@@ -1,0 +1,67 @@
+############## Server port configuration ################
+server:
+  port: 8888
+
+############## Configuration for the jwt ################
+jwt:
+  security:
+    key: ishanitech
+  applicationName: ishanitech
+  expirationDate: 1728000000
+  auth:
+    header: Authorization
+    schema: Bearer
+
+  #####Mail Configuraton ##########
+  mail:
+    default-encoding: UTF-8
+    host: mail.ishanitech.com
+    username: test@ishanitech.com
+    password: Password1*#
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+
+############## Configuration for multipart surpport ###############
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 50MB
+      max-request-size: 100MB
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+rest-microservice-api:
+  protocol: http
+  domain: localhost
+  port: 8888
+
+database:
+  username: root
+  password: suraj123
+
+file:
+  upload:
+    directory: /home/suraj/Documents/ishanitech/iaccounting/Files/
+
+rest:
+  protocol: http
+  domain: localhost
+  port: 8888
+  resource-location: resource
+
+logging:
+  loggin:
+    level:
+      root: ERROR
+  file: /home/suraj/Documents/ishanitech/iaccounting/logs/iaccounting-rest-api.log
