@@ -11,9 +11,9 @@ package com.ishanitech.iaccountingrest.config;// package com.ishanitech.iaccount
  org.springframework.security.config.annotation.web.builders.HttpSecurity;
  import
  org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
- import
  import org.springframework.security.config.http.SessionCreationPolicy;
  import org.springframework.security.web.SecurityFilterChain;
+ import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
  import org.springframework.web.cors.CorsConfiguration;
  import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  import org.springframework.web.filter.CorsFilter;
@@ -42,16 +42,20 @@ package com.ishanitech.iaccountingrest.config;// package com.ishanitech.iaccount
      private CustomAuthenticationEntryPoint authenticationEntryPoint;
      private ObjectMapper objectMapper;
      private JsonTokenHelper tokenHelper;
+//     private final TokenAuthorizationFilter tokenAuthorizationFilter;
 
      public SecurityConfig(CustomAuthenticationProvider authenticationProvider,
      CustomAuthenticationEntryPoint authenticationEntryPoint,
      ObjectMapper objectMapper,
-     JsonTokenHelper tokenHelper) {
+     JsonTokenHelper tokenHelper
+//     TokenAuthorizationFilter tokenAuthorizationFilter
+     ) {
 
          this.authenticationProvider = authenticationProvider;
          this.authenticationEntryPoint = authenticationEntryPoint;
          this.objectMapper = objectMapper;
          this.tokenHelper = tokenHelper;
+//         this.tokenAuthorizationFilter = tokenAuthorizationFilter;
      }
 
 //     @Override
@@ -94,12 +98,14 @@ package com.ishanitech.iaccountingrest.config;// package com.ishanitech.iaccount
          .and()
          .authorizeRequests()
          .requestMatchers("/resource/**", "/home").permitAll()
+         .requestMatchers("/student/**").permitAll()
          .anyRequest()
          .authenticated()
          .and()
          .addFilter(corsConfiguration())
-         .addFilter(new TokenAuthenticationFilter(authenticationManager(),
-         objectMapper, tokenHelper))
+//         .addFilter(new TokenAuthenticationFilter(authenticationManager(),
+//         objectMapper, tokenHelper))
+//                 .addFilterBefore(tokenAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
          .addFilterAfter(new TokenAuthorizationFilter(tokenHelper, objectMapper),
          TokenAuthenticationFilter.class)
          .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -3,11 +3,9 @@ package com.ishanitech.iaccountingrest.converter.impl;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import com.ishanitech.iaccountingrest.config.properties.RestBaseProperty;
 import com.ishanitech.iaccountingrest.converter.BaseConverter;
 import com.ishanitech.iaccountingrest.dto.UserDTO;
 import com.ishanitech.iaccountingrest.model.User;
-import com.ishanitech.iaccountingrest.utils.ImageUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserConverter extends BaseConverter<User, UserDTO> {
 
-	@Autowired
-	private RestBaseProperty restUrlProperty;
+//	@Autowired
+//	private RestBaseProperty restUrlProperty;
 	/**
 	 * Converts {@code UserDTO} object to {@code User} entity object.
 	 * @param dto UserDTO object
@@ -50,11 +48,11 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 	 */
 	@Override
 	public UserDTO fromEntity(User entity) {
-		RestBaseProperty rb = new RestBaseProperty();
-		rb.setDomain("localhost");
-		rb.setPort("8888");
-		rb.setProtocol("http");
-		rb.setResourceLocation("resource");
+//		RestBaseProperty rb = new RestBaseProperty();
+//		rb.setDomain("localhost");
+//		rb.setPort("8888");
+//		rb.setProtocol("http");
+//		rb.setResourceLocation("resource");
 		UserDTO userDTO = new UserDTO();
 		userDTO.setUserId(entity.getId());
 		userDTO.setUsername(entity.getUsername());
@@ -68,8 +66,8 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 		userDTO.setWardNo(entity.getWardNo());
 		userDTO.setRoles(entity.getRole().stream().map(role -> role.getRole()).collect(Collectors.toList()));
 		userDTO.setRegisteredDate(entity.getRegisteredDate());
-		userDTO.setStamp(ImageUtilService.makeFullImageurl(rb, entity.getStamp()));
-		userDTO.setSignature(ImageUtilService.makeFullImageurl(rb, entity.getSignature()));
+//		userDTO.setStamp(ImageUtilService.makeFullImageurl(rb, entity.getStamp()));
+//		userDTO.setSignature(ImageUtilService.makeFullImageurl(rb, entity.getSignature()));
 		return userDTO;
 	}
 
