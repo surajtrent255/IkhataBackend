@@ -42,21 +42,22 @@ package com.ishanitech.iaccountingrest.config;// package com.ishanitech.iaccount
      private CustomAuthenticationEntryPoint authenticationEntryPoint;
      private ObjectMapper objectMapper;
      private JsonTokenHelper tokenHelper;
-//     private final TokenAuthorizationFilter tokenAuthorizationFilter;
+     private final TokenAuthorizationFilter tokenAuthorizationFilter;
 
      public SecurityConfig(CustomAuthenticationProvider authenticationProvider,
      CustomAuthenticationEntryPoint authenticationEntryPoint,
      ObjectMapper objectMapper,
-     JsonTokenHelper tokenHelper
-//     TokenAuthorizationFilter tokenAuthorizationFilter
+     JsonTokenHelper tokenHelper,
+     TokenAuthorizationFilter tokenAuthorizationFilter
      ) {
 
          this.authenticationProvider = authenticationProvider;
          this.authenticationEntryPoint = authenticationEntryPoint;
          this.objectMapper = objectMapper;
          this.tokenHelper = tokenHelper;
-//         this.tokenAuthorizationFilter = tokenAuthorizationFilter;
+         this.tokenAuthorizationFilter = tokenAuthorizationFilter;
      }
+
 
 //     @Override
 //     protected void configure(AuthenticationManagerBuilder auth) throws Exception
@@ -99,13 +100,14 @@ package com.ishanitech.iaccountingrest.config;// package com.ishanitech.iaccount
          .authorizeRequests()
          .requestMatchers("/resource/**", "/home").permitAll()
          .requestMatchers("/student/**").permitAll()
+                 .requestMatchers("/login").permitAll()
          .anyRequest()
          .authenticated()
          .and()
          .addFilter(corsConfiguration())
-//         .addFilter(new TokenAuthenticationFilter(authenticationManager(),
-//         objectMapper, tokenHelper))
-//                 .addFilterBefore(tokenAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                 .authenticationProvider(authenticationProvider)
+         .addFilter(new TokenAuthenticationFilter(authenticationManager, objectMapper, tokenHelper))
+                 .addFilterBefore(tokenAuthorizationFilter, TokenAuthenticationFilter.class)
          .addFilterAfter(new TokenAuthorizationFilter(tokenHelper, objectMapper),
          TokenAuthenticationFilter.class)
          .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -114,6 +116,26 @@ package com.ishanitech.iaccountingrest.config;// package com.ishanitech.iaccount
          return httpSecurity.build();
 
         }
+
+//     javatechie
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http.csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/students/").permitAll()
+//                .and()
+//                .authorizeHttpRequests().requestMatchers("/products/**")
+//                .authenticated().and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authenticationProvider(authenticationProvider)
+////                .addFilterBefore(tokenAuthorizationFilter, TokenAuthenticationFilter.class)
+//                .build();
+//    }
+
+//     endjavatechie
+
      /**
      * @return CorsFilter object. Configuration to allow cors request..
      */

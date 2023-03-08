@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "database")
 public class DataSourceBean {
-
 	private String username;
 	private String password;
 }

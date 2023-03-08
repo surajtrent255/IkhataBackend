@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +21,7 @@ import com.ishanitech.iaccountingrest.utils.JsonTokenHelper;
 
 import io.jsonwebtoken.JwtException;
 
+@Component
 public class TokenAuthorizationFilter extends OncePerRequestFilter {
 	private JsonTokenHelper tokenHelper;
 	private ObjectMapper objectMapper;

@@ -1,6 +1,6 @@
 ############## Server port configuration ################
 server:
-  port: 8888
+  port: 9999
 
 ############## Configuration for the jwt ################
 jwt:
