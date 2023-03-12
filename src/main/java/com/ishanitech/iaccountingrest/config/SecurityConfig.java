@@ -106,10 +106,10 @@ package com.ishanitech.iaccountingrest.config;// package com.ishanitech.iaccount
          .and()
          .addFilter(corsConfiguration())
                  .authenticationProvider(authenticationProvider)
-         .addFilter(new TokenAuthenticationFilter(authenticationManager, objectMapper, tokenHelper))
+//         .addFilter(new TokenAuthenticationFilter(authenticationManager, objectMapper, tokenHelper))
                  .addFilterBefore(tokenAuthorizationFilter, TokenAuthenticationFilter.class)
-         .addFilterAfter(new TokenAuthorizationFilter(tokenHelper, objectMapper),
-         TokenAuthenticationFilter.class)
+//         .addFilterAfter(new TokenAuthorizationFilter(tokenHelper, objectMapper),
+//         TokenAuthenticationFilter.class)
          .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
          .enableSessionUrlRewriting(false);
 
