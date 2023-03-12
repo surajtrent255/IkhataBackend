@@ -44,19 +44,5 @@ public class VerificationTokenDTO {
         this.validationKey = validationKey;
     }
 
-    // public Date getExpiryDate() {
-    //     return this.expiryDate;
-    // }
-
-    // public void setExpiryDate(Date expiryDate) {
-    //     this.expiryDate = expiryDate;
-    // }
-
-    // private Date calculateExpiryDate(final int timeInMinutes){
-    //     final Calendar calendar = Calendar.getInstance();
-    //     calendar.setTimeInMillis(new Date().getTime());
-    //     calendar.add(Calendar.MINUTE, timeInMinutes);
-    //     return new Date(calendar.getTime().getTime());
-    // }
 
 }

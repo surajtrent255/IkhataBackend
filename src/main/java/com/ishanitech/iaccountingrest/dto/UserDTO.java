@@ -2,20 +2,22 @@ package com.ishanitech.iaccountingrest.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.ishanitech.iaccountingrest.model.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 public class UserDTO implements Serializable {
-	private static final long serialVersionUID = 2989312298454528014L;
-	private int userId;
-	private String username;
-	private String fullName;
+	private int id;
+	private String firstname;
+	private String lastname;
 	private String email;
 	@JsonIgnore
 	private String password;
@@ -24,9 +26,8 @@ public class UserDTO implements Serializable {
 	private boolean enabled;
 	private boolean firstLogin;
 	private boolean expired;
-	private int wardNo;
 	private Date registeredDate;
-	private List<String> roles;
+	private Set<Role> roles = new HashSet<>();;
 	private String stamp;
 	private String signature;
 }

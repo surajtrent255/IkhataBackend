@@ -1,12 +1,16 @@
 package com.ishanitech.iaccountingrest.model;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 /**
  *
  * {@code User} represents the user entity.
@@ -16,22 +20,50 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class User implements Serializable{
+@Builder
+@AllArgsConstructor
+public class User implements UserDetails {
     private int id;
-    private String username;
-    private String fullName;
+    private String firstname;
+    private String lastname;
     private String email;
-    private boolean expired;
-    private boolean firstLogin;
-
-    private Date registeredDate;
-    private String mobileNumber;
-    private int wardNo;
-
     private String password;
-    private boolean enabled;
-    private boolean locked;
-    private String stamp;
-    private String signature;
-    private Set<Role> role = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();;
+//  private List<Token> tokens;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> userRoles = this.roles.stream().map(authority-> new SimpleGrantedAuthority(String.format("ROLE_%s", authority.getRole()))).collect(Collectors.toList());
+        return  userRoles;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

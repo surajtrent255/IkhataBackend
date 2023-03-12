@@ -1,16 +1,16 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Dec 16, 2019
- */
 package com.ishanitech.iaccountingrest.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class ResponseDTO<T> {
-	private T data;
+@NoArgsConstructor
+public class AuthenticationRequestDTO {
+
+  private String email;
+  String password;
 }

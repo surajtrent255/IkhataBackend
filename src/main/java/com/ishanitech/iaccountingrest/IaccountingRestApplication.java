@@ -1,8 +1,6 @@
 package com.ishanitech.iaccountingrest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ishanitech.iaccountingrest.security.TokenAuthorizationFilter;
-import com.ishanitech.iaccountingrest.utils.JsonTokenHelper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,12 +14,6 @@ import java.util.Properties;
 @SpringBootApplication
 public class IaccountingRestApplication {
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(11);
-	}
-	private ObjectMapper objectMapper;
-	private JsonTokenHelper tokenHelper;
 	public static void main(String[] args) {
 		SpringApplication.run(IaccountingRestApplication.class, args);
 	}

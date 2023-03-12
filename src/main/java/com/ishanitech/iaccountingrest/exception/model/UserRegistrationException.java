@@ -12,7 +12,6 @@ public class UserRegistrationException extends RuntimeException {
     private static final HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
     private String message;
 
-
     public UserRegistrationException(String message) {
         super();
         this.message = message;
@@ -23,7 +22,6 @@ public class UserRegistrationException extends RuntimeException {
     public void setMessage(String message) {
         this.message = message;
     }
-
     public static HttpStatus getStatus() {
         return status;
     }

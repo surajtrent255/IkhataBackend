@@ -27,17 +27,11 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 	@Override
 	public User fromDto(UserDTO dto) {
 		User user = new User();
-		user.setFullName(dto.getFullName());
-		user.setWardNo(dto.getWardNo());
-		user.setUsername(dto.getUsername());
+		user.setFirstname(dto.getFirstname());
+		user.setLastname(dto.getLastname());
+		user.setRoles(dto.getRoles());
 		user.setEmail(dto.getEmail());
 		user.setPassword(dto.getPassword());
-		user.setMobileNumber(dto.getMobileNumber());
-		user.setRegisteredDate(new Date());
-		user.setEnabled(true);
-		user.setFirstLogin(true);
-		user.setLocked(false);
-		user.setExpired(false);
 		return user;
 	}
 
@@ -54,18 +48,18 @@ public class UserConverter extends BaseConverter<User, UserDTO> {
 //		rb.setProtocol("http");
 //		rb.setResourceLocation("resource");
 		UserDTO userDTO = new UserDTO();
-		userDTO.setUserId(entity.getId());
-		userDTO.setUsername(entity.getUsername());
-		userDTO.setEmail(entity.getEmail());
-		userDTO.setFullName(entity.getFullName());
-		userDTO.setMobileNumber(entity.getMobileNumber());
-		userDTO.setLocked(entity.isLocked());
-		userDTO.setEnabled(entity.isEnabled());
-		userDTO.setExpired(entity.isExpired());
-		userDTO.setFirstLogin(entity.isFirstLogin());
-		userDTO.setWardNo(entity.getWardNo());
-		userDTO.setRoles(entity.getRole().stream().map(role -> role.getRole()).collect(Collectors.toList()));
-		userDTO.setRegisteredDate(entity.getRegisteredDate());
+//		userDTO.setUserId(entity.getId());
+//		userDTO.setUsername(entity.getUsername());
+//		userDTO.setEmail(entity.getEmail());
+//		userDTO.setFullName(entity.getFullName());
+//		userDTO.setMobileNumber(entity.getMobileNumber());
+//		userDTO.setLocked(entity.isLocked());
+//		userDTO.setEnabled(entity.isEnabled());
+//		userDTO.setExpired(entity.isExpired());
+//		userDTO.setFirstLogin(entity.isFirstLogin());
+//		userDTO.setWardNo(entity.getWardNo());
+//		userDTO.setRoles(entity.getRole().stream().map(role -> role.getRole()).collect(Collectors.toList()));
+//		userDTO.setRegisteredDate(entity.getRegisteredDate());
 //		userDTO.setStamp(ImageUtilService.makeFullImageurl(rb, entity.getStamp()));
 //		userDTO.setSignature(ImageUtilService.makeFullImageurl(rb, entity.getSignature()));
 		return userDTO;
