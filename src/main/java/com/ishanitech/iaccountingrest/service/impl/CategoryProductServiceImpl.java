@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.dao.CategoryProductDAO;
 import com.ishanitech.iaccountingrest.dto.CategoryProductDTO;
 import com.ishanitech.iaccountingrest.service.CategoryProductService;
 import com.ishanitech.iaccountingrest.service.DbService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,10 @@ import java.util.Map;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CategoryProductServiceImpl implements CategoryProductService {
 
-    private DbService dbService;
+    private final DbService dbService;
 
 
     @Override
@@ -47,13 +49,36 @@ public class CategoryProductServiceImpl implements CategoryProductService {
     }
 
     @Override
-    public void deleteParentandChildCategories(List<Integer> categoryIds) {
-
+    public int updateCategoryProduct(CategoryProductDTO categoryProductDTO) {
+        CategoryProductDAO categoryProductDAO = dbService.getDao(CategoryProductDAO.class);
+        return categoryProductDAO.updateCategoryProduct(categoryProductDTO, categoryProductDTO.getId());
     }
 
+    @Override
+    public void deleteParentandChildCategories(List<Integer> categoryIds) {
+        CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
+        categoryDAO.deleteParentandChildCategories(categoryIds);
+    }
+
+    @Override
+    public CategoryProductDTO getCategoryByCategoryId(Integer categoryId) {
+        CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
+        CategoryProductDTO category = categoryDAO.getCategoryByCategoryId(categoryId);
+        return category;
+    }
+
+    @Override
+    public List<CategoryProductDTO> getCategoryByParentId(Integer parentId) {
+        CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
+        List<CategoryProductDTO> categories = categoryDAO.getCategoryByParentId(parentId);
+        for (CategoryProductDTO cDTO : categories) {
+            List<CategoryProductDTO> childCategory = categoryDAO.getCategoryByParentId(cDTO.getId());
+
+        }
+        return categories;
+    }
     public List<CategoryProductDTO> cleanCategoryCreator(List<CategoryProductDTO> categoryDTOS) {
         Map<Integer, CategoryProductDTO> categoryMap = new HashMap<>();
-
         // you are using MegaMenuDTO as Linked list with next and before link
 
         // populate a Map

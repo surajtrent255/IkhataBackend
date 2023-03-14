@@ -10,4 +10,8 @@ import org.springframework.stereotype.Component;
 public class DataSourceBean {
 	private String username;
 	private String password;
+	private String databaseName;
+	private String port;
+	private String driverClassName;
+	private String databaseType;
 }

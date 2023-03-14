@@ -5,7 +5,7 @@ server:
 ############## Configuration for the jwt ################
 jwt:
   security:
-    key: ishanitech
+    key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
   applicationName: ishanitech
   expirationDate: 1728000000
   auth:
@@ -53,6 +53,10 @@ rest-microservice-api:
 database:
   username: suraj
   password: Suraj123
+  databaseName: iaccountingdb
+  port: 5432
+  driverClassName: org.postgresql.Driver
+  databaseType: postgresql
 
 file:
   upload:
