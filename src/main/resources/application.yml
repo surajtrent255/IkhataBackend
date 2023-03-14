@@ -48,7 +48,7 @@ rest-microservice-api:
 
 database:
   username: root
-  password: suraj123
+  password: root
 
 file:
   upload:
