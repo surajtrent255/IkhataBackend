@@ -10,6 +10,7 @@ import com.ishanitech.iaccountingrest.exception.model.UserRegistrationException;
 import com.ishanitech.iaccountingrest.service.auth.AuthenticationService;
 import com.ishanitech.iaccountingrest.service.auth.LogoutService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import javax.swing.text.html.parser.Entity;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationController {
 
   private final AuthenticationService service;
@@ -42,6 +44,7 @@ public class AuthenticationController {
     try{
       return new ResponseDTO<>(service.authenticate(request));
     } catch(Exception ex){
+      log.info(ex.getMessage());
         throw new EntityNotFoundException("invalid login credential");
     }
 

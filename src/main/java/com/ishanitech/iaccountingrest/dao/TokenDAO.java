@@ -27,7 +27,7 @@ public interface TokenDAO {
     int saveToken(@BindBean Token token);
 
     @Transaction
-    @SqlBatch("INSERT INTO `token`(token, token_type, revoked, expired, user_id)"
+    @SqlBatch("INSERT INTO token(token, token_type, revoked, expired, user_id)"
             +" VALUES (:token, :tokenType, :revoked, :expired, :userId")
     void saveAllTokens(@BindBean List<Token> tokens);
 
@@ -38,6 +38,6 @@ public interface TokenDAO {
     @SqlUpdate("UPDATE token SET token = :token, token_type = :tokenType, revoked = :revoked, expired = :expired, user_id = :userId WHERE id = :tokenId ;")
     void updateToken(@BindBean Token token, int tokenId);
 
-    @SqlUpdate("UPDATE token SET  revoked = 1, expired = 1 WHERE user_id = :userId ;")
+    @SqlUpdate("UPDATE token SET  revoked = true, expired = true WHERE user_id = :userId ;")
     void updateTokens(@Bind int userId);
 }

@@ -35,6 +35,10 @@ spring:
       file-size-threshold: 2KB
       max-file-size: 50MB
       max-request-size: 100MB
+
+  sql:
+    init:
+      mode: always
 ---
 spring:
   config:
@@ -47,9 +51,8 @@ rest-microservice-api:
   port: 8888
 
 database:
-  username: root
+  username: postgres
   password: root
-
 file:
   upload:
     directory: /home/suraj/Documents/ishanitech/iaccounting/Files/

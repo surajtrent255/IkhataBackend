@@ -20,11 +20,11 @@ import java.util.Optional;
 @RegisterBeanMapper(value = Role.class, prefix = "r")
 public interface UserDAO {
 	@GetGeneratedKeys
-	@SqlUpdate("INSERT INTO user ( "
-			+ " `firstname`, "
-			+ " `lastname`, "
-			+ " `email`, "
-			+ " `password` "
+	@SqlUpdate("INSERT INTO users ( "
+			+ " firstname, "
+			+ " lastname, "
+			+ " email, "
+			+ " password "
 			+ " ) "
 			+ " VALUES ("
 			+ " :firstname, "
@@ -49,7 +49,7 @@ public interface UserDAO {
 			+ " u.password AS u_password,"
 			+ " u.email AS u_email, "
 			+ " r.id AS r_id, "
-			+ " r.role as r_role FROM user u INNER JOIN user_role ur ON u.id = ur.user_id "
+			+ " r.role as r_role FROM users u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "
 			+ " WHERE u.id = :userId;")
 	@UseRowReducer(UserReducer.class)
@@ -61,7 +61,7 @@ public interface UserDAO {
 			+ " u.password AS u_password,"
 			+ " u.email AS u_email, "
 			+ " r.id AS r_id, "
-			+ " r.role as r_role FROM user u INNER JOIN user_role ur ON u.id = ur.user_id "
+			+ " r.role as r_role FROM users u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "
 			+ " WHERE u.email = :email;")
 	@UseRowReducer(UserReducer.class)

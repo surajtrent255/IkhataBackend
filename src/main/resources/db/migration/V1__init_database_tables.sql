@@ -1,35 +1,64 @@
-CREATE TABLE IF NOT EXISTS `token` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `token` varchar(300) NOT NULL,
-  `token_type` varchar(30) NOT NULL,
-  `revoked` bit(1) NOT NULL DEFAULT b'0',
-  `expired` bit(1) NOT NULL DEFAULT b'0',
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+CREATE TABLE "public.users"(
+   "id" SERIAL PRIMARY KEY,
+   "firstname" VARCHAR(50) NOT NULL,
+   "lastname" VARCHAR(50) NOT NULL,
+   "email" VARCHAR(50) UNIQUE NOT NULL,
+   "password" VARCHAR(600) NOT NULL,
+   "deleted" BOOLEAN DEFAULT FALSE
+);
 
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `lastname` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `password` varchar(600) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `email` (`email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE "public"."role"(
+   "id" SERIAL PRIMARY KEY,
+   "role" VARCHAR(15) NOT NULL,
+   "description" VARCHAR(15) NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS `user_role` (
-  `user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE user_role (
+  id SERIAL,
+  company_id int NOT NULL,
+  user_id int NOT NULL,
+  role_id int NOT NULL,
+  PRIMARY KEY (user_id,role_id,id)
+);
+CREATE TABLE  token (
+  id SERIAL NOT NULL ,
+  token varchar(300) NOT NULL,
+  token_type varchar(30) NOT NULL,
+  revoked boolean NOT NULL DEFAULT false,
+  expired boolean NOT NULL DEFAULT false,
+  user_id int NOT NULL,
+  PRIMARY KEY (id)
+) ;
 
-CREATE TABLE IF NOT EXISTS `role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(15) NOT NULL,
-  `role_nepali` varchar(15) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE  "public"."company" (
+  company_id SERIAL NOT NULL ,
+  name varchar(50) NOT NULL,
+  description text NOT NULL,
+  pan_no bigint NOT NULL ,
+  state int Default NULL  ,
+  zone varchar(50) NOT NULL ,
+  district varchar(50) NOT NULL ,
+  mun_vdc varchar(50) NOT NULL ,
+  ward_no int NOT NULL ,
+   phone bigint DEFAULT NULL,
+  PRIMARY KEY (company_id),
+	constraint valid_number
+      check (phone <= 9999999999)
+) ;
 
+--CREATE TABLE user_company (
+--  id SERIAL,
+--  company_id int NOT NULL,
+--  user_id int NOT NULL,
+--  PRIMARY KEY (id),
+--	CONSTRAINT fk_user_company
+--   FOREIGN KEY(company_id)
+--      REFERENCES company(compnay_id)
+--);
 
-
+CREATE TABLE user_company (
+  id SERIAL,
+  company_id int NOT NULL,
+  user_id int NOT NULL,
+  PRIMARY KEY (id)
+);
