@@ -30,7 +30,7 @@ CREATE TABLE  token (
   PRIMARY KEY (id)
 ) ;
 
-CREATE TABLE  "public"."company" (
+CREATE TABLE  company (
   company_id SERIAL NOT NULL ,
   name varchar(50) NOT NULL,
   description text NOT NULL,

@@ -23,7 +23,7 @@ public class CompanyController {
 
 
     @PostMapping("/add")
-    public ResponseDTO<?> addCategory(@RequestBody CompanyDTO companyDTO) {
+    public ResponseDTO<?> addCompany(@RequestBody CompanyDTO companyDTO) {
         Integer result = null;
         try {
             result = companyService.addCompany(companyDTO);
