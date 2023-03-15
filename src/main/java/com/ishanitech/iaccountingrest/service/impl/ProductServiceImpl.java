@@ -7,6 +7,7 @@ import com.ishanitech.iaccountingrest.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,12 +29,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer addNewProduct(ProductDTO product) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
+
         return productDAO.addNewProduct(product);
     }
 
     @Override
     public void updateProduct(ProductDTO productDTO , Integer id) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
+        productDTO.setUpdateDate(new Date());
          productDAO.updateProduct(productDTO, id);
     }
 

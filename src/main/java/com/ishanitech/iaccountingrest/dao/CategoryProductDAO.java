@@ -26,7 +26,7 @@ public interface CategoryProductDAO {
 
     @SqlUpdate("UPDATE category SET name = :name, "
             + "parent_id = :parentId, description = :description,  user_id = :userId, "
-            + "company_id = :companyId WHERE id = :categoryId")
+            + "company_id = :companyId, edit_date = :editedDate WHERE id = :categoryId")
      int updateCategoryProduct(@BindBean CategoryProductDTO categoryProductDTO, @Bind int categoryId);
 
     @SqlBatch("UPDATE category SET deleted = true WHERE category_id = :categoryIds")

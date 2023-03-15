@@ -49,7 +49,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(ProductDTO productDTO, @PathVariable Integer id){
+    public void updateProduct(@RequestBody ProductDTO productDTO, @PathVariable Integer id){
         try{
             productService.updateProduct(productDTO,id);
         } catch(Exception e){

@@ -16,8 +16,8 @@ public class ProductDTO {
        private String name;
        private double sellingPrice;
        private double costPrice;
-       private Date create_date;
-       private Date updated_date;
+       private Date createDate;
+       private Date updateDate;
        private int userId;
        private int companyId;
        private int sellerId;
