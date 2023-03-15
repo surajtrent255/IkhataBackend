@@ -17,8 +17,8 @@ public class CategoryProductDTO {
     private int parentId;
     private int userId;
     private int companyId;
-    private Date created_date;
-    private Date edited_date;
+    private Date createdDate;
+    private Date editedDate;
     private List<CategoryProductDTO> childCategories;
 
     public CategoryProductDTO(int id, String name, int parentId) {

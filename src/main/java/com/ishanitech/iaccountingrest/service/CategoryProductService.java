@@ -8,5 +8,9 @@ public interface CategoryProductService {
     Integer addCategory(CategoryProductDTO categoryproductDTO);
     void deleteCategory(Integer categoryId);
     List<CategoryProductDTO> getAllCategories();
+    int updateCategoryProduct(CategoryProductDTO categoryProductDTO);
     void deleteParentandChildCategories(List<Integer> categoryIds);
+    CategoryProductDTO getCategoryByCategoryId(Integer categoryId);
+
+    List<CategoryProductDTO> getCategoryByParentId(Integer parentId);
 }
