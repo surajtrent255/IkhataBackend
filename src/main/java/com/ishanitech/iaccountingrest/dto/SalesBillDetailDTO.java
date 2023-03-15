@@ -11,13 +11,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SalesDTO {
+public class SalesBillDetailDTO {
     private int id;
-    private int product_id;
-    private int quantity;
+    private int productId;
+    private int qty;
     private Date date;
     private double discount;
-    private double Rate;
+    private double rate;
     private int billId;
     private int companyId;
     private boolean deleted;

@@ -3,9 +3,10 @@ package com.ishanitech.iaccountingrest.controller;
 import com.ishanitech.iaccountingrest.dto.BillDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
+import com.ishanitech.iaccountingrest.service.BillService;
+import com.ishanitech.iaccountingrest.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,44 +17,44 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BillController {
 
-    private BillService billService;
+    private final BillService billService;
 
     @GetMapping
     public ResponseDTO<List<BillDTO>> getAllBills(){
         try{
             return new ResponseDTO<List<BillDTO>>(billService.getAllBills());
         } catch(Exception e) {
-            log.info("Error occured accessing the bill infos : " + e.getMessage());
+            log.error("Error occured accessing the bill infos : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the bill infos : " + e.getMessage());
         }
     }
 
     @GetMapping("/{id}")
-    public BillDTO getBillById(@PathVariable int id){
+    public ResponseDTO<BillDTO> getBillById(@PathVariable int id){
         try{
-            return new ResponseDTO<BillDTO>(billService.getBillById());
+            return new ResponseDTO<BillDTO>(billService.getBillById(id));
         } catch(Exception e) {
-            log.info("Error occured accessing the bill info : " + e.getMessage());
+            log.error("Error occured accessing the bill info : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the bill info : " + e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseDTO<Integer> addNewBill(){
+    public ResponseDTO<Integer> addNewBill(@RequestBody BillDTO billDTO){
         try{
-            return new ResponseDTO<BillDTO>(billService.addNewBill());
+            return new ResponseDTO<Integer>(billService.addNewBill(billDTO));
         } catch(Exception e) {
-            log.info("Error occured creating the bill info : " + e.getMessage());
+            log.error("Error occured creating the bill info : " + e.getMessage());
             throw new CustomSqlException("Error occured creating the bill info : " + e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public BillDTO updateBill(@RequestBody BillDTO billDTO, @PathVariable int id){
+    public void updateBill(@RequestBody BillDTO billDTO, @PathVariable int id){
         try{
-            return new ResponseDTO<BillDTO>(billService.updateBill(billDTO, id));
+             billService.updateBill(billDTO, id);
         } catch(Exception e) {
-            log.info("Error occured updating the bill info : " + e.getMessage());
+            log.error("Error occured updating the bill info : " + e.getMessage());
             throw new CustomSqlException("Error occured updating the bill info :" + e.getMessage());
         }
     }
@@ -63,7 +64,7 @@ public class BillController {
         try{
             billService.deleteBillById(id);
         } catch(Exception ex){
-            log.info("Error occured deleting the bill info " + ex.getMessage());
+            log.error("Error occured deleting the bill info " + ex.getMessage());
             throw new CustomSqlException("Error occured deleting the bill info : " + ex.getMessage());
         }
     }

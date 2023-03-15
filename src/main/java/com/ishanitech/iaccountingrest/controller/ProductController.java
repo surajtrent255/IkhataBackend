@@ -53,7 +53,7 @@ public class ProductController {
         try{
             productService.updateProduct(productDTO,id);
         } catch(Exception e){
-            log.info("error occured during product updation with id "+id+" "+e.getMessage());
+            log.error("error occured during product updation with id "+id+" "+e.getMessage());
             throw new CustomSqlException("error occured while updating the product");
         }
     }
@@ -63,7 +63,7 @@ public class ProductController {
         try{
             productService.deleteProduct(id);
         } catch(Exception e){
-            log.info("error occured during product deletion with id " + id + " "+ e.getMessage());
+            log.error("error occured during product deletion with id " + id + " "+ e.getMessage());
             throw new CustomSqlException("error occured while deletig the product");
         }
     }
