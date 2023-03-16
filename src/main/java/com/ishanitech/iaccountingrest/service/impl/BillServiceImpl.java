@@ -1,11 +1,13 @@
 package com.ishanitech.iaccountingrest.service.impl;
-import com.ishanitech.iaccountingrest.dao.BillDAO;
-import com.ishanitech.iaccountingrest.dto.BillDTO;
+import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
+import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
+import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.service.BillService;
 
 import com.ishanitech.iaccountingrest.service.DbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -16,28 +18,18 @@ public class BillServiceImpl implements BillService {
 
     private final DbService dbService;
     @Override
-    public List<BillDTO> getAllBills() {
-        return dbService.getDao(BillDAO.class).getAllBills();
+    public List<SalesBillDTO> getAllBills() {
+        return dbService.getDao(SalesBillDAO.class).getAllBills();
     }
 
     @Override
-    public BillDTO getBillById(int id) {
-        return dbService.getDao(BillDAO.class).getBillById(id);
+    public SalesBillDTO getBillById(int id) {
+        return dbService.getDao(SalesBillDAO.class).getBillById(id);
     }
 
-    @Override
-    public Integer addNewBill(BillDTO billDTO) {
-        billDTO.setDate(new Date());
-        return dbService.getDao(BillDAO.class).addNewBill(billDTO);
-    }
-
-    @Override
-    public void updateBill(BillDTO billDTO, int id) {
-         dbService.getDao(BillDAO.class).updateBill(billDTO, id);
-    }
-
+    @Transactional
     @Override
     public void deleteBillById(int id) {
-         dbService.getDao(BillDAO.class).deleteBillById(id);
+         dbService.getDao(SalesBillDAO.class).deleteBillById(id);
     }
 }

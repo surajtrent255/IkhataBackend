@@ -28,8 +28,6 @@ public class User implements UserDetails {
     private String lastname;
     private String email;
     private String password;
-    private Date createdDate;
-    private Date editedDate;
     private Set<Role> roles = new HashSet<>();;
 //  private List<Token> tokens;
 

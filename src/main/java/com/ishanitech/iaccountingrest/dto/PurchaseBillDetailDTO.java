@@ -10,12 +10,12 @@ import java.util.Date;
 @ToString
 public class PurchaseBillDetailDTO {
     private int id;
-    private Date date;
     private int productId;
-    private double rate;
     private int qty;
-    private int purchaseBillId;
+    private Date date;
+    private double discountPerUnit;
+    private double rate;
+    private int billId;
     private int companyId;
-    private double discount;
 
 }

@@ -9,9 +9,5 @@ public interface PurchaseBillService {
 
     PurchaseBillDTO getSinglePurchasBillInfo(Integer id);
 
-    Integer addNewPurchaseBillInfo(PurchaseBillDTO purchaseBill);
-
-    void updatePurchaseBill(PurchaseBillDTO productDTO, Integer id);
-
     void deletePurchaseBill(int id);
 }

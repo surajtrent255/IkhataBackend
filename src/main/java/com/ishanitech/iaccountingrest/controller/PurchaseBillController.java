@@ -38,26 +38,6 @@ public class PurchaseBillController {
         }
     }
 
-    @PostMapping
-    public ResponseDTO<Integer> addNewPurchaseBill(@RequestBody PurchaseBillDTO purchaseBill){
-        try{
-            return new ResponseDTO<Integer>(purchaseBillService.addNewPurchaseBillInfo(purchaseBill));
-        } catch(Exception ex){
-            log.error("error occured while adding purchase bill " + ex.getMessage());
-            throw new CustomSqlException("error occured while adding purchase bill "+ex.getMessage());
-        }
-    }
-
-    @PutMapping("/{id}")
-    public void updatePurchaseBill(@RequestBody PurchaseBillDTO productDTO, @PathVariable Integer id){
-        try{
-            purchaseBillService.updatePurchaseBill(productDTO,id);
-        } catch(Exception e){
-            log.error("error occured during purchase bill updation with id "+id+" "+e.getMessage());
-            throw new CustomSqlException("error occured while updating the purchase bill");
-        }
-    }
-
     @DeleteMapping("/{id}")
     public void deletePurchaseBill(@PathVariable int id){
         try{

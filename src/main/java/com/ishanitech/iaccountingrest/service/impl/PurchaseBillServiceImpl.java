@@ -23,15 +23,6 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
         return dbService.getDao(PurchaseBillDAO.class).getSinglePurchaseBill(id);
     }
 
-    @Override
-    public Integer addNewPurchaseBillInfo(PurchaseBillDTO purchaseBill) {
-        return dbService.getDao(PurchaseBillDAO.class).addNewPurchaseBill(purchaseBill);
-    }
-
-    @Override
-    public void updatePurchaseBill(PurchaseBillDTO productDTO, Integer id) {
-        dbService.getDao(PurchaseBillDAO.class).updatePurchaseBill(productDTO, id);
-    }
 
     @Override
     public void deletePurchaseBill(int id) {
