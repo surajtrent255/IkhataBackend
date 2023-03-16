@@ -1,2 +1,71 @@
-package com.ishanitech.iaccountingrest.controller;public class PurchaseBillController {
+package com.ishanitech.iaccountingrest.controller;
+
+import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
+import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
+import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
+import com.ishanitech.iaccountingrest.service.PurchaseBillService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/purchaseBill")
+@Slf4j
+@RequiredArgsConstructor
+public class PurchaseBillController {
+    private final PurchaseBillService purchaseBillService;
+
+    @GetMapping
+    public ResponseDTO<List<PurchaseBillDTO>> getAllPurchaseBill(){
+        try{
+            return new ResponseDTO<List<PurchaseBillDTO>>(purchaseBillService.getAllPurchaseBills());
+        } catch(Exception e){
+            log.error("error occured while fetching purchase bills : " + e.getMessage());
+            throw new CustomSqlException("Error occured while fetching purchase bills");
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseDTO<PurchaseBillDTO> getSinglePurchasBillInfo(@PathVariable("id") Integer id){
+        try{
+            return new ResponseDTO<PurchaseBillDTO>(purchaseBillService.getSinglePurchasBillInfo(id));
+        } catch(Exception e){
+            log.error("error occured while fetching purchas bill with id " + id +" "+ e.getMessage());
+            throw new CustomSqlException("error occured while fetching purchase bill with id " + id +" ");
+        }
+    }
+
+    @PostMapping
+    public ResponseDTO<Integer> addNewPurchaseBill(@RequestBody PurchaseBillDTO purchaseBill){
+        try{
+            return new ResponseDTO<Integer>(purchaseBillService.addNewPurchaseBillInfo(purchaseBill));
+        } catch(Exception ex){
+            log.error("error occured while adding purchase bill " + ex.getMessage());
+            throw new CustomSqlException("error occured while adding purchase bill "+ex.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public void updatePurchaseBill(@RequestBody PurchaseBillDTO productDTO, @PathVariable Integer id){
+        try{
+            purchaseBillService.updatePurchaseBill(productDTO,id);
+        } catch(Exception e){
+            log.error("error occured during purchase bill updation with id "+id+" "+e.getMessage());
+            throw new CustomSqlException("error occured while updating the purchase bill");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePurchaseBill(@PathVariable int id){
+        try{
+            purchaseBillService.deletePurchaseBill(id);
+        } catch(Exception e){
+            log.error("error occured during purchaseBill deletion with id " + id + " "+ e.getMessage());
+            throw new CustomSqlException("error occured while deletig the purchaseBill");
+        }
+    }
+
 }

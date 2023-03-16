@@ -1,2 +1,17 @@
-package com.ishanitech.iaccountingrest.service;public class PurchaseBillService {
+package com.ishanitech.iaccountingrest.service;
+
+import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
+
+import java.util.List;
+
+public interface PurchaseBillService {
+    List<PurchaseBillDTO> getAllPurchaseBills();
+
+    PurchaseBillDTO getSinglePurchasBillInfo(Integer id);
+
+    Integer addNewPurchaseBillInfo(PurchaseBillDTO purchaseBill);
+
+    void updatePurchaseBill(PurchaseBillDTO productDTO, Integer id);
+
+    void deletePurchaseBill(int id);
 }
