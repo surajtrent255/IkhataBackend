@@ -48,6 +48,8 @@ public interface UserDAO {
 			+ " u.lastname AS  u_lastname, "
 			+ " u.password AS u_password,"
 			+ " u.email AS u_email, "
+			+ " u.create_date AS u_created_date, "
+			+ " u.edit_date AS u_edited_date, "
 			+ " r.id AS r_id, "
 			+ " r.role as r_role FROM users u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "
