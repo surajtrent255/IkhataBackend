@@ -1,6 +1,6 @@
 /**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Dec 11, 2019
+ * @author Suraj Adhikari <suraj.trent255@gmail.com>
+ * Since March 11, 2023
  */
 package com.ishanitech.iaccountingrest.config;
 

@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -51,6 +48,7 @@ public class CategoryProductServiceImpl implements CategoryProductService {
     @Override
     public int updateCategoryProduct(CategoryProductDTO categoryProductDTO) {
         CategoryProductDAO categoryProductDAO = dbService.getDao(CategoryProductDAO.class);
+        categoryProductDTO.setEditedDate(new Date());
         return categoryProductDAO.updateCategoryProduct(categoryProductDTO, categoryProductDTO.getId());
     }
 

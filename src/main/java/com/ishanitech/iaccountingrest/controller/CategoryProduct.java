@@ -69,10 +69,9 @@ public class CategoryProduct {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseDTO<?> updateCategoryProduct(@RequestBody CategoryProductDTO categoryProductDTO){
+    public void updateCategoryProduct(@RequestBody CategoryProductDTO categoryProductDTO){
         try{
             categoryProductService.updateCategoryProduct(categoryProductDTO);
-            return new ResponseDTO<>(1);
         } catch (Exception e){
             log.error("error while updating categoryproduct " + e.getMessage());
             throw new CustomSqlException("Something went wrong while updating category");
@@ -81,10 +80,9 @@ public class CategoryProduct {
 
 
     @DeleteMapping("/{id}")
-    public ResponseDTO<?> deleteCategoryProduct(@PathVariable("id") int id){
+    public void deleteCategoryProduct(@PathVariable("id") int id){
         try{
             categoryProductService.deleteCategory(id);
-            return new ResponseDTO<>(1);
 
         } catch (Exception e){
             log.error(e.getMessage());
