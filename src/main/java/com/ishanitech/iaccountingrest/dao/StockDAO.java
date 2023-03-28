@@ -2,10 +2,13 @@ package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.StockDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+import org.jdbi.v3.sqlobject.transaction.Transaction;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,4 +34,19 @@ public interface StockDAO {
     @SqlUpdate("INSERT INTO stock(product_id, qty, company_id)" +
             " VALUES (:productId, :qty, :companyId)")
     Integer addNewStock(@BindBean StockDTO stockDTO);
+
+    @SqlUpdate("update stock set qty = qty + 1 where product_id = :productId and company_id = :companyId ")
+    void increaseStockQuantity(@Bind int productId, @Bind int companyId);
+
+    @SqlUpdate("update stock set qty = qty - :qty where product_id = :productId and company_id = :companyId ")
+    void decreaseStockQuantity(@Bind int productId, @Bind int companyId, @Bind int qty);
+
+    @SqlUpdate("update stock set qty = 0 where qty < 0 and product_id = :productId and company_id = :companyId")
+    void makeStockQuantityToZero(@Bind int productId, @Bind int companyId);
+
+    @Transactional
+    default void decreaseTheStockQuantity( int productId,  int companyId, int qty){
+        decreaseStockQuantity(  productId,   companyId,  qty);
+        makeStockQuantityToZero( productId, companyId);
+    }
 }

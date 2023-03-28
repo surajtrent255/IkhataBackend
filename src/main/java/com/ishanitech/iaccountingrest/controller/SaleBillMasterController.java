@@ -18,6 +18,7 @@ public class SaleBillMasterController {
 
     @PostMapping
     public ResponseDTO<Integer> addSaleBills(@RequestBody SaleBillMasterDTO saleBillMasterDTO){
+        System.out.println("ddd");
         return saleBillMasterService.addNewSaleBill(saleBillMasterDTO);
     }
 }

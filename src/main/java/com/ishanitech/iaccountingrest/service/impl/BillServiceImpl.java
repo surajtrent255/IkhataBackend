@@ -32,4 +32,9 @@ public class BillServiceImpl implements BillService {
     public void deleteBillById(int id) {
          dbService.getDao(SalesBillDAO.class).deleteBillById(id);
     }
+
+    @Override
+    public Integer printTheBill(int billId, int userId) {
+       return dbService.getDao(SalesBillDAO.class).printTheBillWithBillId(billId, new Date(), userId);
+    }
 }
