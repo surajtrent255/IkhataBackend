@@ -1,4 +1,6 @@
 package com.ishanitech.iaccountingrest.controller;
+import com.ishanitech.iaccountingrest.dto.SaleBillMasterDTO;
+import com.ishanitech.iaccountingrest.dto.SalesBillInvoiceDTO;
 import com.ishanitech.iaccountingrest.service.SalesBillDetailService;
 
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
@@ -28,5 +30,16 @@ public class SalesBillDetailController {
             throw new CustomSqlException("error occured accesing sales info " + ex.getMessage());
         }
     }
+    @GetMapping
+    public ResponseDTO<SaleBillMasterDTO> getSalesInfoByBillId(@RequestParam("billId") int billId,
+                                                                     @RequestParam("comapnyId") int companyId){
+        try{
+            return new ResponseDTO<SaleBillMasterDTO>(salesBillDetailService.getSalesInfoByBillId(billId, companyId));
+        } catch(Exception ex){
+            log.error("error occured accesing sales info by BillId" + ex.getMessage());
+            throw new CustomSqlException("error occured accesing sales info ByBillId" + ex.getMessage());
+        }
+    }
+
 
 }

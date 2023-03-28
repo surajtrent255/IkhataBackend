@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/salesBill")
@@ -49,5 +50,14 @@ public class SalesBillController {
         }
     }
 
+    @PostMapping("/print/{billNo}")
+    public ResponseDTO<Integer> printTheBill(@PathVariable int billNo, @RequestBody Map<String, Integer> printMap){
+        try{
+            return new ResponseDTO<Integer>(billService.printTheBill(billNo, printMap.get("printerId")));
+        } catch(Exception ex){
+            log.error("error occured while updating printing info");
+            throw new CustomSqlException("Something went wrong while updating printing info");
+        }
+    }
 
 }

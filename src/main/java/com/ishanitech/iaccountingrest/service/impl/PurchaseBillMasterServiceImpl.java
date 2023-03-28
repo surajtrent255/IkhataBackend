@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.PurchaseBillDAO;
 import com.ishanitech.iaccountingrest.dao.PurchaseBillDetailDAO;
+import com.ishanitech.iaccountingrest.dao.StockDAO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillMasterDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
@@ -22,15 +23,6 @@ import java.util.List;
 public class PurchaseBillMasterServiceImpl implements PurchaseBillMasterService {
     private final DbService dbService;
 
-    @Override
-    public List<PurchaseBillMasterDTO> getAllPurchaseBills() {
-        return null;
-    }
-
-    @Override
-    public PurchaseBillMasterDTO getSinglePurchaseBill() {
-        return null;
-    }
 
     @Transactional
     @Override
@@ -71,12 +63,19 @@ public class PurchaseBillMasterServiceImpl implements PurchaseBillMasterService 
             log.error("addNew Purchase Info() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while adding billdetail");
         }
+//        for updating stock qty count
+        try{
+            StockDAO stockDAO = dbService.getDao(StockDAO.class);
+            stockDAO.increaseStockQuantity(purchaseBillMasterDTO.getProductId(), purchaseBillMasterDTO.getCompanyId());
 
+        } catch (Exception ex){
+            log.error("updateStockQty() ========> "+ex.getMessage());
+            throw new CustomSqlException("something went wrong while updating stock qty ");
+        }
+
+//
         return new ResponseDTO<Integer>(billId);
     }
 
-    @Override
-    public void deleteBill(int id) {
 
-    }
 }

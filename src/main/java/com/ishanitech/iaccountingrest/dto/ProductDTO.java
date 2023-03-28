@@ -22,5 +22,8 @@ public class ProductDTO {
        private int companyId;
        private int sellerId;
        private int categoryId;
+       private String barcode;
+       private double discount;
+       private double tax;
        private boolean deleted;
 }

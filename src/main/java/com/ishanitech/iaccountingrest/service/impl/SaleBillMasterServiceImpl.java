@@ -1,7 +1,9 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
+import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
+import com.ishanitech.iaccountingrest.dao.StockDAO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.dto.SaleBillMasterDTO;
@@ -26,43 +28,57 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
     @Transactional
     @Override
     public ResponseDTO<Integer> addNewSaleBill(SaleBillMasterDTO saleBillMasterDTO) {
-        SalesBillDTO salesBillDTO = new SalesBillDTO();
-        salesBillDTO.setUserId(saleBillMasterDTO.getUserId());
-        salesBillDTO.setCustId(saleBillMasterDTO.getCustId());
-        salesBillDTO.setCompanyId(saleBillMasterDTO.getCompanyId());
-        salesBillDTO.setStatus(saleBillMasterDTO.isStatus());
-        salesBillDTO.setInvoiceNo(saleBillMasterDTO.getInvoiceNo());
-        salesBillDTO.setFiscalYear(saleBillMasterDTO.getFiscalYear());
-        salesBillDTO.setDiscount(saleBillMasterDTO.getDiscount());
-        salesBillDTO.setTotal(saleBillMasterDTO.getTotal());
-        salesBillDTO.setTax(saleBillMasterDTO.getTax());
-        salesBillDTO.setGrandTotal(saleBillMasterDTO.getGrandTotal());
-//
-        SalesBillDetailDTO salesBillDetailDTO = new SalesBillDetailDTO();
-        salesBillDetailDTO.setProductId(saleBillMasterDTO.getProductId());
-        salesBillDetailDTO.setQty(saleBillMasterDTO.getQty());
-        salesBillDetailDTO.setDiscountPerUnit(saleBillMasterDTO.getDiscountPerUnit());
-        salesBillDetailDTO.setRate(saleBillMasterDTO.getRate());
-        salesBillDetailDTO.setCompanyId(saleBillMasterDTO.getCompanyId());
-        int billId = 0;
+        SalesBillDTO  salesBillDTO= saleBillMasterDTO.getSalesBillDTO();
+        List<SalesBillDetailDTO> salesBillDetailDTOS = saleBillMasterDTO.getSalesBillDetails();
+
+        int bill_no = 0;
+        String currentFiscalYear = null;
+        try{
+            BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+            bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear();
+            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear();
+        } catch (Exception ex){
+            log.error("genating billno() ========> "+ex.getMessage());
+            throw new CustomSqlException("something went wrong while generating  bill no");
+        }
+        salesBillDTO.setBillNo(bill_no);
+        salesBillDTO.setFiscalYear(currentFiscalYear);
+        for(SalesBillDetailDTO salesBillDetailDTO: salesBillDetailDTOS ){
+            salesBillDetailDTO.setBillId(bill_no);
+            salesBillDetailDTO.setCompanyId(salesBillDTO.getCompanyId());
+        }
+
         try{
             SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
-             billId = salesBillDAO.addNewBill(salesBillDTO);
+             salesBillDAO.addNewBill(
+                     salesBillDTO);
 
         } catch (Exception ex){
             log.error("addNewSaleBill() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while adding bill");
         }
-        salesBillDetailDTO.setBillId(billId);
+
+//        for updating stock qty count
+
+        try{
+            StockDAO stockDAO = dbService.getDao(StockDAO.class);
+            salesBillDetailDTOS.forEach((salesBillDetailDTO -> {
+                stockDAO.decreaseTheStockQuantity(salesBillDetailDTO.getProductId(), salesBillDTO.getCompanyId(), salesBillDetailDTO.getQty());
+            }));
+
+        } catch (Exception ex){
+            log.error("updateStockQty() ========> "+ex.getMessage());
+            throw new CustomSqlException("something went wrong while updating stock qty ");
+        }
 
         try{
             SalesBillDetailDAO salesBillDetailDAO = dbService.getDao(SalesBillDetailDAO.class);
-            salesBillDetailDAO.addNewSalesInfo(salesBillDetailDTO);
+            salesBillDetailDAO.addNewSalesInfo(salesBillDetailDTOS);
         } catch (Exception ex){
             log.error("addNewSalesInfo() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while adding billdetail");
         }
 
-        return new ResponseDTO<Integer>(billId);
+        return new ResponseDTO<Integer>(bill_no);
     }
 }
