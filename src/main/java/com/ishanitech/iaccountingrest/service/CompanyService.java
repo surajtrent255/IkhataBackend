@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentMap;
 public interface CompanyService {
 
 
-    Integer addCompany(CompanyDTO companyDTO);
+    Integer addCompany(CompanyDTO companyDTO,int userId);
     void deleteCompany(Integer companyId);
     List<CompanyDTO> getAllCompanyList();
 

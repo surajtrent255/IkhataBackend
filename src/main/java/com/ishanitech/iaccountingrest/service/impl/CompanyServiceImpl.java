@@ -4,12 +4,16 @@ import com.ishanitech.iaccountingrest.dao.CompanyDAO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.DbService;
+import lombok.RequiredArgsConstructor;
+import org.jdbi.v3.core.JdbiException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class CompanyServiceImpl implements CompanyService {
 
 
@@ -21,9 +25,17 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     @Override
-    public Integer addCompany(CompanyDTO companyDTO) {
+    public Integer addCompany(CompanyDTO companyDTO,int userId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
-        return companyDAO.addCompany(companyDTO);
+        int savedCompanyId =0;
+        try{
+            savedCompanyId = companyDAO.addCompanyWithUserId(companyDTO,userId);
+        }catch (JdbiException jdbiException){
+            log.error("error creating Company");
+        }
+
+        return savedCompanyId;
+//        return companyDAO.addCompany(companyDTO);
     }
 
     @Override
