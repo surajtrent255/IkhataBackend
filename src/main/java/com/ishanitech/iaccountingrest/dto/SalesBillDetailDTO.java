@@ -16,9 +16,8 @@ public class SalesBillDetailDTO {
     private int productId;
     private int qty;
     private Date date;
-    private double discount;
+    private double discountPerUnit;
     private double rate;
     private int billId;
     private int companyId;
-    private boolean deleted;
 }

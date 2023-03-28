@@ -16,28 +16,7 @@ public class SalesBillDetailServiceImpl implements SalesBillDetailService {
     private final DbService dbService;
 
     @Override
-    public List<SalesBillDetailDTO> getAllSalesInfo() {
-        return dbService.getDao(SalesBillDetailDAO.class).getAllSalesInfo();
-    }
-
-    @Override
     public SalesBillDetailDTO getSingleSalesInfo(int id) {
         return dbService.getDao(SalesBillDetailDAO.class).getSingleSaleInfoById(id);
-    }
-
-    @Override
-    public int  addNewSalesInfo(SalesBillDetailDTO salesBillDetailDTO) {
-       return  dbService.getDao(SalesBillDetailDAO.class).addNewSalesInfo(salesBillDetailDTO);
-    }
-
-
-    @Override
-    public void deleteSalesById(int id) {
-        dbService.getDao(SalesBillDetailDAO.class).deleteSalesById(id);
-    }
-
-    @Override
-    public void editSalesInfo(SalesBillDetailDTO salesBillDetailDTO, int id) {
-        dbService.getDao(SalesBillDetailDAO.class).editSalesById(salesBillDetailDTO, id);
     }
 }

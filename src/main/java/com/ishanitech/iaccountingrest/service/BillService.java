@@ -1,18 +1,14 @@
 package com.ishanitech.iaccountingrest.service;
 
-import com.ishanitech.iaccountingrest.dto.BillDTO;
+import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 
 import java.util.List;
 
 public interface BillService {
 
-        List<BillDTO> getAllBills();
+        List<SalesBillDTO> getAllBills();
 
-        BillDTO getBillById(int id);
-
-        Integer addNewBill(BillDTO billDTO);
-
-        void updateBill(BillDTO billDTO, int id);
+        SalesBillDTO getBillById(int id);
 
         void deleteBillById(int id);
 
