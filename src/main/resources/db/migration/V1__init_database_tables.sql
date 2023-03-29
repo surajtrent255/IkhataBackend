@@ -30,9 +30,9 @@ CREATE TABLE "public"."role"(
 
 CREATE TABLE user_role (
   id SERIAL,
-  company_id int NOT NULL,
   user_id int NOT NULL,
   role_id int NOT NULL,
+  status BOOLEAN DEFAULT FALSE,
    deleted BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (user_id,role_id,id)
 );

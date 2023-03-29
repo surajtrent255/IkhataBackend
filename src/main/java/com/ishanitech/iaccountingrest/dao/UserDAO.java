@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.dao;
 
+import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.model.Role;
 import com.ishanitech.iaccountingrest.model.User;
 import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
@@ -13,6 +14,7 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.statement.UseRowReducer;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -66,6 +68,24 @@ public interface UserDAO {
 			+ " WHERE u.email = :email;")
 	@UseRowReducer(UserReducer.class)
 	Optional<User> getUserByEmail(@Bind("email") String email) ;
+
+
+	@SqlQuery("select users.firstname as firstname"
+			+ ",users.lastname as lastname"
+			+ ",users.email as email"
+			+ ",user_company.company_id as companyId"
+			+ ",user_company.user_id as userId"
+			+ ",company.name as companyName"
+			+ ",user_role.role_id as roleId,"
+			+ "user_role.status as status"
+			+ ",role.role as role"
+			+ " from users inner join user_company on "
+			+ " users.id = user_company.user_id inner join company"
+			+ " on user_company.company_id = company.company_id"
+			+ " inner join user_role on users.id=user_role.user_id inner join"
+			+ " role on role.id=user_role.role_id")
+	@RegisterBeanMapper(UserConfigurationDTO.class)
+	List<UserConfigurationDTO> getUserConfigurationDetails();
 
 
 	class UserReducer implements LinkedHashMapRowReducer<Integer,User> {

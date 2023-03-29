@@ -1,14 +1,12 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.CompanyDAO;
-import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompany;
+import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.DbService;
-import lombok.RequiredArgsConstructor;
 import org.jdbi.v3.core.JdbiException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,7 +57,7 @@ companyDAO.deleteCompany(companyId);
     }
 
     @Override
-    public List<CompanyAndUserCompany> getCompanyByUserId(int userId) {
+    public List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
         return companyDAO.getCompanyByUserId(userId);
     }

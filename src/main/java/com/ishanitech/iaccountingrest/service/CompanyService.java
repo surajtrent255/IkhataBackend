@@ -1,11 +1,9 @@
 package com.ishanitech.iaccountingrest.service;
 
-import com.ishanitech.iaccountingrest.dto.CategoryProductDTO;
-import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompany;
+import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentMap;
 
 public interface CompanyService {
 
@@ -16,7 +14,7 @@ public interface CompanyService {
 
     List<CompanyDTO> getCompanyById(int Id);
 
-    List<CompanyAndUserCompany> getCompanyByUserId(int userId);
+    List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId);
 
 
 

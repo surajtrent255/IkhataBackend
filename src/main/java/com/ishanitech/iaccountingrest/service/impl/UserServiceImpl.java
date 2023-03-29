@@ -1,6 +1,8 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
+import com.ishanitech.iaccountingrest.dao.CompanyDAO;
 import com.ishanitech.iaccountingrest.dao.UserDAO;
+import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.model.User;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.UserService;
@@ -11,6 +13,7 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -69,5 +72,11 @@ public class UserServiceImpl implements UserService {
             log.error("error occured while adding user");
         }
         return savedUserId;
+    }
+
+    @Override
+    public List<UserConfigurationDTO> getUserConfigurationDetails() {
+        UserDAO userDAO = dbService.getDao(UserDAO.class);
+        return userDAO.getUserConfigurationDetails();
     }
 }
