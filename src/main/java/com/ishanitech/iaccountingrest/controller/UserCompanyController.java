@@ -44,6 +44,12 @@ public class UserCompanyController {
         return new ResponseDTO<>(userCompanyService.getUserCompanyById(id));
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseDTO<?> getUserCompanyByUserId(@PathVariable("id") int id){
+        return new ResponseDTO<>(userCompanyService.getUserCompanyById(id));
+    }
+
+
     @DeleteMapping("/{id}")
     public void deleteUserCompany(@PathVariable("id") int id){
         userCompanyService.deleteUserCompany(id);

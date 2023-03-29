@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.service;
 
 import com.ishanitech.iaccountingrest.dto.CategoryProductDTO;
+import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompany;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 
 import java.util.List;
@@ -13,7 +14,9 @@ public interface CompanyService {
     void deleteCompany(Integer companyId);
     List<CompanyDTO> getAllCompanyList();
 
-    List<CompanyDTO> getCompanyById(int companyId);
+    List<CompanyDTO> getCompanyById(int Id);
+
+    List<CompanyAndUserCompany> getCompanyByUserId(int userId);
 
 
 

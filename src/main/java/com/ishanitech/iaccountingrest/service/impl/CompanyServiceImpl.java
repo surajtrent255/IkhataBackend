@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.CompanyDAO;
+import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompany;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.DbService;
@@ -52,8 +53,14 @@ companyDAO.deleteCompany(companyId);
     }
 
     @Override
-    public List<CompanyDTO> getCompanyById(int companyId) {
+    public List<CompanyDTO> getCompanyById(int Id) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
-        return companyDAO.getCompanyByName(companyId);
+        return companyDAO.getCompanyById(Id);
+    }
+
+    @Override
+    public List<CompanyAndUserCompany> getCompanyByUserId(int userId) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        return companyDAO.getCompanyByUserId(userId);
     }
 }

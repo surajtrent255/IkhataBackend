@@ -1,7 +1,9 @@
 package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.CategoryProductDTO;
+import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompany;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
+import com.ishanitech.iaccountingrest.dto.CompanyWithUserIdDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -32,13 +34,17 @@ public interface CompanyDAO {
     @SqlUpdate("delete from company where company_id = :companyId")
     void deleteCompany(@Bind("companyId") Integer companyId);
 
-    @SqlQuery("SELECT * FROM company")
+    @SqlQuery("SELECT * FROM company ")
     @RegisterBeanMapper(CompanyDTO.class)
     List<CompanyDTO> getAllCompanyList();
 
-    @SqlQuery("select * from company where company_id = :companyId")
+    @SqlQuery("select * from company  where id = :Id ")
     @RegisterBeanMapper(CompanyDTO.class)
-    List<CompanyDTO> getCompanyByName(@Bind("companyId") int companyId );
+    List<CompanyDTO> getCompanyById(@Bind("Id") int Id );
+
+    @SqlQuery("select c.company_id as companyId,c.name as name ,c.description as description ,c.pan_no as panNo,c.state as state , c.zone as zone , c.district as district, c.mun_vdc as munVdc, c.ward_no as wardNo,c.phone as phone ,u.user_id as userId from company c  inner join user_company u on u.company_id = c.company_id where u.user_id = :userId ")
+    @RegisterBeanMapper(CompanyAndUserCompany.class)
+    List<CompanyAndUserCompany> getCompanyByUserId(@Bind("userId") int userId );
 
 
 }

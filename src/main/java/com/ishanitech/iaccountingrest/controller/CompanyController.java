@@ -42,8 +42,13 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseDTO<?> getCompanyById(@PathVariable("id") int id){
-        return new ResponseDTO<>(companyService.getCompanyById(id));
+    public ResponseDTO<?> getCompanyById(@PathVariable("Id") int Id){
+        return new ResponseDTO<>(companyService.getCompanyById(Id));
+    }
+
+    @GetMapping("/userCompany/{userId}")
+    public ResponseDTO<?> getCompanyByUserId(@PathVariable("userId") int userId){
+        return new ResponseDTO<>(companyService.getCompanyByUserId(userId));
     }
 
     @DeleteMapping("/{id}")
