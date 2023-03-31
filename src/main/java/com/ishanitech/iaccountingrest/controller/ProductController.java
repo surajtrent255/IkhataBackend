@@ -56,6 +56,7 @@ public class ProductController {
     @PostMapping
     public ResponseDTO<Integer> addNewProduct(@RequestBody ProductDTO product){
         try{
+            System.out.println("entering ********************************");
             return new ResponseDTO<Integer>(productService.addNewProduct(product));
         } catch(Exception ex){
             log.error("error occured while adding product " + ex.getMessage());
