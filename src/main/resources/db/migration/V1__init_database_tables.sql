@@ -24,15 +24,15 @@ CREATE TABLE "public"."role"(
    "id" SERIAL PRIMARY KEY,
    "role" VARCHAR(15) NOT NULL,
    "description" VARCHAR(15) NOT NULL,
-   "deleted" BOOLEAN DEFAULT FALSE,
-
+   "deleted" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE user_role (
   id SERIAL,
   user_id int NOT NULL,
   role_id int NOT NULL,
-  status BOOLEAN DEFAULT FALSE,
+  company_id int DEFAULT NULL,
+  status BOOLEAN DEFAULT TRUE,
    deleted BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (user_id,role_id,id)
 );

@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.CompanyDAO;
+import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
 import com.ishanitech.iaccountingrest.dao.UserDAO;
 import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.model.User;
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserConfigurationDTO> getUserConfigurationDetails() {
-        UserDAO userDAO = dbService.getDao(UserDAO.class);
-        return userDAO.getUserConfigurationDetails();
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        return userConfigutarionDAO.getUserConfigurationDetails();
     }
 }
