@@ -82,3 +82,112 @@ CREATE TABLE user_company (
   user_id int NOT NULL,
   PRIMARY KEY (id)
 );
+
+CREATE TABLE "product"(
+   "id" SERIAL PRIMARY KEY ,
+   "name"  varchar(250) NOT NULL ,
+   "selling_price" REAL NOT NULL,
+   "cost_price" REAL NOT NULL,
+   "create_date" date DEFAULT CURRENT_DATE NOT NULL,
+   "update_date" timestamp default current_timestamp NOT NULL,
+   "user_id" integer NOT NULL,
+   "company_id" integer NOT NULL,
+   "seller_id" integer NOT NULL,
+   "category_id" integer NOT NULL,
+    "barcode" varchar(250) not null,
+    "discount" real default 0.0 not null,
+    "tax" real default 13.0 not null,
+    "deleted" boolean DEFAULT FALSE NOT NULL
+--       FOREIGN KEY(user_id)
+--       REFERENCES users(id),
+--       FOREIGN KEY(category_id)
+--       REFERENCES category(id)
+--     ,
+--     FOREIGN KEY(company_id)
+--     REFERENCES company(id)
+);
+
+
+CREATE TABLE "public"."category"(
+   "id" serial primary key,
+   "name" varchar(250) NOT NULL,
+   "description" text,
+   "parent_id" integer NOT NULL,
+   "user_id" integer NOT NULL,
+   "company_id" integer NOT NULL,
+   "create_date" date DEFAULT CURRENT_DATE NOT NULL,
+   "edit_date" timestamp  DEFAULT current_timestamp NOT NULL,
+    "deleted" boolean default false not null
+);
+
+
+create table sales_bill (
+    fiscal_year varchar(50) not null,
+    bill_no int unique not null,
+    customer_name varchar(50) not null,
+    customer_pan varchar(50) not null,
+    bill_date Date default current_date not null,
+    amount real not null,
+    discount real not null,
+    taxable_amount real not null,
+    tax_amount real not null,
+    total_amount real not null,
+    sync_with_ird boolean default false not null,
+    is_bill_printed boolean default false not null,
+    is_bill_active boolean default false not null,
+    printed_time varchar(50) not null,
+    entered_by varchar(50) not null,
+    printed_by varchar(50) not null,
+    is_realtime boolean not null,
+    payment_method varchar(50) not null,
+    vat_refund_amount real ,
+    transaction_id varchar(50) ,
+    status boolean default true not null
+)
+
+
+CREATE TABLE "sales_bill_detail"(
+   "id" SERIAL PRIMARY KEY ,
+   "product_id" integer NOT NULL,
+   "qty" real NOT NULL,
+   "date" date DEFAULT CURRENT_DATE NOT NULL,
+   "discount_per_unit" real NOT NULL,
+   "rate" real NOT NULL,
+   "bill_id" integer NOT NULL,
+   "company_id" integer NOT NULL
+--       FOREIGN KEY(bill_id)
+--       REFERENCES bill(id)
+--     ,
+--     FOREIGN KEY(company_id)
+--     REFERENCES company(id)
+)
+
+create table bill_no_generator (
+    id serial primary key,
+    fiscal_year varchar(50) not null,
+    bill_no int not null,
+    active boolean not null
+)
+
+
+create table purchase_bill (
+
+    id serial not null,
+    date date default current_date not null,
+    user_id int not null,
+    company_id int not null,
+    seller_id int not null,
+    status boolean default true
+)
+
+
+create table purchase_bill_detail (
+    id serial not null,
+    date date default current_date not null,
+    product_id int not null,
+    rate real not null,
+    qty int not null,
+    purchase_bill_id int not null,
+    company_id int not null,
+    discount_per_unit real not null
+)
