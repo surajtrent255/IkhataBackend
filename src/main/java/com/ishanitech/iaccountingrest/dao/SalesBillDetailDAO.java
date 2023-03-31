@@ -1,13 +1,11 @@
 package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
-import com.ishanitech.iaccountingrest.dto.SalesBillInvoiceDTO;
+import com.ishanitech.iaccountingrest.dto.SalesBillDetailWithProdInfoDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
-import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
-import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.List;
 
@@ -26,4 +24,12 @@ public interface SalesBillDetailDAO {
                 " where bill_id = :billId and company_id = :companyId")
     @RegisterBeanMapper(SalesBillDetailDTO.class)
     List<SalesBillDetailDTO> getSalesInfoByBillId(int billId, int companyId);
+
+    @SqlQuery("SELECT sbd.id as id, sbd.product_id as product_id, sbd.qty as qty, sbd.date as date, sbd.rate as rate, " +
+            " sbd.discount_per_unit as discount_per_unit, sbd.bill_id as bill_id, sbd.company_id as company_id, " +
+            " p.name as product_name  from sales_bill_detail sbd " +
+            " inner join product p on p.id = sbd.product_id" +
+            " where sbd.bill_id = :billId ")
+    @RegisterBeanMapper(SalesBillDetailWithProdInfoDTO.class)
+    List<SalesBillDetailWithProdInfoDTO> getSalesInfoWithProdNameByBillId(int billId, int companyId);
 }

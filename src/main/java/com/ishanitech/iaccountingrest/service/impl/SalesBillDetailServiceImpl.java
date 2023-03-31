@@ -3,8 +3,8 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
 import com.ishanitech.iaccountingrest.dto.SaleBillMasterDTO;
-import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
+import com.ishanitech.iaccountingrest.dto.SalesBillDetailWithProdInfoDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillInvoiceDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.SalesBillDetailService;
@@ -25,12 +25,15 @@ public class SalesBillDetailServiceImpl implements SalesBillDetailService {
     }
 
     @Override
-    public SaleBillMasterDTO getSalesInfoByBillId(int billId, int companyId) {
-        SaleBillMasterDTO saleBillMasterDTO = new SaleBillMasterDTO();
+    public SalesBillInvoiceDTO getSalesInfoByBillId(int billId, int companyId) {
+        SalesBillInvoiceDTO salesBillInvoiceDTO = new SalesBillInvoiceDTO();
 
-        List<SalesBillDetailDTO> salesBillDetailDTO = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoByBillId(billId, companyId);
-        saleBillMasterDTO.setSalesBillDetails(salesBillDetailDTO);
-        saleBillMasterDTO.setSalesBillDTO(dbService.getDao(SalesBillDAO.class).getBillById(billId));
-        return saleBillMasterDTO;
+//        List<SalesBillDetailDTO> salesBillDetailDTO = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoByBillId(billId, companyId);
+//        saleBillMasterDTO.setSalesBillDetails(salesBillDetailDTO);
+//        saleBillMasterDTO.setSalesBillDTO(dbService.getDao(SalesBillDAO.class).getBillById(billId));
+        List<SalesBillDetailWithProdInfoDTO> salesBillDetailWithProdInfoDTOS = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoWithProdNameByBillId(billId, companyId);
+        salesBillInvoiceDTO.setSalesBillDetailsWithProd(salesBillDetailWithProdInfoDTOS);
+        salesBillInvoiceDTO.setSalesBillDTO(dbService.getDao(SalesBillDAO.class).getBillById(billId));
+        return salesBillInvoiceDTO;
     }
 }

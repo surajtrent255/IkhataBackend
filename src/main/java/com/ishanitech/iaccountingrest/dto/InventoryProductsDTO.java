@@ -4,14 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SalesBillInvoiceDTO {
-    private List<SalesBillDetailWithProdInfoDTO> salesBillDetailsWithProd;
-    private SalesBillDTO salesBillDTO;
+@Data
+public class InventoryProductsDTO {
+    private int productId;
+    private String productName;
+    private String categoryName;
+    private String barcode;
+    private int stockQty;
 }
-

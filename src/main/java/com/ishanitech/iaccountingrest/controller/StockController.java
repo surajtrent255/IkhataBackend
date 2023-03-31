@@ -58,6 +58,16 @@ public class StockController {
         }
     }
 
+    @PutMapping
+    public void updateStockByCompAndProdId(@RequestBody StockDTO stockDTO){
+        try{
+            stockService.updateStockByCompAndProdId(stockDTO);
+        } catch(Exception e) {
+            log.error("Error occured updating the stock info : " + e.getMessage());
+            throw new CustomSqlException("Error occured updating the stock info :" + e.getMessage());
+        }
+    }
+
     @DeleteMapping("/{id}")
     public void deleteStock(@PathVariable("id") int id){
         try{
@@ -67,4 +77,11 @@ public class StockController {
             throw new CustomSqlException("Error occured deleting the stock info : " + ex.getMessage());
         }
     }
+
 }
+
+
+
+
+
+

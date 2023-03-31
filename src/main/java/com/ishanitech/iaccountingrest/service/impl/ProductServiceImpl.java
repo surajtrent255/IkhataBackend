@@ -1,7 +1,10 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.ProductDAO;
+import com.ishanitech.iaccountingrest.dao.StockDAO;
+import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
+import com.ishanitech.iaccountingrest.dto.StockDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +33,15 @@ public class ProductServiceImpl implements ProductService {
     public Integer addNewProduct(ProductDTO product) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
 
-        return productDAO.addNewProduct(product);
+        int createdProdId = productDAO.addNewProduct(product);
+        StockDTO stockDTO =new StockDTO();
+        stockDTO.setProductId(createdProdId);
+        stockDTO.setQty(0);
+        stockDTO.setCreateDate(new Date());
+        stockDTO.setUpdateDate(new Date());
+        stockDTO.setCompanyId(product.getCompanyId());
+        dbService.getDao(StockDAO.class).addNewStock(stockDTO);
+        return createdProdId;
     }
 
     @Override
@@ -44,5 +55,12 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(int id) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
         productDAO.deleteProduct(id);
+    }
+
+    @Override
+    public List<InventoryProductsDTO> getAllProductsForInventory(int companyId) {
+        ProductDAO productDAO = dbService.getDao(ProductDAO.class);
+        List<InventoryProductsDTO> products = productDAO.getAllProductsForInventoryByUserIdAndCompanyId(companyId);
+        return products;
     }
 }

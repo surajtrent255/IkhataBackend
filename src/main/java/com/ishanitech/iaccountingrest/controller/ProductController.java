@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.controller;
 
+import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
@@ -22,6 +23,20 @@ public class ProductController {
     public ResponseDTO<List<ProductDTO>> getAllProducts(){
         try{
             return new ResponseDTO<List<ProductDTO>>(productService.getAllProducts());
+        } catch(Exception e){
+            log.error("error occured while fetching products : " + e.getMessage());
+            throw new CustomSqlException("Error occured while fetching product");
+        }
+    }
+
+
+    @GetMapping("/inventory")
+    public ResponseDTO<List<InventoryProductsDTO>> getAllProductsForInventory(
+//            @RequestParam("userId") int userId ,
+            @RequestParam("companyId") int companyId
+    ){
+        try{
+            return new ResponseDTO<List<InventoryProductsDTO>>(productService.getAllProductsForInventory(companyId));
         } catch(Exception e){
             log.error("error occured while fetching products : " + e.getMessage());
             throw new CustomSqlException("Error occured while fetching product");

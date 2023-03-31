@@ -15,7 +15,7 @@ public class PurchaseBillDetailDTO {
     private Date date;
     private double discountPerUnit;
     private double rate;
-    private int billId;
+    private int purchaseBillId;
     private int companyId;
 
 }
