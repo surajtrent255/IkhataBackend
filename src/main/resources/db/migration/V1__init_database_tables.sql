@@ -191,3 +191,13 @@ create table purchase_bill_detail (
     company_id int not null,
     discount_per_unit real not null
 )
+
+create table stock (
+    id serial primary key,
+    product_id int not null,
+    qty int not null,
+    company_id int not null,
+    create_date date default current_date,
+    update_date timestamp default current_timestamp,
+    deleted boolean default false
+    )
