@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.dao;
 
+import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -36,4 +37,13 @@ public interface ProductDAO {
 
     @SqlUpdate("UPDATE product SET deleted = true where id = :id")
     void deleteProduct(@Bind int id);
+
+
+@SqlQuery("select p.id as product_id, p.name as product_name, c.name as category_name," +
+        " p.barcode as barcode , s.qty as stock_qty" +
+        " from product p inner join category c on p.category_id = c.id" +
+        " inner join stock s on p.id = s.product_id" +
+        " where p.company_id = :companyId and s.deleted=false ;")
+    @RegisterBeanMapper(InventoryProductsDTO.class)
+    List<InventoryProductsDTO> getAllProductsForInventoryByUserIdAndCompanyId(int companyId);
 }

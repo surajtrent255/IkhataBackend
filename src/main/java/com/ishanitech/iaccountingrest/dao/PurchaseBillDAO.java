@@ -26,9 +26,11 @@ public interface PurchaseBillDAO {
     @RegisterBeanMapper(PurchaseBillDTO.class)
     PurchaseBillDTO getSinglePurchaseBill(Integer id);
 
-    @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO purchase_bill (user_id, cust_id, company_id, invoice_no, fiscal_year, total, tax, discount, grand_total)" +
-            " VALUES (:userId, :custId, :companyId, :invoiceNo, :fiscalYear, :total, :tax, :discount, :grandTotal)")
+//    @GetGeneratedKeys
+//    @SqlUpdate("INSERT INTO purchase_bill (user_id, cust_id, company_id, invoice_no, fiscal_year, total, tax, discount, grand_total)" +
+//            " VALUES (:userId, :custId, :companyId, :invoiceNo, :fiscalYear, :total, :tax, :discount, :grandTotal)")
+
+    @SqlUpdate("insert into purchase_bill (user_id, company_id, seller_id, date) values (:userId, :companyId, :sellerId, :date)")
     Integer addNewPurchaseBill(@BindBean PurchaseBillDTO purchaseBill);
 
 

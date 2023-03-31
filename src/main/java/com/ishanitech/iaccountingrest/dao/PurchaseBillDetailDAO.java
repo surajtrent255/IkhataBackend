@@ -10,8 +10,8 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 public interface PurchaseBillDetailDAO {
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO purchase_bill_detail (product_id, qty, discount_per_unit, rate, bill_id, company_id) " +
-            " VALUES (:productId, :qty, :discountPerUnit, :rate, :billId, :companyId)")
+    @SqlUpdate("INSERT INTO purchase_bill_detail (product_id, qty, discount_per_unit, rate, purchase_bill_id, company_id) " +
+            " VALUES (:productId, :qty, :discountPerUnit, :rate, :purchaseBillId, :companyId)")
     int addNewPurchaseInfo(@BindBean PurchaseBillDetailDTO purchaseBillDetailDTO);
 
     @SqlQuery("SELECT pbd.id as id, pbd.product_id as product_id, pbd.qty as qty, pbd.date as date, pbd.rate as rate, pbd.bill_id as bill_id, pbd.company_id as company_id from purchase_bill_detail pbd " +
