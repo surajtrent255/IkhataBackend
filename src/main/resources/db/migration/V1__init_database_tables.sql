@@ -49,7 +49,7 @@ CREATE TABLE  token (
 ) ;
 
 CREATE TABLE  company (
-  id SERIAL NOT NULL ,
+  company_id SERIAL NOT NULL ,
   name varchar(50) NOT NULL,
   description text NOT NULL,
   pan_no bigint NOT NULL ,
@@ -80,6 +80,7 @@ CREATE TABLE user_company (
   id SERIAL,
   company_id int NOT NULL,
   user_id int NOT NULL,
+  status boolean DEFAULT TRUE,
   PRIMARY KEY (id)
 );
 

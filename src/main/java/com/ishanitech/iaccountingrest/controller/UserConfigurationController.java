@@ -18,12 +18,13 @@ public class UserConfigurationController {
 
     private final UserConfigurationService userConfigurationService;
 
-    @GetMapping
-    public ResponseDTO<?> getCompanyConfigurationDetails(){
-        return new ResponseDTO<>(userService.getUserConfigurationDetails());
+    @GetMapping("/{companyId}")
+    public ResponseDTO<?> getCompanyConfigurationDetails(@PathVariable("companyId") int companyId ){
+
+        return new ResponseDTO<>(userService.getUserConfigurationDetails(companyId));
     }
 
-    @PostMapping("/status")
+    @PostMapping("/update/role/status")
     public String updateUserStatus(@RequestBody UserStatusDTO statusDTO){
         boolean status = statusDTO.isStatus();
         int userId = statusDTO.getUserId();
@@ -32,11 +33,20 @@ public class UserConfigurationController {
 
     }
 
+    @PostMapping("/update/usercompany/status")
+    public String updateUserCompanyStatus(@RequestBody UserCompanyStatusDTO userCompanyStatusDTO){
+        boolean status = userCompanyStatusDTO.isStatus();
+        int companyId = userCompanyStatusDTO.getCompanyId();
+        userConfigurationService.updateUserCompanyStatus(status,companyId);
+        return "User Company status updated successfully";
+
+    }
+
     @PostMapping("/update/company")
     public ResponseDTO<?> updateUserCompany(@RequestBody UserConfigCompanyDTO userConfigCompanyDTO){
         int companyId = userConfigCompanyDTO.getCompanyId();
         int userId = userConfigCompanyDTO.getUserId();
-        userConfigurationService.updateUserCompany(companyId,userId);
+        userConfigurationService.updateUserRoleCompany(companyId,userId);
 
         return new ResponseDTO<>("User Company Successfully updated");
     }

@@ -8,9 +8,13 @@ public interface UserConfigurationService {
 
 public void updateUserStatus(boolean status,int userId);
 
+public void updateUserCompanyStatus(boolean status,int companyId);
+
 public int addUserRole(int userId,int roleId);
 
-public void updateUserCompany(int companyId,int userId);
+public void updateUserRoleCompany(int companyId,int userId);
+
+
 
 
 }

@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCompanyDTO {
+public class UserCompanyStatusDTO {
 
-    private int id;
-    private int companyId ;
-    private int userId;
+    private boolean status;
+    private int companyId;
+
 }

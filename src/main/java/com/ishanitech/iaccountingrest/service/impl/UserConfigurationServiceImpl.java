@@ -22,6 +22,12 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     }
 
     @Override
+    public void updateUserCompanyStatus(boolean status, int companyId) {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        userConfigutarionDAO.updateUserCompanyStatus(status,companyId);
+    }
+
+    @Override
     public int addUserRole(int userId, int roleId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
 
@@ -37,8 +43,8 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     }
 
     @Override
-    public void updateUserCompany(int companyId, int userId) {
+    public void updateUserRoleCompany(int companyId, int userId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        userConfigutarionDAO.updateUserCompany(companyId,userId);
+        userConfigutarionDAO.updateUserRoleCompany(companyId,userId);
     }
 }

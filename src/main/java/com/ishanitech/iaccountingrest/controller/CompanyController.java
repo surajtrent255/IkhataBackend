@@ -1,10 +1,12 @@
 package com.ishanitech.iaccountingrest.controller;
 
+import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyWithUserIdDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.CompanyService;
+import com.ishanitech.iaccountingrest.service.UserConfigurationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,8 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
+    private final UserConfigurationService userConfigurationService;
+
 
     @PostMapping("/add")
     public ResponseDTO<?> addCompany(@RequestBody CompanyWithUserIdDTO companyWithUserIdDTO) {
@@ -28,6 +32,7 @@ public class CompanyController {
         Integer result = null;
         try {
             result = companyService.addCompany(companyDTO,userId);
+            userConfigurationService.updateUserRoleCompany(companyDTO.getCompanyId(),userId);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new CustomSqlException("Something went wrong while adding Company!");
