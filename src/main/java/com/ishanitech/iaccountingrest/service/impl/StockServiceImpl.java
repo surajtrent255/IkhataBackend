@@ -58,27 +58,27 @@ public class StockServiceImpl implements StockService {
     @Transactional
     @Override
     public void updateStockByCompAndProdId(StockDTO stockDTO) {
-        PurchaseBillDTO purchaseBillDTO = new PurchaseBillDTO();
-        purchaseBillDTO.setDate(new Date());
-        purchaseBillDTO.setUserId(1);
-        purchaseBillDTO.setCompanyId(1);
-        purchaseBillDTO.setSellerId(1);
-        purchaseBillDTO.setStatus(true);
-
-        PurchaseBillDetailDTO purchaseBillDetailDTO= new PurchaseBillDetailDTO();
-        purchaseBillDetailDTO.setDate(new Date());
-        purchaseBillDetailDTO.setQty(stockDTO.getQty());
-        purchaseBillDetailDTO.setCompanyId(1);
-        purchaseBillDetailDTO.setProductId(stockDTO.getProductId());
-
-        ProductDTO p = dbService.getDao(ProductDAO.class).getProductById(stockDTO.getProductId());
-        purchaseBillDetailDTO.setRate(p.getSellingPrice());
-        purchaseBillDetailDTO.setDiscountPerUnit(p.getDiscount());
-        int bill_id = dbService.getDao(PurchaseBillDAO.class).addNewPurchaseBill(purchaseBillDTO);
-        purchaseBillDetailDTO.setPurchaseBillId(bill_id);
-        PurchaseBillDetailDAO purchaseBillDetailDAO = dbService.getDao(PurchaseBillDetailDAO.class);
-        purchaseBillDetailDAO.addNewPurchaseInfo(purchaseBillDetailDTO);
-        StockDAO stockDAO = dbService.getDao(StockDAO.class);
-        stockDAO.increaseStockQuantity(stockDTO);
+//        PurchaseBillDTO purchaseBillDTO = new PurchaseBillDTO();
+//        purchaseBillDTO.setDate(new Date());
+//        purchaseBillDTO.setUserId(1);
+//        purchaseBillDTO.setCompanyId(1);
+//        purchaseBillDTO.setSellerId(1);
+//        purchaseBillDTO.setStatus(true);
+//
+//        PurchaseBillDetailDTO purchaseBillDetailDTO= new PurchaseBillDetailDTO();
+//        purchaseBillDetailDTO.setDate(new Date());
+//        purchaseBillDetailDTO.setQty(stockDTO.getQty());
+//        purchaseBillDetailDTO.setCompanyId(1);
+//        purchaseBillDetailDTO.setProductId(stockDTO.getProductId());
+//
+//        ProductDTO p = dbService.getDao(ProductDAO.class).getProductById(stockDTO.getProductId());
+//        purchaseBillDetailDTO.setRate(p.getSellingPrice());
+//        purchaseBillDetailDTO.setDiscountPerUnit(p.getDiscount());
+//        int bill_id = dbService.getDao(PurchaseBillDAO.class).addNewPurchaseBill(purchaseBillDTO);
+//        purchaseBillDetailDTO.setPurchaseBillId(bill_id);
+//        PurchaseBillDetailDAO purchaseBillDetailDAO = dbService.getDao(PurchaseBillDetailDAO.class);
+//        purchaseBillDetailDAO.addNewPurchaseInfo(purchaseBillDetailDTO);
+//        StockDAO stockDAO = dbService.getDao(StockDAO.class);
+//        stockDAO.increaseStockQuantity(stockDTO);
     }
 }

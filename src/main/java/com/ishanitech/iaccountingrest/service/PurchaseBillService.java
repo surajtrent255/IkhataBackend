@@ -10,4 +10,6 @@ public interface PurchaseBillService {
     PurchaseBillDTO getSinglePurchasBillInfo(Integer id);
 
     void deletePurchaseBill(int id);
+
+    List<PurchaseBillDTO> getAllPurchaseBillsByCompanyId(int compId);
 }

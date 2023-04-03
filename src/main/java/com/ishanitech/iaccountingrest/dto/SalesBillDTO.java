@@ -13,7 +13,7 @@ import java.util.Date;
 @ToString
 public class SalesBillDTO {
     private int userId;
-    private int custId;
+    private int customerId;
     private int companyId;
     private String fiscalYear ;
     private int billNo ;

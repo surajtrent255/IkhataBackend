@@ -12,11 +12,28 @@ import java.util.Date;
 @ToString
 public class PurchaseBillDTO {
 
-    private int id;
-    private Date date;
     private int userId;
-    private int companyId;
     private int sellerId;
-    private boolean status;
-
+    private int companyId;
+    private String fiscalYear ;
+    private int purchaseBillNo ;
+    private boolean billPrinted;
+    private boolean billActive;
+    private boolean realtime;
+    private String sellerName ;
+    private String sellerPan ;
+    private Date billDate  ;
+    private double amount ;
+    private double discount ;
+    private double taxableAmount ;
+    private double taxAmount ;
+    private double  totalAmount ;
+    private boolean syncWithIrd;
+    private String printedTime ;
+    private String enteredBy ;
+    private Integer printedBy ;
+    private String paymentMethod ;
+    private double vatRefundAmount ;
+    private String transactionId ;
+    private boolean status ;
 }

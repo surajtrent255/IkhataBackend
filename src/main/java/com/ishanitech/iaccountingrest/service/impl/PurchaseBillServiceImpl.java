@@ -28,4 +28,9 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
     public void deletePurchaseBill(int id) {
         dbService.getDao(PurchaseBillDAO.class).deletePurchaseBill(id);
     }
+
+    @Override
+    public List<PurchaseBillDTO> getAllPurchaseBillsByCompanyId(int compId) {
+        return dbService.getDao(PurchaseBillDAO.class).getPurchaseBillByCompanyId(compId);
+    }
 }

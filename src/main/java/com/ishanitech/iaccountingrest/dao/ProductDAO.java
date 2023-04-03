@@ -26,8 +26,8 @@ public interface ProductDAO {
     ProductDTO getProductById(Integer id);
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO product (name, selling_price, cost_price, user_id, company_id, seller_id, category_id, barcode, discount, tax )" +
-            "VALUES ( :name, :sellingPrice, :costPrice, :userId, :companyId, :sellerId, :categoryId, :barcode, :discount, :tax)")
+    @SqlUpdate("INSERT INTO product (name, selling_price, cost_price, user_id, company_id, seller_id, category_id, barcode, discount )" +
+            "VALUES ( :name, :sellingPrice, :costPrice, :userId, :companyId, :sellerId, :categoryId, :barcode, :discount)")
     Integer addNewProduct(@BindBean ProductDTO product);
 
     @SqlUpdate("UPDATE  product SET name = :name, selling_price = :sellingPrice, cost_price = :costPrice, user_id = :userId, " +
@@ -43,7 +43,7 @@ public interface ProductDAO {
         " p.barcode as barcode , s.qty as stock_qty" +
         " from product p inner join category c on p.category_id = c.id" +
         " inner join stock s on p.id = s.product_id" +
-        " where p.company_id = :companyId and s.deleted=false ;")
+        " where p.company_id = :companyId and s.deleted=false and p.deleted = false;")
     @RegisterBeanMapper(InventoryProductsDTO.class)
     List<InventoryProductsDTO> getAllProductsForInventoryByUserIdAndCompanyId(int companyId);
 }

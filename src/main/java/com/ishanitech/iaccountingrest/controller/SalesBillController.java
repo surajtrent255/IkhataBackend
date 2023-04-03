@@ -29,6 +29,15 @@ public class SalesBillController {
         }
     }
 
+    @GetMapping("/company")
+    public ResponseDTO<List<SalesBillDTO>> getAllBillsByCompId(@RequestParam("compId") int compId){
+        try{
+            return new ResponseDTO<List<SalesBillDTO>>(billService.getAllBillsByCompId(compId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the bill infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the bill infos : " );
+        }
+    }
     @GetMapping("/{id}")
     public ResponseDTO<SalesBillDTO> getBillById(@PathVariable int id){
         try{

@@ -13,4 +13,6 @@ public interface BillService {
         void deleteBillById(int id);
 
         Integer printTheBill(int billId, int userId);
+
+    List<SalesBillDTO> getAllBillsByCompId(int compId);
 }
