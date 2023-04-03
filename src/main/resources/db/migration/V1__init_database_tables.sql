@@ -121,9 +121,11 @@ CREATE TABLE "public"."category"(
 );
 
 
+
 create table sales_bill (
     fiscal_year varchar(50) not null,
     bill_no int unique not null,
+    customer_id int not null,
     customer_name varchar(50) not null,
     customer_pan varchar(50) not null,
     bill_date Date default current_date not null,
@@ -135,15 +137,17 @@ create table sales_bill (
     sync_with_ird boolean default false not null,
     is_bill_printed boolean default false not null,
     is_bill_active boolean default false not null,
-    printed_time date default current_timestamp,
+    printed_time varchar ,
     entered_by varchar(50) not null,
     printed_by varchar(50) ,
     is_realtime boolean not null,
     payment_method varchar(50) not null,
     vat_refund_amount real ,
     transaction_id varchar(50) ,
-    status boolean default true not null
+    status boolean default true not null,
+    company_id int not null
 )
+
 
 
 CREATE TABLE "sales_bill_detail"(
