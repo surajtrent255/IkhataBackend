@@ -9,6 +9,8 @@ import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.Date;
 import java.util.List;
@@ -51,10 +53,13 @@ public class ProductServiceImpl implements ProductService {
          productDAO.updateProduct(productDTO, id);
     }
 
+    @Transactional
     @Override
     public void deleteProduct(int id) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
         productDAO.deleteProduct(id);
+        StockDAO stockDAO = dbService.getDao(StockDAO.class);
+        stockDAO.deleteStockByProductId(id);
     }
 
     @Override

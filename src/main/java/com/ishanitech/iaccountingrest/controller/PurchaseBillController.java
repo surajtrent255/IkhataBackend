@@ -28,6 +28,17 @@ public class PurchaseBillController {
         }
     }
 
+    @GetMapping("/company")
+    public ResponseDTO<List<PurchaseBillDTO>> getAllPurchaseBillByCompanyId(@RequestParam("compId") int compId){
+        try{
+            return new ResponseDTO<List<PurchaseBillDTO>>(purchaseBillService.getAllPurchaseBillsByCompanyId(compId));
+        } catch(Exception e){
+            log.error("error occured while fetching purchase bills : " + e.getMessage());
+            throw new CustomSqlException("Error occured while fetching purchase bills");
+        }
+    }
+
+
     @GetMapping("/{id}")
     public ResponseDTO<PurchaseBillDTO> getSinglePurchasBillInfo(@PathVariable("id") Integer id){
         try{

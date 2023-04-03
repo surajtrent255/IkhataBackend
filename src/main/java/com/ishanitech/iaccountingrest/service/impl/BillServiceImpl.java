@@ -37,4 +37,10 @@ public class BillServiceImpl implements BillService {
     public Integer printTheBill(int billId, int userId) {
        return dbService.getDao(SalesBillDAO.class).printTheBillWithBillId(billId, new Date(), userId);
     }
+
+    @Override
+    public List<SalesBillDTO> getAllBillsByCompId(int compId) {
+        List<SalesBillDTO> salesBillDTOList = dbService.getDao(SalesBillDAO.class).getSalesBillByCompanyId(compId);
+        return salesBillDTOList;
+    }
 }

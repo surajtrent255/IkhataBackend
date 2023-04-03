@@ -122,9 +122,11 @@ CREATE TABLE "public"."category"(
 );
 
 
+
 create table sales_bill (
     fiscal_year varchar(50) not null,
     bill_no int unique not null,
+    customer_id int not null,
     customer_name varchar(50) not null,
     customer_pan varchar(50) not null,
     bill_date Date default current_date not null,
@@ -136,15 +138,17 @@ create table sales_bill (
     sync_with_ird boolean default false not null,
     is_bill_printed boolean default false not null,
     is_bill_active boolean default false not null,
-    printed_time varchar(50) not null,
+    printed_time varchar ,
     entered_by varchar(50) not null,
-    printed_by varchar(50) not null,
+    printed_by varchar(50) ,
     is_realtime boolean not null,
     payment_method varchar(50) not null,
     vat_refund_amount real ,
     transaction_id varchar(50) ,
-    status boolean default true not null
+    status boolean default true not null,
+    company_id int not null
 )
+
 
 
 CREATE TABLE "sales_bill_detail"(
@@ -170,28 +174,49 @@ create table bill_no_generator (
     active boolean not null
 )
 
-
 create table purchase_bill (
-
-    id serial not null,
-    date date default current_date not null,
-    user_id int not null,
-    company_id int not null,
-    seller_id int not null,
-    status boolean default true
+    fiscal_year varchar(50) not null,
+    purchase_bill_no int unique not null,
+	seller_id int  not null,
+	company_id int not null,
+    seller_name varchar(50) not null,
+    seller_pan varchar(50) not null,
+    bill_date Date default current_date not null,
+    amount real not null,
+    discount real not null,
+    taxable_amount real not null,
+    tax_amount real not null,
+    total_amount real not null,
+    sync_with_ird boolean default false not null,
+    is_bill_printed boolean default false not null,
+    is_bill_active boolean default false not null,
+    printed_time varchar(50) ,
+    entered_by varchar(50) not null,
+    printed_by int ,
+    is_realtime boolean not null,
+    payment_method varchar(50) not null,
+    vat_refund_amount real ,
+    transaction_id varchar(50) ,
+    status boolean default true not null,
+	user_id int not null
 )
 
-
-create table purchase_bill_detail (
-    id serial not null,
-    date date default current_date not null,
-    product_id int not null,
-    rate real not null,
-    qty int not null,
-    purchase_bill_id int not null,
-    company_id int not null,
-    discount_per_unit real not null
+CREATE TABLE "purchase_bill_detail"(
+   "id" SERIAL PRIMARY KEY ,
+   "product_id" integer NOT NULL,
+   "qty" real NOT NULL,
+   "date" date DEFAULT CURRENT_DATE NOT NULL,
+   "discount_per_unit" real NOT NULL,
+   "rate" real NOT NULL,
+   "purchase_bill_id" integer NOT NULL,
+   "company_id" integer NOT NULL
+--       FOREIGN KEY(bill_id)
+--       REFERENCES bill(id)
+--     ,
+--     FOREIGN KEY(company_id)
+--     REFERENCES company(id)
 )
+
 
 create table stock (
     id serial primary key,
@@ -202,3 +227,4 @@ create table stock (
     update_date timestamp default current_timestamp,
     deleted boolean default false
     )
+
