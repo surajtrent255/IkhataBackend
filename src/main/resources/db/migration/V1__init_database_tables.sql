@@ -176,7 +176,7 @@ create table bill_no_generator (
 
 create table purchase_bill (
     fiscal_year varchar(50) not null,
-    purchase_bill_no int unique not null,
+    purchase_bill_no int  not null,
 	seller_id int  not null,
 	company_id int not null,
     seller_name varchar(50) not null,
