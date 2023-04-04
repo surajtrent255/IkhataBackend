@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class Role {
     private int id;
     private String role;
-    private String roleNepali;
+    private String description;
 }

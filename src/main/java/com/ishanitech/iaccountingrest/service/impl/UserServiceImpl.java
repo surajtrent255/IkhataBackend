@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.dao.CompanyDAO;
 import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
 import com.ishanitech.iaccountingrest.dao.UserDAO;
 import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
+import com.ishanitech.iaccountingrest.model.Role;
 import com.ishanitech.iaccountingrest.model.User;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.UserService;
@@ -79,5 +80,11 @@ public class UserServiceImpl implements UserService {
     public List<UserConfigurationDTO> getUserConfigurationDetails(int companyId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
         return userConfigutarionDAO.getUserConfigurationDetails(companyId);
+    }
+
+    @Override
+    public List<Role> getAllRole() {
+        UserDAO userDAO = dbService.getDao(UserDAO.class);
+        return userDAO.getAllRole();
     }
 }

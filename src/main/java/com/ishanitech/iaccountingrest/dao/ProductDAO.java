@@ -15,15 +15,15 @@ public interface ProductDAO {
 
     @SqlQuery("SELECT p.id as id, p.name as name, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, " +
             " p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date" +
-            " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.deleted = false" )
+            " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.deleted = false and p.company_id = :compId" )
     @RegisterBeanMapper(ProductDTO.class)
-    List<ProductDTO> getAllProducts();
+    List<ProductDTO> getAllProducts(@Bind int compId);
 
     @SqlQuery("SELECT p.id as id, p.name as name, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, " +
             " p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date" +
-            " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.id = :id AND p.deleted = false" )
+            " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.id = :id AND p.deleted = false AND p.company_id = :compId;" )
     @RegisterBeanMapper(ProductDTO.class)
-    ProductDTO getProductById(Integer id);
+    ProductDTO getProductByIdAndCompId(Integer id, Integer compId);
 
     @GetGeneratedKeys
     @SqlUpdate("INSERT INTO product (name, selling_price, cost_price, user_id, company_id, seller_id, category_id, barcode, discount )" +

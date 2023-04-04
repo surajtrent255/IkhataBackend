@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductDTO> getAllProducts();
+    List<ProductDTO> getAllProducts(int compId);
 
-    ProductDTO getProductById(Integer id);
+    ProductDTO getProductByIdAndCompId(Integer id ,int compId);
 
     Integer addNewProduct(ProductDTO product);
 

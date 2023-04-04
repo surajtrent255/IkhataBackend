@@ -24,6 +24,13 @@ public class UserConfigurationController {
         return new ResponseDTO<>(userService.getUserConfigurationDetails(companyId));
     }
 
+    @GetMapping("/role")
+    public ResponseDTO<?> getCompanyConfigurationDetails(){
+
+        return new ResponseDTO<>(userService.getAllRole());
+    }
+
+
     @PostMapping("/update/role/status")
     public String updateUserStatus(@RequestBody UserStatusDTO statusDTO){
         boolean status = statusDTO.isStatus();
@@ -65,5 +72,7 @@ public class UserConfigurationController {
 
         return new ResponseDTO<>("Successfully Added Role To User");
     }
+
+
 
 }

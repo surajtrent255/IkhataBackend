@@ -70,6 +70,10 @@ public interface UserDAO {
 	Optional<User> getUserByEmail(@Bind("email") String email) ;
 
 
+	@SqlQuery("select id,role,description from role;")
+	@RegisterBeanMapper(Role.class)
+	List<Role> getAllRole();
+
 
 
 

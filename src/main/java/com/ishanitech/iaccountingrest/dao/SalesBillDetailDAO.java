@@ -29,7 +29,7 @@ public interface SalesBillDetailDAO {
             " sbd.discount_per_unit as discount_per_unit, sbd.bill_id as bill_id, sbd.company_id as company_id, " +
             " p.name as product_name  from sales_bill_detail sbd " +
             " inner join product p on p.id = sbd.product_id" +
-            " where sbd.bill_id = :billId ")
+            " where sbd.bill_id = :billId and sbd.company_id = :companyId ")
     @RegisterBeanMapper(SalesBillDetailWithProdInfoDTO.class)
     List<SalesBillDetailWithProdInfoDTO> getSalesInfoWithProdNameByBillId(int billId, int companyId);
 }

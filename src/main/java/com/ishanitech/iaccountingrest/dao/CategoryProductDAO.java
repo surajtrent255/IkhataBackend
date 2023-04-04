@@ -20,9 +20,9 @@ public interface CategoryProductDAO {
     @SqlUpdate("Update category set deleted = true where id = :categoryId")
      void deleteCategory(@Bind("categoryId") Integer categoryId);
 
-    @SqlQuery("SELECT * FROM category WHERE deleted = false")
+    @SqlQuery("SELECT * FROM category WHERE deleted = false and company_id = :compId")
     @RegisterBeanMapper(CategoryProductDTO.class)
-    List<CategoryProductDTO> getAllCategories();
+    List<CategoryProductDTO> getAllCategoriesByCompId(@Bind int compId);
 
     @SqlUpdate("UPDATE category SET name = :name, "
             + "parent_id = :parentId, description = :description,  user_id = :userId, "

@@ -31,9 +31,9 @@ public class CategoryProductServiceImpl implements CategoryProductService {
     }
 
     @Override
-    public List<CategoryProductDTO> getAllCategories() {
+    public List<CategoryProductDTO> getAllCategoriesByCompId(int compId) {
         CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
-        List<CategoryProductDTO> categories = categoryDAO.getAllCategories();
+        List<CategoryProductDTO> categories = categoryDAO.getAllCategoriesByCompId(compId);
 
         categories.sort((category1, category2) -> {
             return category1.getParentId() - category2.getParentId();

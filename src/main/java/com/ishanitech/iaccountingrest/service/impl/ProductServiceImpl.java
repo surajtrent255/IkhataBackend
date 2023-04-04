@@ -20,15 +20,16 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final DbService dbService;
     @Override
-    public List<ProductDTO> getAllProducts() {
+    public List<ProductDTO> getAllProducts(int compId) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
-        return productDAO.getAllProducts();
+        return productDAO.getAllProducts(compId);
     }
 
     @Override
-    public ProductDTO getProductById(Integer id) {
+    public ProductDTO getProductByIdAndCompId(Integer id, int compId) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
-        return productDAO.getProductById(id);
+        ProductDTO product =   productDAO.getProductByIdAndCompId(id, compId);
+        return product;
     }
 
     @Override
