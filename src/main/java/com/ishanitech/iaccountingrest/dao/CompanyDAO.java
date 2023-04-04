@@ -51,7 +51,7 @@ public interface CompanyDAO {
             + "c.ward_no as wardNo"
             +",c.phone as phone ,"
             + "u.user_id as userId from company c "
-            + "inner join user_company u on u.company_id = c.company_id where u.user_id = :userId ")
+            + "inner join user_company u on u.company_id = c.company_id where u.user_id = :userId and  u.status = true  ")
     @RegisterBeanMapper(CompanyAndUserCompanyDTO.class)
     List<CompanyAndUserCompanyDTO> getCompanyByUserId(@Bind("userId") int userId );
 
