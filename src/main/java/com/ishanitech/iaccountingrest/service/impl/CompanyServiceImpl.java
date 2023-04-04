@@ -51,9 +51,9 @@ companyDAO.deleteCompany(companyId);
     }
 
     @Override
-    public List<CompanyDTO> getCompanyById(int Id) {
+    public CompanyDTO getCompanyByPanNo(Long PanNo) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
-        return companyDAO.getCompanyById(Id);
+        return  companyDAO.getCompanyByPanNo(PanNo);
     }
 
     @Override

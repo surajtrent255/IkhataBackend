@@ -50,7 +50,7 @@ public class UserConfigurationController {
     }
 
     @PostMapping("/update/company")
-    public ResponseDTO<?> updateUserCompany(@RequestBody UserConfigCompanyDTO userConfigCompanyDTO){
+    public ResponseDTO<?> updateUserRoleCompany(@RequestBody UserConfigCompanyDTO userConfigCompanyDTO){
         int companyId = userConfigCompanyDTO.getCompanyId();
         int userId = userConfigCompanyDTO.getUserId();
         userConfigurationService.updateUserRoleCompany(companyId,userId);

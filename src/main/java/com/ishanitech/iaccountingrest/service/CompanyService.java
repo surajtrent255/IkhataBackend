@@ -12,7 +12,7 @@ public interface CompanyService {
     void deleteCompany(Integer companyId);
     List<CompanyDTO> getAllCompanyList();
 
-    List<CompanyDTO> getCompanyById(int Id);
+    CompanyDTO getCompanyByPanNo(Long PanNo);
 
     List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId);
 

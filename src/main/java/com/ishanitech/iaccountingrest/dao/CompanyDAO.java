@@ -36,9 +36,9 @@ public interface CompanyDAO {
     @RegisterBeanMapper(CompanyDTO.class)
     List<CompanyDTO> getAllCompanyList();
 
-    @SqlQuery("select * from company  where id = :Id ")
+    @SqlQuery("select * from company  where pan_no = :PanNo ")
     @RegisterBeanMapper(CompanyDTO.class)
-    List<CompanyDTO> getCompanyById(@Bind("Id") int Id );
+    CompanyDTO getCompanyByPanNo(@Bind("PanNo") Long PanNo );
 
     @SqlQuery("select c.company_id as companyId"
             + ",c.name as name"

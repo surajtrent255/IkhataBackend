@@ -32,7 +32,8 @@ public class CompanyController {
         Integer result = null;
         try {
             result = companyService.addCompany(companyDTO,userId);
-            userConfigurationService.updateUserRoleCompany(companyDTO.getCompanyId(),userId);
+           CompanyDTO companyDTO1 = (CompanyDTO) companyService.getCompanyByPanNo(companyDTO.getPanNo());
+            userConfigurationService.updateUserRoleCompany(companyDTO1.getCompanyId(),userId);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new CustomSqlException("Something went wrong while adding Company!");
@@ -46,9 +47,9 @@ public class CompanyController {
         return new ResponseDTO<List<CompanyDTO>>(companyService.getAllCompanyList());
     }
 
-    @GetMapping("/{id}")
-    public ResponseDTO<?> getCompanyById(@PathVariable("Id") int Id){
-        return new ResponseDTO<>(companyService.getCompanyById(Id));
+    @GetMapping("/{PanNo}")
+    public ResponseDTO<?> getCompanyById(@PathVariable("PanNo") Long PanNo){
+        return new ResponseDTO<>(companyService.getCompanyByPanNo(PanNo));
     }
 
     @GetMapping("/userCompany/{userId}")
