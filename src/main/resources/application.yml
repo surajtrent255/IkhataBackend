@@ -1,7 +1,3 @@
-############## Server port configuration ################
-server:
-  port: 9999
-
 ############## Configuration for the jwt ################
 jwt:
   security:
@@ -45,6 +41,10 @@ spring:
     activate:
       on-profile: dev
 
+############## Server port configuration ################
+server:
+  port: 9999
+
 rest-microservice-api:
   protocol: http
   domain: localhost
@@ -76,3 +76,40 @@ logging:
 
 webservice:
   host-url: http://103.233.58.121:9191/
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+############## Server port configuration ################
+server:
+  port: 8888
+
+database:
+  username: postgres
+  password: Postgres1*#
+  databaseName: iaccountingdb
+  port: 5432
+  driverClassName: org.postgresql.Driver
+  databaseType: postgresql
+
+file:
+  upload:
+    directory: /home/suraj/ikhata/Files/
+
+rest:
+  protocol: http
+  domain: 103.233.58.121
+  port: 8888
+  resource-location: resource
+
+logging:
+  loggin:
+    level:
+      root: ERROR
+  file: /home/suraj/ikhata/log/ikhata-rest.log
+
+webservice:
+  host-url: http://103.233.58.121:9999/
