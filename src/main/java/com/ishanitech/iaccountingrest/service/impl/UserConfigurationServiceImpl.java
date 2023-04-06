@@ -1,12 +1,16 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
+import com.ishanitech.iaccountingrest.dao.UserDAO;
+import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,5 +50,17 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     public void updateUserRoleCompany(int companyId, int userId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
         userConfigutarionDAO.updateUserRoleCompany(companyId,userId);
+    }
+
+    @Override
+    public void updateUserRole(int userId) {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        userConfigutarionDAO.updateUserRole(userId);
+    }
+
+    @Override
+    public List<UserConfigDTO> getAllUser() {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        return  userConfigutarionDAO.getAllUser();
     }
 }

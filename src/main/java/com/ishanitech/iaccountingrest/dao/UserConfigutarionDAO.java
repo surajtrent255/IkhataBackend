@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.dao;
 
+import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
 import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.dto.UserRoleConfigDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -40,5 +41,12 @@ public interface UserConfigutarionDAO {
 
     @SqlUpdate("UPDATE user_role SET  company_id = :companyId WHERE user_id = :userId ;")
     void updateUserRoleCompany(@Bind("companyId") int companyId,@Bind("userId") int userId);
+
+    @SqlUpdate("UPDATE user_role SET role_id=1 WHERE user_id = :userId ;")
+    void updateUserRole(@Bind("userId") int userId);
+
+    @SqlQuery("SELECT * FROM users")
+    @RegisterBeanMapper(UserConfigDTO.class)
+    List<UserConfigDTO> getAllUser();
 
 }

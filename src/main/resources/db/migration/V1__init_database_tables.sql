@@ -147,7 +147,7 @@ create table sales_bill (
     transaction_id varchar(50) ,
     status boolean default true not null,
     company_id int not null
-)
+);
 
 
 
@@ -165,14 +165,14 @@ CREATE TABLE "sales_bill_detail"(
 --     ,
 --     FOREIGN KEY(company_id)
 --     REFERENCES company(id)
-)
+);
 
 create table bill_no_generator (
     id serial primary key,
     fiscal_year varchar(50) not null,
     bill_no int not null,
     active boolean not null
-)
+);
 
 create table purchase_bill (
     fiscal_year varchar(50) not null,
@@ -199,7 +199,7 @@ create table purchase_bill (
     transaction_id varchar(50) ,
     status boolean default true not null,
 	user_id int not null
-)
+);
 
 CREATE TABLE "purchase_bill_detail"(
    "id" SERIAL PRIMARY KEY ,
@@ -215,7 +215,7 @@ CREATE TABLE "purchase_bill_detail"(
 --     ,
 --     FOREIGN KEY(company_id)
 --     REFERENCES company(id)
-)
+);
 
 
 create table stock (
@@ -226,5 +226,5 @@ create table stock (
     create_date date default current_date,
     update_date timestamp default current_timestamp,
     deleted boolean default false
-    )
+    );
 

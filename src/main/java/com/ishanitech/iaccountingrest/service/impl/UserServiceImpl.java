@@ -3,6 +3,8 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.CompanyDAO;
 import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
 import com.ishanitech.iaccountingrest.dao.UserDAO;
+import com.ishanitech.iaccountingrest.dto.UserCompanyDTO;
+import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
 import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.model.Role;
 import com.ishanitech.iaccountingrest.model.User;
@@ -87,4 +89,6 @@ public class UserServiceImpl implements UserService {
         UserDAO userDAO = dbService.getDao(UserDAO.class);
         return userDAO.getAllRole();
     }
+
+
 }

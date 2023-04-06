@@ -74,5 +74,9 @@ public class UserConfigurationController {
     }
 
 
+    @GetMapping("/users")
+    public ResponseDTO<?> getAllUsers(){
+        return new ResponseDTO<>(userConfigurationService.getAllUser()) ;
+    }
 
 }

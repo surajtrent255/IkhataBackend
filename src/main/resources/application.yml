@@ -72,7 +72,9 @@ logging:
   loggin:
     level:
       root: ERROR
-  file: /home/suraj/Documents/ishanitech/iaccounting/logs/iaccounting-rest-api.log
+  file:
+    name:
+       C:/Users/iaccounting-rest-api.log
 
 webservice:
   host-url: http://103.233.58.121:9191/
