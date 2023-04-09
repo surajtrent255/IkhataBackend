@@ -24,6 +24,7 @@ public class CategoryProduct {
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseDTO<?> getAllCategories(@RequestParam("compId") int compId){
         List<CategoryProductDTO> categories;
+        log.error("suraj********************************************");
         try{
             categories = categoryProductService.getAllCategoriesByCompId(compId);
             return new ResponseDTO<>(categories);

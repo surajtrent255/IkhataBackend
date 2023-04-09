@@ -29,10 +29,9 @@ public class SalesBillDetailController {
         }
     }
     @GetMapping
-    public ResponseDTO<SalesBillInvoiceDTO> getSalesInfoByBillId(@RequestParam("billId") int billId,
-                                                                     @RequestParam("comapnyId") int companyId){
+    public ResponseDTO<SalesBillInvoiceDTO> getSalesInfoByBillId(@RequestParam("billId") int billId){
         try{
-            return new ResponseDTO<SalesBillInvoiceDTO>(salesBillDetailService.getSalesInfoByBillId(billId, companyId));
+            return new ResponseDTO<SalesBillInvoiceDTO>(salesBillDetailService.getSalesInfoByBillId(billId));
         } catch(Exception ex){
             log.error("error occured accesing sales info by BillId" + ex.getMessage());
             throw new CustomSqlException("error occured accesing sales info ByBillId" + ex.getMessage());

@@ -8,5 +8,5 @@ public interface SalesBillDetailService {
 
     SalesBillDetailDTO getSingleSalesInfo(int id);
 
-    SalesBillInvoiceDTO getSalesInfoByBillId(int billId, int companyId);
+    SalesBillInvoiceDTO getSalesInfoByBillId(int billId);
 }

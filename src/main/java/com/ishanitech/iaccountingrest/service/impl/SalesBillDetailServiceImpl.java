@@ -25,13 +25,9 @@ public class SalesBillDetailServiceImpl implements SalesBillDetailService {
     }
 
     @Override
-    public SalesBillInvoiceDTO getSalesInfoByBillId(int billId, int companyId) {
+    public SalesBillInvoiceDTO getSalesInfoByBillId(int billId) {
         SalesBillInvoiceDTO salesBillInvoiceDTO = new SalesBillInvoiceDTO();
-
-//        List<SalesBillDetailDTO> salesBillDetailDTO = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoByBillId(billId, companyId);
-//        saleBillMasterDTO.setSalesBillDetails(salesBillDetailDTO);
-//        saleBillMasterDTO.setSalesBillDTO(dbService.getDao(SalesBillDAO.class).getBillById(billId));
-        List<SalesBillDetailWithProdInfoDTO> salesBillDetailWithProdInfoDTOS = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoWithProdNameByBillId(billId, companyId);
+        List<SalesBillDetailWithProdInfoDTO> salesBillDetailWithProdInfoDTOS = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoWithProdNameByBillId(billId);
         salesBillInvoiceDTO.setSalesBillDetailsWithProd(salesBillDetailWithProdInfoDTOS);
         salesBillInvoiceDTO.setSalesBillDTO(dbService.getDao(SalesBillDAO.class).getBillById(billId));
         return salesBillInvoiceDTO;

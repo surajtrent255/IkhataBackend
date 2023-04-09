@@ -43,8 +43,8 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseDTO<ProductDTO> getProductByIdAndCompId(@PathVariable("id") Integer id,
+    @GetMapping("/{productId}")
+    public ResponseDTO<ProductDTO> getProductByIdAndCompId(@PathVariable("productId") Integer id,
                                                   @RequestParam("compId") int compId){
         try{
             return new ResponseDTO<ProductDTO>(productService.getProductByIdAndCompId(id, compId));

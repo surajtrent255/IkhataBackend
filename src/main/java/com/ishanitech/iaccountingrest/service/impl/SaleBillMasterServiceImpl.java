@@ -41,16 +41,14 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
             log.error("genating billno() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while generating  bill no");
         }
-        salesBillDTO.setBillNo(bill_no);
+        salesBillDTO.setBillNo("B01"+bill_no);
         salesBillDTO.setFiscalYear(currentFiscalYear);
-        for(SalesBillDetailDTO salesBillDetailDTO: salesBillDetailDTOS ){
-            salesBillDetailDTO.setBillId(bill_no);
-            salesBillDetailDTO.setCompanyId(salesBillDTO.getCompanyId());
-        }
 
+
+        int billId = 0 ;
         try{
             SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
-             salesBillDAO.addNewBill(
+              billId = salesBillDAO.addNewBill(
                      salesBillDTO);
 
         } catch (Exception ex){
@@ -58,12 +56,19 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
             throw new CustomSqlException("something went wrong while adding bill");
         }
 
+        for(SalesBillDetailDTO salesBillDetailDTO: salesBillDetailDTOS ){
+            salesBillDetailDTO.setBillId(billId);
+            salesBillDetailDTO.setCompanyId(salesBillDTO.getCompanyId());
+            salesBillDetailDTO.setBranchId(salesBillDTO.getBranchId());
+            salesBillDetailDTO.setDate(salesBillDTO.getBillDate());
+
+        }
 //        for updating stock qty count
 
         try{
             StockDAO stockDAO = dbService.getDao(StockDAO.class);
             salesBillDetailDTOS.forEach((salesBillDetailDTO -> {
-                stockDAO.decreaseTheStockQuantity(salesBillDetailDTO.getProductId(), salesBillDTO.getCompanyId(), salesBillDetailDTO.getQty());
+                stockDAO.decreaseTheStockQuantity(salesBillDetailDTO.getProductId(), salesBillDTO.getCompanyId(), salesBillDTO.getBranchId(), salesBillDetailDTO.getQty());
             }));
 
         } catch (Exception ex){
@@ -79,6 +84,6 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
             throw new CustomSqlException("something went wrong while adding billdetail");
         }
 
-        return new ResponseDTO<Integer>(bill_no);
+        return new ResponseDTO<Integer>(billId);
     }
 }

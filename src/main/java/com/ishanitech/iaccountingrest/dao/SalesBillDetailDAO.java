@@ -16,8 +16,8 @@ public interface SalesBillDetailDAO {
     SalesBillDetailDTO getSingleSaleInfoById(int id);
 
 
-    @SqlBatch("INSERT INTO sales_bill_detail (product_id, qty, discount_per_unit, rate, bill_id, company_id) " +
-            " VALUES (:productId, :qty, :discountPerUnit, :rate, :billId, :companyId)")
+    @SqlBatch("INSERT INTO sales_bill_detail (product_id, qty, discount_per_unit, date,  rate, tax_rate,  bill_id, company_id, branch_id ) " +
+            " VALUES (:productId, :qty, :discountPerUnit, :date, :rate, :taxRate, :billId, :companyId, :branchId)")
      void addNewSalesInfo(@BindBean List<SalesBillDetailDTO> salesBillDetailDTO);
 
         @SqlQuery("SELECT sbd.id as id, sbd.product_id as product_id, sbd.qty as qty, sbd.date as date, sbd.rate as rate, sbd.discount_per_unit as discount_per_unit, sbd.bill_id as bill_id, sbd.company_id as company_id from sales_bill_detail sbd " +
@@ -29,7 +29,7 @@ public interface SalesBillDetailDAO {
             " sbd.discount_per_unit as discount_per_unit, sbd.bill_id as bill_id, sbd.company_id as company_id, " +
             " p.name as product_name  from sales_bill_detail sbd " +
             " inner join product p on p.id = sbd.product_id" +
-            " where sbd.bill_id = :billId and sbd.company_id = :companyId ")
+            " where sbd.bill_id = :billId")
     @RegisterBeanMapper(SalesBillDetailWithProdInfoDTO.class)
-    List<SalesBillDetailWithProdInfoDTO> getSalesInfoWithProdNameByBillId(int billId, int companyId);
+    List<SalesBillDetailWithProdInfoDTO> getSalesInfoWithProdNameByBillId(int billId);
 }

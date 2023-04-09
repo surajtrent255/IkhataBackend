@@ -39,6 +39,7 @@ public interface SalesBillDAO {
     List<SalesBillDTO> getAllBills();
 
     @SqlQuery("select   " +
+            " sb.id as id, "+
             "  sb.fiscal_year as  fiscal_year,  " +
             "  sb.bill_no as bill_no,  " +
             "  sb.customer_name as customer_name,  " +
@@ -60,16 +61,18 @@ public interface SalesBillDAO {
             "  sb.vat_refund_amount  as vat_refund_amount,  " +
             "  sb.transaction_id  as transaction_id  " +
             "    " +
-            " from sales_bill sb where sb.status = true and sb.bill_no = :id;")
+            " from sales_bill sb where sb.status = true and sb.id = :id;")
     @RegisterBeanMapper(SalesBillDTO.class)
     SalesBillDTO getBillById(int id);
 
+    @GetGeneratedKeys
     @SqlUpdate("insert into sales_bill (" +
             " fiscal_year ," +
             " bill_no ," +
             " customer_id, "+
             " customer_name ," +
             " customer_pan ," +
+            " bill_date, "+
             " amount  ," +
             " discount  ," +
             " taxable_amount  ," +
@@ -85,13 +88,17 @@ public interface SalesBillDAO {
             " payment_method ," +
             " vat_refund_amount  ," +
             " transaction_id,  " +
-            " company_id "+
+            " company_id, "+
+            " branch_id, "+
+            " draft, "+
+            " tax_approach"+
             ") values (" +
             " :fiscalYear," +
             " :billNo ," +
             " :customerId, "+
             " :customerName ," +
             " :customerPan ," +
+            " :billDate, "+
             " :amount  ," +
             " :discount  ," +
             " :taxableAmount  ," +
@@ -107,9 +114,12 @@ public interface SalesBillDAO {
             " :paymentMethod ," +
             " :vatRefundAmount  ," +
             " :transactionId , " +
-            " :companyId "+
+            " :companyId , "+
+            " :branchId, "+
+            " :draft, "+
+            " :taxApproach"+
             ")")
-     void addNewBill(@BindBean SalesBillDTO salesBillDTO);
+     int addNewBill(@BindBean SalesBillDTO salesBillDTO);
 
 
     @SqlUpdate("UPDATE sales_bill SET status = false WHERE bill_no = :bill_no")
@@ -141,8 +151,8 @@ public interface SalesBillDAO {
             "  sb.is_realtime as realtime,  " +
             "  sb.payment_method as payment_method,  " +
             "  sb.vat_refund_amount  as vat_refund_amount,  " +
-            "  sb.transaction_id  as transaction_id  " +
-            "    " +
+            "  sb.transaction_id  as transaction_id, " +
+            "  sb.company_id as company_id " +
             " from sales_bill sb where sb.status = true and sb.company_id = :compId;")
     @RegisterBeanMapper(SalesBillDTO.class)
     List<SalesBillDTO> getSalesBillByCompanyId(int compId);

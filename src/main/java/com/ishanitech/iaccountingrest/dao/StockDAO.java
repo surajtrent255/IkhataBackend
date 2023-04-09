@@ -40,16 +40,16 @@ public interface StockDAO {
     @SqlUpdate("update stock set qty = qty + :qty where product_id = :productId and company_id = :companyId ")
     void increaseStockQuantity(@BindBean StockDTO stockDTO);
 
-    @SqlUpdate("update stock set qty = qty - :qty where product_id = :productId and company_id = :companyId ")
-    void decreaseStockQuantity(@Bind int productId, @Bind int companyId, @Bind int qty);
+    @SqlUpdate("update stock set qty = qty - :qty where product_id = :productId and company_id = :companyId  and branch_id = :branchId")
+    void decreaseStockQuantity(@Bind int productId, @Bind int companyId, @Bind int branchId,  @Bind int qty);
 
     @SqlUpdate("update stock set qty = 0 where qty < 0 and product_id = :productId and company_id = :companyId")
     void makeStockQuantityToZero(@Bind int productId, @Bind int companyId);
 
     @Transactional
-    default void decreaseTheStockQuantity( int productId,  int companyId, int qty){
-        decreaseStockQuantity(  productId,   companyId,  qty);
-        makeStockQuantityToZero( productId, companyId);
+    default void decreaseTheStockQuantity( int productId,  int companyId, int branchId,  int qty){
+        decreaseStockQuantity(  productId,   companyId, branchId,  qty);
+//        makeStockQuantityToZero( productId, companyId);
     }
 
     @SqlUpdate("UPDATE stock set deleted = true WHERE product_id = :id;")

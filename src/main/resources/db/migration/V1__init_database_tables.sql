@@ -124,12 +124,13 @@ CREATE TABLE "public"."category"(
 
 
 create table sales_bill (
+    id serial not null,
     fiscal_year varchar(50) not null,
-    bill_no int unique not null,
+    bill_no varchar(50) unique not null,
     customer_id int not null,
     customer_name varchar(50) not null,
     customer_pan varchar(50) not null,
-    bill_date Date default current_date not null,
+    bill_date Date not null,
     amount real not null,
     discount real not null,
     taxable_amount real not null,
@@ -146,8 +147,12 @@ create table sales_bill (
     vat_refund_amount real ,
     transaction_id varchar(50) ,
     status boolean default true not null,
-    company_id int not null
-)
+    company_id int not null,
+    branch_id int not null,
+    draft boolean default false,
+    tax_approach int not null
+);
+
 
 
 
@@ -158,21 +163,23 @@ CREATE TABLE "sales_bill_detail"(
    "date" date DEFAULT CURRENT_DATE NOT NULL,
    "discount_per_unit" real NOT NULL,
    "rate" real NOT NULL,
-   "bill_id" integer NOT NULL,
-   "company_id" integer NOT NULL
+   "bill_id" int NOT NULL,
+   "company_id" integer NOT NULL,
+   "branch_id" int not null,
+   "tax_rate" int not null
 --       FOREIGN KEY(bill_id)
 --       REFERENCES bill(id)
 --     ,
 --     FOREIGN KEY(company_id)
 --     REFERENCES company(id)
-)
+);
 
 create table bill_no_generator (
     id serial primary key,
     fiscal_year varchar(50) not null,
     bill_no int not null,
     active boolean not null
-)
+);
 
 create table purchase_bill (
     fiscal_year varchar(50) not null,
@@ -199,7 +206,7 @@ create table purchase_bill (
     transaction_id varchar(50) ,
     status boolean default true not null,
 	user_id int not null
-)
+);
 
 CREATE TABLE "purchase_bill_detail"(
    "id" SERIAL PRIMARY KEY ,
@@ -215,7 +222,7 @@ CREATE TABLE "purchase_bill_detail"(
 --     ,
 --     FOREIGN KEY(company_id)
 --     REFERENCES company(id)
-)
+);
 
 
 create table stock (
@@ -223,8 +230,20 @@ create table stock (
     product_id int not null,
     qty int not null,
     company_id int not null,
+    branch_id int not null,
     create_date date default current_date,
     update_date timestamp default current_timestamp,
     deleted boolean default false
-    )
+    );
 
+create table vat_rate_type (
+	id serial not null,
+	vate_rate varchar(50) not null,
+	vat_rate_num real not null
+)
+
+INSERT INTO public.vat_rate_type(
+	id, vate_rate, vat_rate_num)
+	VALUES (1, 'NO VAT', 0),
+(2, '0 VAT', 0),
+(3, '13% VAT', 13)
