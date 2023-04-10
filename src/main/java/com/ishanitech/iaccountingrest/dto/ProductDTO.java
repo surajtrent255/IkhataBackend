@@ -14,6 +14,7 @@ import java.util.Date;
 public class ProductDTO {
        private int id;
        private String name;
+       private String description;
        private double sellingPrice;
        private double costPrice;
        private Date createDate;

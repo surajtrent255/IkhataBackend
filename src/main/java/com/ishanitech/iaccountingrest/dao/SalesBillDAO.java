@@ -59,6 +59,10 @@ public interface SalesBillDAO {
             "  sb.is_realtime as realtime,  " +
             "  sb.payment_method as payment_method,  " +
             "  sb.vat_refund_amount  as vat_refund_amount,  " +
+            "  sb.company_id as company_id, "+
+            " sb.branch_id as branch_id, "+
+            " sb.draft as draft, "+
+            " sb.tax_approach as taxApproach," +
             "  sb.transaction_id  as transaction_id  " +
             "    " +
             " from sales_bill sb where sb.status = true and sb.id = :id;")
@@ -133,6 +137,7 @@ public interface SalesBillDAO {
 
     @SqlQuery("select   " +
             "  sb.fiscal_year as  fiscal_year,  " +
+            " sb.id as id, "+
             "  sb.bill_no as bill_no,  " +
             "  sb.customer_name as customer_name,  " +
             "  sb.customer_pan as customer_pan,  " +

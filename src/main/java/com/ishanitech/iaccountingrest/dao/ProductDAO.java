@@ -13,24 +13,24 @@ import java.util.List;
 
 public interface ProductDAO {
 
-    @SqlQuery("SELECT p.id as id, p.name as name, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, " +
+    @SqlQuery("SELECT p.id as id, p.name as name, p.description as description,  p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, " +
             " p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date" +
             " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.deleted = false and p.company_id = :compId" )
     @RegisterBeanMapper(ProductDTO.class)
     List<ProductDTO> getAllProducts(@Bind int compId);
 
-    @SqlQuery("SELECT p.id as id, p.name as name, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, " +
+    @SqlQuery("SELECT p.id as id, p.name as name, p.description as description,  p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, " +
             " p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date" +
             " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.id = :id AND p.deleted = false AND p.company_id = :compId;" )
     @RegisterBeanMapper(ProductDTO.class)
     ProductDTO getProductByIdAndCompId(Integer id, Integer compId);
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO product (name, selling_price, cost_price, user_id, company_id, seller_id, category_id, barcode, discount )" +
-            "VALUES ( :name, :sellingPrice, :costPrice, :userId, :companyId, :sellerId, :categoryId, :barcode, :discount)")
+    @SqlUpdate("INSERT INTO product (name, description, selling_price, cost_price, user_id, company_id, seller_id, category_id, barcode, discount )" +
+            "VALUES ( :name, :description, :sellingPrice, :costPrice, :userId, :companyId, :sellerId, :categoryId, :barcode, :discount)")
     Integer addNewProduct(@BindBean ProductDTO product);
 
-    @SqlUpdate("UPDATE  product SET name = :name, selling_price = :sellingPrice, cost_price = :costPrice, user_id = :userId, " +
+    @SqlUpdate("UPDATE  product SET name = :name, description = :description, selling_price = :sellingPrice, cost_price = :costPrice, user_id = :userId, " +
             " company_id = :companyId, seller_id = :sellerId, category_id = :categoryId, update_date = :updateDate," +
             " barcode = :barcode, discount = :discount, tax = :tax where id = :id")
     void updateProduct(@BindBean ProductDTO productDTO, @Bind Integer id);

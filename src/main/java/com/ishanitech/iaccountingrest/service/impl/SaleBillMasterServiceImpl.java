@@ -34,14 +34,17 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
         int bill_no = 0;
         String currentFiscalYear = null;
         try{
-            BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
-            bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear();
+            if(!salesBillDTO.isDraft()){
+                BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+                bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear();
+            }
             currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear();
         } catch (Exception ex){
             log.error("genating billno() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while generating  bill no");
         }
-        salesBillDTO.setBillNo("B01"+bill_no);
+
+        salesBillDTO.setBillNo("B01 "+bill_no);
         salesBillDTO.setFiscalYear(currentFiscalYear);
 
 
@@ -64,7 +67,7 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
 
         }
 //        for updating stock qty count
-
+    if(!salesBillDTO.isDraft()){
         try{
             StockDAO stockDAO = dbService.getDao(StockDAO.class);
             salesBillDetailDTOS.forEach((salesBillDetailDTO -> {
@@ -75,6 +78,8 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
             log.error("updateStockQty() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while updating stock qty ");
         }
+
+    }
 
         try{
             SalesBillDetailDAO salesBillDetailDAO = dbService.getDao(SalesBillDetailDAO.class);

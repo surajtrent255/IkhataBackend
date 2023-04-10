@@ -87,6 +87,7 @@ CREATE TABLE user_company (
 CREATE TABLE "product"(
    "id" SERIAL PRIMARY KEY ,
    "name"  varchar(250) NOT NULL ,
+   " description" TEXT (250) NOT NULL,
    "selling_price" REAL NOT NULL,
    "cost_price" REAL NOT NULL,
    "create_date" date DEFAULT CURRENT_DATE NOT NULL,
@@ -126,7 +127,7 @@ CREATE TABLE "public"."category"(
 create table sales_bill (
     id serial not null,
     fiscal_year varchar(50) not null,
-    bill_no varchar(50) unique not null,
+    bill_no varchar(50)  ,
     customer_id int not null,
     customer_name varchar(50) not null,
     customer_pan varchar(50) not null,
@@ -166,7 +167,8 @@ CREATE TABLE "sales_bill_detail"(
    "bill_id" int NOT NULL,
    "company_id" integer NOT NULL,
    "branch_id" int not null,
-   "tax_rate" int not null
+   "tax_rate" int not null,
+   "row_total" bigint not null
 --       FOREIGN KEY(bill_id)
 --       REFERENCES bill(id)
 --     ,

@@ -22,4 +22,5 @@ public class SalesBillDetailDTO {
     private int companyId;
     private int branchId;
     private int taxRate;
+    private long rowTotal;
 }
