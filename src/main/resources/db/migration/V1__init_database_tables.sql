@@ -14,10 +14,13 @@ CREATE TABLE users(
    "firstname" VARCHAR(50) NOT NULL,
    "lastname" VARCHAR(50) NOT NULL,
    "email" VARCHAR(50) UNIQUE NOT NULL,
-   "password" VARCHAR(600) NOT NULL,
+   "phone" bigint NOT NULL,
+   "password" VARCHAR(600) DEFAULT 0,
    "deleted" BOOLEAN DEFAULT FALSE,
    "create_date" DATE DEFAULT NULL,
-   "edit_date" DATE DEFAULT NULL
+   "edit_date" DATE DEFAULT NULL,
+   constraint valid_number
+         check (phone <= 9999999999)
 );
 
 CREATE TABLE "public"."role"(
@@ -171,7 +174,9 @@ create table bill_no_generator (
     id serial primary key,
     fiscal_year varchar(50) not null,
     bill_no int not null,
-    active boolean not null
+    active boolean not null,
+    company_id int not null,
+    branch_id int not null
 );
 
 create table purchase_bill (
@@ -228,3 +233,33 @@ create table stock (
     deleted boolean default false
     );
 
+    CREATE TABLE  branch (
+      id SERIAL NOT NULL ,
+      company_id int NOT NULL,
+      name varchar(50) NOT NULL,
+      abbrv varchar(20) NOT NULL,
+      description text NOT NULL,
+      pan_no bigint NOT NULL ,
+      state int Default NULL  ,
+      zone varchar(50) NOT NULL ,
+      district varchar(50) NOT NULL ,
+      mun_vdc varchar(50) NOT NULL ,
+      ward_no int NOT NULL ,
+      deleted BOOLEAN DEFAULT FALSE,
+
+       phone bigint DEFAULT NULL,
+      PRIMARY KEY (id),
+    	constraint valid_number
+          check (phone <= 9999999999)
+    ) ;
+
+
+CREATE TABLE user_branch (
+  id SERIAL,
+  user_id int NOT NULL,
+  branch_id int NOT NULL,
+  company_id int NOT NULL,
+  status boolean DEFAULT TRUE,
+  create_date DATE DEFAULT NULL,
+  PRIMARY KEY (id)
+);

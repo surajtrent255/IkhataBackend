@@ -20,7 +20,7 @@ public class UserDTO implements Serializable {
 	private String email;
 	@JsonIgnore
 	private String password;
-	private String mobileNumber;
+	private String PhoneNumber;
 	private boolean isLocked;
 	private boolean enabled;
 	private boolean firstLogin;

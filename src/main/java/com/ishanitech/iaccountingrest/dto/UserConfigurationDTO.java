@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserConfigurationDTO {
 
-    private String firstname;
+    private String firstName;
 
-    private String lastname ;
+    private String lastName ;
 
     private String email;
 
@@ -19,11 +19,13 @@ public class UserConfigurationDTO {
 
     private int userId;
 
-    private String Companyname;
+    private String companyName;
 
     private int roleId;
 
-    private boolean status;
+    private boolean companyStatus;
+
+    private boolean roleStatus;
 
     private String role;
 

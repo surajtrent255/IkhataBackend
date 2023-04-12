@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
     private String email;
+    private Long phone;
     private String password;
     private Set<Role> roles = new HashSet<>();;
 //  private List<Token> tokens;

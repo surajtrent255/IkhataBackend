@@ -41,10 +41,8 @@ public class UserConfigurationController {
     }
 
     @PostMapping("/update/usercompany/status")
-    public String updateUserCompanyStatus(@RequestBody UserCompanyStatusDTO userCompanyStatusDTO){
-        boolean status = userCompanyStatusDTO.isStatus();
-        int companyId = userCompanyStatusDTO.getCompanyId();
-        userConfigurationService.updateUserCompanyStatus(status,companyId);
+    public String updateUserCompanyStatus(@RequestParam("status") boolean status,@RequestParam("userId") int userId){
+        userConfigurationService.updateUserCompanyStatus(status,userId);
         return "User Company status updated successfully";
 
     }
@@ -77,6 +75,28 @@ public class UserConfigurationController {
     @GetMapping("/users")
     public ResponseDTO<?> getAllUsers(){
         return new ResponseDTO<>(userConfigurationService.getAllUser()) ;
+    }
+
+    @GetMapping("/assign/user")
+    public ResponseDTO<?> assignCompanyToUser(@RequestParam("companyId") int companyId,@RequestParam("userId") int userId){
+        try{
+           userConfigurationService.AssignCompanyToUser(companyId,userId);
+            return new ResponseDTO<>("Successfully assigned");
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException("Error assigning company to user");
+        }
+
+    }
+
+    @GetMapping("/users/ByCompanyId")
+    public ResponseDTO<?> getAllUsersByCompanyId(@RequestParam("companyId") int companyId){
+        try {
+            return new ResponseDTO<>(userConfigurationService.getAllUsersByCompanyId(companyId));
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return new ResponseDTO<>();
     }
 
 }

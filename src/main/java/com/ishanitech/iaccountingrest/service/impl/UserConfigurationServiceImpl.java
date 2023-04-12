@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
 import com.ishanitech.iaccountingrest.dao.UserDAO;
 import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
+import com.ishanitech.iaccountingrest.model.User;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,9 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     }
 
     @Override
-    public void updateUserCompanyStatus(boolean status, int companyId) {
+    public void updateUserCompanyStatus(boolean status, int userId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        userConfigutarionDAO.updateUserCompanyStatus(status,companyId);
+        userConfigutarionDAO.updateUserCompanyStatus(status,userId);
     }
 
     @Override
@@ -62,5 +63,18 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     public List<UserConfigDTO> getAllUser() {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
         return  userConfigutarionDAO.getAllUser();
+    }
+
+    @Override
+    public void AssignCompanyToUser(int companyId, int userId) {
+        UserConfigutarionDAO userConfigutarionDAO =dbService.getDao(UserConfigutarionDAO.class);
+        userConfigutarionDAO.AssignCompanyToUser(companyId,userId);
+
+    }
+
+    @Override
+    public List<UserConfigDTO> getAllUsersByCompanyId(int companyId) {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        return userConfigutarionDAO.getUsersByCompanyId(companyId);
     }
 }
