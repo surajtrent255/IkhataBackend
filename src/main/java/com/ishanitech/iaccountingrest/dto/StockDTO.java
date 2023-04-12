@@ -14,6 +14,7 @@ public class StockDTO {
     private int productId;
     private int qty;
     private int companyId;
+    private int branchId;
     private Date createDate;
     private Date updateDate;
 

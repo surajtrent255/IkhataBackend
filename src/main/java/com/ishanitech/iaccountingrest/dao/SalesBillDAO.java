@@ -126,8 +126,8 @@ public interface SalesBillDAO {
      int addNewBill(@BindBean SalesBillDTO salesBillDTO);
 
 
-    @SqlUpdate("UPDATE sales_bill SET status = false WHERE bill_no = :bill_no")
-    void deleteBillById(int  bill_no);
+    @SqlUpdate("UPDATE sales_bill SET status = false WHERE id = :billId")
+    void deleteBillById(int  billId);
 
 
     @SqlUpdate("update sales_bill set is_bill_printed = true , printed_time = :date , printed_by = :printerId" +
@@ -157,10 +157,15 @@ public interface SalesBillDAO {
             "  sb.payment_method as payment_method,  " +
             "  sb.vat_refund_amount  as vat_refund_amount,  " +
             "  sb.transaction_id  as transaction_id, " +
-            "  sb.company_id as company_id " +
-            " from sales_bill sb where sb.status = true and sb.company_id = :compId;")
+            "  sb.company_id as company_id, " +
+            "  sb.draft as draft, " +
+            " sb.status as status"+
+            " from sales_bill sb where sb.status = true and sb.company_id = :compId and sb.branch_id = :branchId;")
     @RegisterBeanMapper(SalesBillDTO.class)
-    List<SalesBillDTO> getSalesBillByCompanyId(int compId);
+    List<SalesBillDTO> getSalesBillByCompanyId(int compId, int branchId);
+
+    @SqlUpdate("update sales_bill set bill_no = :billNo , draft=false where id = :billId")
+    void makeDraftFalse(String billNo, int billId);
     //mj printedBy ? id or name
 
 }

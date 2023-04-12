@@ -21,9 +21,9 @@ public interface SalesBillDetailDAO {
      void addNewSalesInfo(@BindBean List<SalesBillDetailDTO> salesBillDetailDTO);
 
         @SqlQuery("SELECT sbd.id as id, sbd.product_id as product_id, sbd.qty as qty, sbd.date as date, sbd.rate as rate, sbd.discount_per_unit as discount_per_unit, sbd.bill_id as bill_id, sbd.company_id as company_id from sales_bill_detail sbd " +
-                " where bill_id = :billId and company_id = :companyId")
+                " where bill_id = :billId ")
     @RegisterBeanMapper(SalesBillDetailDTO.class)
-    List<SalesBillDetailDTO> getSalesInfoByBillId(int billId, int companyId);
+    List<SalesBillDetailDTO> getSalesInfoByBillId(int billId);
 
     @SqlQuery("SELECT sbd.id as id, sbd.product_id as product_id, sbd.qty as qty, sbd.date as date, sbd.rate as rate, " +
             " sbd.discount_per_unit as discount_per_unit, sbd.bill_id as bill_id, sbd.company_id as company_id, sbd.row_total as row_total,  " +

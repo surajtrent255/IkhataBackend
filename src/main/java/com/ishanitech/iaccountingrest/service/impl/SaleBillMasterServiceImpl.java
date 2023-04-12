@@ -36,9 +36,9 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
         try{
             if(!salesBillDTO.isDraft()){
                 BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
-                bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear();
+                bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId());
             }
-            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear();
+            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId());
         } catch (Exception ex){
             log.error("genating billno() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while generating  bill no");

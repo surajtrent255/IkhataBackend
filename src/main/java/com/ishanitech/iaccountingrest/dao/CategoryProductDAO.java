@@ -14,27 +14,27 @@ import java.util.List;
 public interface CategoryProductDAO {
 
     @GetGeneratedKeys
-    @SqlUpdate(" insert into category(name, description, parent_id, user_id, company_id, create_date) values (:name, :description, :parentId, :userId, :companyId, :createdDate)")
+    @SqlUpdate(" insert into category(name, description, parent_id, user_id, company_id, branch_id, create_date) values (:name, :description, :parentId, :userId, :companyId, :branchId, :createdDate)")
     Integer addCategory(@BindBean CategoryProductDTO categoryDTO);
 
-    @SqlUpdate("Update category set deleted = true where id = :categoryId")
-     void deleteCategory(@Bind("categoryId") Integer categoryId);
+    @SqlUpdate("Update category set deleted = true where id = :categoryId;")
+    void deleteCategory(@Bind("categoryId") Integer categoryId);
 
-    @SqlQuery("SELECT * FROM category WHERE deleted = false and company_id = :compId")
+    @SqlQuery("SELECT * FROM category WHERE deleted = false and company_id = :compId and branch_id = :branchId")
     @RegisterBeanMapper(CategoryProductDTO.class)
-    List<CategoryProductDTO> getAllCategoriesByCompId(@Bind int compId);
+    List<CategoryProductDTO> getAllCategoriesByCompIdAndBranchId(@Bind int compId, @Bind int branchId);
 
     @SqlUpdate("UPDATE category SET name = :name, "
             + "parent_id = :parentId, description = :description,  user_id = :userId, "
-            + "company_id = :companyId, edit_date = :editedDate WHERE id = :categoryId")
-     int updateCategoryProduct(@BindBean CategoryProductDTO categoryProductDTO, @Bind int categoryId);
+            + "company_id = :companyId, branch_id = :branchId, edit_date = :editedDate WHERE id = :categoryId")
+    int updateCategoryProduct(@BindBean CategoryProductDTO categoryProductDTO, @Bind int categoryId);
 
     @SqlBatch("UPDATE category SET deleted = true WHERE category_id = :categoryIds")
     void deleteParentandChildCategories(List<Integer> categoryIds);
 
     @SqlQuery("SELECT * FROM category WHERE id = :categoryId AND deleted = false")
     @RegisterBeanMapper(CategoryProductDTO.class)
-     CategoryProductDTO getCategoryByCategoryId(@Bind("categoryId") Integer categoryId);
+    CategoryProductDTO getCategoryByCategoryId(@Bind("categoryId") Integer categoryId);
 
     @SqlQuery("SELECT * FROM category WHERE parent_id = :parentId AND deleted = false")
     @RegisterBeanMapper(CategoryProductDTO.class)

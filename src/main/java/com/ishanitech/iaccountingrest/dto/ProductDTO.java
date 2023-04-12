@@ -21,6 +21,7 @@ public class ProductDTO {
        private Date updateDate;
        private int userId;
        private int companyId;
+       private int branchId;
        private int sellerId;
        private int categoryId;
        private String barcode;

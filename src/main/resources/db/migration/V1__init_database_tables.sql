@@ -87,13 +87,14 @@ CREATE TABLE user_company (
 CREATE TABLE "product"(
    "id" SERIAL PRIMARY KEY ,
    "name"  varchar(250) NOT NULL ,
-   " description" TEXT (250) NOT NULL,
+   "description" TEXT  NOT NULL,
    "selling_price" REAL NOT NULL,
    "cost_price" REAL NOT NULL,
    "create_date" date DEFAULT CURRENT_DATE NOT NULL,
    "update_date" timestamp default current_timestamp NOT NULL,
    "user_id" integer NOT NULL,
    "company_id" integer NOT NULL,
+   "branch_id" integer not null,
    "seller_id" integer NOT NULL,
    "category_id" integer NOT NULL,
     "barcode" varchar(250) not null,
@@ -117,6 +118,7 @@ CREATE TABLE "public"."category"(
    "parent_id" integer NOT NULL,
    "user_id" integer NOT NULL,
    "company_id" integer NOT NULL,
+   "branch_id" integer not null,
    "create_date" date DEFAULT CURRENT_DATE NOT NULL,
    "edit_date" timestamp  DEFAULT current_timestamp NOT NULL,
     "deleted" boolean default false not null
@@ -180,7 +182,9 @@ create table bill_no_generator (
     id serial primary key,
     fiscal_year varchar(50) not null,
     bill_no int not null,
-    active boolean not null
+    active boolean not null,
+    company_id int not null,
+    branch_id int not null
 );
 
 create table purchase_bill (

@@ -17,5 +17,6 @@ public class PurchaseBillDetailDTO {
     private double rate;
     private int purchaseBillId;
     private int companyId;
+    private int branchId;
 
 }

@@ -14,10 +14,14 @@
         (
             fiscal_year,
             bill_no,
-            active
+            active,
+            company_id,
+            branch_id
         ) values
         (
             '2079/80',
             1,
-            true
+            true,
+            1,
+            1
         )

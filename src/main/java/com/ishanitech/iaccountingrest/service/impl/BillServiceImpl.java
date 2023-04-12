@@ -1,7 +1,10 @@
 package com.ishanitech.iaccountingrest.service.impl;
+import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
+import com.ishanitech.iaccountingrest.dao.StockDAO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
+import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
 import com.ishanitech.iaccountingrest.service.BillService;
 
 import com.ishanitech.iaccountingrest.service.DbService;
@@ -30,6 +33,14 @@ public class BillServiceImpl implements BillService {
     @Transactional
     @Override
     public void deleteBillById(int id) {
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        SalesBillDetailDAO salesBillDetailDAO = dbService.getDao(SalesBillDetailDAO.class);
+        SalesBillDTO salesBillDTO =  salesBillDAO.getBillById(id);
+        List<SalesBillDetailDTO> salesBillDetailDTOS= salesBillDetailDAO.getSalesInfoByBillId(id);
+        StockDAO stockDAO = dbService.getDao(StockDAO.class);
+        salesBillDetailDTOS.forEach((salesBillDetailDTO -> {
+            stockDAO.increaseStockQuantity(salesBillDetailDTO.getProductId(), salesBillDTO.getCompanyId(), salesBillDTO.getBranchId(), salesBillDetailDTO.getQty());
+        }));
          dbService.getDao(SalesBillDAO.class).deleteBillById(id);
     }
 
@@ -39,8 +50,27 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<SalesBillDTO> getAllBillsByCompId(int compId) {
-        List<SalesBillDTO> salesBillDTOList = dbService.getDao(SalesBillDAO.class).getSalesBillByCompanyId(compId);
+    public List<SalesBillDTO> getAllBillsByCompId(int compId, int branchId) {
+        List<SalesBillDTO> salesBillDTOList = dbService.getDao(SalesBillDAO.class).getSalesBillByCompanyId(compId,  branchId);
         return salesBillDTOList;
+    }
+
+    @Transactional
+    @Override
+    public Object approveTheBillById(int billId) {
+        SalesBillDAO salesBillDAO =  dbService.getDao(SalesBillDAO.class);
+        SalesBillDTO salesBillDTO = salesBillDAO.getBillById(billId);
+        List<SalesBillDetailDTO> salesBillDetailDTOS = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoByBillId(billId);
+        StockDAO stockDAO = dbService.getDao(StockDAO.class);
+
+        BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+        int bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId());
+
+        String billNoToBeUpdated = "B01 "+bill_no;
+        salesBillDetailDTOS.forEach((salesBillDetailDTO -> {
+            stockDAO.decreaseTheStockQuantity(salesBillDetailDTO.getProductId(), salesBillDTO.getCompanyId(), salesBillDTO.getBranchId(), salesBillDetailDTO.getQty());
+        }));
+        salesBillDAO.makeDraftFalse(billNoToBeUpdated, billId);
+        return salesBillDTO;
     }
 }

@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductDTO> getAllProducts(int compId);
+    List<ProductDTO> getAllProducts(int comId, int branchId);
 
-    ProductDTO getProductByIdAndCompId(Integer id ,int compId);
+    ProductDTO getProductById(Integer id);
 
     Integer addNewProduct(ProductDTO product);
 
@@ -17,5 +17,5 @@ public interface ProductService {
 
     void deleteProduct(int id);
 
-    List<InventoryProductsDTO> getAllProductsForInventory( int companyId);
+    List<InventoryProductsDTO> getAllProductsForInventory( int companyId, int branchId);
 }
