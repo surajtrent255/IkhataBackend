@@ -30,9 +30,9 @@ public class SalesBillController {
     }
 
     @GetMapping("/company")
-    public ResponseDTO<List<SalesBillDTO>> getAllBillsByCompId(@RequestParam("compId") int compId){
+    public ResponseDTO<List<SalesBillDTO>> getAllBillsByCompId(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId){
         try{
-            return new ResponseDTO<List<SalesBillDTO>>(billService.getAllBillsByCompId(compId));
+            return new ResponseDTO<List<SalesBillDTO>>(billService.getAllBillsByCompId(compId, branchId));
         } catch(Exception e) {
             log.error("Error occured accessing the bill infos : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the bill infos : " );
@@ -46,6 +46,18 @@ public class SalesBillController {
             log.error("Error occured accessing the bill info : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the bill info : " );
         }
+    }
+
+
+    @PostMapping("/approve/{id}")
+    public ResponseDTO<?> approveTheDraft(@PathVariable("id") int billId){
+        try{
+            return new ResponseDTO<>(billService.approveTheBillById(billId));
+        } catch(Exception ex){
+            log.error("Error occured while approving the bill "+ ex.getMessage());
+            throw new CustomSqlException("something went wrong while approving the bill ");
+        }
+
     }
 
 

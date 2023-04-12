@@ -12,16 +12,17 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class SalesBillDTO {
+    private int id;
     private int userId;
     private int customerId;
     private int companyId;
     private String fiscalYear ;
-    private int billNo ;
+    private String billNo ;
     private boolean billPrinted;
     private boolean billActive;
     private boolean realtime;
     private String customerName ;
-    private String customerPan ;
+    private long customerPan ;
     private Date billDate  ;
     private double amount ;
     private double discount ;
@@ -36,6 +37,9 @@ public class SalesBillDTO {
     private double vatRefundAmount ;
     private String transactionId ;
     private boolean status ;
+    private int branchId;
+    private boolean draft;
+    private int taxApproach;
 
 
 }

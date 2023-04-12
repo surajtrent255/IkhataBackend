@@ -14,12 +14,14 @@ import java.util.Date;
 public class ProductDTO {
        private int id;
        private String name;
+       private String description;
        private double sellingPrice;
        private double costPrice;
        private Date createDate;
        private Date updateDate;
        private int userId;
        private int companyId;
+       private int branchId;
        private int sellerId;
        private int categoryId;
        private String barcode;

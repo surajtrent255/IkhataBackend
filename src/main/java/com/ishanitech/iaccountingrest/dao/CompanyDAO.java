@@ -55,5 +55,21 @@ public interface CompanyDAO {
     @RegisterBeanMapper(CompanyAndUserCompanyDTO.class)
     List<CompanyAndUserCompanyDTO> getCompanyByUserId(@Bind("userId") int userId );
 
+//    suraj
+    @SqlQuery("select c.company_id as companyId"
+            + ",c.name as name"
+            + ",c.description as description"
+            + ",c.pan_no as panNo "
+            + ",c.state as state "
+            + ", c.zone as zone "
+            + ", c.district as district"
+            + ", c.mun_vdc as munVdc,"
+            + "c.ward_no as wardNo"
+            +",c.phone as phone "
+            + " from company c "
+            + " where c.company_id = :compId  and c.deleted = false;")
+    @RegisterBeanMapper(CompanyDTO.class)
+   CompanyDTO getCompanyByCompanyId(@Bind("compId") int compId );
+
 
 }

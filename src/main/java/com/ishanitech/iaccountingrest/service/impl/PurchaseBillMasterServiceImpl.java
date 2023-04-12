@@ -27,7 +27,7 @@ public class PurchaseBillMasterServiceImpl implements PurchaseBillMasterService 
         List<PurchaseBillDetailDTO> purchaseBillDetailDTOS = purchaseBillMasterDTO.getPurchaseBillDetails();
         String currentFiscalYear = null;
         try{
-            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear();
+            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear(purchaseBillDTO.getCompanyId(), purchaseBillDTO.getBranchId());
         } catch (Exception ex){
             log.error("genating billno() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while generating  bill no");
@@ -36,6 +36,7 @@ public class PurchaseBillMasterServiceImpl implements PurchaseBillMasterService 
         for(PurchaseBillDetailDTO purchaseBillDetailDTO: purchaseBillDetailDTOS){
             purchaseBillDetailDTO.setPurchaseBillId(purchaseBillDTO.getPurchaseBillNo());
             purchaseBillDetailDTO.setCompanyId(purchaseBillDTO.getCompanyId());
+            purchaseBillDetailDTO.setBranchId(purchaseBillDTO.getBranchId());
         }
 
         try{
@@ -51,7 +52,7 @@ public class PurchaseBillMasterServiceImpl implements PurchaseBillMasterService 
         try{
             StockDAO stockDAO = dbService.getDao(StockDAO.class);
             purchaseBillDetailDTOS.forEach((purchaseBillDetailDTO -> {
-                stockDAO.increaseStockQuantityWithAttrs(purchaseBillDetailDTO.getProductId(), purchaseBillDetailDTO.getCompanyId(), purchaseBillDetailDTO.getQty());
+                stockDAO.increaseStockQuantityWithAttrs(purchaseBillDetailDTO.getProductId(), purchaseBillDetailDTO.getCompanyId(), purchaseBillDetailDTO.getBranchId(), purchaseBillDetailDTO.getQty());
             }));
 
         } catch (Exception ex){

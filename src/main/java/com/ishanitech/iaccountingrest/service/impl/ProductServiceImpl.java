@@ -20,15 +20,15 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final DbService dbService;
     @Override
-    public List<ProductDTO> getAllProducts(int compId) {
+    public List<ProductDTO> getAllProducts(int compId, int branchId) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
-        return productDAO.getAllProducts(compId);
+        return productDAO.getAllProducts(compId, branchId);
     }
 
     @Override
-    public ProductDTO getProductByIdAndCompId(Integer id, int compId) {
+    public ProductDTO getProductById(Integer id) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
-        ProductDTO product =   productDAO.getProductByIdAndCompId(id, compId);
+        ProductDTO product =   productDAO.getProductById(id);
         return product;
     }
 
@@ -43,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
         stockDTO.setCreateDate(new Date());
         stockDTO.setUpdateDate(new Date());
         stockDTO.setCompanyId(product.getCompanyId());
+        stockDTO.setBranchId(product.getBranchId());
         dbService.getDao(StockDAO.class).addNewStock(stockDTO);
         return createdProdId;
     }
@@ -64,9 +65,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<InventoryProductsDTO> getAllProductsForInventory(int companyId) {
+    public List<InventoryProductsDTO> getAllProductsForInventory(int companyId, int branchId) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
-        List<InventoryProductsDTO> products = productDAO.getAllProductsForInventoryByUserIdAndCompanyId(companyId);
+        List<InventoryProductsDTO> products = productDAO.getAllProductsForInventoryByUserIdAndCompanyIdAndBranchId(companyId, branchId);
         return products;
     }
 }

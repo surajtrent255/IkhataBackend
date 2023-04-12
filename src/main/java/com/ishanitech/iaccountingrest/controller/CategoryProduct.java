@@ -21,11 +21,12 @@ public class CategoryProduct {
     private final CategoryProductService categoryProductService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseDTO<?> getAllCategories(@RequestParam("compId") int compId){
+//    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public ResponseDTO<?> getAllCategories(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId){
         List<CategoryProductDTO> categories;
+        log.error("suraj********************************************");
         try{
-            categories = categoryProductService.getAllCategoriesByCompId(compId);
+            categories = categoryProductService.getAllCategoriesByCompIdAndBranchId(compId, branchId);
             return new ResponseDTO<>(categories);
         } catch (Exception e){
             log.error("error occured during fetching catgories :  " + e.getMessage());

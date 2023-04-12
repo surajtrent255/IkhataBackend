@@ -90,12 +90,14 @@ CREATE TABLE user_company (
 CREATE TABLE "product"(
    "id" SERIAL PRIMARY KEY ,
    "name"  varchar(250) NOT NULL ,
+   "description" TEXT  NOT NULL,
    "selling_price" REAL NOT NULL,
    "cost_price" REAL NOT NULL,
    "create_date" date DEFAULT CURRENT_DATE NOT NULL,
    "update_date" timestamp default current_timestamp NOT NULL,
    "user_id" integer NOT NULL,
    "company_id" integer NOT NULL,
+   "branch_id" integer not null,
    "seller_id" integer NOT NULL,
    "category_id" integer NOT NULL,
     "barcode" varchar(250) not null,
@@ -119,6 +121,7 @@ CREATE TABLE "public"."category"(
    "parent_id" integer NOT NULL,
    "user_id" integer NOT NULL,
    "company_id" integer NOT NULL,
+   "branch_id" integer not null,
    "create_date" date DEFAULT CURRENT_DATE NOT NULL,
    "edit_date" timestamp  DEFAULT current_timestamp NOT NULL,
     "deleted" boolean default false not null
@@ -127,12 +130,13 @@ CREATE TABLE "public"."category"(
 
 
 create table sales_bill (
+    id serial not null,
     fiscal_year varchar(50) not null,
-    bill_no int unique not null,
+    bill_no varchar(50)  ,
     customer_id int not null,
     customer_name varchar(50) not null,
     customer_pan varchar(50) not null,
-    bill_date Date default current_date not null,
+    bill_date Date not null,
     amount real not null,
     discount real not null,
     taxable_amount real not null,
@@ -149,8 +153,12 @@ create table sales_bill (
     vat_refund_amount real ,
     transaction_id varchar(50) ,
     status boolean default true not null,
-    company_id int not null
+    company_id int not null,
+    branch_id int not null,
+    draft boolean default false,
+    tax_approach int not null
 );
+
 
 
 
@@ -161,8 +169,11 @@ CREATE TABLE "sales_bill_detail"(
    "date" date DEFAULT CURRENT_DATE NOT NULL,
    "discount_per_unit" real NOT NULL,
    "rate" real NOT NULL,
-   "bill_id" integer NOT NULL,
-   "company_id" integer NOT NULL
+   "bill_id" int NOT NULL,
+   "company_id" integer NOT NULL,
+   "branch_id" int not null,
+   "tax_rate" int not null,
+   "row_total" bigint not null
 --       FOREIGN KEY(bill_id)
 --       REFERENCES bill(id)
 --     ,
@@ -228,6 +239,7 @@ create table stock (
     product_id int not null,
     qty int not null,
     company_id int not null,
+    branch_id int not null,
     create_date date default current_date,
     update_date timestamp default current_timestamp,
     deleted boolean default false
@@ -263,3 +275,14 @@ CREATE TABLE user_branch (
   create_date DATE DEFAULT NULL,
   PRIMARY KEY (id)
 );
+create table vat_rate_type (
+	id serial not null,
+	vate_rate varchar(50) not null,
+	vat_rate_num real not null
+)
+
+INSERT INTO public.vat_rate_type(
+	id, vate_rate, vat_rate_num)
+	VALUES (1, 'NO VAT', 0),
+(2, '0 VAT', 0),
+(3, '13% VAT', 13)

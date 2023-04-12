@@ -39,6 +39,7 @@ public interface SalesBillDAO {
     List<SalesBillDTO> getAllBills();
 
     @SqlQuery("select   " +
+            " sb.id as id, "+
             "  sb.fiscal_year as  fiscal_year,  " +
             "  sb.bill_no as bill_no,  " +
             "  sb.customer_name as customer_name,  " +
@@ -58,18 +59,24 @@ public interface SalesBillDAO {
             "  sb.is_realtime as realtime,  " +
             "  sb.payment_method as payment_method,  " +
             "  sb.vat_refund_amount  as vat_refund_amount,  " +
+            "  sb.company_id as company_id, "+
+            " sb.branch_id as branch_id, "+
+            " sb.draft as draft, "+
+            " sb.tax_approach as taxApproach," +
             "  sb.transaction_id  as transaction_id  " +
             "    " +
-            " from sales_bill sb where sb.status = true and sb.bill_no = :id;")
+            " from sales_bill sb where sb.status = true and sb.id = :id;")
     @RegisterBeanMapper(SalesBillDTO.class)
     SalesBillDTO getBillById(int id);
 
+    @GetGeneratedKeys
     @SqlUpdate("insert into sales_bill (" +
             " fiscal_year ," +
             " bill_no ," +
             " customer_id, "+
             " customer_name ," +
             " customer_pan ," +
+            " bill_date, "+
             " amount  ," +
             " discount  ," +
             " taxable_amount  ," +
@@ -85,13 +92,17 @@ public interface SalesBillDAO {
             " payment_method ," +
             " vat_refund_amount  ," +
             " transaction_id,  " +
-            " company_id "+
+            " company_id, "+
+            " branch_id, "+
+            " draft, "+
+            " tax_approach"+
             ") values (" +
             " :fiscalYear," +
             " :billNo ," +
             " :customerId, "+
             " :customerName ," +
             " :customerPan ," +
+            " :billDate, "+
             " :amount  ," +
             " :discount  ," +
             " :taxableAmount  ," +
@@ -107,13 +118,16 @@ public interface SalesBillDAO {
             " :paymentMethod ," +
             " :vatRefundAmount  ," +
             " :transactionId , " +
-            " :companyId "+
+            " :companyId , "+
+            " :branchId, "+
+            " :draft, "+
+            " :taxApproach"+
             ")")
-     void addNewBill(@BindBean SalesBillDTO salesBillDTO);
+     int addNewBill(@BindBean SalesBillDTO salesBillDTO);
 
 
-    @SqlUpdate("UPDATE sales_bill SET status = false WHERE bill_no = :bill_no")
-    void deleteBillById(int  bill_no);
+    @SqlUpdate("UPDATE sales_bill SET status = false WHERE id = :billId")
+    void deleteBillById(int  billId);
 
 
     @SqlUpdate("update sales_bill set is_bill_printed = true , printed_time = :date , printed_by = :printerId" +
@@ -123,6 +137,7 @@ public interface SalesBillDAO {
 
     @SqlQuery("select   " +
             "  sb.fiscal_year as  fiscal_year,  " +
+            " sb.id as id, "+
             "  sb.bill_no as bill_no,  " +
             "  sb.customer_name as customer_name,  " +
             "  sb.customer_pan as customer_pan,  " +
@@ -141,11 +156,16 @@ public interface SalesBillDAO {
             "  sb.is_realtime as realtime,  " +
             "  sb.payment_method as payment_method,  " +
             "  sb.vat_refund_amount  as vat_refund_amount,  " +
-            "  sb.transaction_id  as transaction_id  " +
-            "    " +
-            " from sales_bill sb where sb.status = true and sb.company_id = :compId;")
+            "  sb.transaction_id  as transaction_id, " +
+            "  sb.company_id as company_id, " +
+            "  sb.draft as draft, " +
+            " sb.status as status"+
+            " from sales_bill sb where sb.status = true and sb.company_id = :compId and sb.branch_id = :branchId;")
     @RegisterBeanMapper(SalesBillDTO.class)
-    List<SalesBillDTO> getSalesBillByCompanyId(int compId);
+    List<SalesBillDTO> getSalesBillByCompanyId(int compId, int branchId);
+
+    @SqlUpdate("update sales_bill set bill_no = :billNo , draft=false where id = :billId")
+    void makeDraftFalse(String billNo, int billId);
     //mj printedBy ? id or name
 
 }

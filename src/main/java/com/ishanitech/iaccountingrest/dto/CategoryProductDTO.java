@@ -17,6 +17,7 @@ public class CategoryProductDTO {
     private int parentId;
     private int userId;
     private int companyId;
+    private int branchId;
     private Date createdDate;
     private Date editedDate;
     private List<CategoryProductDTO> childCategories;

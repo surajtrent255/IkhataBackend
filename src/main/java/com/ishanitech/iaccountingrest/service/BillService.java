@@ -14,5 +14,7 @@ public interface BillService {
 
         Integer printTheBill(int billId, int userId);
 
-    List<SalesBillDTO> getAllBillsByCompId(int compId);
+        List<SalesBillDTO> getAllBillsByCompId(int compId, int branchId);
+
+        Object approveTheBillById(int billId);
 }

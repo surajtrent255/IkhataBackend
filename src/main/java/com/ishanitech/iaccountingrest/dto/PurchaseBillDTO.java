@@ -15,6 +15,7 @@ public class PurchaseBillDTO {
     private int userId;
     private int sellerId;
     private int companyId;
+    private int branchId;
     private String fiscalYear ;
     private int purchaseBillNo ;
     private boolean billPrinted;

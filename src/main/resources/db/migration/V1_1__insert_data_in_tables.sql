@@ -10,18 +10,18 @@
     	VALUES ('nabin', 'hello There', 23456783245678, 02, 'bagmati', 'kathmandu', 'alocknagar', 01, 9848859416);
 
 
-    insert into bill_no_generator
-            (
-                fiscal_year,
-                bill_no,
-                active,
-                company_id,
-                branch_id
-            ) values
-            (
-                '2079/80',
-                1,
-                true,
-                1,
-                1
-            )
+    	insert into bill_no_generator
+        (
+            fiscal_year,
+            bill_no,
+            active,
+            company_id,
+            branch_id
+        ) values
+        (
+            '2079/80',
+            1,
+            true,
+            1,
+            1
+        )
