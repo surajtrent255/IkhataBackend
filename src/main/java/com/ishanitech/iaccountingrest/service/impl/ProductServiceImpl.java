@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -69,5 +70,22 @@ public class ProductServiceImpl implements ProductService {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
         List<InventoryProductsDTO> products = productDAO.getAllProductsForInventoryByUserIdAndCompanyIdAndBranchId(companyId, branchId);
         return products;
+    }
+
+    @Override
+    public List<ProductDTO> getAllProductsByProductsIds(int[] productsIds) {
+        String prodIds = "";
+        for(int i=0; i<productsIds.length; i++){
+            prodIds += productsIds[i]+",";
+
+        }
+        String newProdIds = prodIds.substring(0, prodIds.length()-1);
+        ProductDAO productDAO = dbService.getDao(ProductDAO.class);
+        List<ProductDTO> productDTOS = productDAO.getAllProductsByProductsIds(newProdIds);
+        System.out.println(newProdIds);
+
+        return productDTOS;
+
+
     }
 }

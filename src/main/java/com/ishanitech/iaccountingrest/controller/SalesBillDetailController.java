@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("/salesBillDetail")
@@ -26,6 +28,16 @@ public class SalesBillDetailController {
         } catch(Exception ex){
             log.error("error occured accesing sales info " + ex.getMessage());
             throw new CustomSqlException("error occured accesing sales info " + ex.getMessage());
+        }
+    }
+
+    @GetMapping("/getByBillId")
+    public ResponseDTO<List<SalesBillDetailDTO>> getSalesDetailByBillId(@RequestParam("billId") int billId){
+        try{
+            return new ResponseDTO<List<SalesBillDetailDTO>>(salesBillDetailService.getSaleBillDetailByBillId(billId));
+        } catch(Exception ex){
+            log.error("error occured accesing sales info by BillId" + ex.getMessage());
+            throw new CustomSqlException("error occured accesing sales info ByBillId" + ex.getMessage());
         }
     }
     @GetMapping

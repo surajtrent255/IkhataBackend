@@ -28,13 +28,15 @@ public interface SalesBillDAO {
             "  sb.is_bill_active  as bill_active,  " +
             "  sb.printed_time  as printed_time,  " +
             "  sb.entered_by  as entered_by,  " +
+            " sb.draft as draft, "+
+            " sb.status as status, "+
             "  sb.printed_by as printed_by,  " +
             "  sb.is_realtime as realtime,  " +
             "  sb.payment_method as payment_method,  " +
             "  sb.vat_refund_amount  as vat_refund_amount,  " +
             "  sb.transaction_id  as transaction_id  " +
             "    " +
-            " from sales_bill sb where sb.status = true ;")
+            " from sales_bill sb  ;")
     @RegisterBeanMapper(SalesBillDTO.class)
     List<SalesBillDTO> getAllBills();
 
@@ -42,11 +44,13 @@ public interface SalesBillDAO {
             " sb.id as id, "+
             "  sb.fiscal_year as  fiscal_year,  " +
             "  sb.bill_no as bill_no,  " +
+            "  sb.customer_id as customer_id, "+
             "  sb.customer_name as customer_name,  " +
             "  sb.customer_pan as customer_pan,  " +
             "  sb.bill_date as bill_date,   " +
             "  sb.amount  as amount,  " +
             "  sb.discount  as discount,  " +
+            "  sb.discount_approach as discount_approach, "+
             "  sb.taxable_amount  as taxable_amount,  " +
             "  sb.tax_amount  as tax_amount,  " +
             "  sb.total_amount  as total_amount,  " +
@@ -62,10 +66,11 @@ public interface SalesBillDAO {
             "  sb.company_id as company_id, "+
             " sb.branch_id as branch_id, "+
             " sb.draft as draft, "+
+            " sb.status as status, "+
             " sb.tax_approach as taxApproach," +
             "  sb.transaction_id  as transaction_id  " +
             "    " +
-            " from sales_bill sb where sb.status = true and sb.id = :id;")
+            " from sales_bill sb where  sb.id = :id;")
     @RegisterBeanMapper(SalesBillDTO.class)
     SalesBillDTO getBillById(int id);
 
@@ -79,6 +84,7 @@ public interface SalesBillDAO {
             " bill_date, "+
             " amount  ," +
             " discount  ," +
+            " discount_approach , "+
             " taxable_amount  ," +
             " tax_amount  ," +
             " total_amount  ," +
@@ -105,6 +111,7 @@ public interface SalesBillDAO {
             " :billDate, "+
             " :amount  ," +
             " :discount  ," +
+            " :discountApproach, "+
             " :taxableAmount  ," +
             " :taxAmount  ," +
             " :totalAmount  ," +
@@ -129,10 +136,12 @@ public interface SalesBillDAO {
     @SqlUpdate("UPDATE sales_bill SET status = false WHERE id = :billId")
     void deleteBillById(int  billId);
 
+    @SqlUpdate("delete from sales_bill where id = :billId")
+    void permanentBillDeleteById(int billId);
 
     @SqlUpdate("update sales_bill set is_bill_printed = true , printed_time = :date , printed_by = :printerId" +
-            " where bill_no = :billNo")
-    int printTheBillWithBillId(@Bind int billNo, @Bind Date date, @Bind int printerId);
+            " where id = :billId")
+    int printTheBillWithBillId(@Bind int billId, @Bind Date date, @Bind int printerId);
 
 
     @SqlQuery("select   " +
@@ -160,7 +169,7 @@ public interface SalesBillDAO {
             "  sb.company_id as company_id, " +
             "  sb.draft as draft, " +
             " sb.status as status"+
-            " from sales_bill sb where sb.status = true and sb.company_id = :compId and sb.branch_id = :branchId;")
+            " from sales_bill sb where  sb.company_id = :compId and sb.branch_id = :branchId;")
     @RegisterBeanMapper(SalesBillDTO.class)
     List<SalesBillDTO> getSalesBillByCompanyId(int compId, int branchId);
 

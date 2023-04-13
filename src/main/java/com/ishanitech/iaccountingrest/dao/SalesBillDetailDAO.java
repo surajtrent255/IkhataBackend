@@ -26,7 +26,7 @@ public interface SalesBillDetailDAO {
     List<SalesBillDetailDTO> getSalesInfoByBillId(int billId);
 
     @SqlQuery("SELECT sbd.id as id, sbd.product_id as product_id, sbd.qty as qty, sbd.date as date, sbd.rate as rate, " +
-            " sbd.discount_per_unit as discount_per_unit, sbd.bill_id as bill_id, sbd.company_id as company_id, sbd.row_total as row_total,  " +
+            " sbd.discount_per_unit as discount_per_unit, sbd.bill_id as bill_id, sbd.company_id as company_id, sbd.tax_rate as tax_rate, sbd.row_total as row_total,  " +
             " p.name as product_name  from sales_bill_detail sbd " +
             " inner join product p on p.id = sbd.product_id" +
             " where sbd.bill_id = :billId")

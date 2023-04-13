@@ -1,14 +1,3 @@
-CREATE TABLE "public.users"(
-   "id" SERIAL PRIMARY KEY,
-   "firstname" VARCHAR(50) NOT NULL,
-   "lastname" VARCHAR(50) NOT NULL,
-   "email" VARCHAR(50) UNIQUE NOT NULL,
-   "password" VARCHAR(600) NOT NULL,
-   "deleted" BOOLEAN DEFAULT FALSE,
-   "create_date" DATE DEFAULT NULL,
-   "edit_date" DATE DEFAULT NULL
-);
-
 CREATE TABLE users(
    "id" SERIAL PRIMARY KEY,
    "firstname" VARCHAR(50) NOT NULL,
@@ -62,7 +51,7 @@ CREATE TABLE  company (
   mun_vdc varchar(50) NOT NULL ,
   ward_no int NOT NULL ,
   deleted BOOLEAN DEFAULT FALSE,
-
+   customer boolean default false,
    phone bigint DEFAULT NULL,
   PRIMARY KEY (company_id),
 	constraint valid_number
@@ -139,6 +128,7 @@ create table sales_bill (
     bill_date Date not null,
     amount real not null,
     discount real not null,
+    discount_approach int not null,
     taxable_amount real not null,
     tax_amount real not null,
     total_amount real not null,

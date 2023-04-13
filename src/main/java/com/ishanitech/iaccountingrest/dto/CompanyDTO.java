@@ -26,6 +26,7 @@ public class CompanyDTO {
     private String munVdc;
 
     private int wardNo;
+    private boolean customer;
 
     private Long phone;
 

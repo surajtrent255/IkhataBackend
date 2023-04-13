@@ -43,4 +43,5 @@ public class SaleBillMasterDTO {
 //    private boolean status ;
     private List<SalesBillDetailDTO> salesBillDetails;
     private SalesBillDTO salesBillDTO;
+    private int alreadyDraft;
 }

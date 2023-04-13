@@ -1,44 +1,48 @@
 package com.ishanitech.iaccountingrest.dao;
 
+import com.ishanitech.iaccountingrest.dto.BillNoGenerationDTO;
 import com.ishanitech.iaccountingrest.dto.BillNoGeneratorDTO;
-import io.jsonwebtoken.impl.crypto.MacProvider;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public interface BillNoGeneratorDAO {
 
     @GetGeneratedKeys
-    @SqlUpdate("insert into bill_no_generator" +
-            "(" +
-            " fiscal_year," +
-            " bill_no," +
-            " active," +
-            " company_id,"+
-            " branch_id "+
-            ") values " +
-            "(" +
-            " :fiscalYear," +
-            " 1," +
-            " true" +
-            " :companyId, "+
-            " :branchId "+
-            ")")
-    int createNewFiscalYear(@Bind String fiscalYear, int companyId, int branchId);
+    @SqlUpdate("""
+            insert into bill_no_generator
+                        (
+                         fiscal_year,
+                         bill_no,
+                        active,
+                        company_id,
+                        branch_id
+                        ) values
+                        (
+                        :fiscalYear,
+            				1,
+            				true,
+            				:companyId,
+            				:branchId   
+                        )
+            """)
+    int createNewFiscalYear(@BindBean BillNoGenerationDTO billNoGenerationDTO);
 
     @SqlUpdate("update bill_no_generator set active = false where company_id = :companyId and branch_id = :branchId and fiscal_year != :fiscalYear;")
     void disableOtherYears(@Bind String fiscalYear, int companyId, int branchId);
 
     @Transactional
     default void initilizeBillNoForNewFiscalYear(String fiscalyear, int companyId, int branchId){
-        int fiscalYearearId = createNewFiscalYear( fiscalyear, companyId, branchId);
-        String fiscalYear = getCurrentFiscalYear(companyId, branchId);
+        BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
+        billNoGeneration.setFiscalYear(fiscalyear);
+        billNoGeneration.setCompanyId(companyId);
+        billNoGeneration.setBranchId(branchId);
+        int fiscalYearId = createNewFiscalYear(billNoGeneration);
+        String fiscalYear = getCurrentFiscalYear();
         disableOtherYears(fiscalYear, companyId, branchId);
     }
 
@@ -55,8 +59,8 @@ public interface BillNoGeneratorDAO {
         return currentBillNo;
     }
 
-    @SqlQuery("select bg.fiscal_year from bill_no_generator bg where bg.active = true and bg.company_id = :companyId and bg.branch_id = :branchId")
-    String getCurrentFiscalYear(int companyId, int branchId);
+    @SqlQuery("select bg.fiscal_year from bill_no_generator bg where bg.active = true LIMIT 1; ")
+    String getCurrentFiscalYear();
 
     @SqlQuery("select bng.id as id, bng.fiscal_year as fiscal_year, " +
             " bng.bill_no as bill_no, bng.active as active " +
