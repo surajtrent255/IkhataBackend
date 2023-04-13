@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
 import com.ishanitech.iaccountingrest.dao.UserDAO;
 import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
+import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.model.User;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
@@ -21,9 +22,9 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     private final DbService dbService;
 
     @Override
-    public void updateUserStatus(boolean status, int userId) {
+    public void updateUserRoleStatus(boolean status, int userId,int companyId,int roleId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        userConfigutarionDAO.updateUserStatus(status,userId);
+        userConfigutarionDAO.updateUserRoleStatus(status,userId,companyId,roleId);
     }
 
     @Override
@@ -33,31 +34,23 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     }
 
     @Override
-    public int addUserRole(int userId, int roleId) {
+    public int addUserRole(int userId,int companyId, int roleId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
 
         int savedCompanyId =0;
         try{
-            savedCompanyId = userConfigutarionDAO.addRoleToUser(userId,roleId);
+            savedCompanyId = userConfigutarionDAO.addRoleToUser(userId,companyId,roleId);
         }catch (JdbiException jdbiException){
-            log.error("error adding role to user");
+            log.error(jdbiException.getMessage());
         }
 
         return savedCompanyId;
 
     }
 
-    @Override
-    public void updateUserRoleCompany(int companyId, int userId) {
-        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        userConfigutarionDAO.updateUserRoleCompany(companyId,userId);
-    }
 
-    @Override
-    public void updateUserRole(int userId) {
-        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        userConfigutarionDAO.updateUserRole(userId);
-    }
+
+
 
     @Override
     public List<UserConfigDTO> getAllUser() {
@@ -76,5 +69,17 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     public List<UserConfigDTO> getAllUsersByCompanyId(int companyId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
         return userConfigutarionDAO.getUsersByCompanyId(companyId);
+    }
+
+    @Override
+    public List<UserConfigurationDTO> getUserRoleDetailsBasedOnCompanyId(int companyId) {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        return userConfigutarionDAO.getUserRoleDetailsBasedOnCompanyId(companyId);
+    }
+
+    @Override
+    public List<UserConfigurationDTO> getUserRoleDetailsBasedOnCompanyIdAndUserId(int companyId, int userId) {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        return userConfigutarionDAO.getUserRoleDetailsBasedOnCompanyIdAndUserId(companyId,userId);
     }
 }

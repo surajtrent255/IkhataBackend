@@ -286,3 +286,20 @@ INSERT INTO public.vat_rate_type(
 	VALUES (1, 'NO VAT', 0),
 (2, '0 VAT', 0),
 (3, '13% VAT', 13)
+
+
+CREATE TABLE  districts (
+  district_id   SERIAL ,
+  district_name varchar(50) ,
+  province_id int NOT NULL,
+  disabled bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (district_id)
+) ;
+
+
+CREATE TABLE province (
+  province_id SERIAL,
+  province_name varchar(50) ,
+  disabled bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (province_id)
+);

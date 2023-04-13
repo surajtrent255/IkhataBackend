@@ -8,21 +8,22 @@ import java.util.List;
 
 public interface UserConfigurationService {
 
-public void updateUserStatus(boolean status,int userId);
+public void updateUserRoleStatus(boolean status,int userId,int companyId,int roleId);
 
 public void updateUserCompanyStatus(boolean status,int userId);
 
-public int addUserRole(int userId,int roleId);
+public int addUserRole(int userId,int companyId,int roleId);
 
-public void updateUserRoleCompany(int companyId,int userId);
-
-public void updateUserRole(int userId);
 
     List<UserConfigDTO> getAllUser();
 
     void AssignCompanyToUser(int companyId,int userId);
 
     List<UserConfigDTO> getAllUsersByCompanyId(int companyId);
+
+    List<UserConfigurationDTO> getUserRoleDetailsBasedOnCompanyId(int companyId);
+
+    List<UserConfigurationDTO> getUserRoleDetailsBasedOnCompanyIdAndUserId(int companyId,int userId);
 
 
 

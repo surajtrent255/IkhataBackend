@@ -19,23 +19,29 @@ public class UserConfigurationController {
     private final UserConfigurationService userConfigurationService;
 
     @GetMapping("/{companyId}")
-    public ResponseDTO<?> getCompanyConfigurationDetails(@PathVariable("companyId") int companyId ){
+    public ResponseDTO<?> getUserRoleDetailsBasedOnCompanyId(@PathVariable("companyId") int companyId ){
+        return new ResponseDTO<>(userConfigurationService.getUserRoleDetailsBasedOnCompanyId(companyId));
+    }
 
-        return new ResponseDTO<>(userService.getUserConfigurationDetails(companyId));
+    @GetMapping("/{companyId}/{userId}")
+    public ResponseDTO<?> getUserRoleDetailsBasedOnCompanyIdAndUserId(@PathVariable("companyId") int companyId,@PathVariable("userId") int userId){
+        try {
+            return new ResponseDTO<>(userConfigurationService.getUserRoleDetailsBasedOnCompanyIdAndUserId(companyId,userId));
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return new ResponseDTO<>();
     }
 
     @GetMapping("/role")
-    public ResponseDTO<?> getCompanyConfigurationDetails(){
-
+    public ResponseDTO<?> getAllRoles(){
         return new ResponseDTO<>(userService.getAllRole());
     }
 
 
     @PostMapping("/update/role/status")
-    public String updateUserStatus(@RequestBody UserStatusDTO statusDTO){
-        boolean status = statusDTO.isStatus();
-        int userId = statusDTO.getUserId();
-        userConfigurationService.updateUserStatus(status,userId);
+    public String updateUserRoleStatus(@RequestParam("status") boolean status,@RequestParam("userId") int userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int roleId){
+        userConfigurationService.updateUserRoleStatus(status,userId,companyId,roleId);
         return "status updated successfully";
 
     }
@@ -47,22 +53,13 @@ public class UserConfigurationController {
 
     }
 
-    @PostMapping("/update/company")
-    public ResponseDTO<?> updateUserRoleCompany(@RequestBody UserConfigCompanyDTO userConfigCompanyDTO){
-        int companyId = userConfigCompanyDTO.getCompanyId();
-        int userId = userConfigCompanyDTO.getUserId();
-        userConfigurationService.updateUserRoleCompany(companyId,userId);
 
-        return new ResponseDTO<>("User Company Successfully updated");
-    }
 
     @PostMapping("/add/role")
-    public ResponseDTO<?> addUserRole(@RequestBody UserRoleConfigDTO userRoleConfigDTO){
-        int userId = userRoleConfigDTO.getUserId();
-        int roleId = userRoleConfigDTO.getRoleId();
+    public ResponseDTO<?> addUserRole(@RequestParam("userId") int userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int roleId){
         Integer result = null;
         try {
-            result = userConfigurationService.addUserRole(userId,roleId);
+            result = userConfigurationService.addUserRole(userId,companyId,roleId);
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException("Error adding Role to user");
@@ -77,7 +74,7 @@ public class UserConfigurationController {
         return new ResponseDTO<>(userConfigurationService.getAllUser()) ;
     }
 
-    @GetMapping("/assign/user")
+    @PostMapping("/assign/user")
     public ResponseDTO<?> assignCompanyToUser(@RequestParam("companyId") int companyId,@RequestParam("userId") int userId){
         try{
            userConfigurationService.AssignCompanyToUser(companyId,userId);

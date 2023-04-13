@@ -78,11 +78,7 @@ public class UserServiceImpl implements UserService {
         return savedUserId;
     }
 
-    @Override
-    public List<UserConfigurationDTO> getUserConfigurationDetails(int companyId) {
-        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        return userConfigutarionDAO.getUserConfigurationDetails(companyId);
-    }
+
 
     @Override
     public List<Role> getAllRole() {

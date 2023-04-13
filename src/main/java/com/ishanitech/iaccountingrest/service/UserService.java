@@ -19,8 +19,6 @@ public interface UserService {
 	User getUserById(int userId);
 	int addUser(User user, int roleId);
 
-	List<UserConfigurationDTO> getUserConfigurationDetails(int companyId);
-
 	List<Role> getAllRole();
 
 

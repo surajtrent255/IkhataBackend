@@ -58,4 +58,34 @@ public class BranchController {
         return new ResponseDTO<>();
     }
 
+    @GetMapping("/users")
+    public ResponseDTO<?> getBranchUsersByCompanyId(@RequestParam("companyId") int companyId){
+        try {
+            return new ResponseDTO<>(branchService.getBranchUserByCompanyId(companyId));
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return new ResponseDTO<>();
+    }
+
+    @PutMapping("/enable")
+    void enableDisableBranchUser(@RequestParam boolean status,@RequestParam int userId,@RequestParam int companyId,@RequestParam int branchId){
+        try {
+            branchService.enableDisableBranchUser(status,userId,companyId,branchId);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+
+    @GetMapping("/list/assign")
+    public ResponseDTO<?> getUserForAssignBranchList(@RequestParam int companyId){
+        try {
+           return new ResponseDTO<>(branchService.getUserForAssignBranchList(companyId)) ;
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return new ResponseDTO<>();
+    }
+
 }

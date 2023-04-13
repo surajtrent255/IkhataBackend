@@ -1,8 +1,10 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.BranchDAO;
+import com.ishanitech.iaccountingrest.dto.BranchConfigDTO;
 import com.ishanitech.iaccountingrest.dto.BranchDTO;
 import com.ishanitech.iaccountingrest.dto.UserBranchDTO;
+import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
 import com.ishanitech.iaccountingrest.service.BranchService;
 import com.ishanitech.iaccountingrest.service.DbService;
 import org.springframework.stereotype.Service;
@@ -46,5 +48,23 @@ public class BranchServiceImpl implements BranchService {
     public List<UserBranchDTO> getBranchDetailsBasedOnCompanyAndUserId(int companyId, int userId) {
         BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
         return branchDAO.getBranchDetailsByCompanyAndUserId(companyId,userId);
+    }
+
+    @Override
+    public List<BranchConfigDTO> getBranchUserByCompanyId(int companyId) {
+        BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
+        return branchDAO.getBranchUsersByCompanyId(companyId);
+    }
+
+    @Override
+    public void enableDisableBranchUser(boolean status, int userId, int companyId, int branchId) {
+        BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
+        branchDAO.enableDisableBranchUser(status,userId,companyId,branchId);
+    }
+
+    @Override
+    public List<UserConfigDTO> getUserForAssignBranchList(int companyId) {
+        BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
+        return branchDAO.getUserForAssignBranchList(companyId);
     }
 }
