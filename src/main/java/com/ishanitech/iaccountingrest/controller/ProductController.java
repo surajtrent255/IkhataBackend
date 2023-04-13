@@ -19,9 +19,6 @@ public class ProductController {
 
     private final ProductService productService;
 
-
-
-
     @GetMapping
     public ResponseDTO<List<ProductDTO>> getAllProducts(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId) {
         try {
