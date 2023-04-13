@@ -40,7 +40,7 @@ public interface BranchDAO {
 //  AND users.id  NOT IN (SELECT user_id FROM user_branch)
 
 //for Local Storage
-    @SqlQuery("SELECT * FROM user_branch WHERE company_id= :companyId AND user_id = :userId ")
+    @SqlQuery("SELECT * FROM user_branch WHERE company_id= :companyId AND user_id = :userId AND status=true")
     @RegisterBeanMapper(UserBranchDTO.class)
     List<UserBranchDTO> getBranchDetailsByCompanyAndUserId(@Bind("companyId") int companyId,@Bind("userId") int userId);
 
