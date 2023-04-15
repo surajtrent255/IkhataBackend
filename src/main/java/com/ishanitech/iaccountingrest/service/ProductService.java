@@ -18,4 +18,6 @@ public interface ProductService {
     void deleteProduct(int id);
 
     List<InventoryProductsDTO> getAllProductsForInventory( int companyId, int branchId);
+
+    List<ProductDTO> getAllProductsByProductsIds(int[] productsIds);
 }

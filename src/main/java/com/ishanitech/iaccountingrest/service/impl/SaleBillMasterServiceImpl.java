@@ -28,6 +28,10 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
     @Transactional
     @Override
     public ResponseDTO<Integer> addNewSaleBill(SaleBillMasterDTO saleBillMasterDTO) {
+        int alreadyDraft = saleBillMasterDTO.getAlreadyDraft();
+        if(alreadyDraft > 0){
+            dbService.getDao(SalesBillDAO.class).permanentBillDeleteById(alreadyDraft);//detail ko pani delete garna xa
+        }
         SalesBillDTO  salesBillDTO= saleBillMasterDTO.getSalesBillDTO();
         List<SalesBillDetailDTO> salesBillDetailDTOS = saleBillMasterDTO.getSalesBillDetails();
 
@@ -38,7 +42,7 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
                 BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
                 bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId());
             }
-            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId());
+            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear();
         } catch (Exception ex){
             log.error("genating billno() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while generating  bill no");

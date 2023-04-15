@@ -29,9 +29,18 @@ public class SalesBillDetailServiceImpl implements SalesBillDetailService {
         List<SalesBillDetailWithProdInfoDTO> salesBillDetailWithProdInfoDTOS = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoWithProdNameByBillId(billId);
         salesBillInvoiceDTO.setSalesBillDetailsWithProd(salesBillDetailWithProdInfoDTOS);
         salesBillInvoiceDTO.setSalesBillDTO(dbService.getDao(SalesBillDAO.class).getBillById(billId));
+        CompanyDTO customer = dbService.getDao(CompanyDAO.class).getCompanyByCompanyId(salesBillInvoiceDTO.getSalesBillDTO().getCustomerId());
+        salesBillInvoiceDTO.setCustomerAddress(customer.getMunVdc() +" "+ customer.getDistrict());
         int compId = salesBillInvoiceDTO.getSalesBillDTO().getCompanyId();
         CompanyDTO sellerCompany =  dbService.getDao(CompanyDAO.class).getCompanyByCompanyId(compId);
         salesBillInvoiceDTO.setSellerCompany(sellerCompany);
         return salesBillInvoiceDTO;
+    }
+
+    @Override
+    public List<SalesBillDetailDTO> getSaleBillDetailByBillId(int billId) {
+        List<SalesBillDetailDTO> salesBillDetailDTOS = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoByBillId(billId);
+
+        return salesBillDetailDTOS;
     }
 }

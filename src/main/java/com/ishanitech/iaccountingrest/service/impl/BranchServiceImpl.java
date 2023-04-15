@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
 import com.ishanitech.iaccountingrest.dao.BranchDAO;
 import com.ishanitech.iaccountingrest.dto.BranchConfigDTO;
+import com.ishanitech.iaccountingrest.dto.BillNoGenerationDTO;
 import com.ishanitech.iaccountingrest.dto.BranchDTO;
 import com.ishanitech.iaccountingrest.dto.UserBranchDTO;
 import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
@@ -32,15 +33,15 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public int addBranch(BranchDTO branchDTO) {
         BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
-        int branchAdded = branchDAO.addBranch(branchDTO);
-//        BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
-//        String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
-//        BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
-//        billNoGeneration.setFiscalYear(currentFiscalYear);
-//        billNoGeneration.setCompanyId(branchDTO.getCompanyId());
-//        billNoGeneration.setBranchId(branchAdded);
-//        billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
-        return branchAdded;
+      int branchAdded = branchDAO.addBranch(branchDTO);
+        BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+        String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
+        BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
+        billNoGeneration.setFiscalYear(currentFiscalYear);
+        billNoGeneration.setCompanyId(branchDTO.getCompanyId());
+        billNoGeneration.setBranchId(branchAdded);
+        billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
+      return branchAdded;
 
     }
 

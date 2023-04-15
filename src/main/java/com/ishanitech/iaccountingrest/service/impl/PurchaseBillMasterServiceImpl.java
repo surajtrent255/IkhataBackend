@@ -27,7 +27,7 @@ public class PurchaseBillMasterServiceImpl implements PurchaseBillMasterService 
         List<PurchaseBillDetailDTO> purchaseBillDetailDTOS = purchaseBillMasterDTO.getPurchaseBillDetails();
         String currentFiscalYear = null;
         try{
-            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear(purchaseBillDTO.getCompanyId(), purchaseBillDTO.getBranchId());
+            currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear();
         } catch (Exception ex){
             log.error("genating billno() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while generating  bill no");

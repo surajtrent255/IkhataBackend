@@ -29,7 +29,18 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/getProductsByIds")
+    public ResponseDTO<List<ProductDTO>> getAllProductsByProductsId(@RequestParam("productsIds") int[] productsIds){
+        try{
+            int [] arrProductsIds = productsIds;
+            return new ResponseDTO<List<ProductDTO>>(productService.getAllProductsByProductsIds(productsIds));
+        }catch(Exception ex){
+            log.error("error during fetching products by ids " + ex.getMessage());
+            throw new CustomSqlException("Something went wrong !! ");
+        }
 
+
+    }
     @GetMapping("/inventory")
     public ResponseDTO<List<InventoryProductsDTO>> getAllProductsForInventory(
 //            @RequestParam("userId") int userId ,

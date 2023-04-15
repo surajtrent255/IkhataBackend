@@ -71,10 +71,10 @@ public class SalesBillController {
         }
     }
 
-    @PostMapping("/print/{billNo}")
-    public ResponseDTO<Integer> printTheBill(@PathVariable int billNo, @RequestBody Map<String, Integer> printMap){
+    @PostMapping("/print/{billId}")
+    public ResponseDTO<Integer> printTheBill(@PathVariable int billId, @RequestBody Map<String, Integer> printMap){
         try{
-            return new ResponseDTO<Integer>(billService.printTheBill(billNo, printMap.get("printerId")));
+            return new ResponseDTO<Integer>(billService.printTheBill(billId, printMap.get("printerId")));
         } catch(Exception ex){
             log.error("error occured while updating printing info");
             throw new CustomSqlException("Something went wrong while updating printing info");

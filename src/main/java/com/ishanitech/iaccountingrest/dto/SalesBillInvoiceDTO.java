@@ -14,6 +14,7 @@ public class SalesBillInvoiceDTO {
     private List<SalesBillDetailWithProdInfoDTO> salesBillDetailsWithProd;
     private SalesBillDTO salesBillDTO;
     private CompanyDTO sellerCompany;
+    private String customerAddress;
 
 }
 

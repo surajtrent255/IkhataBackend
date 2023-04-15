@@ -19,5 +19,6 @@ public class SalesBillDetailWithProdInfoDTO {
     private int billId;
     private int companyId;
     private String productName;
+    private int taxRate;
     private double rowTotal;
 }

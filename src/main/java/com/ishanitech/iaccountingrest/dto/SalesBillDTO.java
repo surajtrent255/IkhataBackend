@@ -26,6 +26,7 @@ public class SalesBillDTO {
     private Date billDate  ;
     private double amount ;
     private double discount ;
+    private int discountApproach;
     private double taxableAmount ;
     private double taxAmount ;
     private double  totalAmount ;
