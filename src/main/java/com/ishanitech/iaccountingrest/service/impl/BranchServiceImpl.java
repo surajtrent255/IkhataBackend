@@ -33,13 +33,13 @@ public class BranchServiceImpl implements BranchService {
     public int addBranch(BranchDTO branchDTO) {
         BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
         int branchAdded = branchDAO.addBranch(branchDTO);
-        BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
-        String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
-        BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
-        billNoGeneration.setFiscalYear(currentFiscalYear);
-        billNoGeneration.setCompanyId(branchDTO.getCompanyId());
-        billNoGeneration.setBranchId(branchAdded);
-        billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
+//        BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+//        String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
+//        BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
+//        billNoGeneration.setFiscalYear(currentFiscalYear);
+//        billNoGeneration.setCompanyId(branchDTO.getCompanyId());
+//        billNoGeneration.setBranchId(branchAdded);
+//        billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
         return branchAdded;
 
     }
