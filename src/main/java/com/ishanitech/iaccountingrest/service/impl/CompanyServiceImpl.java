@@ -9,6 +9,7 @@ import org.jdbi.v3.core.JdbiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,5 +61,26 @@ companyDAO.deleteCompany(companyId);
     public List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
         return companyDAO.getCompanyByUserId(userId);
+    }
+
+    @Override
+    public List<CompanyDTO> getCustomerInfosByPanOrPhone(int searchMethod, long customerPhoneOrPan) {
+        List<CompanyDTO> customersInfos  = new ArrayList<>();
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        CompanyDTO customer = null;
+        List<CompanyDTO> customerDTOS = new ArrayList<>();
+        switch (searchMethod) {
+            case 1 -> {
+                customer = companyDAO.getCompanyByPanNo(customerPhoneOrPan);
+                if(customer != null){
+                    customersInfos.add(customer);
+                }
+            }
+            case 2 -> {
+                customerDTOS = companyDAO.getCompanyByPhoneNo(customerPhoneOrPan);
+                customersInfos.addAll(customerDTOS);
+            }
+        }
+        return customersInfos;
     }
 }

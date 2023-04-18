@@ -27,9 +27,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductById(Integer id) {
+    public ProductDTO getProductById(Integer id, int compId, int branchId) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
-        ProductDTO product =   productDAO.getProductById(id);
+        ProductDTO product =   productDAO.getProductById(id, compId, branchId);
         return product;
     }
 

@@ -72,4 +72,7 @@ public interface CompanyDAO {
    CompanyDTO getCompanyByCompanyId(@Bind("compId") int compId );
 
 
+    @SqlQuery("select * from company  where phone = :customerPhone ")
+    @RegisterBeanMapper(CompanyDTO.class)
+    List<CompanyDTO> getCompanyByPhoneNo(long customerPhone);
 }
