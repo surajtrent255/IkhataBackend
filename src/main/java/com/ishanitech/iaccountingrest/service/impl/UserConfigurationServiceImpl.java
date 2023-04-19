@@ -34,28 +34,23 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     }
 
     @Override
-    public int addUserRole(int userId,int companyId, int roleId) {
+    public void addUserRole(int userId,int companyId, int [] roleId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        int NewRoleId;
 
-        int savedCompanyId =0;
-        try{
-            savedCompanyId = userConfigutarionDAO.addRoleToUser(userId,companyId,roleId);
-        }catch (JdbiException jdbiException){
-            log.error(jdbiException.getMessage());
+        for(int i=0;i<roleId.length;i++){
+            NewRoleId = roleId[i];
+            userConfigutarionDAO.addRoleToUser(userId,companyId,NewRoleId);
         }
-
-        return savedCompanyId;
+        
 
     }
 
 
-
-
-
     @Override
-    public List<UserConfigDTO> getAllUser() {
+    public List<UserConfigDTO> getAllUser(int companyId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        return  userConfigutarionDAO.getAllUser();
+        return  userConfigutarionDAO.getAllUser(companyId);
     }
 
     @Override

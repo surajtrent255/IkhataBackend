@@ -56,10 +56,9 @@ public class UserConfigurationController {
 
 
     @PostMapping("/add/role")
-    public ResponseDTO<?> addUserRole(@RequestParam("userId") int userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int roleId){
-        Integer result = null;
+    public ResponseDTO<?> addUserRole(@RequestParam("userId") int userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int[] roleId){
         try {
-            result = userConfigurationService.addUserRole(userId,companyId,roleId);
+            userConfigurationService.addUserRole(userId,companyId,roleId);
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException("Error adding Role to user");
@@ -70,8 +69,8 @@ public class UserConfigurationController {
 
 
     @GetMapping("/users")
-    public ResponseDTO<?> getAllUsers(){
-        return new ResponseDTO<>(userConfigurationService.getAllUser()) ;
+    public ResponseDTO<?> getAllUsers(@RequestParam("companyId") int companyId){
+        return new ResponseDTO<>(userConfigurationService.getAllUser(companyId)) ;
     }
 
     @PostMapping("/assign/user")

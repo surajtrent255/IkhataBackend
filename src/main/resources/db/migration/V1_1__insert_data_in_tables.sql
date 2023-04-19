@@ -115,3 +115,27 @@ INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES
      	(5, 'Lumbini Province', b'0'),
      	(6, 'Karnali Province',b'0'),
      	(7, 'Sudurpashchim Province', b'0');
+
+
+  INSERT INTO municipality (municipality_id, municipality_name,province_id, district_id, disabled) VALUES
+     	(1, 'Kathmandu Metropolitan City', 3, 35, b'0'),
+     	(2, 'Budanilkantha Municipality',3, 35, b'0'),
+     	(3, 'Chandragiri Municipality', 3, 35, b'0'),
+     	(4, 'Dakshinkali Municipality',3, 35, b'0'),
+     	(5, 'Gokarneshwar Municipality', 3, 35, b'0'),
+     	(6, 'Kageshwari Manohara Municipality', 3, 35, b'0'),
+     	(7, 'Kirtipur Municipality', 3, 35, b'0'),
+     	(8, 'Nagarjun Municipality', 3, 35, b'0'),
+     	(9, 'Shankharapur Municipality', 3, 35, b'0'),
+     	(10, 'Tarakeshwar Municipality',3, 35, b'0'),
+     	(11, 'Tokha Municipality', 3, 35, b'0'),
+     	(12, 'Lalitpur Metropolitan City', 3, 38, b'0'),
+     	(13, 'Mahalaxmi Municipality', 3, 38, b'0'),
+     	(14, 'Godawari Municipality',3, 38, b'0'),
+     	(15, 'Konjyoson Rural Municipality', 3, 38, b'0'),
+     	(16, 'Bagmati Rural Municipality',3, 38, b'0'),
+     	(17, 'Mahankal Rural Municipality', 3, 38, b'0'),
+     	(18, 'Bhaktapur Municipality', 3, 10, b'0'),
+     	(19, 'Changunarayan Municipality',3, 10, b'0'),
+     	(20, 'Madhyapur Thimi Municipality', 3, 10, b'0'),
+     	(21, 'Suryabinayak Municipality', 3, 10, b'0');

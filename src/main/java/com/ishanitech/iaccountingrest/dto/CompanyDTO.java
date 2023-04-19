@@ -18,9 +18,7 @@ public class CompanyDTO {
     private Long panNo;
 
     private int state;
-
-    private String zone;
-
+    
     private String district;
 
     private String munVdc;

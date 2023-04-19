@@ -46,7 +46,6 @@ CREATE TABLE  company (
   description text NOT NULL,
   pan_no bigint NOT NULL ,
   state int Default NULL  ,
-  zone varchar(50) NOT NULL ,
   district varchar(50) NOT NULL ,
   mun_vdc varchar(50) NOT NULL ,
   ward_no int NOT NULL ,
@@ -243,7 +242,6 @@ create table stock (
       description text NOT NULL,
       pan_no bigint NOT NULL ,
       state int Default NULL  ,
-      zone varchar(50) NOT NULL ,
       district varchar(50) NOT NULL ,
       mun_vdc varchar(50) NOT NULL ,
       ward_no int NOT NULL ,
@@ -293,3 +291,12 @@ CREATE TABLE province (
   disabled bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (province_id)
 );
+
+CREATE TABLE municipality (
+  municipality_id SERIAL,
+  municipality_name varchar(150)   NOT NULL,
+  province_id int NOT NULL,
+  district_id int NOT NULL,
+  disabled bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (municipality_id)
+)

@@ -16,7 +16,7 @@ import java.util.List;
 public interface CompanyDAO {
 
     @GetGeneratedKeys
-    @SqlUpdate(" insert into company( name, description, pan_no, state, zone, district, mun_vdc, ward_no, phone, customer) values ( :name, :description, :panNo, :state, :zone, :district, :munVdc, :wardNo, :phone, :customer)")
+    @SqlUpdate(" insert into company( name, description, pan_no, state,  district, mun_vdc, ward_no, phone, customer) values ( :name, :description, :panNo, :state,  :district, :munVdc, :wardNo, :phone, :customer)")
     Integer addCompany(@BindBean CompanyDTO companyDTO);
 
     @Transaction
@@ -45,7 +45,6 @@ public interface CompanyDAO {
             + ",c.description as description"
             + ",c.pan_no as panNo "
             + ",c.state as state "
-            + ", c.zone as zone "
             + ", c.district as district"
             + ", c.mun_vdc as munVdc,"
             + "c.ward_no as wardNo"
@@ -61,7 +60,6 @@ public interface CompanyDAO {
             + ",c.description as description"
             + ",c.pan_no as panNo "
             + ",c.state as state "
-            + ", c.zone as zone "
             + ", c.district as district"
             + ", c.mun_vdc as munVdc,"
             + "c.ward_no as wardNo"

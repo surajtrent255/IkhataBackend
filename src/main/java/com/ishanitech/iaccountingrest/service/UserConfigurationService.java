@@ -12,10 +12,10 @@ public void updateUserRoleStatus(boolean status,int userId,int companyId,int rol
 
 public void updateUserCompanyStatus(boolean status,int userId);
 
-public int addUserRole(int userId,int companyId,int roleId);
+public void addUserRole(int userId,int companyId,int[] roleId);
 
 
-    List<UserConfigDTO> getAllUser();
+    List<UserConfigDTO> getAllUser(int companyId);
 
     void AssignCompanyToUser(int companyId,int userId);
 
