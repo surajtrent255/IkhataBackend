@@ -63,10 +63,19 @@ public class UserConfigurationController {
             log.error(e.getMessage());
             throw new CustomSqlException("Error adding Role to user");
         }
-
         return new ResponseDTO<>("Successfully Added Role To User");
     }
 
+    @PostMapping("/add/multiple/user/role")
+    public ResponseDTO<?> addMultipleUserRole(@RequestParam("userId") int[] userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int roleId){
+        try {
+            userConfigurationService.addMultipleUserRole(userId,companyId,roleId);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException("Error adding Role to Multiple user");
+        }
+        return new ResponseDTO<>("Successfully Added Role To Multiple User");
+    }
 
     @GetMapping("/users")
     public ResponseDTO<?> getAllUsers(@RequestParam("companyId") int companyId){
@@ -74,7 +83,7 @@ public class UserConfigurationController {
     }
 
     @PostMapping("/assign/user")
-    public ResponseDTO<?> assignCompanyToUser(@RequestParam("companyId") int companyId,@RequestParam("userId") int userId){
+    public ResponseDTO<?> assignCompanyToUser(@RequestParam("companyId") int companyId,@RequestParam("userId") int[] userId){
         try{
            userConfigurationService.AssignCompanyToUser(companyId,userId);
             return new ResponseDTO<>("Successfully assigned");
