@@ -40,9 +40,9 @@ public class CategoryProductServiceImpl implements CategoryProductService {
         });
 
         //Arranging in hierarchy
-//        List<CategoryProductDTO> categoryListHierarchy = cleanCategoryCreator(categories);
+        List<CategoryProductDTO> categoryListHierarchy = cleanCategoryCreator(categories);
 
-        return categories;
+        return categoryListHierarchy;
     }
 
     @Override

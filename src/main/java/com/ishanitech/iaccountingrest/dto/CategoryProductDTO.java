@@ -20,13 +20,14 @@ public class CategoryProductDTO {
     private int branchId;
     private Date createdDate;
     private Date editedDate;
-    private List<CategoryProductDTO> childCategories;
+    private List<CategoryProductDTO> childCategories = new ArrayList<>();
+    private boolean showChildren;
 
     public CategoryProductDTO(int id, String name, int parentId) {
         this.id = id;
         this.name = name;
         this.parentId = parentId;
-        this.childCategories = new ArrayList<>();
+//        this.childCategories = new ArrayList<>();
     }
 
     public void addChildCategory(CategoryProductDTO childCategory) {
