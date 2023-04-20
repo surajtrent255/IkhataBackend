@@ -41,6 +41,8 @@ public class SalesBillDTO {
     private int branchId;
     private boolean draft;
     private int taxApproach;
+    private int customerSearchMethod;
+    private int printCount;
 
 
 }

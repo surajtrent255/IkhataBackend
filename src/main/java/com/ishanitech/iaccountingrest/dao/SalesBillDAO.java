@@ -68,8 +68,8 @@ public interface SalesBillDAO {
             " sb.draft as draft, "+
             " sb.status as status, "+
             " sb.tax_approach as taxApproach," +
-            "  sb.transaction_id  as transaction_id  " +
-            "    " +
+            "  sb.transaction_id  as transaction_id , " +
+            "   sb.customer_search_method as customerSearchMethod " +
             " from sales_bill sb where  sb.id = :id;")
     @RegisterBeanMapper(SalesBillDTO.class)
     SalesBillDTO getBillById(int id);
@@ -101,7 +101,9 @@ public interface SalesBillDAO {
             " company_id, "+
             " branch_id, "+
             " draft, "+
-            " tax_approach"+
+            " tax_approach, "+
+            " customer_search_method, "+
+            " print_count"+
             ") values (" +
             " :fiscalYear," +
             " :billNo ," +
@@ -128,7 +130,9 @@ public interface SalesBillDAO {
             " :companyId , "+
             " :branchId, "+
             " :draft, "+
-            " :taxApproach"+
+            " :taxApproach, "+
+            " :customerSearchMethod,"+
+            " 0"+
             ")")
      int addNewBill(@BindBean SalesBillDTO salesBillDTO);
 
@@ -139,7 +143,7 @@ public interface SalesBillDAO {
     @SqlUpdate("delete from sales_bill where id = :billId")
     void permanentBillDeleteById(int billId);
 
-    @SqlUpdate("update sales_bill set is_bill_printed = true , printed_time = :date , printed_by = :printerId" +
+    @SqlUpdate("update sales_bill set is_bill_printed = true, print_count = print_count+1,  printed_time = :date , printed_by = :printerId" +
             " where id = :billId")
     int printTheBillWithBillId(@Bind int billId, @Bind Date date, @Bind int printerId);
 

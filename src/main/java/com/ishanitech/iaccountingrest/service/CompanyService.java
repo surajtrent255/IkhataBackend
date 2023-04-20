@@ -16,6 +16,5 @@ public interface CompanyService {
 
     List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId);
 
-
-
+    List<CompanyDTO> getCustomerInfosByPanOrPhone(int searchMethod, long customerPhoneOrPan);
 }

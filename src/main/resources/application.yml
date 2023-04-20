@@ -52,7 +52,7 @@ rest-microservice-api:
 
 database:
   username: postgres
-  password: root
+  password: Postgres1*#
   databaseName: iaccountingdb
   port: 5432
   driverClassName: org.postgresql.Driver

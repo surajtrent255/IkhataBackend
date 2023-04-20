@@ -9,7 +9,7 @@ public interface ProductService {
 
     List<ProductDTO> getAllProducts(int comId, int branchId);
 
-    ProductDTO getProductById(Integer id);
+    ProductDTO getProductById(Integer id, int compId, int branchId);
 
     Integer addNewProduct(ProductDTO product);
 

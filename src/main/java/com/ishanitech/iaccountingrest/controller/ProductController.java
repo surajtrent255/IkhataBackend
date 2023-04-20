@@ -55,9 +55,9 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseDTO<ProductDTO> getProductById(@PathVariable("productId") Integer id) {
+    public ResponseDTO<ProductDTO> getProductById(@PathVariable("productId") Integer id, @RequestParam("compId") int compId, @RequestParam("branchId") int branchId) {
         try {
-            return new ResponseDTO<ProductDTO>(productService.getProductById(id));
+            return new ResponseDTO<ProductDTO>(productService.getProductById(id, compId, branchId));
         } catch (Exception e) {
             log.error("error occured while fetching product with id " + id + " " + e.getMessage());
             throw new CustomSqlException("error occured while fetching product with id " + id + " ");

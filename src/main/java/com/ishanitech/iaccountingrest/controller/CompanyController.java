@@ -63,4 +63,15 @@ public class CompanyController {
     }
 
 
+    @GetMapping("/searchBy")
+    public ResponseDTO<List<CompanyDTO>> fetchCustomer(@RequestParam("searchMethod") int searchMethod, @RequestParam("customerPhoneOrPan") long customerPhoneOrPan){
+        try{
+            return new ResponseDTO<List<CompanyDTO>>(companyService.getCustomerInfosByPanOrPhone(searchMethod, customerPhoneOrPan));
+        } catch(Exception ex){
+            log.error("something went wrong while fetching customer infos " + ex.getMessage());
+            throw new CustomSqlException("something went wrong while fetching customerInfos" );
+        }
+    }
+
+
 }

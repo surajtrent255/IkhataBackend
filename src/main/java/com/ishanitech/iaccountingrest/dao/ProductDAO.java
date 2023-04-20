@@ -22,9 +22,9 @@ public interface ProductDAO {
 
     @SqlQuery("SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id,  p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, " +
             " p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date" +
-            " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.id = :id AND p.deleted = false " )
+            " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.id = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false " )
     @RegisterBeanMapper(ProductDTO.class)
-    ProductDTO getProductById(Integer id );
+    ProductDTO getProductById(Integer id, int compId, int branchId );
 
     @GetGeneratedKeys
     @SqlUpdate("INSERT INTO product (name, description, selling_price, cost_price, user_id, company_id, branch_id, seller_id, category_id, barcode, discount )" +

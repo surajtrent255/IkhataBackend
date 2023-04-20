@@ -145,7 +145,9 @@ create table sales_bill (
     company_id int not null,
     branch_id int not null,
     draft boolean default false,
-    tax_approach int not null
+    tax_approach int not null,
+    customer_search_method int not null
+
 );
 
 
