@@ -2,7 +2,6 @@ package com.ishanitech.iaccountingrest.service;
 
 import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
 import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
-import com.ishanitech.iaccountingrest.model.User;
 
 import java.util.List;
 

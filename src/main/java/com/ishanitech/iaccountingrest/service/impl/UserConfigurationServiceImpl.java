@@ -1,15 +1,12 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
-import com.ishanitech.iaccountingrest.dao.UserDAO;
 import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
 import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
-import com.ishanitech.iaccountingrest.model.User;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,8 +39,6 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
             NewRoleId = roleId[i];
             userConfigutarionDAO.addRoleToUser(userId,companyId,NewRoleId);
         }
-        
-
     }
 
     @Override
@@ -55,7 +50,6 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
             newUserId = userId[i];
             userConfigutarionDAO.addRoleToUser(newUserId,companyId,roleId);
         }
-
     }
 
 
@@ -73,8 +67,6 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
             newUserId = userId[i];
             userConfigutarionDAO.AssignCompanyToUser(companyId,newUserId);
         }
-
-
     }
 
     @Override
