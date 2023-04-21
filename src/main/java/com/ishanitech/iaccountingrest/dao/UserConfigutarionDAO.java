@@ -37,11 +37,12 @@ public interface UserConfigutarionDAO {
     int addRoleToUser(@Bind("userId") int userId,@Bind("companyId") int companyId,@Bind("roleId") int roleId);
 
 
-//    Naya Banauna parxa
-    @SqlQuery("SELECT DISTINCT users.id as userId, users.firstname as firstName, users.lastname as lastName, users.email as email " +
+
+    @SqlQuery(" SELECT DISTINCT users.id as userId, users.firstname as firstName, users.lastname as lastName, users.email as email " +
             " FROM users " +
             " LEFT JOIN user_company ON users.id = user_company.user_id " +
-            " WHERE user_company.company_id <> :companyId OR user_company.company_id IS NULL; ")
+            " WHERE (user_company.company_id <> :companyId OR user_company.company_id IS NULL) " +
+            " AND users.id NOT IN (SELECT user_id FROM user_company WHERE company_id = :companyId); ")
     @RegisterBeanMapper(UserConfigDTO.class)
     List<UserConfigDTO> getAllUser(@Bind int companyId);
 

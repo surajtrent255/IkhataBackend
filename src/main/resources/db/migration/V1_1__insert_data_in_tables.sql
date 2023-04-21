@@ -139,3 +139,10 @@ INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES
      	(19, 'Changunarayan Municipality',3, 10, b'0'),
      	(20, 'Madhyapur Thimi Municipality', 3, 10, b'0'),
      	(21, 'Suryabinayak Municipality', 3, 10, b'0');
+
+     	 INSERT INTO payment_mode (id, mode_name) VALUES
+             	(1, 'cash' ),
+             	(2, 'cheque'),
+             	(3, 'bank_redirect'),
+             	(4, 'ebanking');
+

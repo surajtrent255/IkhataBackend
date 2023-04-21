@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsersForConfigurationDTO {
+public class PaymentModeDTO {
 
-    private String firstname;
+    private int id;
 
-    private String lastname;
+    private String modeName;
 
-    private String email;
+    private String description;
 
     private boolean status;
-
 }

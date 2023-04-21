@@ -227,7 +227,7 @@ CREATE TABLE "purchase_bill_detail"(
 
 create table stock (
     id serial primary key,
-    product_id int not null,
+                product_id int not null,
     qty int not null,
     company_id int not null,
     branch_id int not null,
@@ -301,4 +301,50 @@ CREATE TABLE municipality (
   district_id int NOT NULL,
   disabled bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (municipality_id)
-)
+);
+
+
+CREATE TABLE payment (
+  SN SERIAL,
+  company_id int DEFAULT NULL,
+  party_id int NOT NULL,
+  amount REAL NOT NULL,
+  payment_mode_id INT NOT NULL,
+  tds_deducted real DEFAULT 0,
+  post_datecheck boolean DEFAULT FALSE,
+  branch_id int DEFAULT NULL,
+  date DATE DEFAULT NULL,
+  status boolean DEFAULT TRUE,
+
+  PRIMARY KEY (SN)
+);
+
+CREATE TABLE payment_mode(
+	id SERIAL,
+	mode_name 	VARCHAR(50) NOT NULL,
+	description VARCHAR(50) DEFAULT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY(id)
+
+);
+
+CREATE TABLE post_date_check(
+
+	Sn SERIAL,
+	checkNo bigint  NOT NULL,
+	payment_id int NOT NULL,
+	pay_date DATE DEFAULT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY(Sn)
+);
+
+--drop scripts
+DELETE FROM branch;
+DELETE FROM company;
+DELETE FROM token;
+DELETE FROM user_branch;
+DELETE FROM user_company;
+DELETE FROM user_role;
+DELETE FROM users;
+DELETE FROM payment;
+
