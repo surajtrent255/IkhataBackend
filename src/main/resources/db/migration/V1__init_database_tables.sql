@@ -269,13 +269,9 @@ create table vat_rate_type (
 	id serial not null,
 	vate_rate varchar(50) not null,
 	vat_rate_num real not null
-)
+);
 
-INSERT INTO public.vat_rate_type(
-	id, vate_rate, vat_rate_num)
-	VALUES (1, 'NO VAT', 0),
-(2, '0 VAT', 0),
-(3, '13% VAT', 13)
+
 
 
 CREATE TABLE  districts (
@@ -302,3 +298,30 @@ CREATE TABLE municipality (
   disabled bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (municipality_id)
 )
+
+create table public.loan (
+	id  serial not null,
+	company_id int not null,
+	bank_id int not null,
+	lender_id int not null,
+	loan_type int not null,
+	loan_number int not null,
+	loan_name int not null,
+	loan_amount real not null,
+	received_amount real not null,
+	service_charge real ,
+	other_expenses real
+);
+
+create table loan_type (
+	id serial not null,
+	loan_type_index int not null,
+	loan_type varchar(40) not null
+);
+
+create table loan_name(
+	id serial not null,
+	loan_name_index int not null,
+	loan_name varchar(40) not null
+
+);

@@ -5,11 +5,6 @@
 	(4, 'MANAGER',''),
 	(5, 'SUPER_ADMIN','');
 
-	INSERT INTO public.company(
-    	 name, description, pan_no, state, zone, district, mun_vdc, ward_no, phone)
-    	VALUES ('nabin', 'hello There', 23456783245678, 02, 'bagmati', 'kathmandu', 'alocknagar', 01, 9848859416);
-
-
     	insert into bill_no_generator
         (
             fiscal_year,
@@ -25,6 +20,16 @@
             1,
             1
         )
+INSERT INTO public.vat_rate_type(
+	id, vate_rate, vat_rate_num)
+	VALUES (1, 'NO VAT', 0),
+(2, '0 VAT', 0),
+(3, '13% VAT', 13)
+
+insert into loan_type (loan_type_index,loan_type) values (1, 'TERM'),
+(2,'OD');
+insert into loan_name(loan_name_index, loan_name) values(1, 'HOME_LOAN'),
+(2, 'LAND_LOAN');
 
 
 INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES (1, 'Achham', 7, b'0'),
