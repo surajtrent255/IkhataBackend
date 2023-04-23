@@ -17,8 +17,8 @@ public interface CategoryProductDAO {
     @SqlUpdate(" insert into category(name, description, parent_id, user_id, company_id, branch_id, create_date) values (:name, :description, :parentId, :userId, :companyId, :branchId, :createdDate)")
     Integer addCategory(@BindBean CategoryProductDTO categoryDTO);
 
-    @SqlUpdate("Update category set deleted = true where id = :categoryId;")
-    void deleteCategory(@Bind("categoryId") Integer categoryId);
+    @SqlUpdate("Update category set deleted = true where id = :categoryId and company_id = :compId and branch_id = :branchId;")
+    void deleteCategory(@Bind("categoryId") Integer categoryId, Integer compId, Integer branchId);
 
     @SqlQuery("SELECT * FROM category WHERE deleted = false and company_id = :compId and branch_id = :branchId")
     @RegisterBeanMapper(CategoryProductDTO.class)

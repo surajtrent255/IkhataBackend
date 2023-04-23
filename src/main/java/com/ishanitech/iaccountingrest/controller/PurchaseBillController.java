@@ -29,9 +29,9 @@ public class PurchaseBillController {
     }
 
     @GetMapping("/company")
-    public ResponseDTO<List<PurchaseBillDTO>> getAllPurchaseBillByCompanyId(@RequestParam("compId") int compId){
+    public ResponseDTO<List<PurchaseBillDTO>> getAllPurchaseBillByCompanyIdAndBranchId(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId){
         try{
-            return new ResponseDTO<List<PurchaseBillDTO>>(purchaseBillService.getAllPurchaseBillsByCompanyId(compId));
+            return new ResponseDTO<List<PurchaseBillDTO>>(purchaseBillService.getAllPurchaseBillsByCompanyId(compId, branchId));
         } catch(Exception e){
             log.error("error occured while fetching purchase bills : " + e.getMessage());
             throw new CustomSqlException("Error occured while fetching purchase bills");

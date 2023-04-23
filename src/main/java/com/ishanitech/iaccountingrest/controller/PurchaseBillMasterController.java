@@ -18,7 +18,7 @@ public class PurchaseBillMasterController {
     private final PurchaseBillMasterService purchaseBillMasterService;
 
     @PostMapping
-    public ResponseDTO<Integer> addSaleBils(@RequestBody PurchaseBillMasterDTO purchaseBillMasterDTO){
+    public ResponseDTO<Integer> addSaleBills(@RequestBody PurchaseBillMasterDTO purchaseBillMasterDTO){
         return purchaseBillMasterService.addNewPurchaseBill(purchaseBillMasterDTO);
     }
 

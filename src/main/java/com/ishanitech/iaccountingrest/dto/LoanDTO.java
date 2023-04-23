@@ -9,15 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoanDTO {
 
-    private int id;
-    private int companyId;
-    private int bankId;
-    private int lenderId;
-    private int loanType;
-    private long loanNumber;
-    private int loanName;
-    private double loanAmount;
-    private double receivedAmount;
-    private double serviceCharge;
-    private double otherExpenses;
+    private Integer id;
+    private Integer companyId;
+    private Integer branchId;
+    private Integer bankId;
+    private Integer lenderId;
+    private Integer loanType;
+    private Long loanNumber;
+    private Integer loanName;
+    private Double loanAmount;
+    private Double receivedAmount;
+    private Double serviceCharge;
+    private Double otherExpenses;
 }

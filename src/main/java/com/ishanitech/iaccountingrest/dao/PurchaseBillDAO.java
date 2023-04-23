@@ -35,6 +35,7 @@ public interface PurchaseBillDAO {
          " fiscal_year ," +
          " purchase_bill_no ," +
          " company_id, "+
+          " branch_id, "+
          " seller_id ,"+
          " seller_name ," +
          " seller_pan ," +
@@ -57,7 +58,8 @@ public interface PurchaseBillDAO {
          ") values (" +
          " :fiscalYear," +
          " :purchaseBillNo ," +
-         " :companyId ,"+
+         " :companyId, "+
+         " :branchId, "+
          " :sellerId, "+
          " :sellerName ," +
          " :sellerPan ," +
@@ -86,6 +88,7 @@ public interface PurchaseBillDAO {
     @SqlQuery("select  " +
          " pb.fiscal_year as  fiscal_year, " +
          " pb.company_id as company_id," +
+            " pb.branch_id as branch_id, "+
          " pb.purchase_bill_no as purchase_bill_no, " +
          " pb.seller_name as seller_name, " +
          " pb.seller_pan as seller_pan, " +
@@ -106,7 +109,37 @@ public interface PurchaseBillDAO {
          " pb.vat_refund_amount  as vat_refund_amount, " +
          " pb.transaction_id  as transaction_id ," +
          " pb.user_id as user_id " +
-         " from purchase_bill pb where pb.status = true and pb.company_id = :compId ;")
+         " from purchase_bill pb where pb.status = true and pb.company_id = :compId and pb.branch_id = :branchId;")
     @RegisterBeanMapper(PurchaseBillDTO.class)
-    List<PurchaseBillDTO> getPurchaseBillByCompanyId(@Bind int compId);
+    List<PurchaseBillDTO> getPurchaseBillByCompanyId(@Bind int compId, @Bind int branchId);
+
+    @SqlQuery("""
+            select  
+                 pb.fiscal_year as  fiscal_year, 
+                 pb.purchase_bill_no as purchase_bill_no,
+                 pb.seller_id as seller_id,
+                 pb.seller_name as customer_name, 
+                 pb.seller_pan as customer_pan, 
+                 pb.bill_date as bill_date,  
+                 pb.amount  as amount, 
+                 pb.discount  as discount, 
+                 pb.taxable_amount  as taxable_amount, 
+                 pb.tax_amount  as tax_amount, 
+                 pb.total_amount  as total_amount, 
+                 pb.sync_with_ird as sync_with_ird, 
+                 pb.is_bill_printed  as bill_printed, 
+                 pb.is_bill_active  as bill_active, 
+                 pb.printed_time  as printed_time, 
+                 pb.entered_by  as entered_by, 
+                 pb.printed_by as printed_by, 
+                 pb.is_realtime as realtime, 
+                 pb.payment_method as payment_method, 
+                 pb.vat_refund_amount  as vat_refund_amount, 
+                 pb.transaction_id  as transaction_id 
+                  
+                from purchase_bill pb where pb.status = true and pb.purchase_bill_no = :billId 
+                and pb.company_id = :companyId and pb.branch_id = :branchId;  
+            """)
+    @RegisterBeanMapper(PurchaseBillDTO.class)
+    PurchaseBillDTO getBillById(int billId, int companyId, int branchId);
 }

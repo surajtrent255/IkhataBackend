@@ -80,9 +80,9 @@ public class CategoryProduct {
 
 
     @DeleteMapping("/{id}")
-    public void deleteCategoryProduct(@PathVariable("id") int id){
+    public void deleteCategoryProduct(@PathVariable("id") int id, @RequestParam("compId") int compId, @RequestParam("branchId") int branchId){
         try{
-            categoryProductService.deleteCategory(id);
+            categoryProductService.deleteCategory(id, compId, branchId);
 
         } catch (Exception e){
             log.error(e.getMessage());

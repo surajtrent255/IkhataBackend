@@ -25,9 +25,9 @@ public class CategoryProductServiceImpl implements CategoryProductService {
     }
 
     @Override
-    public void deleteCategory(Integer categoryId) {
+    public void deleteCategory(Integer categoryId, Integer compId, Integer branchId) {
         CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
-        categoryDAO.deleteCategory(categoryId);
+        categoryDAO.deleteCategory(categoryId, compId, branchId);
     }
 
     @Override
@@ -40,9 +40,9 @@ public class CategoryProductServiceImpl implements CategoryProductService {
         });
 
         //Arranging in hierarchy
-//        List<CategoryProductDTO> categoryListHierarchy = cleanCategoryCreator(categories);
+        List<CategoryProductDTO> categoryListHierarchy = cleanCategoryCreator(categories);
 
-        return categories;
+        return categoryListHierarchy;
     }
 
     @Override

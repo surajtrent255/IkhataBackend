@@ -30,7 +30,7 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
     }
 
     @Override
-    public List<PurchaseBillDTO> getAllPurchaseBillsByCompanyId(int compId) {
-        return dbService.getDao(PurchaseBillDAO.class).getPurchaseBillByCompanyId(compId);
+    public List<PurchaseBillDTO> getAllPurchaseBillsByCompanyId(int compId, int branchId) {
+        return dbService.getDao(PurchaseBillDAO.class).getPurchaseBillByCompanyId(compId, branchId);
     }
 }

@@ -133,6 +133,7 @@ create table sales_bill (
     total_amount real not null,
     sync_with_ird boolean default false not null,
     is_bill_printed boolean default false not null,
+    print_count int default 0 not null;
     is_bill_active boolean default false not null,
     printed_time varchar ,
     entered_by varchar(50) not null,
@@ -186,6 +187,7 @@ create table purchase_bill (
     purchase_bill_no int  not null,
 	seller_id int  not null,
 	company_id int not null,
+	branch_id int not null,
     seller_name varchar(50) not null,
     seller_pan varchar(50) not null,
     bill_date Date default current_date not null,
@@ -216,7 +218,8 @@ CREATE TABLE "purchase_bill_detail"(
    "discount_per_unit" real NOT NULL,
    "rate" real NOT NULL,
    "purchase_bill_id" integer NOT NULL,
-   "company_id" integer NOT NULL
+   "company_id" integer NOT NULL,
+   "branch_id" integer not null
 --       FOREIGN KEY(bill_id)
 --       REFERENCES bill(id)
 --     ,
@@ -302,6 +305,7 @@ CREATE TABLE municipality (
 create table public.loan (
 	id  serial not null,
 	company_id int not null,
+	branch_id int not null,
 	bank_id int not null,
 	lender_id int not null,
 	loan_type int not null,
@@ -310,7 +314,8 @@ create table public.loan (
 	loan_amount real not null,
 	received_amount real not null,
 	service_charge real ,
-	other_expenses real
+	other_expenses real,
+	deleted boolean default false not null
 );
 
 create table loan_type (
