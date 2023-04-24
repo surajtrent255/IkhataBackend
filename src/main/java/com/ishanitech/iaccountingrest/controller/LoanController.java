@@ -2,6 +2,8 @@ package com.ishanitech.iaccountingrest.controller;
 
 
 import com.ishanitech.iaccountingrest.dto.LoanDTO;
+import com.ishanitech.iaccountingrest.dto.LoanNamesDTO;
+import com.ishanitech.iaccountingrest.dto.LoanTypesDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.LoanService;
@@ -73,6 +75,25 @@ public class LoanController {
         } catch(Exception ex){
             log.error("deleting the loan " + ex.getMessage());
             throw new CustomSqlException("Something went wrong while deleting loan. ");
+        }
+    }
+
+    @GetMapping("/types")
+    public ResponseDTO<List<LoanTypesDTO>> getALlLoanTypes(){
+        try{
+            return new ResponseDTO<List<LoanTypesDTO>>(loanService.getAllLoanTypes());
+        }catch(Exception ex){
+            log.error("fetching loan types " + ex.getMessage());
+            throw new CustomSqlException("Something went wrong while fetching loan types");
+        }
+    }
+    @GetMapping("/names")
+    public ResponseDTO<List<LoanNamesDTO>> getALlLoanNames(){
+        try{
+            return new ResponseDTO<List<LoanNamesDTO>>(loanService.getAllLoanNames());
+        }catch(Exception ex){
+            log.error("fetching loan name " + ex.getMessage());
+            throw new CustomSqlException("Something went wrong while fetching loan name");
         }
     }
 }

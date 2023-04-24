@@ -1,6 +1,8 @@
 package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.LoanDTO;
+import com.ishanitech.iaccountingrest.dto.LoanNamesDTO;
+import com.ishanitech.iaccountingrest.dto.LoanTypesDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
@@ -55,5 +57,16 @@ public interface LoanDAO {
     void deleteLoanEntity(int id, int compId, int branchId);
 
 
+    @SqlQuery("""
+            select lt.id as id, lt.loan_type_index as loan_type_index, lt.loan_type as loan_type from loan_type lt
+            """)
+    @RegisterBeanMapper(LoanTypesDTO.class)
+    List<LoanTypesDTO> getAllLoanTypes();
 
+    @SqlQuery("""
+            select ln.id as id, ln.loan_name_index as loan_name_index, ln.loan_name as loan_name from loan_name ln
+
+            """)
+    @RegisterBeanMapper(LoanNamesDTO.class)
+    List<LoanNamesDTO> getAllLoanNames();
 }
