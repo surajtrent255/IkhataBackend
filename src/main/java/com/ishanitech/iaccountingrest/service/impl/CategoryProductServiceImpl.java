@@ -41,7 +41,7 @@ public class CategoryProductServiceImpl implements CategoryProductService {
 
         //Arranging in hierarchy
         List<CategoryProductDTO> categoryListHierarchy = cleanCategoryCreator(categories);
-
+        log.info("category hiearchy >>" +categoryListHierarchy.toString());
         return categoryListHierarchy;
     }
 
