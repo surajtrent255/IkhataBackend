@@ -301,4 +301,54 @@ CREATE TABLE municipality (
   district_id int NOT NULL,
   disabled bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (municipality_id)
-)
+);
+-- DROP TABLE IF EXISTS public.bank;
+CREATE TABLE  bank (
+bank_id  SERIAL ,
+company_id  int  NOT NULL ,
+branch_id  int NOT NULL,
+bank_name  VARCHAR(50) NOT NULL ,
+account_number BIGINT NOT NULL,
+create_date date default current_date,
+account_type   CHAR(50)
+);
+-- DROP TABLE IF EXISTS public.bank_deposit;
+CREATE TABLE  bank_deposit (
+deposit_id SERIAL ,
+bank_id  int  NOT NULL ,
+company_id  int  NOT NULL ,
+branch_id  int NOT NULL,
+deposit_amount real NOT NULL,
+deposit_type VARCHAR(50) NOT NULL,
+submit_date date default current_date,
+cheque_number  VARCHAR(50)
+);
+-- DROP TABLE IF EXISTS public.bank_withdraw;
+CREATE TABLE  bank_withdraw(
+withdraw_id SERIAL,
+company_id  int  NOT NULL ,
+branch_id  int NOT NULL,
+withdraw_amount real NOT NULL,
+withdraw_type VARCHAR(50) NOT NULL,
+withdraw_date date default current_date,
+cheque_number  VARCHAR(50)
+);
+
+
+-- DROP TABLE IF EXISTS public.type_of_payment;
+CREATE TABLE type_of_payment(
+id SERIAL,
+name VARCHAR(50)
+);
+
+-- DROP TABLE IF EXISTS public.account_type;
+CREATE TABLE account_type(
+id SERIAL,
+name varchar(50)
+);
+
+CREATE TABLE bank_list(
+id SERIAL,
+name varchar(50),
+location VARCHAR(100)
+);

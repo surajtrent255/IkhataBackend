@@ -24,7 +24,7 @@
             true,
             1,
             1
-        )
+        );
 
 
 INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES (1, 'Achham', 7, b'0'),
@@ -139,3 +139,40 @@ INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES
      	(19, 'Changunarayan Municipality',3, 10, b'0'),
      	(20, 'Madhyapur Thimi Municipality', 3, 10, b'0'),
      	(21, 'Suryabinayak Municipality', 3, 10, b'0');
+
+INSERT INTO public.account_type(
+	id, name)
+	VALUES (1, 'saving'),(2,'current'),(3,'other');
+
+INSERT INTO public.type_of_payment(
+	id, name)
+	VALUES (1, 'cheque'),(2,'ebanking'),(3,'cash') ,(4,'other');
+
+	INSERT INTO public.bank(
+    	bank_id, company_id, branch_id, bank_name, account_number, create_date, account_type)
+    	VALUES (1, 1, 1, 'testing', 132465897, '2023/01/01', 'saving');
+ INSERT INTO public.bank_list(
+ 	id, name, location)
+ 	VALUES (1,'Agriculture Development Bank','Ramshahpath, Kathmandu'),
+ (2,'Citizens Bank International','Narayanhitipath, Kathmandu'),
+ (3,'Everest Bank','Lazimpat, Kathmandu'),
+ (4,'Global IME Bank','Kamaladi, Kathmandu'),
+ (5,'Himalayan Bank','Kamaladi, Kathmandu'),
+ (6,'Kumari Bank','Durbarmarg, Kathmandu'),
+ (7,'Laxmi Bank','Hattisar, Kathmandu'),
+ (8,'Machhapuchhre Bank','Lazimpat, Kathmandu'),
+ (9,'Nabil Bank','Beena Marg, Kathmandu'),
+ (10,'Nepal Bank','Dharmapath, Kathmandu'),
+ (11,'Nepal Investment Mega Bank'	,'Durbarmarg, Kathmandu'),
+ (12,'Nepal SBI Bank','Kesharmahal, Kathmandu'),
+ (13,'NIC Asia Bank','Thapathali, Kathmandu'),
+ (14,'NMB Bank','Babarmahal, Kathmandu'),
+ (15,'Prabhu Bank','Babarmahal, Kathmandu'),
+ (16,'Prime Commercial Bank','Kamalpokhari, Kathmandu'),
+ (17,'Rastriya Banijya Bank','Singhadurbarplaza, Kathmandu'),
+ (18,'Sanima Bank','Nagpokhari, Kathmandu'),
+ (19,'Siddhartha Bank','Hattisar, Kathmandu'),
+ (20,'Standard Chartered Bank','Nayabaneshwor, Kathmandu'),
+ (21,'Sunrise Bank','Gairidhara, Kathmandu'),
+ (22,'other','unknown');
+
