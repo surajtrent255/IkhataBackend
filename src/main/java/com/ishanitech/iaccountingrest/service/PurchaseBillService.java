@@ -11,5 +11,5 @@ public interface PurchaseBillService {
 
     void deletePurchaseBill(int id);
 
-    List<PurchaseBillDTO> getAllPurchaseBillsByCompanyId(int compId);
+    List<PurchaseBillDTO> getAllPurchaseBillsByCompanyId(int compId, int branchId);
 }

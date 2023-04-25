@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CategoryProductService {
     Integer addCategory(CategoryProductDTO categoryproductDTO);
-    void deleteCategory(Integer categoryId);
+    void deleteCategory(Integer categoryId, Integer compId, Integer branchId);
     List<CategoryProductDTO> getAllCategoriesByCompIdAndBranchId(int compId, int branchId);
     int updateCategoryProduct(CategoryProductDTO categoryProductDTO);
     void deleteParentandChildCategories(List<Integer> categoryIds);
