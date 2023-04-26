@@ -380,6 +380,7 @@ company_id  int  NOT NULL ,
 branch_id  int NOT NULL,
 bank_name  VARCHAR(50) NOT NULL ,
 account_number BIGINT NOT NULL,
+initial_amount real ,
 create_date date default current_date,
 account_type   CHAR(50)
 );

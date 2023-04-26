@@ -12,11 +12,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BankDepositeDTO {
-    private int bank_id ;
-    private  int company_id;
-    private  int amount;
-    private  int check_number ;
-    private Date submitt_date;
-    private  String deposite_type ;
+    private int depositId;
+    private int bankId ;
+    private  int companyId;
+    private  int branchId;
+    private  int depositAmount;
+    private  String depositType;
+    private Date submiteDate;
+    private  Long chequeNumber ;
 
 }

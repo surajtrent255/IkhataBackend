@@ -57,9 +57,10 @@ public class BankServiceImpl implements BankService {
             try{
                 int bankId =0;
                 bankId = BankDAO.addBank(bankDTO);
+                return 10;
             } catch(JdbiException jdbiException){
 
-                System.out.println("error occured while adding user");
+                System.out.println("error occured while adding bank");
             }
             return 1;
         }

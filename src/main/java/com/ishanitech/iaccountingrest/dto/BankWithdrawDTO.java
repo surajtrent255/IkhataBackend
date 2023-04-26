@@ -8,13 +8,16 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BankWithdrawDTO {
-    private  int company_id;
-    private  int amount;
-    private  int check_number ;
-    private Date withdraw_date;
-    private  String widhdraw_type;
+
+    private int withdrawId;
+    private  int companyId;
+    private int branchId;
+    private  float withdrawAmount;
+    private  String withdrawType;
+    private  Date withdrawDate;
+    private String chequeNumber;
+
 }
