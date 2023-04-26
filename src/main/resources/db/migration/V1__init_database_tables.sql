@@ -300,78 +300,7 @@ CREATE TABLE municipality (
   district_id int NOT NULL,
   disabled bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (municipality_id)
-<<<<<<< HEAD
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 -- DROP TABLE IF EXISTS public.bank;
 CREATE TABLE  bank (
@@ -380,6 +309,7 @@ company_id  int  NOT NULL ,
 branch_id  int NOT NULL,
 bank_name  VARCHAR(50) NOT NULL ,
 account_number BIGINT NOT NULL,
+initial_amount real ,
 create_date date default current_date,
 account_type   CHAR(50)
 );
@@ -422,7 +352,6 @@ CREATE TABLE bank_list(
 id SERIAL,
 name varchar(50),
 location VARCHAR(100)
-=======
 )
 
 create table public.loan (
@@ -452,5 +381,4 @@ create table loan_name(
 	loan_name_index int not null,
 	loan_name varchar(40) not null
 
->>>>>>> 6646b496ffa567804e838874b7ce0ff368cd7c03
 );
