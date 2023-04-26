@@ -51,22 +51,25 @@ public class BankDepositeServiceImpl implements BankDepositeService {
             return 1;
         }
         catch (JdbiException jdbiException){
-            System.out.println("error in update Deposite");
+
+            System.out.println("error in update Deposite"+jdbiException.getMessage() );
             return 0;
         }
     }
 
     @Override
-    public int deleteFromBankDepositeBranchId(int branchId , String chequeNumber) {
+    public int deleteFromBankDepositeBranchId( int branchId , String chequeNumber) {
 
 
         try{
             BankDepositeServiceDAO bankDepositeServiceDAO = dbService.getDao(BankDepositeServiceDAO.class);
             bankDepositeServiceDAO.deleteDeposite(branchId,chequeNumber );
+            return 1;
         }catch (JdbiException jdbiException){
             log.error(jdbiException.getMessage());
+            return 0;
         }
-        return 1;
+
     }
 
 }

@@ -31,12 +31,50 @@ public class BankWithdrawServiceImpl implements BankWithdrawService {
         BankWithdrawDAO BankWithdrawDAO = dbService.getDao(BankWithdrawDAO.class);
 
         try{
-            int bankId =0;
-            bankId = BankWithdrawDAO.addwithdraw(bankWithdrawDTO);
+
+             BankWithdrawDAO.addwithdraw(bankWithdrawDTO);
+            return 1;
         } catch(JdbiException jdbiException){
 
-            System.out.println("error occured while adding user");
+            System.out.println("error occured while adding user" +jdbiException.getMessage());
+            return 0;
         }
-        return 1;
+
     }
+
+    @Override
+    public int updatewithdraw(BankWithdrawDTO BankWithdrawDTO) {
+        BankWithdrawDAO BankWithdrawDAO = dbService.getDao(BankWithdrawDAO.class);
+
+        try{
+            BankWithdrawDAO.updatewithdraw(BankWithdrawDTO, BankWithdrawDTO.getWithdrawId());
+            System.out.println("service imp in update withdraw"+ BankWithdrawDTO );
+            return 1;
+        }
+        catch (JdbiException jdbiException){
+
+            System.out.println("error in update withdraw"+jdbiException.getMessage() );
+            return 0;
+        }
+
+    }
+
+    @Override
+    public int deletewithdraw(int branchId, int withdrawId) {
+        try{
+            BankWithdrawDAO BankWithdrawDAO = dbService.getDao(BankWithdrawDAO.class);
+            BankWithdrawDAO.deletewithdraw(branchId,withdrawId);
+            return withdrawId;
+
+        }catch (JdbiException jdbiException){
+            log.error(jdbiException.getMessage());
+            return 0;
+
+        }
+
+
+
+    }
+
+
 }

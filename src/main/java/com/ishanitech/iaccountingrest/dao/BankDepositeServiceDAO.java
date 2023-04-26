@@ -18,22 +18,7 @@ public interface BankDepositeServiceDAO {
     @RegisterBeanMapper(BankDepositeDTO.class)
     List<BankDepositeDTO> getALLBankDeposite(int companyId, int branchId);
 
-////    @GetGeneratedKeys
-//    @SqlUpdate("INSERT INTO bank_deposit( "
-//            + " company_id ,"
-//            + " branch_id ,"
-//            + " deposit_amount ,"
-//            +"deposit_type,"
-//            +"cheque_number"
-//            + " ) "
-//            + " VALUES ("
-//            + " :companyId,"
-//            + " :branchId, "
-//            + " :amount,"
-//            + " :depositType ,"
-//            + " :checkNumber"
-//            + "  )")
-//    int addBankDeposit(@BindBean BankDepositeDTO BankDepositeDTO);
+
 
 
 
@@ -46,13 +31,13 @@ public interface BankDepositeServiceDAO {
 
 
         @SqlUpdate("UPDATE bank_deposit SET " +
-        "bank_id=: bankId, " +
-        "company_id =: companyId, " +
-        "branch_id =: branchId,"+
-        "deposit_amount =: depositAmount,"+
-        "deposit_type =: depositType,"+
-        "cheque_number =: chequeNumber"+" WHERE deposit_id  =: depositId ")
+        "bank_id= :bankId, " +
+        "company_id = :companyId, " +
+        "branch_id = :branchId,"+
+        "deposit_amount = :depositAmount,"+
+        "deposit_type = :depositType,"+
+        "cheque_number = :chequeNumber"+" WHERE deposit_id  = :depositId ")
     int updateDeposite(@BindBean BankDepositeDTO bankDepositeDTO, @Bind int depositId);
-    @SqlQuery("DELETE FROM bank WHERE  branch_id=:branchId AND cheque_number=: chequeNumber")
+    @SqlQuery("DELETE FROM bank_deposit WHERE  branch_id= :branchId AND cheque_number= :chequeNumber")
     int deleteDeposite(@Bind int branchId ,@Bind String chequeNumber);
 }
