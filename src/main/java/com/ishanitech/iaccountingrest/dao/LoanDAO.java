@@ -26,7 +26,7 @@ public interface LoanDAO {
     @SqlQuery("""
             SELECT l.id as id, l.company_id as company_id, l.branch_id as branch_id, l.bank_id as bank_id, l.lender_id as lender_id, l.loan_type as loan_type, l.loan_number as loan_number, l.loan_name as loan_name,
             l.loan_amount as loan_amount, l.received_amount as received_amount, l.service_charge as service_charge, l.other_expenses as other_expenses
-            	FROM loan l  where l.company_id= :compId and l.branch_id = :branchId;
+            	FROM loan l  where l.company_id= :compId and l.branch_id = :branchId and l.deleted=false;
             """)
     @RegisterBeanMapper(LoanDTO.class)
     List<LoanDTO> getAllLoanEntityByCompAndBranch(int compId, int branchId);
@@ -34,7 +34,7 @@ public interface LoanDAO {
     @SqlQuery("""
             SELECT l.id as id, l.company_id as company_id, l.branch_id as branch_id, l.bank_id as bank_id, l.lender_id as lender_id, l.loan_type as loan_type, l.loan_number as loan_number, l.loan_name as loan_name,
             l.loan_amount as loan_amount, l.received_amount as received_amount, l.service_charge as service_charge, l.other_expenses as other_expenses
-            	FROM public.loan l  where l.company_id= :compId and l.branch_id = :branchId and l.id = :id;
+            	FROM public.loan l  where l.company_id= :compId and l.branch_id = :branchId and l.id = :id and l.deleted=false;
             """)
     @RegisterBeanMapper(LoanDTO.class)
     LoanDTO getSingleLoan(int id, int compId, int branchId);

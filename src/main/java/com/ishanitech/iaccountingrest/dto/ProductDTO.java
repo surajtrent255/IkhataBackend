@@ -12,20 +12,20 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class ProductDTO {
-       private int id;
+       private Integer id;
        private String name;
        private String description;
-       private double sellingPrice;
-       private double costPrice;
+       private Double sellingPrice;
+       private Double costPrice;
        private Date createDate;
        private Date updateDate;
-       private int userId;
-       private int companyId;
-       private int branchId;
-       private int sellerId;
-       private int categoryId;
+       private Integer userId;
+       private Integer companyId;
+       private Integer branchId;
+       private Integer sellerId;
+       private Integer categoryId;
        private String barcode;
-       private double discount;
-       private double tax;
+       private Double discount;
+       private Double tax;
        private boolean deleted;
 }

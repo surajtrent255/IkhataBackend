@@ -68,7 +68,7 @@ public class BankServiceImpl implements BankService {
     public int updateBank(BankDTO bankDTO) {
 
             BankDAO BankDAO = dbService.getDao(BankDAO.class);
-                return BankDAO.editbank(bankDTO, bankDTO.getId());
+                return BankDAO.editbank(bankDTO, bankDTO.getBankId());
         }
 
     @Override

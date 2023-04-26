@@ -37,7 +37,7 @@ public class LoanServiceImpl implements LoanService {
     public LoanDTO getSingleLoanEntity(int compId, int branchId, int id) {
         LoanDAO loanDAO = dbService.getDao(LoanDAO.class);;
         LoanDTO loanDTO;
-        loanDTO = loanDAO.getSingleLoan(compId,branchId, id);
+        loanDTO = loanDAO.getSingleLoan(id, compId,branchId);
         return loanDTO;
     }
 
