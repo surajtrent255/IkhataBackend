@@ -19,10 +19,8 @@
             true,
             1,
             1
-<<<<<<< HEAD
         );
-=======
-        )
+
 INSERT INTO public.vat_rate_type(
 	id, vate_rate, vat_rate_num)
 	VALUES (1, 'NO VAT', 0),
@@ -33,7 +31,6 @@ insert into loan_type (loan_type_index,loan_type) values (1, 'TERM'),
 (2,'OD');
 insert into loan_name(loan_name_index, loan_name) values(1, 'HOME_LOAN'),
 (2, 'LAND_LOAN');
->>>>>>> 6646b496ffa567804e838874b7ce0ff368cd7c03
 
 
 INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES (1, 'Achham', 7, b'0'),

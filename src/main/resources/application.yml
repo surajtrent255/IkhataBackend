@@ -51,7 +51,6 @@ rest-microservice-api:
   port: 8888
 
 database:
-
   username: postgres
   password: admin
   databaseName: iaccountingdb

@@ -60,7 +60,7 @@ public class BankServiceImpl implements BankService {
                 return 10;
             } catch(JdbiException jdbiException){
 
-                System.out.println("error occured while adding bank");
+                System.out.println("error occured while adding user" + jdbiException.getMessage());
             }
             return 1;
         }
