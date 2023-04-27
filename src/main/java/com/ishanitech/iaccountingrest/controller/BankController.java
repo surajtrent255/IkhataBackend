@@ -68,13 +68,9 @@ public class BankController {
     }
     @PostMapping("/bank")
     public ResponseDTO<?> addbank(@RequestBody BankDTO bankDTO){
-        try {
-          return  new ResponseDTO<>(bankService.addbank(bankDTO))  ;
-        }catch (Exception e){
-            log.error(e.getMessage());
-        }
 
-        return new ResponseDTO<>( bankDTO.getId() +" BANK Is Added Successfully");
+          return  new ResponseDTO<>(bankService.addbank(bankDTO))  ;
+
     }
 
     @PutMapping
