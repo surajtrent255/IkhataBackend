@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.*;
 import com.ishanitech.iaccountingrest.dto.*;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BankService;
 import com.ishanitech.iaccountingrest.service.DbService;
 import lombok.extern.slf4j.Slf4j;
@@ -53,15 +54,15 @@ public class BankServiceImpl implements BankService {
     @Override
     public int addbank(BankDTO bankDTO) {
         BankDAO BankDAO = dbService.getDao(BankDAO.class);
+        int bankId =0;
 
             try{
-                int bankId =0;
                 bankId = BankDAO.addBank(bankDTO);
             } catch(JdbiException jdbiException){
-
-                System.out.println("error occured while adding user" + jdbiException.getMessage());
+                log.info("error occured while adding user" + jdbiException.getMessage());
+                throw new CustomSqlException(" something went wrong !!! ");
             }
-            return 1;
+            return bankId;
         }
 
     @Override

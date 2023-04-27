@@ -12,8 +12,8 @@ import javax.naming.Name;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountTypeDTO {
-    private int Id;
-    private  String Name;
+    private int id;
+    private  String name;
 
 
 }
