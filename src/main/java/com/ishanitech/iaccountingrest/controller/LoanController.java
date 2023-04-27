@@ -22,7 +22,6 @@ public class LoanController {
 
     private final LoanService loanService;
 
-
     @PostMapping
     public ResponseDTO<Integer> createNewLoan(@RequestBody LoanDTO loanDTO){
         try{

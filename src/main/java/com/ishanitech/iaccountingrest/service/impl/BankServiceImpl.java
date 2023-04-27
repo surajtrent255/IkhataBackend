@@ -55,23 +55,25 @@ public class BankServiceImpl implements BankService {
     public int addbank(BankDTO bankDTO) {
         BankDAO BankDAO = dbService.getDao(BankDAO.class);
         int bankId =0;
+
+
             try{
 
                 bankId = BankDAO.addBank(bankDTO);
                 return bankId;
-            } catch(JdbiException jdbiException){
+            } catch(JdbiException jdbiException) {
+
                 log.error("error occured while fetching products : " + jdbiException.getMessage());
                 throw new CustomSqlException("Error occured while adding bank");
 
             }
-
         }
 
     @Override
     public int updateBank(BankDTO bankDTO) {
 
             BankDAO BankDAO = dbService.getDao(BankDAO.class);
-                return BankDAO.editbank(bankDTO, bankDTO.getId());
+                return BankDAO.editbank(bankDTO, bankDTO.getBankId());
         }
 
     @Override

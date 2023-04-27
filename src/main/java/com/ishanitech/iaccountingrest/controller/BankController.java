@@ -1,11 +1,14 @@
 package com.ishanitech.iaccountingrest.controller;
 import com.ishanitech.iaccountingrest.dto.BankDTO;
+import com.ishanitech.iaccountingrest.dto.BankListDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BankService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -68,9 +71,7 @@ public class BankController {
     }
     @PostMapping("/bank")
     public ResponseDTO<?> addbank(@RequestBody BankDTO bankDTO){
-
           return  new ResponseDTO<>(bankService.addbank(bankDTO))  ;
-
     }
 
     @PutMapping
@@ -106,6 +107,7 @@ public class BankController {
     @GetMapping("/list")
     public ResponseDTO<?> getAllBankList(){
         try{
+            List<BankListDTO> b = bankService.getAllBankList();
             return new ResponseDTO<>(bankService.getAllBankList());
         }catch (Exception e){
             System.out.println(e);

@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BankDTO {
-    private int Id;
+    private int bankId;
     private  int companyId;
     private  int branchId;
     private  String bankName;

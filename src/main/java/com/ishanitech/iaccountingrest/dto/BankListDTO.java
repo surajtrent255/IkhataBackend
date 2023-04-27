@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BankListDTO {
-    private int Id;
-    private  String Name;
-    private  String Location;
+    private int id;
+    private  String name;
+    private  String location;
 }
