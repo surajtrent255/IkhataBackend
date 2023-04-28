@@ -5,11 +5,6 @@
 	(4, 'MANAGER',''),
 	(5, 'SUPER_ADMIN','');
 
-	INSERT INTO public.company(
-    	 name, description, pan_no, state, zone, district, mun_vdc, ward_no, phone)
-    	VALUES ('nabin', 'hello There', 23456783245678, 02, 'bagmati', 'kathmandu', 'alocknagar', 01, 9848859416);
-
-
     	insert into bill_no_generator
         (
             fiscal_year,
@@ -24,7 +19,18 @@
             true,
             1,
             1
-        )
+        );
+
+INSERT INTO public.vat_rate_type(
+	id, vate_rate, vat_rate_num)
+	VALUES (1, 'NO VAT', 0),
+(2, '0 VAT', 0),
+(3, '13% VAT', 13)
+
+insert into loan_type (loan_type_index,loan_type) values (1, 'TERM'),
+(2,'OD');
+insert into loan_name(loan_name_index, loan_name) values(1, 'HOME_LOAN'),
+(2, 'LAND_LOAN');
 
 
 INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES (1, 'Achham', 7, b'0'),
@@ -140,9 +146,131 @@ INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES
      	(20, 'Madhyapur Thimi Municipality', 3, 10, b'0'),
      	(21, 'Suryabinayak Municipality', 3, 10, b'0');
 
+<<<<<<< HEAD
      	 INSERT INTO payment_mode (id, mode_name) VALUES
              	(1, 'cash' ),
              	(2, 'cheque'),
              	(3, 'bank_redirect'),
              	(4, 'ebanking');
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO public.account_type(
+	id, name)
+	VALUES (1, 'saving'),(2,'current'),(3,'other');
+
+INSERT INTO public.type_of_payment(
+	id, name)
+	VALUES (1, 'cheque'),(2,'ebanking'),(3,'cash') ,(4,'other');
+
+	INSERT INTO public.bank(
+    	bank_id, company_id, branch_id, bank_name, account_number, create_date, account_type)
+    	VALUES (1, 1, 1, 'testing', 132465897, '2023/01/01', 'saving');
+ INSERT INTO public.bank_list(
+ 	id, name, location)
+ 	VALUES (1,'Agriculture Development Bank','Ramshahpath, Kathmandu'),
+ (2,'Citizens Bank International','Narayanhitipath, Kathmandu'),
+ (3,'Everest Bank','Lazimpat, Kathmandu'),
+ (4,'Global IME Bank','Kamaladi, Kathmandu'),
+ (5,'Himalayan Bank','Kamaladi, Kathmandu'),
+ (6,'Kumari Bank','Durbarmarg, Kathmandu'),
+ (7,'Laxmi Bank','Hattisar, Kathmandu'),
+ (8,'Machhapuchhre Bank','Lazimpat, Kathmandu'),
+ (9,'Nabil Bank','Beena Marg, Kathmandu'),
+ (10,'Nepal Bank','Dharmapath, Kathmandu'),
+ (11,'Nepal Investment Mega Bank'	,'Durbarmarg, Kathmandu'),
+ (12,'Nepal SBI Bank','Kesharmahal, Kathmandu'),
+ (13,'NIC Asia Bank','Thapathali, Kathmandu'),
+ (14,'NMB Bank','Babarmahal, Kathmandu'),
+ (15,'Prabhu Bank','Babarmahal, Kathmandu'),
+ (16,'Prime Commercial Bank','Kamalpokhari, Kathmandu'),
+ (17,'Rastriya Banijya Bank','Singhadurbarplaza, Kathmandu'),
+ (18,'Sanima Bank','Nagpokhari, Kathmandu'),
+ (19,'Siddhartha Bank','Hattisar, Kathmandu'),
+ (20,'Standard Chartered Bank','Nayabaneshwor, Kathmandu'),
+ (21,'Sunrise Bank','Gairidhara, Kathmandu'),
+ (22,'other','unknown');
+>>>>>>> 1b765c3968b460bc8b1750eb3b0c7f2b6205ceb6
 

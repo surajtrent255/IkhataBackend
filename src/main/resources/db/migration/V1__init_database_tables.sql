@@ -133,6 +133,7 @@ create table sales_bill (
     total_amount real not null,
     sync_with_ird boolean default false not null,
     is_bill_printed boolean default false not null,
+    print_count int default 0 not null;
     is_bill_active boolean default false not null,
     printed_time varchar ,
     entered_by varchar(50) not null,
@@ -186,6 +187,7 @@ create table purchase_bill (
     purchase_bill_no int  not null,
 	seller_id int  not null,
 	company_id int not null,
+	branch_id int not null,
     seller_name varchar(50) not null,
     seller_pan varchar(50) not null,
     bill_date Date default current_date not null,
@@ -216,7 +218,8 @@ CREATE TABLE "purchase_bill_detail"(
    "discount_per_unit" real NOT NULL,
    "rate" real NOT NULL,
    "purchase_bill_id" integer NOT NULL,
-   "company_id" integer NOT NULL
+   "company_id" integer NOT NULL,
+   "branch_id" integer not null
 --       FOREIGN KEY(bill_id)
 --       REFERENCES bill(id)
 --     ,
@@ -268,13 +271,9 @@ create table vat_rate_type (
 	id serial not null,
 	vate_rate varchar(50) not null,
 	vat_rate_num real not null
-)
+);
 
-INSERT INTO public.vat_rate_type(
-	id, vate_rate, vat_rate_num)
-	VALUES (1, 'NO VAT', 0),
-(2, '0 VAT', 0),
-(3, '13% VAT', 13)
+
 
 
 CREATE TABLE  districts (
@@ -301,6 +300,7 @@ CREATE TABLE municipality (
   disabled bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (municipality_id)
 );
+
 
 
 CREATE TABLE payment (
@@ -389,4 +389,85 @@ CREATE TABLE receipt (
   branch_id int DEFAULT NULL,
   status boolean DEFAULT TRUE,
   PRIMARY KEY (SN)
+
+-- DROP TABLE IF EXISTS public.bank;
+CREATE TABLE  bank (
+bank_id  SERIAL ,
+company_id  int  NOT NULL ,
+branch_id  int NOT NULL,
+bank_name  VARCHAR(50) NOT NULL ,
+account_number BIGINT NOT NULL,
+initial_amount real ,
+create_date date default current_date,
+account_type   CHAR(50)
+);
+-- DROP TABLE IF EXISTS public.bank_deposit;
+CREATE TABLE  bank_deposit (
+deposit_id SERIAL ,
+bank_id  int  NOT NULL ,
+company_id  int  NOT NULL ,
+branch_id  int NOT NULL,
+deposit_amount real NOT NULL,
+deposit_type VARCHAR(50) NOT NULL,
+submit_date date default current_date,
+cheque_number  VARCHAR(50)
+);
+-- DROP TABLE IF EXISTS public.bank_withdraw;
+CREATE TABLE  bank_withdraw(
+withdraw_id SERIAL,
+company_id  int  NOT NULL ,
+branch_id  int NOT NULL,
+withdraw_amount real NOT NULL,
+withdraw_type VARCHAR(50) NOT NULL,
+withdraw_date date default current_date,
+cheque_number  VARCHAR(50)
+);
+
+
+-- DROP TABLE IF EXISTS public.type_of_payment;
+CREATE TABLE type_of_payment(
+id SERIAL,
+name VARCHAR(50)
+);
+
+-- DROP TABLE IF EXISTS public.account_type;
+CREATE TABLE account_type(
+id SERIAL,
+name varchar(50)
+);
+
+CREATE TABLE bank_list(
+id SERIAL,
+name varchar(50),
+location VARCHAR(100)
+)
+
+create table public.loan (
+	id  serial not null,
+	company_id int not null,
+	branch_id int not null,
+	bank_id int not null,
+	lender_id int not null,
+	loan_type int not null,
+	loan_number int not null,
+	loan_name int not null,
+	loan_amount real not null,
+	received_amount real not null,
+	service_charge real ,
+	other_expenses real,
+	deleted boolean default false not null
+);
+
+create table loan_type (
+	id serial not null,
+	loan_type_index int not null,
+	loan_type varchar(40) not null
+);
+
+create table loan_name(
+	id serial not null,
+	loan_name_index int not null,
+	loan_name varchar(40) not null
+
+
 );

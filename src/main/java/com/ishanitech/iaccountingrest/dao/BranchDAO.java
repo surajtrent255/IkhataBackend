@@ -59,4 +59,5 @@ public interface BranchDAO {
     List<UserConfigDTO> getUserForAssignBranchList(@Bind("companyId") int companyId);
 
 
+
 }
