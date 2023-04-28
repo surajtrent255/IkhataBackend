@@ -1,10 +1,11 @@
 package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.PaymentDTO;
-import com.ishanitech.iaccountingrest.dto.PaymentModeDTO;
+import jakarta.annotation.Nullable;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -16,13 +17,21 @@ public interface PaymentDAO {
     @RegisterBeanMapper(PaymentDTO.class)
     List<PaymentDTO> getPaymentDetailsByCompanyId(@Bind int companyId);
 
-    @SqlUpdate("INSERT INTO payment( " +
-            " company_id, party_id, amount, payment_mode_id, tds_deducted, branch_id, date )" +
-            " VALUES ( :companyId, :partyId, :amount, :paymentModeId, :tdsDeductedAmount, :branchId, :date);")
+    @SqlQuery("SELECT * from payment WHERE sn = :SN")
     @RegisterBeanMapper(PaymentDTO.class)
-    Integer addPayMentDetails(@BindBean PaymentDTO paymentDTO);
+    PaymentDTO getPaymentDetailsById(@Bind int SN);
 
-//    Payment Mode Query
+    @SqlUpdate("INSERT INTO payment( " +
+            " company_id, party_id, amount, payment_mode_id, tds_deducted, branch_id, date, post_datecheck )" +
+            " VALUES ( :companyId, :partyId, :amount, :paymentModeId, :tdsDeducted, :branchId, :date, :postDateCheck );")
+    @RegisterBeanMapper(PaymentDTO.class)
+    @GetGeneratedKeys
+    Long addPaymentDetails(@BindBean PaymentDTO paymentDTO);
+
+
+    @SqlUpdate("DELETE FROM payment WHERE sn= :SN")
+    @Nullable
+    void deleteFromPayment(@Bind("SN") int SN);
 
 
 

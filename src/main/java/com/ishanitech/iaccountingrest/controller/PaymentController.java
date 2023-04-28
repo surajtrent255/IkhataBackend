@@ -4,9 +4,12 @@ import com.ishanitech.iaccountingrest.dto.PaymentDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.service.PaymentModeService;
 import com.ishanitech.iaccountingrest.service.PaymentService;
+import com.ishanitech.iaccountingrest.service.PostDateCheckService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @Slf4j
@@ -17,6 +20,8 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     private final PaymentModeService paymentModeService;
+
+    private final PostDateCheckService postDateCheckService;
 
     @GetMapping
     public ResponseDTO<?> getPaymentDetailsByCompanyId(@RequestParam("companyId") int companyId){
@@ -29,15 +34,32 @@ public class PaymentController {
         return new ResponseDTO<>();
     }
 
-    @PostMapping
-    public ResponseDTO<?> addPaymentDetails(@RequestBody PaymentDTO paymentDTO){
-        int success = 0;
-        try {
-            success = paymentService.addPaymentDetails(paymentDTO);
+    @GetMapping("/{SN}")
+    public ResponseDTO<?> getPaymentDetailsById(@PathVariable("SN") int SN){
+
+        try{
+            return new ResponseDTO<>(paymentService.getPaymentDetailsById(SN));
         }catch (Exception e){
             log.error(e.getMessage());
         }
-        return new ResponseDTO<>("Data" + success);
+        return new ResponseDTO<>();
+    }
+
+    @PostMapping
+    public ResponseDTO<?> addPaymentDetails(@RequestBody PaymentDTO paymentDTO){
+        boolean PostCheck = paymentDTO.isPostDateCheck();
+        Long PaymentId;
+        try {
+            PaymentId = paymentService.addPaymentDetails(paymentDTO);
+            if(PostCheck){
+                long checkNo = paymentDTO.getCheckNo();
+                Date payDate = paymentDTO.getPostCheckDate();
+                postDateCheckService.addPostChequeInfo(checkNo,PaymentId,payDate);
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return new ResponseDTO<>("Data" );
     }
 
     @GetMapping("/mode")
@@ -48,6 +70,17 @@ public class PaymentController {
             log.error(e.getMessage());
         }
         return new ResponseDTO<>();
+    }
+
+    @DeleteMapping("/{SN}")
+    public void DeletePaymentDetails(@PathVariable("SN") int SN){
+
+        try {
+          paymentService.DeletePaymentDetails(SN);
+          postDateCheckService.deletePostDateCheckInfo(SN);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
     }
 
 }

@@ -4,7 +4,6 @@ import com.ishanitech.iaccountingrest.dao.PaymentDAO;
 import com.ishanitech.iaccountingrest.dto.PaymentDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.PaymentService;
-import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,16 +24,24 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Integer addPaymentDetails(PaymentDTO paymentDTO) {
+    public PaymentDTO getPaymentDetailsById(int SN) {
         PaymentDAO paymentDAO = dbService.getDao(PaymentDAO.class);
-        int success = 0;
-        try{
-            success = paymentDAO.addPayMentDetails(paymentDTO);
+        return paymentDAO.getPaymentDetailsById(SN);
+    }
+
+    @Override
+    public Long addPaymentDetails(PaymentDTO paymentDTO) {
+        PaymentDAO paymentDAO = dbService.getDao(PaymentDAO.class);
+        long success;
+            success = paymentDAO.addPaymentDetails(paymentDTO);
             return success;
-        }catch (JdbiException e){
-            System.out.println(e);
-        }
-        return success;
+    }
+
+    @Override
+    public void DeletePaymentDetails(int SN) {
+        PaymentDAO paymentDAO = dbService.getDao(PaymentDAO.class);
+           paymentDAO.deleteFromPayment(SN);
+
     }
 
 

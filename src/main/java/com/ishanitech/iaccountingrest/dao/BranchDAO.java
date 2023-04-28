@@ -19,7 +19,7 @@ public interface BranchDAO {
     List<BranchDTO> getBranchByCompanyId(@Bind("companyId") int companyId);
 
     @GetGeneratedKeys
-    @SqlUpdate(" INSERT INTO branch (company_id, name, abbrv, description, pan_no, state, district, mun_vdc, ward_no, phone) VALUES ( :companyId, :name, :abbrv, :description, :panNo, :state, :district, :munVdc, :wardNo, :phone );")
+    @SqlUpdate(" INSERT INTO branch (company_id, name, abbrv, description,  state, district, mun_vdc, ward_no, phone) VALUES ( :companyId, :name, :abbrv, :description,  :state, :district, :munVdc, :wardNo, :phone );")
     Integer addBranch(@BindBean BranchDTO branchDTO);
 
     @SqlQuery("INSERT INTO user_branch("

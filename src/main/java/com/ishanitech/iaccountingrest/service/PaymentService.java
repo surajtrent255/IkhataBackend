@@ -8,6 +8,12 @@ public interface PaymentService {
 
     List<PaymentDTO> getPaymentDetailsByCompanyId(int companyId);
 
-    Integer addPaymentDetails(PaymentDTO paymentDTO);
+    PaymentDTO getPaymentDetailsById(int SN);
+
+    Long addPaymentDetails(PaymentDTO paymentDTO);
+
+    void DeletePaymentDetails(int SN);
+
+
 
 }

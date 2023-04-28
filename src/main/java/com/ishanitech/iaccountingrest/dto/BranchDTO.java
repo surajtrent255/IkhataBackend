@@ -14,7 +14,6 @@ public class BranchDTO {
     private String name;
     private String abbrv;
     private String description;
-    private Long panNo;
     private Integer state;
     private String district;
     private String munVdc;

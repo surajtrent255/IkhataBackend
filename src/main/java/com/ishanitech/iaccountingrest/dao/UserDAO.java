@@ -57,7 +57,7 @@ public interface UserDAO {
 			+ " r.id AS r_id, "
 			+ " r.role as r_role FROM users u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "
-			+ " WHERE u.id = :userId;")
+			+ " WHERE u.id = :userId AND company_id IS NULL;")
 	@UseRowReducer(UserReducer.class)
 	Optional<User> getUserById(@Bind("userId") int userId);
 
@@ -70,7 +70,7 @@ public interface UserDAO {
 			+ " r.id AS r_id, "
 			+ " r.role as r_role FROM users u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "
-			+ " WHERE u.email = :email;")
+			+ " WHERE u.email = :email AND company_id IS NULL;")
 	@UseRowReducer(UserReducer.class)
 	Optional<User> getUserByEmail(@Bind("email") String email) ;
 

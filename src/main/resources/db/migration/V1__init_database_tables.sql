@@ -242,7 +242,6 @@ create table stock (
       name varchar(50) NOT NULL,
       abbrv varchar(20) NOT NULL,
       description text NOT NULL,
-      pan_no bigint NOT NULL ,
       state int Default NULL  ,
       district varchar(50) NOT NULL ,
       mun_vdc varchar(50) NOT NULL ,
@@ -348,3 +347,46 @@ DELETE FROM user_role;
 DELETE FROM users;
 DELETE FROM payment;
 
+CREATE TABLE expenses (
+  SN SERIAL,
+  company_id int DEFAULT NULL,
+  amount REAL NOT NULL,
+  topic VARCHAR(200),
+  bill_no INT,
+  pay_to VARCHAR(50),
+  date DATE DEFAULT NULL,
+  branch_id int DEFAULT NULL,
+  status boolean DEFAULT TRUE,
+  PRIMARY KEY (SN)
+);
+
+
+CREATE TABLE fixed_assets (
+  SN SERIAL,
+  company_id int DEFAULT NULL,
+  name VARCHAR(50),
+	amount REAL NOT NULL,
+	date DATE DEFAULT NULL,
+	bill_no INT,
+	cash REAL ,
+	loan VARCHAR(100),
+	loan_id INT,
+  branch_id int DEFAULT NULL,
+  status boolean DEFAULT TRUE,
+  PRIMARY KEY (SN)
+);
+
+
+CREATE TABLE receipt (
+  SN SERIAL,
+  company_id int DEFAULT NULL,
+  party_id INT NOT  NULL,
+	amount REAL NOT NULL,
+	date DATE DEFAULT NULL,
+	mode_id INT DEFAULT NULL,
+	tds_deducted_amount REAL NOT NULL ,
+	post_date_check BOOLEAN DEFAULT FALSE,
+  branch_id int DEFAULT NULL,
+  status boolean DEFAULT TRUE,
+  PRIMARY KEY (SN)
+);
