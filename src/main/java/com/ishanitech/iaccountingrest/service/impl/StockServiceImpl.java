@@ -81,4 +81,10 @@ public class StockServiceImpl implements StockService {
 //        StockDAO stockDAO = dbService.getDao(StockDAO.class);
 //        stockDAO.increaseStockQuantity(stockDTO);
     }
+
+    @Override
+    public StockDTO getStockBYProductId(int productId) {
+        StockDAO stockDAO = dbService.getDao(StockDAO.class);
+        return stockDAO.getStockBYProductId(productId);
+    }
 }

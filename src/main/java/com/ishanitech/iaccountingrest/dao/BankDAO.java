@@ -1,9 +1,6 @@
 package com.ishanitech.iaccountingrest.dao;
 
-import com.ishanitech.iaccountingrest.dto.AccountTypeDTO;
-import com.ishanitech.iaccountingrest.dto.BankDTO;
-import com.ishanitech.iaccountingrest.dto.BankListDTO;
-import com.ishanitech.iaccountingrest.dto.TypePaymentDTO;
+import com.ishanitech.iaccountingrest.dto.*;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -14,6 +11,9 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.List;
 
 public interface BankDAO {
+
+
+
     @SqlQuery("SELECT * FROM bank where bank_id=:id")
     @RegisterBeanMapper(BankDTO.class)
     List<BankDTO> getAllByBankId(int id);
@@ -56,11 +56,11 @@ public interface BankDAO {
             + "account_type = :accountType, initial_amount = :initialAmount WHERE bank_id  = :Id")
     int editbank(@BindBean BankDTO bankDTO, @Bind int Id);
 
-    @SqlQuery("DELETE FROM bank WHERE  company_id=:companyId AND branch_id=branchId")
+    @SqlQuery("DELETE FROM bank WHERE  company_id=:companyId AND branch_id=:branchId")
     int deleteBank(@Bind int companyId, @Bind int branchId);
 
-    @SqlQuery("DELETE FROM bank WHERE account_number=:accountNo")
-    int deleteFromBankByAccountNo(@Bind Long accountNo );
+    @SqlQuery("DELETE FROM bank WHERE bank_id=:bankId")
+    int deleteFromBankByAccountNo(@Bind int bankId );
 
 
 

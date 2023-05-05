@@ -76,10 +76,10 @@ public class ProductController {
 
 
     @PostMapping
-    public ResponseDTO<Integer> addNewProduct(@RequestBody ProductDTO product) {
+    public ResponseDTO<Integer> addNewProduct(@RequestBody ProductDTO product,@RequestParam ("stockqty") int stockqtr) {
         try {
-            System.out.println("entering ********************************");
-            return new ResponseDTO<Integer>(productService.addNewProduct(product));
+            System.out.println("entering ******************************** " + stockqtr);
+            return new ResponseDTO<Integer>(productService.addNewProduct(product,stockqtr));
         } catch (Exception ex) {
             log.error("error occured while adding product " + ex.getMessage());
             throw new CustomSqlException("error occured while adding product " + ex.getMessage());

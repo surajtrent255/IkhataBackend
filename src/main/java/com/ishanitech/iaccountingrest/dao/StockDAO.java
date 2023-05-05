@@ -57,4 +57,27 @@ public interface StockDAO {
 
     @SqlUpdate("UPDATE stock set deleted = true WHERE product_id = :id;")
     void deleteStockByProductId(int id);
+    @SqlQuery("select s.id AS id, s.product_id as product_id, s.qty as qty, s.company_id as company_id, s.branch_id, s.create_date as create_date," +
+            " s.update_date as update_date, s.deleted as deleted from stock s where s.product_id = :productId;")
+    @RegisterBeanMapper(StockDTO.class)
+    StockDTO getStockBYProductId(int productId);
+
+
+    @SqlUpdate("""
+            update stock set qty = qty - :newStockDataForParent where product_id = :id
+            
+            """)
+    void updateStockWhileSplitAgainForParent(int newStockDataForParent, int id);
+
+    @SqlUpdate("""
+            update stock set qty = qty + :newStockDataForParent where product_id = :id
+            
+            """)
+    void updateStockWhileMergeAgainForParent(int newStockDataForParent, int id);
+    @SqlUpdate("""
+            update stock set qty = qty + :newStockDataForChild where product_id = :id
+            
+            """)
+    void updateStockWhileSplitAgainForChild(int newStockDataForChild, int id);
+
 }

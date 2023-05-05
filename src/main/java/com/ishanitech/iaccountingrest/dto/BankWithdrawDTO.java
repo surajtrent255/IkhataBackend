@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
@@ -12,9 +13,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BankWithdrawDTO {
-    private  int company_id;
-    private  int amount;
-    private  int check_number ;
-    private Date withdraw_date;
-    private  String widhdraw_type;
+
+    private int withdrawId;
+    private int bankId;
+    private  int companyId;
+    private int branchId;
+    private  int withdrawAmount;
+    private  String withdrawType;
+    private  Date withdrawDate;
+    private String chequeNumber;
+
 }

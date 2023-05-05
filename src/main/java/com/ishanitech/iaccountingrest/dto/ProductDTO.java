@@ -27,6 +27,8 @@ public class ProductDTO {
        private String barcode;
        private Double discount;
        private Double tax;
+       private String unit;
+       private  Integer qtyPerUnit;
        private boolean deleted;
        private Integer stock;
 }
