@@ -12,14 +12,14 @@ CREATE TABLE users(
          check (phone <= 9999999999)
 );
 
-CREATE TABLE "public"."role"(
+CREATE TABLE role(
    "id" SERIAL PRIMARY KEY,
    "role" VARCHAR(15) NOT NULL,
    "description" VARCHAR(15) NOT NULL,
    "deleted" BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE user_role (
+CREATE TABLE user_company_role (
   id SERIAL,
   user_id int NOT NULL,
   role_id int NOT NULL,
@@ -28,6 +28,16 @@ CREATE TABLE user_role (
    deleted BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (user_id,role_id,id)
 );
+
+CREATE TABLE user_role (
+  id SERIAL,
+  user_id int NOT NULL,
+  role_id int NOT NULL,
+  status BOOLEAN DEFAULT TRUE,
+   deleted BOOLEAN DEFAULT FALSE,
+  PRIMARY KEY (user_id,role_id,id)
+);
+
 CREATE TABLE  token (
   id SERIAL NOT NULL ,
   token varchar(300) NOT NULL,
@@ -43,6 +53,7 @@ CREATE TABLE  token (
 CREATE TABLE  company (
   company_id SERIAL NOT NULL ,
   name varchar(50) NOT NULL,
+  email VARCHAR(100) DEFAULT NUll,
   description text NOT NULL,
   pan_no bigint NOT NULL ,
   state int Default NULL  ,
@@ -52,6 +63,7 @@ CREATE TABLE  company (
   deleted BOOLEAN DEFAULT FALSE,
    customer boolean default false,
    phone bigint DEFAULT NULL,
+   status BOOLEAN DEFAULT TRUE,
   PRIMARY KEY (company_id),
 	constraint valid_number
       check (phone <= 9999999999)
@@ -64,7 +76,7 @@ CREATE TABLE  company (
 --  PRIMARY KEY (id),
 --	CONSTRAINT fk_user_company
 --   FOREIGN KEY(company_id)
---      REFERENCES company(compnay_id)
+--      REFERENCES company(company_id)
 --);
 
 CREATE TABLE user_company (
@@ -236,7 +248,7 @@ CREATE TABLE "purchase_bill_detail"(
 
 create table stock (
     id serial primary key,
-    product_id int not null,
+                product_id int not null,
     qty int not null,
     company_id int not null,
     branch_id int not null,
@@ -251,7 +263,6 @@ create table stock (
       name varchar(50) NOT NULL,
       abbrv varchar(20) NOT NULL,
       description text NOT NULL,
-      pan_no bigint NOT NULL ,
       state int Default NULL  ,
       district varchar(50) NOT NULL ,
       mun_vdc varchar(50) NOT NULL ,
@@ -307,6 +318,97 @@ CREATE TABLE municipality (
   disabled bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (municipality_id)
 );
+
+
+
+CREATE TABLE payment (
+  SN SERIAL,
+  company_id int DEFAULT NULL,
+  party_id int NOT NULL,
+  amount REAL NOT NULL,
+  payment_mode_id INT NOT NULL,
+  tds_deducted real DEFAULT 0,
+  post_date_check boolean DEFAULT FALSE,
+  branch_id int DEFAULT NULL,
+  date DATE DEFAULT NULL,
+  status boolean DEFAULT TRUE,
+
+  PRIMARY KEY (SN)
+);
+
+CREATE TABLE payment_mode(
+	id SERIAL,
+	mode_name 	VARCHAR(50) NOT NULL,
+	description VARCHAR(50) DEFAULT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY(id)
+
+);
+
+CREATE TABLE post_date_check(
+
+	Sn SERIAL,
+	check_no bigint  NOT NULL,
+	payment_id int NOT NULL,
+	pay_date DATE DEFAULT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY(Sn)
+);
+
+--drop scripts
+DELETE FROM branch;
+DELETE FROM company;
+DELETE FROM token;
+DELETE FROM user_branch;
+DELETE FROM user_company;
+DELETE FROM user_role;
+DELETE FROM user_company_role;
+DELETE FROM counter;
+DELETE FROM users;
+DELETE FROM payment;
+
+CREATE TABLE expenses (
+  SN SERIAL,
+  company_id int DEFAULT NULL,
+  amount REAL NOT NULL,
+  topic VARCHAR(200),
+  bill_no INT,
+  pay_to VARCHAR(50),
+  date DATE DEFAULT NULL,
+  branch_id int DEFAULT NULL,
+  status boolean DEFAULT TRUE,
+  PRIMARY KEY (SN)
+);
+
+
+CREATE TABLE fixed_assets (
+  SN SERIAL,
+  company_id int DEFAULT NULL,
+  name VARCHAR(50),
+	amount REAL NOT NULL,
+	date DATE DEFAULT NULL,
+	bill_no INT,
+	cash REAL ,
+	loan VARCHAR(100),
+	loan_id INT,
+  branch_id int DEFAULT NULL,
+  status boolean DEFAULT TRUE,
+  PRIMARY KEY (SN)
+);
+
+
+CREATE TABLE receipt (
+  SN SERIAL,
+  company_id int DEFAULT NULL,
+  party_id INT NOT  NULL,
+	amount REAL NOT NULL,
+	date DATE DEFAULT NULL,
+	mode_id INT DEFAULT NULL,
+	tds_deducted_amount REAL NOT NULL ,
+	post_date_check BOOLEAN DEFAULT FALSE,
+  branch_id int DEFAULT NULL,
+  status boolean DEFAULT TRUE,
+  PRIMARY KEY (SN)
 
 -- DROP TABLE IF EXISTS public.bank;
 CREATE TABLE  bank (
@@ -387,6 +489,7 @@ create table loan_name(
 	id serial not null,
 	loan_name_index int not null,
 	loan_name varchar(40) not null
+);
 
 );
 
@@ -432,4 +535,32 @@ unit VARCHAR(250),
 tax INT,
 company_id INT,
 branch_id INT
+
+);
+
+CREATE TABLE counter(
+	id SERIAL,
+	name VARCHAR(50) DEFAULT NULL,
+	company_id INT NOT NULL,
+	branch_id INT NOT NULL ,
+	date DATE DEFAULT NULL,
+	status boolean DEFAULT TRUE
+);
+
+
+CREATE TABLE feature_control(
+id SERIAL,
+	feature VARCHAR(50) NOT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	feature_group INT DEFAULT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE user_feature(
+	id SERIAL,
+	feature_id INT DEFAULT NULL,
+	user_id INT DEFAULT NULL,
+	company_id INT DEFAULT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY(id)
 );

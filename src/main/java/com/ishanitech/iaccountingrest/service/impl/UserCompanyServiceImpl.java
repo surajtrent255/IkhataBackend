@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.UserCompanyDAO;
+import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.UserCompanyDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.UserCompanyService;
@@ -44,5 +45,11 @@ public class UserCompanyServiceImpl implements UserCompanyService {
         UserCompanyDAO userCompanyDAO = dbService.getDao(UserCompanyDAO.class);
 
         return userCompanyDAO.getUserCompanyById(id);
+    }
+
+    @Override
+    public List<CompanyDTO> getCompanyDetailsFromUserCompanyRoleTableForDisableCompany(int userId) {
+        UserCompanyDAO userCompanyDAO = dbService.getDao(UserCompanyDAO.class);
+        return userCompanyDAO.getCompanyDetailsFromUserCompanyRoleTableForDisableCompany(userId);
     }
 }

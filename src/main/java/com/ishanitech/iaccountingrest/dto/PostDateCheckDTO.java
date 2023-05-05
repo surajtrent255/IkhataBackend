@@ -4,17 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UsersForConfigurationDTO {
+@NoArgsConstructor
+public class PostDateCheckDTO {
+    private int SN;
+    private Long checkNo;
 
-    private String firstname;
+    private int paymentId;
 
-    private String lastname;
-
-    private String email;
+    private Date payDate;
 
     private boolean status;
-
 }

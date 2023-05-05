@@ -1,7 +1,7 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
-import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
+import com.ishanitech.iaccountingrest.dto.UserCommonConfigDTO;
 import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,11 +34,8 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     @Override
     public void addUserRole(int userId,int companyId, int [] roleId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        int NewRoleId;
-
-        for(int i=0;i<roleId.length;i++){
-            NewRoleId = roleId[i];
-            userConfigutarionDAO.addRoleToUser(userId,companyId,NewRoleId);
+        for(int RoleId: roleId){
+            userConfigutarionDAO.addRoleToUser(userId,companyId,RoleId);
         }
     }
 
@@ -54,7 +52,7 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 
 
     @Override
-    public List<UserConfigDTO> getAllUser(int companyId) {
+    public List<UserCommonConfigDTO> getAllUser(int companyId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
         return  userConfigutarionDAO.getAllUser(companyId);
     }
@@ -70,7 +68,7 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     }
 
     @Override
-    public List<UserConfigDTO> getAllUsersByCompanyId(int companyId) {
+    public List<UserCommonConfigDTO> getAllUsersByCompanyId(int companyId) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
         return userConfigutarionDAO.getUsersByCompanyId(companyId);
     }
@@ -86,4 +84,27 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
         return userConfigutarionDAO.getUserRoleDetailsBasedOnCompanyIdAndUserId(companyId,userId);
     }
+
+    @Override
+    public List<UserConfigurationDTO> getAllUsersForSuperAdminListing() {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        return userConfigutarionDAO.getAllUsersForSuperAdminList();
+    }
+
+    @Override
+    public void assignAdminRoleFromSuperAdmin(int userId,int roleId) {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        userConfigutarionDAO.assignAdminRoleToUserBySuperAdmin(userId, roleId);
+
+
+    }
+
+    @Override
+    public void enableDisableUsersBySuperAdmin(boolean status, int userId) {
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        userConfigutarionDAO.enableDisableUsersBySuperAdmin(status,userId);
+
+    }
+
+
 }

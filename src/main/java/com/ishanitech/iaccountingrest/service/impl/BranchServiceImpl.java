@@ -6,7 +6,7 @@ import com.ishanitech.iaccountingrest.dto.BranchConfigDTO;
 import com.ishanitech.iaccountingrest.dto.BillNoGenerationDTO;
 import com.ishanitech.iaccountingrest.dto.BranchDTO;
 import com.ishanitech.iaccountingrest.dto.UserBranchDTO;
-import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
+import com.ishanitech.iaccountingrest.dto.UserCommonConfigDTO;
 import com.ishanitech.iaccountingrest.service.BranchService;
 import com.ishanitech.iaccountingrest.service.DbService;
 import org.springframework.stereotype.Service;
@@ -70,7 +70,7 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public List<UserConfigDTO> getUserForAssignBranchList(int companyId) {
+    public List<UserCommonConfigDTO> getUserForAssignBranchList(int companyId) {
         BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
         return branchDAO.getUserForAssignBranchList(companyId);
     }

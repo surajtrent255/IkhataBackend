@@ -1,7 +1,6 @@
 package com.ishanitech.iaccountingrest.controller;
 
 
-import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.dto.UserCompanyDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;

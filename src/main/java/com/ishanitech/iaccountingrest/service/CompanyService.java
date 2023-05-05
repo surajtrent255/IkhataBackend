@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.service;
 
 import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface CompanyService {
     List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId);
 
     List<CompanyDTO> getCustomerInfosByPanOrPhone(int searchMethod, long customerPhoneOrPan);
+
+    void updateCompanyStatus( boolean status,  int companyId);
 }

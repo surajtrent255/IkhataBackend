@@ -1,0 +1,38 @@
+package com.ishanitech.iaccountingrest.dao;
+
+import com.ishanitech.iaccountingrest.dto.FixedAssetsDTO;
+import jakarta.annotation.Nullable;
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+
+import java.util.List;
+
+public interface FixedAssetsDAO {
+
+    @SqlUpdate("INSERT INTO fixed_assets( " +
+            " company_id, name, amount, date, bill_no, cash, loan, loan_id, branch_id) " +
+            " VALUES ( :companyId, :name, :amount, :date, :billNo, :cash, :loan, :loanId, :branchId);")
+    Integer addFixAssetsDetails(@BindBean FixedAssetsDTO fixedAssetsDTO);
+
+
+    @SqlQuery("SELECT * FROM fixed_assets WHERE company_id= :companyId")
+    @RegisterBeanMapper(FixedAssetsDTO.class)
+    List<FixedAssetsDTO> getFixedAssetsDetails(@Bind int companyId);
+
+    @SqlQuery("SELECT * FROM fixed_assets WHERE sn= :SN")
+    @RegisterBeanMapper(FixedAssetsDTO.class)
+    FixedAssetsDTO getFixedAssetsDetailsBySN(@Bind int SN);
+
+    @SqlUpdate("UPDATE public.fixed_assets " +
+            " SET  name=:name, amount=:amount, date=:date, bill_no=:billNo, cash=:cash, loan=:loan, loan_id=:loanId " +
+            " WHERE sn=:SN;")
+    void updateFixedAssets(@BindBean FixedAssetsDTO fixedAssetsDTO);
+
+    @SqlUpdate("DELETE FROM fixed_assets WHERE sn= :SN")
+    @Nullable
+    void deleteFromFixedAssets(@Bind int SN);
+
+}

@@ -1,10 +1,13 @@
 package com.ishanitech.iaccountingrest.dto;
 
+import com.ishanitech.iaccountingrest.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +19,8 @@ public class UserConfigurationDTO {
     private String lastName ;
 
     private String email;
+
+    private Long phone;
 
     private int companyId;
 

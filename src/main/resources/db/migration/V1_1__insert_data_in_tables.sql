@@ -1,9 +1,10 @@
 ﻿INSERT INTO role (id, role, description) VALUES
 	(1, 'ADMIN', ''),
 	(2, 'USER', ''),
-	(3, 'ACCOUNTANT',''),
-	(4, 'MANAGER',''),
-	(5, 'SUPER_ADMIN','');
+	(3, 'AUDITOR',''),
+	(4, 'ACCOUNTANT',''),
+	(5, 'STAFF',''),
+	(6, 'SUPER_ADMIN','');
 
     	insert into bill_no_generator
         (
@@ -147,6 +148,20 @@ INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES
      	(21, 'Suryabinayak Municipality', 3, 10, b'0');
 
 
+     	 INSERT INTO payment_mode (id, mode_name) VALUES
+             	(1, 'cash' ),
+             	(2, 'cheque'),
+             	(3, 'bank_redirect'),
+             	(4, 'ebanking');
+
+
+INSERT INTO feature_control(
+	id, feature,feature_group)
+	VALUES
+	(1, 'Edit_Price', 1),
+	(2, 'Search_By_Barcode', 2),
+	(3, 'Search_By_Id', 2),
+	(4, 'Search_By_Product_Name', 3);
 
 
 
@@ -265,6 +280,7 @@ INSERT INTO public.type_of_payment(
  (20,'Standard Chartered Bank','Nayabaneshwor, Kathmandu'),
  (21,'Sunrise Bank','Gairidhara, Kathmandu'),
  (22,'other','unknown');
+>>>>>>> 1b765c3968b460bc8b1750eb3b0c7f2b6205ceb6
 
 insert into sale_type(
 	id,

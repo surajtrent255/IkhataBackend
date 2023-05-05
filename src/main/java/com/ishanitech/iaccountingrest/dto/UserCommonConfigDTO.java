@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserConfigDTO {
+public class UserCommonConfigDTO {
 
     private int userId;
     private String firstName;

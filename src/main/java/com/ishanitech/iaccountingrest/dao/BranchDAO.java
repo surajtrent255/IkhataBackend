@@ -3,7 +3,7 @@ package com.ishanitech.iaccountingrest.dao;
 import com.ishanitech.iaccountingrest.dto.BranchConfigDTO;
 import com.ishanitech.iaccountingrest.dto.BranchDTO;
 import com.ishanitech.iaccountingrest.dto.UserBranchDTO;
-import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
+import com.ishanitech.iaccountingrest.dto.UserCommonConfigDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -19,7 +19,7 @@ public interface BranchDAO {
     List<BranchDTO> getBranchByCompanyId(@Bind("companyId") int companyId);
 
     @GetGeneratedKeys
-    @SqlUpdate(" INSERT INTO branch (company_id, name, abbrv, description, pan_no, state, district, mun_vdc, ward_no, phone) VALUES ( :companyId, :name, :abbrv, :description, :panNo, :state, :district, :munVdc, :wardNo, :phone );")
+    @SqlUpdate(" INSERT INTO branch (company_id, name, abbrv, description,  state, district, mun_vdc, ward_no, phone) VALUES ( :companyId, :name, :abbrv, :description,  :state, :district, :munVdc, :wardNo, :phone );")
     Integer addBranch(@BindBean BranchDTO branchDTO);
 
     @SqlQuery("INSERT INTO user_branch("
@@ -55,8 +55,8 @@ public interface BranchDAO {
             " inner join user_company on user_company.user_id = users.id " +
             " WHERE user_company.company_id = :companyId  " +
             " AND users.id  NOT IN (SELECT user_id FROM user_branch) ;")
-    @RegisterBeanMapper(UserConfigDTO.class)
-    List<UserConfigDTO> getUserForAssignBranchList(@Bind("companyId") int companyId);
+    @RegisterBeanMapper(UserCommonConfigDTO.class)
+    List<UserCommonConfigDTO> getUserForAssignBranchList(@Bind("companyId") int companyId);
 
 
 
