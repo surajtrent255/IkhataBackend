@@ -75,4 +75,9 @@ public interface CompanyDAO {
     @RegisterBeanMapper(CompanyDTO.class)
     List<CompanyDTO> getCompanyByPhoneNo(long customerPhoneorPan);
 
+    @SqlUpdate(" UPDATE public.company " +
+            " SET  status= :status " +
+            " WHERE company_id = :companyId; ")
+    void updateCompanyStatus(@Bind boolean status,@Bind int companyId);
+
 }
