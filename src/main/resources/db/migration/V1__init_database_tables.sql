@@ -88,9 +88,11 @@ CREATE TABLE "product"(
    "branch_id" integer not null,
    "seller_id" integer ,
    "category_id" integer NOT NULL,
-    "barcode" varchar(250) not null,
+    "barcode" varchar(250),
     "discount" real default 0.0 not null,
-    "tax" real default 13.0 not null,
+    "tax" integer ,
+    "unit" VARCHAR(100),
+    "quantity_per_unit" integer,
     "deleted" boolean DEFAULT FALSE NOT NULL
 --       FOREIGN KEY(user_id)
 --       REFERENCES users(id),
@@ -319,7 +321,7 @@ deposit_id SERIAL ,
 bank_id  int  NOT NULL ,
 company_id  int  NOT NULL ,
 branch_id  int NOT NULL,
-deposit_amount real NOT NULL,
+deposit_amount bigint NOT NULL,
 deposit_type VARCHAR(50) NOT NULL,
 submit_date date default current_date,
 cheque_number  VARCHAR(50)
@@ -327,9 +329,10 @@ cheque_number  VARCHAR(50)
 -- DROP TABLE IF EXISTS public.bank_withdraw;
 CREATE TABLE  bank_withdraw(
 withdraw_id SERIAL,
+bank_id int ,
 company_id  int  NOT NULL ,
 branch_id  int NOT NULL,
-withdraw_amount real NOT NULL,
+withdraw_amount bigint NOT NULL,
 withdraw_type VARCHAR(50) NOT NULL,
 withdraw_date date default current_date,
 cheque_number  VARCHAR(50)
@@ -381,4 +384,57 @@ create table loan_name(
 	loan_name_index int not null,
 	loan_name varchar(40) not null
 
+);
+
+
+
+
+create  table unit (
+id serial not null ,
+name VARCHAR(50) not null
+);
+
+
+
+CREATE TABLE split_product (
+    id SERIAL PRIMARY KEY,
+    product_id INT ,
+    product_name VARCHAR(100),
+    qty INT,
+    total_qty INT,
+    unit VARCHAR(50),
+    price REAL,
+    updated_product_id INT,
+    updated_product_name VARCHAR(100),
+    company_id INT,
+    branch_id INT
+);
+CREATE TABLE split_product (
+    id SERIAL PRIMARY KEY,
+    product_id INT ,
+    product_name VARCHAR(100),
+    qty INT,
+	split_qty INT,
+    total_qty INT,
+    unit VARCHAR(50),
+    price REAL,
+    updated_product_id INT,
+    updated_product_name VARCHAR(100),
+    company_id INT,
+    branch_id INT
+);
+
+CREATE Table merge_product(
+id serial PRIMARY KEY,
+product_id INT,
+product_name VARCHAR(250),
+split_product_id INT,
+split_product_name VARCHAR(200),
+price INT,
+qty INT,
+merge_qty INT,
+unit VARCHAR(250),
+tax INT,
+company_id INT,
+branch_id INT
 );

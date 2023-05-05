@@ -11,7 +11,7 @@ public interface ProductService {
 
     ProductDTO getProductById(Integer id, int compId, int branchId);
 
-    Integer addNewProduct(ProductDTO product);
+    Integer addNewProduct(ProductDTO product ,int stockqtr);
 
     void updateProduct(ProductDTO productDTO, Integer id);
 

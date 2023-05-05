@@ -15,6 +15,7 @@ import java.util.Date;
 public class BankWithdrawDTO {
 
     private int withdrawId;
+    private int bankId;
     private  int companyId;
     private int branchId;
     private  int withdrawAmount;

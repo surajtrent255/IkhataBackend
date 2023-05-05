@@ -94,11 +94,11 @@ public class BankController {
         }
         return new ResponseDTO<>("Bank Successfullly deleted");
     }
-    @DeleteMapping("/{accountNo}")
-    public ResponseDTO<?> deleteFromBankByAccountNo(@PathVariable("accountNo") Long accountNo){
+    @DeleteMapping("/{bankId}")
+    public ResponseDTO<?> deleteFromBankByAccountNo(@PathVariable("bankId") int bankId){
         int success =0;
         try{
-           success = bankService.DeleteFromBankByAccountNo(accountNo);
+           success = bankService.DeleteFromBankByAccountNo(bankId);
         }catch (Exception e){
             log.error(e.getMessage());
         }

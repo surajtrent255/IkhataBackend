@@ -83,10 +83,10 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public int DeleteFromBankByAccountNo(Long accountNo) {
+    public int DeleteFromBankByAccountNo(int bankId) {
         try{
             BankDAO bankDAO = dbService.getDao(BankDAO.class);
-            bankDAO.deleteFromBankByAccountNo(accountNo);
+            bankDAO.deleteFromBankByAccountNo(bankId);
         }catch (JdbiException jdbiException){
             log.error(jdbiException.getMessage());
         }

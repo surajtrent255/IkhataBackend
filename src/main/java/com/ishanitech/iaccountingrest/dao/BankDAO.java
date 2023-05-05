@@ -59,8 +59,8 @@ public interface BankDAO {
     @SqlQuery("DELETE FROM bank WHERE  company_id=:companyId AND branch_id=:branchId")
     int deleteBank(@Bind int companyId, @Bind int branchId);
 
-    @SqlQuery("DELETE FROM bank WHERE account_number=:accountNo")
-    int deleteFromBankByAccountNo(@Bind Long accountNo );
+    @SqlQuery("DELETE FROM bank WHERE bank_id=:bankId")
+    int deleteFromBankByAccountNo(@Bind int bankId );
 
 
 

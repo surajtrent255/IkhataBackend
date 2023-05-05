@@ -1,7 +1,8 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.BankDepositeServiceDAO;
-import com.ishanitech.iaccountingrest.dto.BankDepositeDTO;
+import com.ishanitech.iaccountingrest.dto.BankDepositDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BankDepositeService;
 import com.ishanitech.iaccountingrest.service.DbService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,34 +21,35 @@ public class BankDepositeServiceImpl implements BankDepositeService {
 
 
     @Override
-    public List<BankDepositeDTO> getAllByBankBankDeposite(int companyId, int branchId) {
+    public List<BankDepositDTO> getAllByBankBankDeposite(int companyId, int branchId) {
         BankDepositeServiceDAO BankDepositeServiceDAO =dbService.getDao(BankDepositeServiceDAO.class);
         return
          BankDepositeServiceDAO.getALLBankDeposite(companyId,branchId);
         }
 
     @Override
-    public int addBankDeposit(BankDepositeDTO BankDepositeDTO) {
+    public int addBankDeposit(BankDepositDTO BankDepositDTO) {
         BankDepositeServiceDAO BankDepositeServiceDAO = dbService.getDao(BankDepositeServiceDAO.class);
 
             try{
-                 BankDepositeServiceDAO.addBankDeposit( BankDepositeDTO);
+                 BankDepositeServiceDAO.addBankDeposit( BankDepositDTO);
                     return  1;
 
             } catch(JdbiException jdbiException){
+                log.error("error occured while fetching products : " + jdbiException.getMessage());
+                throw new CustomSqlException("Error occured while adding bank");
 
-                System.out.println("error occured while adding an deposit");
-                return 0;
+
 
             }
 
         }
 
     @Override
-    public int updateDeposite(BankDepositeDTO bankDepositeDTO) {
+    public int updateDeposite(BankDepositDTO bankDepositDTO) {
         BankDepositeServiceDAO bankDepositeServiceDAO = dbService.getDao(BankDepositeServiceDAO.class);
         try{
-            bankDepositeServiceDAO.updateDeposite(bankDepositeDTO, bankDepositeDTO.getDepositId());
+            bankDepositeServiceDAO.updateDeposite(bankDepositDTO, bankDepositDTO.getDepositId());
             return 1;
         }
         catch (JdbiException jdbiException){
@@ -58,12 +60,12 @@ public class BankDepositeServiceImpl implements BankDepositeService {
     }
 
     @Override
-    public int deleteFromBankDepositeBranchId( int branchId , String chequeNumber) {
+    public int deleteFromBankDepositeBranchId( int branchId , int depositId) {
 
 
         try{
             BankDepositeServiceDAO bankDepositeServiceDAO = dbService.getDao(BankDepositeServiceDAO.class);
-            bankDepositeServiceDAO.deleteDeposite(branchId,chequeNumber );
+            bankDepositeServiceDAO.deleteDeposite(branchId,depositId );
             return 1;
         }catch (JdbiException jdbiException){
             log.error(jdbiException.getMessage());

@@ -1,7 +1,7 @@
 package com.ishanitech.iaccountingrest.controller;
 
 
-import com.ishanitech.iaccountingrest.dto.BankDepositeDTO;
+import com.ishanitech.iaccountingrest.dto.BankDepositDTO;
 import com.ishanitech.iaccountingrest.dto.BankWithdrawDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
@@ -55,9 +55,9 @@ public class BankWithdrawController {
 
     }
 
-    @DeleteMapping("/{branchId}/{withdrawId}")
+        @DeleteMapping("/{branchId}/{withdrawId}")
     public ResponseDTO<?> deletewithdraw(@PathVariable("branchId") int branchId,@PathVariable("withdrawId") int withdrawId){
-            System.out.println("branchid" + branchId+"withdreadid"+withdrawId);
+            System.out.println("branchid" + branchId+"withdrew"+withdrawId);
             int deleted=0;
         try{
 

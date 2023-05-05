@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BankDepositeDTO {
+public class BankDepositDTO {
     private int depositId;
     private int bankId ;
     private  int companyId;

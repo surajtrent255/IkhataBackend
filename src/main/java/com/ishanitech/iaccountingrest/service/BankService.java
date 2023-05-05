@@ -30,7 +30,7 @@ public interface BankService {
 
     void deleteBankByCompanyAndBranchId(int companyId,int branchId);
 
-    int DeleteFromBankByAccountNo(Long accountNo);
+    int DeleteFromBankByAccountNo(int bankId);
 
     List<BankListDTO> getAllBankList();
 

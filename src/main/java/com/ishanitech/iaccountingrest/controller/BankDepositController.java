@@ -1,5 +1,5 @@
 package com.ishanitech.iaccountingrest.controller;
-import com.ishanitech.iaccountingrest.dto.BankDepositeDTO;
+import com.ishanitech.iaccountingrest.dto.BankDepositDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BankDepositeService;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/api/v1/bank/deposite")
 @RequiredArgsConstructor
-public class BankDepositeController {
+public class BankDepositController {
     private final BankDepositeService BankDepositeService;
     @GetMapping
-    public  ResponseDTO<?> getAllByBankBankDeposite(@RequestParam("companyId") int companyId ,@RequestParam("branchId")  int branchId){
+    public  ResponseDTO<?> getAllByBankBankDeposit(@RequestParam("companyId") int companyId ,@RequestParam("branchId")  int branchId){
 
         try{
             return new ResponseDTO<>(BankDepositeService.getAllByBankBankDeposite(companyId ,branchId));
@@ -35,22 +35,18 @@ public class BankDepositeController {
 //        return new ResponseDTO<>( bankDepositeDTO.getBankId()+" deposite Is Added Successfully");
 //    }
 @PostMapping
-public ResponseDTO<?> addBankDeposit(@RequestBody BankDepositeDTO bankDepositeDTO){
-    try {
-        return  new ResponseDTO<>(BankDepositeService.addBankDeposit(bankDepositeDTO))  ;
-    }catch (Exception e){
-        log.error(e.getMessage());
-    }
+public ResponseDTO<?> addBankDeposit(@RequestBody BankDepositDTO bankDepositDTO){
 
-    return new ResponseDTO<>( bankDepositeDTO.getBankId() +" deposite Is Added Successfully");
+        return  new ResponseDTO<>(BankDepositeService.addBankDeposit(bankDepositDTO))  ;
+
 }
 
 
 
     @PutMapping
-    public int updateDeposite(@RequestBody BankDepositeDTO bankDepositeDTO){
+    public int updateDeposite(@RequestBody BankDepositDTO bankDepositDTO){
         try{
-            BankDepositeService.updateDeposite(bankDepositeDTO);
+            BankDepositeService.updateDeposite(bankDepositDTO);
             return 1;
         } catch (Exception e){
             log.error("error while updating deposite it " + e.getMessage());
@@ -59,12 +55,12 @@ public ResponseDTO<?> addBankDeposit(@RequestBody BankDepositeDTO bankDepositeDT
         }
 
     }
-    @DeleteMapping("/{branchId}/{chequeNumber}")
-    public ResponseDTO<?> deleteFromBankDepositeBranchId(@PathVariable("branchId") int branchId , @PathVariable("chequeNumber") String chequeNumber){
+        @DeleteMapping("/{branchId}/{depositId}")
+    public ResponseDTO<?> deleteFromBankDepositeBranchId(@PathVariable("branchId") int branchId , @PathVariable("depositId") int depositId){
 
         try {
 
-            BankDepositeService.deleteFromBankDepositeBranchId(branchId ,chequeNumber);
+            BankDepositeService.deleteFromBankDepositeBranchId(branchId ,depositId);
 
         }catch (Exception e){
             log.error(e.getMessage());

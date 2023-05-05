@@ -34,13 +34,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Integer addNewProduct(ProductDTO product) {
+    public Integer addNewProduct(ProductDTO product , int stockqtr) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
 
         int createdProdId = productDAO.addNewProduct(product);
         StockDTO stockDTO =new StockDTO();
         stockDTO.setProductId(createdProdId);
-        stockDTO.setQty(0);
+        stockDTO.setQty(stockqtr);
         stockDTO.setCreateDate(new Date());
         stockDTO.setUpdateDate(new Date());
         stockDTO.setCompanyId(product.getCompanyId());

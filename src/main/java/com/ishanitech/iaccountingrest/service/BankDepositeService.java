@@ -1,17 +1,18 @@
 package com.ishanitech.iaccountingrest.service;
 
-import com.ishanitech.iaccountingrest.dto.BankDepositeDTO;
+import com.ishanitech.iaccountingrest.dto.BankDepositDTO;
+
 
 import java.util.List;
 
 public interface BankDepositeService  {
-    List<BankDepositeDTO> getAllByBankBankDeposite(int companyId, int branchId);
+    List<BankDepositDTO> getAllByBankBankDeposite(int companyId, int branchId);
 
-    int addBankDeposit(BankDepositeDTO bankDepositeDTO);
+    int addBankDeposit(BankDepositDTO bankDepositeDTO);
 
-    int updateDeposite(BankDepositeDTO bankDepositeDTO);
+    int updateDeposite(BankDepositDTO bankDepositeDTO);
 
-    int deleteFromBankDepositeBranchId(int branchId,String chequeNumber);
+    int deleteFromBankDepositeBranchId(int branchId,int depositId);
 
 
 }
