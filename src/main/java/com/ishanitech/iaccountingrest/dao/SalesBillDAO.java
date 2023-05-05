@@ -102,6 +102,7 @@ public interface SalesBillDAO {
             " transaction_id,  " +
             " company_id, "+
             " branch_id, "+
+            " counter_id, "+
             " draft, "+
             " tax_approach, "+
             " customer_search_method, "+
@@ -132,6 +133,7 @@ public interface SalesBillDAO {
             " :transactionId , " +
             " :companyId , "+
             " :branchId, "+
+            " :counterId,"+
             " :draft, "+
             " :taxApproach, "+
             " :customerSearchMethod,"+

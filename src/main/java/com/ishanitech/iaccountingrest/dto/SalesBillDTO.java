@@ -39,6 +39,7 @@ public class SalesBillDTO {
     private String transactionId ;
     private boolean status ;
     private Integer branchId;
+    private Integer counterId;
     private boolean draft;
     private Integer taxApproach;
     private Integer customerSearchMethod;

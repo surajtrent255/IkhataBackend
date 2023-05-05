@@ -277,4 +277,21 @@ insert into sale_type(
 ),
 (2,2,'Credit Sale');
 
+INSERT INTO public.unit(
+	name)
+	VALUES ( 'Bora'),
+	 ( 'Carton'),
+	 ( 'package'),
+	 ( '?'),
+	 ( 'pkg'),
+	 ( 'Box'),
+	 ( 'Crate'),
+	 ( 'Bundle'),
+	 ( 'Bag'),
+	 ( 'Container'),
+	( 'Case'),
+	 ( 'Pouch'),
+	 ( 'Jar'),
+	 ( 'Can'),
+	( 'Barrel');
 

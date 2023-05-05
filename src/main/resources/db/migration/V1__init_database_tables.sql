@@ -135,7 +135,7 @@ create table sales_bill (
     total_amount real not null,
     sync_with_ird boolean default false not null,
     is_bill_printed boolean default false not null,
-    print_count int default 0 not null;
+    print_count int default 0 not null,
     is_bill_active boolean default false not null,
     printed_time varchar ,
     entered_by varchar(50) not null,
@@ -147,6 +147,7 @@ create table sales_bill (
     status boolean default true not null,
     company_id int not null,
     branch_id int not null,
+    counter_id int not null,
     draft boolean default false,
     tax_approach int not null,
     customer_search_method int not null,
