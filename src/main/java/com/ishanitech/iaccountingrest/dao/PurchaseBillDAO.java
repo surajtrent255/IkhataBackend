@@ -15,7 +15,8 @@ public interface PurchaseBillDAO {
 
     @SqlQuery(
  "   select b.id as id, b.date as date, b.user_id as user_id, b.cust_id as cust_id, b.company_id as company_id," +
-       "  b.status as status, b.invoice_no as invoice_no, b.fiscal_year as fiscal_year, b.total as total, b.tax as tax," +
+       "  b.status as status, b.invoice_no as invoice_no, b.fiscal_year as fiscal_year, b.total as total, b.transportation as transportation, b.insurance" +
+         " as insurance, b.loading as loading, b.other as other,  b.tax as tax," +
        "  b.discount as discount, b.grand_total as grand_total FROM purchase_bill b WHERE status = true")
     @RegisterBeanMapper(PurchaseBillDTO.class)
     List<PurchaseBillDTO> getAllPurchaseBills();
@@ -54,7 +55,12 @@ public interface PurchaseBillDAO {
          " payment_method ," +
          " vat_refund_amount  ," +
          " transaction_id  ," +
-         " user_id "+
+         " user_id, "+
+            " sale_type, "+
+            "transportation, "+
+            "insurance, "+
+            "loading, "+
+            "other"+
          ") values (" +
          " :fiscalYear," +
          " :purchaseBillNo ," +
@@ -78,7 +84,12 @@ public interface PurchaseBillDAO {
          " :paymentMethod ," +
          " :vatRefundAmount  ," +
          " :transactionId , " +
-         " :userId"+
+         " :userId, "+
+            " :saleType, "+
+            ":transportation, "+
+            ":insurance, "+
+            ":loading, "+
+            ":other "+
          ")")
     int addNewPurchaseBill(@BindBean PurchaseBillDTO purchaseBill);
 
@@ -108,7 +119,10 @@ public interface PurchaseBillDAO {
          " pb.payment_method as payment_method, " +
          " pb.vat_refund_amount  as vat_refund_amount, " +
          " pb.transaction_id  as transaction_id ," +
-         " pb.user_id as user_id " +
+         " pb.user_id as user_id,  pb.transportation as transportation, " +
+            " pb.insurance as insurance, pb.loading as loading, pb.other as other," +
+
+            "pb.sale_type as sale_type"+
          " from purchase_bill pb where pb.status = true and pb.company_id = :compId and pb.branch_id = :branchId;")
     @RegisterBeanMapper(PurchaseBillDTO.class)
     List<PurchaseBillDTO> getPurchaseBillByCompanyId(@Bind int compId, @Bind int branchId);
@@ -135,8 +149,8 @@ public interface PurchaseBillDAO {
                  pb.is_realtime as realtime, 
                  pb.payment_method as payment_method, 
                  pb.vat_refund_amount  as vat_refund_amount, 
-                 pb.transaction_id  as transaction_id 
-                  
+                 pb.transaction_id  as transaction_id, 
+                 pb.sale_type as sale_type
                 from purchase_bill pb where pb.status = true and pb.purchase_bill_no = :billId 
                 and pb.company_id = :companyId and pb.branch_id = :branchId;  
             """)

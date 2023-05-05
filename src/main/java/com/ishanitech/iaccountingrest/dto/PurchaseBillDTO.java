@@ -37,4 +37,11 @@ public class PurchaseBillDTO {
     private double vatRefundAmount ;
     private String transactionId ;
     private boolean status ;
+    private Integer saleType;
+
+    private Double transportation ;
+    private Double insurance ;
+    private Double loading ;
+    private Double other ;
+
 }

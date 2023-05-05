@@ -208,7 +208,12 @@ create table purchase_bill (
     vat_refund_amount real ,
     transaction_id varchar(50) ,
     status boolean default true not null,
-	user_id int not null
+	user_id int not null,
+	sale_type int not null,
+	transportation real not null,
+	insurance real not null,
+	loading real not null,
+	other real
 );
 
 CREATE TABLE "purchase_bill_detail"(
