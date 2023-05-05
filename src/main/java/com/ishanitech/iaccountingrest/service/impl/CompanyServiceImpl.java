@@ -83,4 +83,10 @@ companyDAO.deleteCompany(companyId);
         }
         return customersInfos;
     }
+
+    @Override
+    public void updateCompanyStatus(boolean status, int companyId) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        companyDAO.updateCompanyStatus(status,companyId);
+    }
 }

@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.PaymentDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.PaymentModeService;
 import com.ishanitech.iaccountingrest.service.PaymentService;
 import com.ishanitech.iaccountingrest.service.PostDateCheckService;
@@ -56,10 +57,12 @@ public class PaymentController {
                 Date payDate = paymentDTO.getPostCheckDate();
                 postDateCheckService.addPostChequeInfo(checkNo,PaymentId,payDate);
             }
+            return new ResponseDTO<>("Added Successfully");
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Data" );
+
     }
 
     @GetMapping("/mode")

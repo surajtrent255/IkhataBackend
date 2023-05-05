@@ -1,7 +1,5 @@
 package com.ishanitech.iaccountingrest.dao;
 
-import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
-import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.model.Role;
 import com.ishanitech.iaccountingrest.model.User;
 import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
@@ -57,7 +55,7 @@ public interface UserDAO {
 			+ " r.id AS r_id, "
 			+ " r.role as r_role FROM users u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "
-			+ " WHERE u.id = :userId AND company_id IS NULL;")
+			+ " WHERE u.id = :userId  ;")
 	@UseRowReducer(UserReducer.class)
 	Optional<User> getUserById(@Bind("userId") int userId);
 
@@ -70,7 +68,7 @@ public interface UserDAO {
 			+ " r.id AS r_id, "
 			+ " r.role as r_role FROM users u INNER JOIN user_role ur ON u.id = ur.user_id "
 			+ " INNER JOIN role r ON r.id = ur.role_id "
-			+ " WHERE u.email = :email AND company_id IS NULL;")
+			+ " WHERE u.email = :email  ;")
 	@UseRowReducer(UserReducer.class)
 	Optional<User> getUserByEmail(@Bind("email") String email) ;
 

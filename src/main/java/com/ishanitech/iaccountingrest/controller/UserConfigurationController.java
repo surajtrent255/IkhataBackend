@@ -2,11 +2,18 @@ package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
+import com.ishanitech.iaccountingrest.model.User;
+import com.ishanitech.iaccountingrest.service.CompanyService;
+import com.ishanitech.iaccountingrest.service.UserCompanyService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
 import com.ishanitech.iaccountingrest.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -17,6 +24,10 @@ public class UserConfigurationController {
     private final UserService userService;
 
     private final UserConfigurationService userConfigurationService;
+
+    private final UserCompanyService userCompanyService;
+
+    private final CompanyService companyService;
 
     @GetMapping("/{companyId}")
     public ResponseDTO<?> getUserRoleDetailsBasedOnCompanyId(@PathVariable("companyId") int companyId ){
@@ -102,6 +113,54 @@ public class UserConfigurationController {
             log.error(e.getMessage());
         }
         return new ResponseDTO<>();
+    }
+
+
+//    For Super Admin
+    @GetMapping("/superAdmin")
+    public ResponseDTO<?> getAllUsersForSuperAdminListing(){
+        try{
+            return new ResponseDTO<>(userConfigurationService.getAllUsersForSuperAdminListing());
+
+        }catch(Exception e){
+            log.error(e.getMessage());
+        }
+        return new ResponseDTO<>();
+    }
+
+    @PutMapping("/superAdmin/assign")
+    public ResponseDTO<?> assignAdminRoleToUserFromSuperAdmin(@RequestParam("userId") int userId){
+        try{
+
+            userConfigurationService.assignAdminRoleFromSuperAdmin(userId,1);
+            List<CompanyDTO> companyDTO = userCompanyService.getCompanyDetailsFromUserCompanyRoleTableForDisableCompany(userId);
+            for (CompanyDTO company : companyDTO) {
+                companyService.updateCompanyStatus(true, company.getCompanyId());
+            }
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return new ResponseDTO<>("Assign Successful");
+    }
+
+    @PutMapping("/superAdmin")
+    public ResponseDTO<?> enableDisableUsersFromSuperAdmin(@RequestParam("status") boolean status,@RequestParam("userId") int userId){
+        try{
+            boolean UserStatus = status;
+            if(UserStatus == false) {
+                userConfigurationService.assignAdminRoleFromSuperAdmin(userId,2);
+                List<CompanyDTO> companyDTO =userCompanyService.getCompanyDetailsFromUserCompanyRoleTableForDisableCompany(userId);
+                for (CompanyDTO company : companyDTO) {
+                    companyService.updateCompanyStatus(false, company.getCompanyId());
+                }
+
+            }
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+        return new ResponseDTO<>("Users Status Update Successful");
     }
 
 }

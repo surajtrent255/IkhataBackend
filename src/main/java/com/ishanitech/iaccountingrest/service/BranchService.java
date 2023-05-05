@@ -3,7 +3,7 @@ package com.ishanitech.iaccountingrest.service;
 import com.ishanitech.iaccountingrest.dto.BranchConfigDTO;
 import com.ishanitech.iaccountingrest.dto.BranchDTO;
 import com.ishanitech.iaccountingrest.dto.UserBranchDTO;
-import com.ishanitech.iaccountingrest.dto.UserConfigDTO;
+import com.ishanitech.iaccountingrest.dto.UserCommonConfigDTO;
 
 import java.util.List;
 
@@ -21,6 +21,6 @@ public interface BranchService {
 
     void enableDisableBranchUser(boolean status,int userId,int companyId,int branchId);
 
-    List<UserConfigDTO> getUserForAssignBranchList(int companyId);
+    List<UserCommonConfigDTO> getUserForAssignBranchList(int companyId);
 
 }

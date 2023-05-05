@@ -37,6 +37,7 @@ public class CompanyController {
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new CustomSqlException("Something went wrong while adding Company!");
+
         }
         return new ResponseDTO<>( "Company is Successfully Added");
 
@@ -44,7 +45,14 @@ public class CompanyController {
 
     @GetMapping
     public ResponseDTO<List<CompanyDTO>> getAllCompanyList(){
-        return new ResponseDTO<List<CompanyDTO>>(companyService.getAllCompanyList());
+        try{
+            return new ResponseDTO<List<CompanyDTO>>(companyService.getAllCompanyList());
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException("SomeThing Went Wrong");
+
+        }
+
     }
 
     @GetMapping("/{PanNo}")
@@ -54,7 +62,13 @@ public class CompanyController {
 
     @GetMapping("/userCompany/{userId}")
     public ResponseDTO<?> getCompanyByUserId(@PathVariable("userId") int userId){
-        return new ResponseDTO<>(companyService.getCompanyByUserId(userId));
+        try{
+            return new ResponseDTO<>(companyService.getCompanyByUserId(userId));
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException("SomeThing Went Wrong");
+        }
+
     }
 
     @DeleteMapping("/{id}")

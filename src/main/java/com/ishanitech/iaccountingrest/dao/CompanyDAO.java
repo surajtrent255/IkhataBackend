@@ -16,7 +16,7 @@ import java.util.List;
 public interface CompanyDAO {
 
     @GetGeneratedKeys
-    @SqlUpdate(" insert into company( name, description, pan_no, state,  district, mun_vdc, ward_no, phone, customer) values ( :name, :description, :panNo, :state,  :district, :munVdc, :wardNo, :phone, :customer)")
+    @SqlUpdate(" insert into company( name,email, description, pan_no, state,  district, mun_vdc, ward_no, phone, customer) values ( :name,:email, :description, :panNo, :state,  :district, :munVdc, :wardNo, :phone, :customer)")
     Integer addCompany(@BindBean CompanyDTO companyDTO);
 
     @Transaction
@@ -50,7 +50,8 @@ public interface CompanyDAO {
             + "c.ward_no as wardNo"
             +",c.phone as phone ,"
             + "u.user_id as userId from company c "
-            + "inner join user_company u on u.company_id = c.company_id where u.user_id = :userId and  u.status = true  ")
+            + "inner join user_company u on u.company_id = c.company_id where u.user_id = :userId AND  u.status = true " +
+            " AND c.status = true ")
     @RegisterBeanMapper(CompanyAndUserCompanyDTO.class)
     List<CompanyAndUserCompanyDTO> getCompanyByUserId(@Bind("userId") int userId );
 
@@ -73,4 +74,9 @@ public interface CompanyDAO {
     @SqlQuery("select * from company  where phone = :customerPhone ")
     @RegisterBeanMapper(CompanyDTO.class)
     List<CompanyDTO> getCompanyByPhoneNo(long customerPhone);
+
+    @SqlUpdate(" UPDATE public.company " +
+            " SET  status= :status " +
+            " WHERE company_id = :companyId; ")
+    void updateCompanyStatus(@Bind boolean status,@Bind int companyId);
 }
