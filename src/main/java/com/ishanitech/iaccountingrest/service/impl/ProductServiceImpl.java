@@ -88,4 +88,12 @@ public class ProductServiceImpl implements ProductService {
 
 
     }
+
+    @Override
+    public List<ProductDTO> getProductsByWildCard(String name, Integer compId, Integer branchId) {
+        ProductDAO productDAO = dbService.getDao(ProductDAO.class);
+        List<ProductDTO> productDTOS;
+        productDTOS = productDAO.getAllProductsByWildCardName(name, compId, branchId);
+        return productDTOS;
+    }
 }

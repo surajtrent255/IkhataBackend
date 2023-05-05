@@ -28,4 +28,5 @@ public class ProductDTO {
        private Double discount;
        private Double tax;
        private boolean deleted;
+       private Integer stock;
 }

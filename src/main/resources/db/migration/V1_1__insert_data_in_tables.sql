@@ -266,3 +266,15 @@ INSERT INTO public.type_of_payment(
  (21,'Sunrise Bank','Gairidhara, Kathmandu'),
  (22,'other','unknown');
 
+insert into sale_type(
+	id,
+	sale_type_index,
+	sale_type
+) values (
+	1,
+	1,
+	'Cash Sale'
+),
+(2,2,'Credit Sale');
+
+

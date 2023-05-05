@@ -20,9 +20,15 @@ public interface ProductDAO {
     @RegisterBeanMapper(ProductDTO.class)
     List<ProductDTO> getAllProducts(@Bind int compId, @Bind int branchId);
 
-    @SqlQuery("SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id,  p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, " +
-            " p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date" +
-            " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.id = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false " )
+    @SqlQuery("""
+            SELECT p.id as id, p.name as name,s.qty as stock, p.description as description, p.branch_id as branch_id,  p.selling_price as selling_price,
+            p.cost_price as cost_price, p.user_id as user_id, p.company_id as company_id, p.seller_id as seller_id,
+            p.category_id as category_id, p.create_date as create_date, p.update_date
+                         as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax
+            			 FROM product p
+            			 inner join stock  s on p.id = s.product_id
+            			 WHERE p.id = :id and p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false and s.deleted= false;
+            """ )
     @RegisterBeanMapper(ProductDTO.class)
     ProductDTO getProductById(Integer id, int compId, int branchId );
 
@@ -56,4 +62,13 @@ public interface ProductDAO {
              """ )
     @RegisterBeanMapper(ProductDTO.class)
     List<ProductDTO> getAllProductsByProductsIds(@Define String newProdIds);
+
+    @SqlQuery("""
+             SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id,  
+             p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
+             as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE p.name like :name and p.deleted = false  and p.company_id = :compId and 
+             p.branch_id = :branchId 
+             """ )
+    @RegisterBeanMapper(ProductDTO.class)
+    List<ProductDTO> getAllProductsByWildCardName(String name, Integer compId, Integer branchId);
 }

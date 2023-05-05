@@ -122,8 +122,8 @@ create table sales_bill (
     fiscal_year varchar(50) not null,
     bill_no varchar(50)  ,
     customer_id int not null,
-    customer_name varchar(50) not null,
-    customer_pan varchar(50) not null,
+    customer_name varchar(50),
+    customer_pan varchar(50) ,
     bill_date Date not null,
     amount real not null,
     discount real not null,
@@ -147,11 +147,9 @@ create table sales_bill (
     branch_id int not null,
     draft boolean default false,
     tax_approach int not null,
-    customer_search_method int not null
-
+    customer_search_method int not null,
+    sale_type int not null
 );
-
-
 
 
 CREATE TABLE "sales_bill_detail"(
@@ -382,3 +380,10 @@ create table loan_name(
 	loan_name varchar(40) not null
 
 );
+
+create table sale_type(
+	id serial not null,
+	sale_type_index int not null,
+	sale_type varchar(50) not null
+)
+

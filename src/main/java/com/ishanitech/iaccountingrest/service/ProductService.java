@@ -20,4 +20,6 @@ public interface ProductService {
     List<InventoryProductsDTO> getAllProductsForInventory( int companyId, int branchId);
 
     List<ProductDTO> getAllProductsByProductsIds(int[] productsIds);
+
+    List<ProductDTO> getProductsByWildCard(String name, Integer compId, Integer branchId);
 }

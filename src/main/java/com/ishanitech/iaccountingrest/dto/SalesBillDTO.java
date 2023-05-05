@@ -12,10 +12,10 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class SalesBillDTO {
-    private int id;
-    private int userId;
-    private int customerId;
-    private int companyId;
+    private Integer id;
+    private Integer userId;
+    private Integer customerId;
+    private Integer companyId;
     private String fiscalYear ;
     private String billNo ;
     private boolean billPrinted;
@@ -24,25 +24,27 @@ public class SalesBillDTO {
     private String customerName ;
     private long customerPan ;
     private Date billDate  ;
-    private double amount ;
-    private double discount ;
-    private int discountApproach;
-    private double taxableAmount ;
-    private double taxAmount ;
-    private double  totalAmount ;
+    private Double amount ;
+    private Double discount ;
+    private Integer discountApproach;
+    private Double taxableAmount ;
+    private Double taxAmount ;
+    private Double  totalAmount ;
     private boolean syncWithIrd;
     private String printedTime ;
     private String enteredBy ;
     private Integer printedBy ;
     private String paymentMethod ;
-    private double vatRefundAmount ;
+    private Double vatRefundAmount ;
     private String transactionId ;
     private boolean status ;
-    private int branchId;
+    private Integer branchId;
     private boolean draft;
-    private int taxApproach;
-    private int customerSearchMethod;
-    private int printCount;
+    private Integer taxApproach;
+    private Integer customerSearchMethod;
+    private Integer printCount;
+    private Integer saleType;
+
 
 
 }

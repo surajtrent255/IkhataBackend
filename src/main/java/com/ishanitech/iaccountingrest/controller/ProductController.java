@@ -29,6 +29,16 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/searchByWildCard")
+    public ResponseDTO<List<ProductDTO>> getProductsByWildcards(@RequestParam("name") String name, @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId) {
+        try {
+            return new ResponseDTO<List<ProductDTO>>(productService.getProductsByWildCard(name+"%", compId, branchId));
+        } catch (Exception e) {
+            log.error("error occured while fetching products by wildcard : " + e.getMessage());
+            throw new CustomSqlException("Error occured while fetching product ");
+        }
+    }
+
     @GetMapping("/getProductsByIds")
     public ResponseDTO<List<ProductDTO>> getAllProductsByProductsId(@RequestParam("productsIds") int[] productsIds){
         try{
@@ -63,6 +73,7 @@ public class ProductController {
             throw new CustomSqlException("error occured while fetching product with id " + id + " ");
         }
     }
+
 
     @PostMapping
     public ResponseDTO<Integer> addNewProduct(@RequestBody ProductDTO product) {
