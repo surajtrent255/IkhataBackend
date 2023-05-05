@@ -491,6 +491,33 @@ create table loan_name(
 	loan_name varchar(40) not null
 );
 
+
+CREATE TABLE counter(
+	id SERIAL,
+	name VARCHAR(50) DEFAULT NULL,
+	company_id INT NOT NULL,
+	branch_id INT NOT NULL ,
+	date DATE DEFAULT NULL,
+	status boolean DEFAULT TRUE
+);
+
+
+CREATE TABLE feature_control(
+id SERIAL,
+	feature VARCHAR(50) NOT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	feature_group INT DEFAULT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE user_feature(
+	id SERIAL,
+	feature_id INT DEFAULT NULL,
+	user_id INT DEFAULT NULL,
+	company_id INT DEFAULT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY(id)
+
 );
 
 create table sale_type(
@@ -535,32 +562,4 @@ unit VARCHAR(250),
 tax INT,
 company_id INT,
 branch_id INT
-
-);
-
-CREATE TABLE counter(
-	id SERIAL,
-	name VARCHAR(50) DEFAULT NULL,
-	company_id INT NOT NULL,
-	branch_id INT NOT NULL ,
-	date DATE DEFAULT NULL,
-	status boolean DEFAULT TRUE
-);
-
-
-CREATE TABLE feature_control(
-id SERIAL,
-	feature VARCHAR(50) NOT NULL,
-	status BOOLEAN DEFAULT TRUE,
-	feature_group INT DEFAULT NULL,
-	PRIMARY KEY(id)
-);
-
-CREATE TABLE user_feature(
-	id SERIAL,
-	feature_id INT DEFAULT NULL,
-	user_id INT DEFAULT NULL,
-	company_id INT DEFAULT NULL,
-	status BOOLEAN DEFAULT TRUE,
-	PRIMARY KEY(id)
 );
