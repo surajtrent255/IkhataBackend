@@ -92,17 +92,19 @@ CREATE TABLE "product"(
    "name"  varchar(250) NOT NULL ,
    "description" TEXT  NOT NULL,
    "selling_price" REAL NOT NULL,
-   "cost_price" REAL NOT NULL,
+   "cost_price" REAL ,
    "create_date" date DEFAULT CURRENT_DATE NOT NULL,
    "update_date" timestamp default current_timestamp NOT NULL,
    "user_id" integer NOT NULL,
    "company_id" integer NOT NULL,
    "branch_id" integer not null,
-   "seller_id" integer NOT NULL,
+   "seller_id" integer ,
    "category_id" integer NOT NULL,
-    "barcode" varchar(250) not null,
+    "barcode" varchar(250),
     "discount" real default 0.0 not null,
-    "tax" real default 13.0 not null,
+    "tax" integer ,
+    "unit" VARCHAR(100),
+    "quantity_per_unit" integer,
     "deleted" boolean DEFAULT FALSE NOT NULL
 --       FOREIGN KEY(user_id)
 --       REFERENCES users(id),
@@ -134,8 +136,8 @@ create table sales_bill (
     fiscal_year varchar(50) not null,
     bill_no varchar(50)  ,
     customer_id int not null,
-    customer_name varchar(50) not null,
-    customer_pan varchar(50) not null,
+    customer_name varchar(50),
+    customer_pan varchar(50) ,
     bill_date Date not null,
     amount real not null,
     discount real not null,
@@ -145,7 +147,7 @@ create table sales_bill (
     total_amount real not null,
     sync_with_ird boolean default false not null,
     is_bill_printed boolean default false not null,
-    print_count int default 0 not null;
+    print_count int default 0 not null,
     is_bill_active boolean default false not null,
     printed_time varchar ,
     entered_by varchar(50) not null,
@@ -157,13 +159,12 @@ create table sales_bill (
     status boolean default true not null,
     company_id int not null,
     branch_id int not null,
+    counter_id int not null,
     draft boolean default false,
     tax_approach int not null,
-    customer_search_method int not null
-
+    customer_search_method int not null,
+    sale_type int not null
 );
-
-
 
 
 CREATE TABLE "sales_bill_detail"(
@@ -421,7 +422,7 @@ deposit_id SERIAL ,
 bank_id  int  NOT NULL ,
 company_id  int  NOT NULL ,
 branch_id  int NOT NULL,
-deposit_amount real NOT NULL,
+deposit_amount bigint NOT NULL,
 deposit_type VARCHAR(50) NOT NULL,
 submit_date date default current_date,
 cheque_number  VARCHAR(50)
@@ -429,9 +430,10 @@ cheque_number  VARCHAR(50)
 -- DROP TABLE IF EXISTS public.bank_withdraw;
 CREATE TABLE  bank_withdraw(
 withdraw_id SERIAL,
+bank_id int ,
 company_id  int  NOT NULL ,
 branch_id  int NOT NULL,
-withdraw_amount real NOT NULL,
+withdraw_amount bigint NOT NULL,
 withdraw_type VARCHAR(50) NOT NULL,
 withdraw_date date default current_date,
 cheque_number  VARCHAR(50)
@@ -484,6 +486,7 @@ create table loan_name(
 	loan_name varchar(40) not null
 );
 
+
 CREATE TABLE counter(
 	id SERIAL,
 	name VARCHAR(50) DEFAULT NULL,
@@ -509,4 +512,50 @@ CREATE TABLE user_feature(
 	company_id INT DEFAULT NULL,
 	status BOOLEAN DEFAULT TRUE,
 	PRIMARY KEY(id)
+
+);
+
+create table sale_type(
+	id serial not null,
+	sale_type_index int not null,
+	sale_type varchar(50) not null
+)
+
+
+
+
+create  table unit (
+id serial not null ,
+name VARCHAR(50) not null
+);
+
+CREATE TABLE split_product (
+    id SERIAL PRIMARY KEY,
+    product_id INT ,
+    product_name VARCHAR(100),
+    qty INT,
+	split_qty INT,
+    total_qty INT,
+    unit VARCHAR(50),
+    price REAL,
+    updated_product_id INT,
+    updated_product_name VARCHAR(100),
+    company_id INT,
+    branch_id INT
+);
+
+CREATE Table merge_product(
+id serial PRIMARY KEY,
+product_id INT,
+product_name VARCHAR(250),
+split_product_id INT,
+split_product_name VARCHAR(200),
+price INT,
+qty INT,
+merge_qty INT,
+unit VARCHAR(250),
+tax INT,
+company_id INT,
+branch_id INT
+
 );

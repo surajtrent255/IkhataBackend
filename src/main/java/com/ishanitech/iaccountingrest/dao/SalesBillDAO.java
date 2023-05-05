@@ -34,7 +34,8 @@ public interface SalesBillDAO {
             "  sb.is_realtime as realtime,  " +
             "  sb.payment_method as payment_method,  " +
             "  sb.vat_refund_amount  as vat_refund_amount,  " +
-            "  sb.transaction_id  as transaction_id  " +
+            "  sb.transaction_id  as transaction_id,  " +
+            " sb.sale_type as sale_type"+
             "    " +
             " from sales_bill sb  ;")
     @RegisterBeanMapper(SalesBillDTO.class)
@@ -69,7 +70,8 @@ public interface SalesBillDAO {
             " sb.status as status, "+
             " sb.tax_approach as taxApproach," +
             "  sb.transaction_id  as transaction_id , " +
-            "   sb.customer_search_method as customerSearchMethod " +
+            "   sb.customer_search_method as customerSearchMethod, " +
+            " sb.sale_type as sale_type"+
             " from sales_bill sb where  sb.id = :id;")
     @RegisterBeanMapper(SalesBillDTO.class)
     SalesBillDTO getBillById(int id);
@@ -100,10 +102,12 @@ public interface SalesBillDAO {
             " transaction_id,  " +
             " company_id, "+
             " branch_id, "+
+            " counter_id, "+
             " draft, "+
             " tax_approach, "+
             " customer_search_method, "+
-            " print_count"+
+            " print_count, "+
+            " sale_type "+
             ") values (" +
             " :fiscalYear," +
             " :billNo ," +
@@ -129,10 +133,12 @@ public interface SalesBillDAO {
             " :transactionId , " +
             " :companyId , "+
             " :branchId, "+
+            " :counterId,"+
             " :draft, "+
             " :taxApproach, "+
             " :customerSearchMethod,"+
-            " 0"+
+            " 0,"+
+            " :saleType"+
             ")")
      int addNewBill(@BindBean SalesBillDTO salesBillDTO);
 
@@ -172,7 +178,8 @@ public interface SalesBillDAO {
             "  sb.transaction_id  as transaction_id, " +
             "  sb.company_id as company_id, " +
             "  sb.draft as draft, " +
-            " sb.status as status"+
+            " sb.status as status, "+
+            " sb.sale_type as sale_type"+
             " from sales_bill sb where  sb.company_id = :compId and sb.branch_id = :branchId;")
     @RegisterBeanMapper(SalesBillDTO.class)
     List<SalesBillDTO> getSalesBillByCompanyId(int compId, int branchId);

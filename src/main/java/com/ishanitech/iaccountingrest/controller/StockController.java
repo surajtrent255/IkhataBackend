@@ -37,6 +37,15 @@ public class StockController {
             throw new CustomSqlException("Error occured accessing the stock info : " + e.getMessage());
         }
     }
+    @GetMapping("/product/{productId}")
+    public ResponseDTO<StockDTO> getStockByProductId(@PathVariable int productId){
+        try{
+            return new ResponseDTO<StockDTO>(stockService.getStockBYProductId(productId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the stock info : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the stock info : " + e.getMessage());
+        }
+    }
 
     @PostMapping
     public ResponseDTO<Integer> addNewStock(@RequestBody StockDTO stockDTO){

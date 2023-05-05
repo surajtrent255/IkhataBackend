@@ -56,13 +56,17 @@ public class BankServiceImpl implements BankService {
         BankDAO BankDAO = dbService.getDao(BankDAO.class);
         int bankId =0;
 
+
             try{
+
                 bankId = BankDAO.addBank(bankDTO);
-            } catch(JdbiException jdbiException){
-                log.info("error occured while adding user" + jdbiException.getMessage());
-                throw new CustomSqlException(" something went wrong !!! ");
+                return bankId;
+            } catch(JdbiException jdbiException) {
+
+                log.error("error occured while fetching products : " + jdbiException.getMessage());
+                throw new CustomSqlException("Error occured while adding bank");
+
             }
-            return bankId;
         }
 
     @Override
@@ -79,10 +83,10 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public int DeleteFromBankByAccountNo(Long accountNo) {
+    public int DeleteFromBankByAccountNo(int bankId) {
         try{
             BankDAO bankDAO = dbService.getDao(BankDAO.class);
-            bankDAO.deleteFromBankByAccountNo(accountNo);
+            bankDAO.deleteFromBankByAccountNo(bankId);
         }catch (JdbiException jdbiException){
             log.error(jdbiException.getMessage());
         }

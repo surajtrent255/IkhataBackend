@@ -67,20 +67,22 @@ companyDAO.deleteCompany(companyId);
     public List<CompanyDTO> getCustomerInfosByPanOrPhone(int searchMethod, long customerPhoneOrPan) {
         List<CompanyDTO> customersInfos  = new ArrayList<>();
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
-        CompanyDTO customer = null;
-        List<CompanyDTO> customerDTOS = new ArrayList<>();
-        switch (searchMethod) {
-            case 1 -> {
-                customer = companyDAO.getCompanyByPanNo(customerPhoneOrPan);
-                if(customer != null){
-                    customersInfos.add(customer);
-                }
-            }
-            case 2 -> {
-                customerDTOS = companyDAO.getCompanyByPhoneNo(customerPhoneOrPan);
-                customersInfos.addAll(customerDTOS);
-            }
-        }
+//        CompanyDTO customer = null;
+        customersInfos = companyDAO.getCompanyByPhoneNo(customerPhoneOrPan);
+//
+//        List<CompanyDTO> customerDTOS = new ArrayList<>();
+//        switch (searchMethod) {
+//            case 1 -> {
+//                customer = companyDAO.getCompanyByPanNo(customerPhoneOrPan);
+//                if(customer != null){
+//                    customersInfos.add(customer);
+//                }
+//            }
+//            case 2 -> {
+//                customerDTOS = companyDAO.getCompanyByPhoneNo(customerPhoneOrPan);
+//                customersInfos.addAll(customerDTOS);
+//            }
+//        }
         return customersInfos;
     }
 
