@@ -12,7 +12,6 @@ import org.jdbi.v3.sqlobject.transaction.Transaction;
 
 import java.util.List;
 
-
 public interface CompanyDAO {
 
     @GetGeneratedKeys
@@ -20,14 +19,14 @@ public interface CompanyDAO {
     Integer addCompany(@BindBean CompanyDTO companyDTO);
 
     @Transaction
-    default int addCompanyWithUserId(CompanyDTO companyDTO,int userId){
+    default int addCompanyWithUserId(CompanyDTO companyDTO, int userId) {
         int savedCompanyId = addCompany(companyDTO);
-        insertToUserCompany(savedCompanyId,userId);
+        insertToUserCompany(savedCompanyId, userId);
         return savedCompanyId;
     }
 
     @SqlUpdate("INSERT INTO user_company (company_id,user_id) VALUES (:savedCompanyId,:userId)")
-    void insertToUserCompany(@Bind int savedCompanyId,@Bind int userId);
+    void insertToUserCompany(@Bind int savedCompanyId, @Bind int userId);
 
     @SqlUpdate("delete from company where company_id = :companyId")
     void deleteCompany(@Bind("companyId") Integer companyId);
@@ -38,7 +37,7 @@ public interface CompanyDAO {
 
     @SqlQuery("select * from company  where pan_no = :PanNo ")
     @RegisterBeanMapper(CompanyDTO.class)
-    CompanyDTO getCompanyByPanNo(@Bind("PanNo") Long PanNo );
+    CompanyDTO getCompanyByPanNo(@Bind("PanNo") Long PanNo);
 
     @SqlQuery("select c.company_id as companyId"
             + ",c.name as name"
@@ -48,14 +47,15 @@ public interface CompanyDAO {
             + ", c.district as district"
             + ", c.mun_vdc as munVdc,"
             + "c.ward_no as wardNo"
-            +",c.phone as phone ,"
+            + ",c.phone as phone ,"
             + "u.user_id as userId from company c "
-            + "inner join user_company u on u.company_id = c.company_id where u.user_id = :userId AND  u.status = true " +
+            + "inner join user_company u on u.company_id = c.company_id where u.user_id = :userId AND  u.status = true "
+            +
             " AND c.status = true ")
     @RegisterBeanMapper(CompanyAndUserCompanyDTO.class)
-    List<CompanyAndUserCompanyDTO> getCompanyByUserId(@Bind("userId") int userId );
+    List<CompanyAndUserCompanyDTO> getCompanyByUserId(@Bind("userId") int userId);
 
-//    suraj
+    // suraj
     @SqlQuery("select c.company_id as companyId"
             + ",c.name as name"
             + ",c.description as description"
@@ -64,12 +64,11 @@ public interface CompanyDAO {
             + ", c.district as district"
             + ", c.mun_vdc as munVdc,"
             + "c.ward_no as wardNo"
-            +",c.phone as phone "
+            + ",c.phone as phone "
             + " from company c "
             + " where c.company_id = :compId  and c.deleted = false;")
     @RegisterBeanMapper(CompanyDTO.class)
-   CompanyDTO getCompanyByCompanyId(@Bind("compId") int compId );
-
+    CompanyDTO getCompanyByCompanyId(@Bind("compId") int compId);
 
     @SqlQuery("select * from company  where phone = :customerPhoneorPan or pan_no = :customerPhoneorPan ")
     @RegisterBeanMapper(CompanyDTO.class)
@@ -78,6 +77,5 @@ public interface CompanyDAO {
     @SqlUpdate(" UPDATE public.company " +
             " SET  status= :status " +
             " WHERE company_id = :companyId; ")
-    void updateCompanyStatus(@Bind boolean status,@Bind int companyId);
-
+    void updateCompanyStatus(@Bind boolean status, @Bind int companyId);
 }
