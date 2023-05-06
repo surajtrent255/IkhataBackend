@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.DistrictMunicipalityAndProvinceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +24,9 @@ public class DistrictAndProvinceController {
             return new ResponseDTO<>(districtMunicipalityAndProvinceService.getAllState());
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @GetMapping("/district/{provinceId}")
@@ -33,8 +35,8 @@ public class DistrictAndProvinceController {
             return new ResponseDTO<>(districtMunicipalityAndProvinceService.getDistrictByProvinceId(provinceId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
     }
 
     @GetMapping("/municipality/{provinceId}/{districtId}")
@@ -43,8 +45,9 @@ public class DistrictAndProvinceController {
             return new ResponseDTO<>(districtMunicipalityAndProvinceService.getMunicipalityByProvinceAndDistrictId(provinceId,districtId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("data");
+
     }
 
 

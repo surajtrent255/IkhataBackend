@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.controller;
 import com.ishanitech.iaccountingrest.dto.BranchDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.dto.UserBranchDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BranchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,32 +21,34 @@ public class BranchController {
         try{
             return new ResponseDTO<>(branchService.getBranchByCompanyId(companyId));
         }catch (Exception e){
-            System.out.println(e);
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("data");
+
     }
 
     @PostMapping
     public ResponseDTO<?> addBranch(@RequestBody BranchDTO branchDTO){
         try {
             branchService.addBranch(branchDTO);
+            return new ResponseDTO<>("branch Successfully Added" );
+
         }catch (Exception e){
-            System.out.println(e);
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("branch Successfully Added" );
     }
 
     @PostMapping("/assign")
     public ResponseDTO<?> AssignBranchToUser(@RequestBody UserBranchDTO userBranchDTO){
         try {
             branchService.AssignBranchToUser(userBranchDTO);
+            return new ResponseDTO<>(userBranchDTO.getUserId() + "Is Added Successfully");
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
 
-        return new ResponseDTO<>(userBranchDTO.getUserId() + "Is Added Successfully");
     }
 
     @GetMapping("/get")
@@ -54,8 +57,9 @@ public class BranchController {
             return new ResponseDTO<>(branchService.getBranchDetailsBasedOnCompanyAndUserId(companyId,userId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @GetMapping("/users")
@@ -64,8 +68,9 @@ public class BranchController {
             return new ResponseDTO<>(branchService.getBranchUserByCompanyId(companyId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @PutMapping("/enable")
@@ -74,6 +79,7 @@ public class BranchController {
             branchService.enableDisableBranchUser(status,userId,companyId,branchId);
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
     }
 

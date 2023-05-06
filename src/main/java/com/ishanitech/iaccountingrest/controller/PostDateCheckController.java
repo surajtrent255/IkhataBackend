@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.PostDateCheckDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.PostDateCheckService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +22,8 @@ public class PostDateCheckController {
             return new ResponseDTO<>(postDateCheckService.getAllPostChequeInfo());
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("data");
     }
 
 

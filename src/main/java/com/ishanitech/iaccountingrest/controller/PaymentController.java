@@ -31,8 +31,9 @@ public class PaymentController {
             return new ResponseDTO<>(paymentService.getPaymentDetailsByCompanyId(companyId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @GetMapping("/{SN}")
@@ -42,8 +43,9 @@ public class PaymentController {
             return new ResponseDTO<>(paymentService.getPaymentDetailsById(SN));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @PostMapping
@@ -71,8 +73,8 @@ public class PaymentController {
             return new ResponseDTO<>(paymentModeService.getAllPaymentModeDetails());
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
     }
 
     @DeleteMapping("/{SN}")
@@ -83,6 +85,7 @@ public class PaymentController {
           postDateCheckService.deletePostDateCheckInfo(SN);
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
     }
 

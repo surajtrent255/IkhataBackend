@@ -34,12 +34,11 @@ public class CompanyController {
             result = companyService.addCompany(companyDTO,userId);
            CompanyDTO companyDTO1 = (CompanyDTO) companyService.getCompanyByPanNo(companyDTO.getPanNo());
             userConfigurationService.addUserRole(userId,companyDTO1.getCompanyId(),new int[] {1});
+            return new ResponseDTO<>( "Company is Successfully Added");
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new CustomSqlException("Something went wrong while adding Company!");
-
         }
-        return new ResponseDTO<>( "Company is Successfully Added");
 
     }
 
@@ -50,14 +49,18 @@ public class CompanyController {
         }catch(Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException("SomeThing Went Wrong");
-
         }
 
     }
 
     @GetMapping("/{PanNo}")
     public ResponseDTO<?> getCompanyById(@PathVariable("PanNo") Long PanNo){
-        return new ResponseDTO<>(companyService.getCompanyByPanNo(PanNo));
+        try{
+            return new ResponseDTO<>(companyService.getCompanyByPanNo(PanNo));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
     @GetMapping("/userCompany/{userId}")
@@ -73,7 +76,12 @@ public class CompanyController {
 
     @DeleteMapping("/{id}")
     public void deleteCompany(@PathVariable("id") int id){
-        companyService.deleteCompany(id);
+        try{
+            companyService.deleteCompany(id);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
 

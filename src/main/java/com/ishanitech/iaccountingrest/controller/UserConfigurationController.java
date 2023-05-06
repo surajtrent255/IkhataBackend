@@ -40,27 +40,46 @@ public class UserConfigurationController {
             return new ResponseDTO<>(userConfigurationService.getUserRoleDetailsBasedOnCompanyIdAndUserId(companyId,userId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @GetMapping("/role")
     public ResponseDTO<?> getAllRoles(){
-        return new ResponseDTO<>(userService.getAllRole());
+
+        try {
+            return new ResponseDTO<>(userService.getAllRole());
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
 
     @PostMapping("/update/role/status")
-    public String updateUserRoleStatus(@RequestParam("status") boolean status,@RequestParam("userId") int userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int roleId){
-        userConfigurationService.updateUserRoleStatus(status,userId,companyId,roleId);
-        return "status updated successfully";
+    public ResponseDTO<?> updateUserRoleStatus(@RequestParam("status") boolean status,@RequestParam("userId") int userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int roleId){
+        try{
+            userConfigurationService.updateUserRoleStatus(status,userId,companyId,roleId);
+            return new ResponseDTO<>("status updated successfully") ;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+
 
     }
 
     @PostMapping("/update/usercompany/status")
-    public String updateUserCompanyStatus(@RequestParam("status") boolean status,@RequestParam("userId") int userId){
-        userConfigurationService.updateUserCompanyStatus(status,userId);
-        return "User Company status updated successfully";
+    public ResponseDTO<?> updateUserCompanyStatus(@RequestParam("status") boolean status,@RequestParam("userId") int userId){
+        try{
+            userConfigurationService.updateUserCompanyStatus(status,userId);
+            return new ResponseDTO<>("User Company status updated successfully");
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+
 
     }
 
@@ -70,27 +89,33 @@ public class UserConfigurationController {
     public ResponseDTO<?> addUserRole(@RequestParam("userId") int userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int[] roleId){
         try {
             userConfigurationService.addUserRole(userId,companyId,roleId);
+            return new ResponseDTO<>("Successfully Added Role To User");
+
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException("Error adding Role to user");
         }
-        return new ResponseDTO<>("Successfully Added Role To User");
     }
 
     @PostMapping("/add/multiple/user/role")
     public ResponseDTO<?> addMultipleUserRole(@RequestParam("userId") int[] userId,@RequestParam("companyId") int companyId,@RequestParam("roleId") int roleId){
         try {
             userConfigurationService.addMultipleUserRole(userId,companyId,roleId);
+            return new ResponseDTO<>("Successfully Added Role To Multiple User");
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException("Error adding Role to Multiple user");
         }
-        return new ResponseDTO<>("Successfully Added Role To Multiple User");
     }
 
     @GetMapping("/users")
     public ResponseDTO<?> getAllUsers(@RequestParam("companyId") int companyId){
-        return new ResponseDTO<>(userConfigurationService.getAllUser(companyId)) ;
+        try{
+            return new ResponseDTO<>(userConfigurationService.getAllUser(companyId)) ;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
     @PostMapping("/assign/user")
@@ -111,8 +136,9 @@ public class UserConfigurationController {
             return new ResponseDTO<>(userConfigurationService.getAllUsersByCompanyId(companyId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
 
@@ -124,8 +150,9 @@ public class UserConfigurationController {
 
         }catch(Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @PutMapping("/superAdmin/assign")
@@ -137,11 +164,13 @@ public class UserConfigurationController {
             for (CompanyDTO company : companyDTO) {
                 companyService.updateCompanyStatus(true, company.getCompanyId());
             }
+            return new ResponseDTO<>("Assign Successful");
+
 
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Assign Successful");
     }
 
     @PutMapping("/superAdmin")
@@ -154,13 +183,12 @@ public class UserConfigurationController {
                 for (CompanyDTO company : companyDTO) {
                     companyService.updateCompanyStatus(false, company.getCompanyId());
                 }
-
             }
-
+            return new ResponseDTO<>("Users Status Update Successful");
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Users Status Update Successful");
     }
 
 }

@@ -25,33 +25,55 @@ public class UserCompanyController {
         Integer result = null;
         try {
             result = userCompanyService.addUserCompany(userCompanyDTO);
+            return new ResponseDTO<>( "User's Company is Successfully Added");
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new CustomSqlException("Something went wrong while adding User's Company!");
         }
-        return new ResponseDTO<>( "User's Company is Successfully Added");
 
     }
 
     @GetMapping
     public ResponseDTO<List<UserCompanyDTO>> getAllUserCompanyList(){
-        return new ResponseDTO<List<UserCompanyDTO>>(userCompanyService.getAllUserCompanyList());
+        try{
+            return new ResponseDTO<List<UserCompanyDTO>>(userCompanyService.getAllUserCompanyList());
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseDTO<?> getUserCompanyById(@PathVariable("id") int id){
-        return new ResponseDTO<>(userCompanyService.getUserCompanyById(id));
+        try{
+            return new ResponseDTO<>(userCompanyService.getUserCompanyById(id));
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
     @GetMapping("/user/{id}")
     public ResponseDTO<?> getUserCompanyByUserId(@PathVariable("id") int id){
-        return new ResponseDTO<>(userCompanyService.getUserCompanyById(id));
+        try{
+            return new ResponseDTO<>(userCompanyService.getUserCompanyById(id));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
 
     @DeleteMapping("/{id}")
     public void deleteUserCompany(@PathVariable("id") int id){
-        userCompanyService.deleteUserCompany(id);
+        try {
+            userCompanyService.deleteUserCompany(id);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
 

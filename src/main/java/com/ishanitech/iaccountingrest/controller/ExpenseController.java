@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.ExpenseDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,8 @@ public class ExpenseController {
             return new ResponseDTO<>(expenseService.getExpenseDetails(companyId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-
-        return new ResponseDTO<>("Done" );
     }
 
     @GetMapping("/{SN}")
@@ -33,9 +33,10 @@ public class ExpenseController {
             return new ResponseDTO<>(expenseService.getExpenseDetailsBySN(SN));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
 
-        return new ResponseDTO<>("Done" );
+
     }
 
     @PutMapping
@@ -45,28 +46,31 @@ public class ExpenseController {
             return new ResponseDTO<>("Update Successfully");
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @PostMapping
     public ResponseDTO<?> addExpenseDetails(@RequestBody ExpenseDTO expenseDTO){
         try {
-            return new ResponseDTO<>(expenseService.addExpenseDetails(expenseDTO));
+            return new ResponseDTO<>("Data Successfully Added" + expenseService.addExpenseDetails(expenseDTO));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Data Successfully Added" + expenseDTO);
+
     }
 
     @DeleteMapping("/{SN}")
     public ResponseDTO<?> deleteExpenseDetails(@PathVariable("SN") int SN){
         try{
             expenseService.deleteFromExpense(SN);
+            return new ResponseDTO<>("Delete Successful");
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Delete Successfull");
     }
 
 

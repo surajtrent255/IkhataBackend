@@ -22,29 +22,32 @@ public class CounterController {
           return new ResponseDTO<>(counterService.getAllCounterDetails(companyId)) ;
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @PostMapping
     public ResponseDTO<?> addCounterDetails(@RequestBody CounterDTO counterDTO){
         try{
-            return new ResponseDTO<>(counterService.addCounter(counterDTO));
+            return new ResponseDTO<>("Data SuccessFully Added" +counterService.addCounter(counterDTO));
+
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Data SuccessFully Added");
     }
 
     @PutMapping("/update")
     public ResponseDTO<?> enableDisableCounter(@RequestParam("status") boolean status,@RequestParam("id") int id){
         try {
-            return new ResponseDTO<>(counterService.enableDisableCounter(status,id));
+            return new ResponseDTO<>("Successfully Status Changed" + counterService.enableDisableCounter(status,id));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
 
-        return new ResponseDTO<>("Successfully Status Changed");
+
     }
 
     @GetMapping("/get/users")
@@ -53,19 +56,19 @@ public class CounterController {
             return new ResponseDTO<>(counterService.getUsersForAssignCounter(companyId,branchId));
         }catch(Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>();
+
     }
 
     @PostMapping("/assign/users")
     public ResponseDTO<?> assignCounterToUsers(@RequestBody CounterDTO counterDTO){
         try {
-            return  new ResponseDTO<>(counterService.assignUsersToCounter(counterDTO));
+            return  new ResponseDTO<>("User Successfully Assigned To Counter" + counterService.assignUsersToCounter(counterDTO));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-
-        return  new ResponseDTO<>("User Successfully Assigned To Counter");
     }
 
     @GetMapping("/get/users/forListing/{companyId}")
@@ -74,19 +77,19 @@ public class CounterController {
             return new ResponseDTO<>(counterService.getUsersForCounterListing(companyId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-
-        return new ResponseDTO<>();
     }
 
     @PutMapping("/update/user/counter/status")
     public ResponseDTO<?> updateUserStatusInCounter(@RequestParam("status") boolean status,@RequestParam("userId") int userId,@RequestParam("counterId") int counterId){
         try {
             counterService.updateUserStatusInCounter(status,userId,counterId);
+            return new ResponseDTO<>("Status Updated Successfully");
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Status Updated Successfully");
     }
 
     @GetMapping("/for/localStorage")

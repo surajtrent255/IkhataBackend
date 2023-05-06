@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.FixedAssetsDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.FixedAssetsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,8 @@ public class FixedAssetsController {
             return new ResponseDTO<>(fixedAssetsService.getFixedAssetsDetails(companyId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Done");
     }
 
     @GetMapping("/{SN}")
@@ -32,39 +33,44 @@ public class FixedAssetsController {
             return new ResponseDTO<>(fixedAssetsService.getFixedAssetsBySN(SN));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Done");
+
     }
 
     @PutMapping
     public ResponseDTO<?> updateFixedDetails(@RequestBody FixedAssetsDTO fixedAssetsDTO){
         try{
             fixedAssetsService.updateFixedAssets(fixedAssetsDTO);
+            return new ResponseDTO<>("Update Successfully");
+
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
 
-        return new ResponseDTO<>("Update Successfully");
     }
 
     @PostMapping
     public ResponseDTO<?> addFixedDetails(@RequestBody FixedAssetsDTO fixedAssetsDTO){
         try {
-            return new ResponseDTO<>(fixedAssetsService.addFixedAssetsDetails(fixedAssetsDTO));
+            return new ResponseDTO<>("Data Successfully Added" + fixedAssetsService.addFixedAssetsDetails(fixedAssetsDTO));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Data Successfully Added");
+
     }
 
     @DeleteMapping("/{SN}")
     public ResponseDTO<?> deleteFixedAssets(@PathVariable("SN") int SN){
         try{
             fixedAssetsService.deleteFromAssets(SN);
+            return new ResponseDTO<>("Successfully Deleted");
         }catch(Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Successfully Deleted");
     }
 
 }

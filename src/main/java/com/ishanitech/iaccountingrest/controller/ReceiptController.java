@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.ReceiptDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.ReceiptService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -20,27 +21,28 @@ public class ReceiptController {
             return new ResponseDTO<>(receiptService.getReceipts(companyId));
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Done");
     }
 
     @PostMapping
     public ResponseDTO<?> addReceipts(@RequestBody ReceiptDTO receiptDTO){
         try{
-          return new ResponseDTO<>(receiptService.addReceipts(receiptDTO)) ;
+          return new ResponseDTO<>("Successfully Added" + receiptService.addReceipts(receiptDTO)) ;
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Successfully Added");
     }
 
     @DeleteMapping("/{SN}")
     public ResponseDTO<?> deleteReceipts(@PathVariable("SN") int SN){
         try {
             receiptService.deleteReceipts(SN);
+            return new ResponseDTO<>("Successfully Deleted");
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
-        return new ResponseDTO<>("Successfully Deleted");
     }
 }
