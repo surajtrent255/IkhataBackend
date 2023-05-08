@@ -418,7 +418,7 @@ CREATE TABLE receipt (
   branch_id int DEFAULT NULL,
   status boolean DEFAULT TRUE,
   PRIMARY KEY (SN)
-
+)
 -- DROP TABLE IF EXISTS public.bank;
 CREATE TABLE  bank (
 bank_id  SERIAL ,
@@ -557,6 +557,20 @@ CREATE TABLE split_product (
     company_id INT,
     branch_id INT
 );
+CREATE TABLE split_product_log(
+    id SERIAL PRIMARY KEY,
+    product_id INT ,
+    product_name VARCHAR(100),
+    qty INT,
+	split_qty INT,
+    total_qty INT,
+    unit VARCHAR(50),
+    price REAL,
+    updated_product_id INT,
+    updated_product_name VARCHAR(100),
+    company_id INT,
+    branch_id INT
+);
 
 CREATE Table merge_product(
 id serial PRIMARY KEY,
@@ -612,4 +626,12 @@ SN SERIAL PRIMARY KEY,
 	credit_reason TEXT DEFAULT NULL,
 	credit_amount REAL DEFAULT NULL,
 	credit_tax_amount REAL DEFAULT NULL
+)
+CREATE TABLE user_counter(
+id SERIAL ,
+counter_id INT DEFAULT NULL,
+user_id INT DEFAULT NULL,
+company_id INT DEFAULT NULL,
+branch_id INT DEFAULT NULL,
+status BOOLEAN DEFAULT TRUE
 );

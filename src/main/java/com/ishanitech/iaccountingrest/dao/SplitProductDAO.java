@@ -66,4 +66,30 @@ public interface SplitProductDAO {
     @SqlQuery("SELECT * FROM split_product where id=:id")
     @RegisterBeanMapper(SplitProductDTO.class)
     List<SplitProductDTO> getSplitProductById(int id);
+    @GetGeneratedKeys
+    @SqlUpdate("INSERT INTO split_product("
+            + "product_id, "
+            + "product_name, "
+            + "qty, "
+            + "split_qty, "
+            + "total_qty, "
+            + "unit, "
+            + "price, "
+            +"updated_product_id,"
+            + "updated_product_name, "
+            + "company_id, "
+            + "branch_id) "
+            + "VALUES ("
+            + ":productId, "
+            + ":productName, "
+            + ":qty, "
+            + ":splitQty, "
+            + ":totalQty, "
+            + ":unit, "
+            + ":price, "
+            +":updatedProductId,"
+            + ":updatedProductName, "
+            + ":companyId, "
+            + ":branchId)")
+    void addsplitlog(SplitProductDTO splitProductDTO);
 }
