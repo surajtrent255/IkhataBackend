@@ -71,4 +71,14 @@ public interface ProductDAO {
                         """)
         @RegisterBeanMapper(ProductDTO.class)
         List<ProductDTO> getAllProductsByWildCardName(String name, Integer compId, Integer branchId);
+
+
+        @SqlQuery("""
+                SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id,  p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, 
+             
+                p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
+            
+                as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax,p.unit as unit ,p.quantity_per_unit as qtyPerUnit FROM product p WHERE p.barcode = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false """)
+        @RegisterBeanMapper(ProductDTO.class)
+    ProductDTO getProductByBarCode(String id, int compId, int branchId);
 }
