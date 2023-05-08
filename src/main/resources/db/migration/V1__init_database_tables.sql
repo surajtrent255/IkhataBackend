@@ -29,6 +29,15 @@ CREATE TABLE user_company_role (
   PRIMARY KEY (user_id,role_id,id)
 );
 
+CREATE TABLE user_counter(
+id SERIAL ,
+counter_id INT DEFAULT NULL,
+user_id INT DEFAULT NULL,
+company_id INT DEFAULT NULL,
+branch_id INT DEFAULT NULL,
+status BOOLEAN DEFAULT TRUE
+);
+
 CREATE TABLE user_role (
   id SERIAL,
   user_id int NOT NULL,

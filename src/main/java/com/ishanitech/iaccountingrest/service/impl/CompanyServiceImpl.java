@@ -1,6 +1,10 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
+import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
+import com.ishanitech.iaccountingrest.dao.BranchDAO;
 import com.ishanitech.iaccountingrest.dao.CompanyDAO;
+import com.ishanitech.iaccountingrest.dto.BillNoGenerationDTO;
+import com.ishanitech.iaccountingrest.dto.BranchDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.service.CompanyService;
@@ -27,9 +31,21 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Integer addCompany(CompanyDTO companyDTO,int userId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
         int savedCompanyId =0;
         try{
             savedCompanyId = companyDAO.addCompanyWithUserId(companyDTO,userId);
+//            BranchDTO branchDTO = new BranchDTO();
+//            branchDTO.setCompanyId(savedCompanyId);
+//            int branchAdded = branchDAO.addBranch(branchDTO);
+            BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+            String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
+            BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
+            billNoGeneration.setFiscalYear(currentFiscalYear);
+            billNoGeneration.setCompanyId(savedCompanyId);
+            billNoGeneration.setBranchId(0);
+            billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
+
         }catch (JdbiException jdbiException){
             log.error("error creating Company");
         }

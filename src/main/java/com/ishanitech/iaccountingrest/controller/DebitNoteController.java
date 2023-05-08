@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.DebitNoteDTO;
+import com.ishanitech.iaccountingrest.dto.DebitNoteDetailsDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.DebitNoteService;
@@ -25,6 +26,17 @@ public class DebitNoteController {
             debitNoteService.addDebitNote(debitNoteDTO);
             return  new ResponseDTO<>("Successfully Added");
         }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @PostMapping("/details")
+    public ResponseDTO<?> addDebitNoteDetails(@RequestBody DebitNoteDetailsDTO debitNoteDetailsDTO){
+        try{
+            debitNoteService.addDebitNoteDetails(debitNoteDetailsDTO);
+            return new ResponseDTO<>("Data Added Successfully");
+        }catch(Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
         }

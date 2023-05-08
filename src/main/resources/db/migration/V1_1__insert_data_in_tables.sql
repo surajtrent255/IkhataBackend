@@ -164,87 +164,6 @@ INSERT INTO feature_control(
 	(4, 'Search_By_Product_Name', 3);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 INSERT INTO public.account_type(
 	id, name)
 	VALUES (1, 'saving'),(2,'current'),(3,'other');
@@ -280,7 +199,7 @@ INSERT INTO public.type_of_payment(
  (20,'Standard Chartered Bank','Nayabaneshwor, Kathmandu'),
  (21,'Sunrise Bank','Gairidhara, Kathmandu'),
  (22,'other','unknown');
->>>>>>> 1b765c3968b460bc8b1750eb3b0c7f2b6205ceb6
+
 
 insert into sale_type(
 	id,
