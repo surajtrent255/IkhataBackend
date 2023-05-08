@@ -72,22 +72,30 @@ public class SplitServiceImpl implements SplitService {
     @Transactional
     @Override
     public void updateSplitAgain(SplitProductDTO splitProductDTO) {
+        int Id =0;
         StockDAO stockDAO = dbService.getDao(StockDAO.class);
+        SplitProductDAO SplitProductDAO = dbService.getDao(SplitProductDAO.class);
+        Id=SplitProductDAO.addsplitlog(splitProductDTO);
         Integer newStockDataForParent = splitProductDTO.getSplitQty();
         Integer newStockDataForChild = splitProductDTO.getSplitQty() * splitProductDTO.getQty();
         stockDAO.updateStockWhileSplitAgainForParent(newStockDataForParent, splitProductDTO.getProductId());
         stockDAO.updateStockWhileSplitAgainForChild(newStockDataForChild, splitProductDTO.getUpdatedProductId());
+        System.out.println(Id);
     }
 
     @Transactional
     @Override
     public void updateMerge(SplitProductDTO splitProductDTO) {
+        int Id =0;
         StockDAO stockDAO = dbService.getDao(StockDAO.class);
-
+        SplitProductDAO SplitProductDAO = dbService.getDao(SplitProductDAO.class);
+        Integer total =splitProductDTO.getSplitQty()*splitProductDTO.getQty();
+        Id=SplitProductDAO.addMergelog(splitProductDTO , total);
         Integer newStockDataForParent = splitProductDTO.getSplitQty();
 //        Integer remainder = splitProductDTO.getSplitQty() - newStockDataForParent*splitProductDTO.getQty();
         Integer newStockDataForChild = - splitProductDTO.getSplitQty()*splitProductDTO.getQty();
         stockDAO.updateStockWhileMergeAgainForParent(newStockDataForParent, splitProductDTO.getProductId());
+        System.out.println(Id);
         stockDAO.updateStockWhileSplitAgainForChild(newStockDataForChild, splitProductDTO.getUpdatedProductId());
     }
 
