@@ -548,6 +548,20 @@ CREATE TABLE split_product (
     company_id INT,
     branch_id INT
 );
+CREATE TABLE split_product_log(
+    id SERIAL PRIMARY KEY,
+    product_id INT ,
+    product_name VARCHAR(100),
+    qty INT,
+	split_qty INT,
+    total_qty INT,
+    unit VARCHAR(50),
+    price REAL,
+    updated_product_id INT,
+    updated_product_name VARCHAR(100),
+    company_id INT,
+    branch_id INT
+);
 
 CREATE Table merge_product(
 id serial PRIMARY KEY,

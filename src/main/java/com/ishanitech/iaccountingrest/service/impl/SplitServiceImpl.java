@@ -81,9 +81,10 @@ public class SplitServiceImpl implements SplitService {
     @Override
     public void updateMerge(SplitProductDTO splitProductDTO) {
         StockDAO stockDAO = dbService.getDao(StockDAO.class);
-        Integer newStockDataForParent = splitProductDTO.getSplitQty()/splitProductDTO.getQty();
-        Integer remainder = splitProductDTO.getSplitQty() - newStockDataForParent*splitProductDTO.getQty();
-        Integer newStockDataForChild = - splitProductDTO.getSplitQty() + remainder;
+
+        Integer newStockDataForParent = splitProductDTO.getSplitQty();
+//        Integer remainder = splitProductDTO.getSplitQty() - newStockDataForParent*splitProductDTO.getQty();
+        Integer newStockDataForChild = - splitProductDTO.getSplitQty()*splitProductDTO.getQty();
         stockDAO.updateStockWhileMergeAgainForParent(newStockDataForParent, splitProductDTO.getProductId());
         stockDAO.updateStockWhileSplitAgainForChild(newStockDataForChild, splitProductDTO.getUpdatedProductId());
     }
