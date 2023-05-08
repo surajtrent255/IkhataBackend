@@ -47,6 +47,8 @@ public class SplitServiceImpl implements SplitService {
         }
     }
 
+
+
     @Override
     public int updateSplit(SplitProductDTO splitProductDTO) {
         SplitProductDAO SplitProductDAO = dbService.getDao(SplitProductDAO.class);
@@ -88,6 +90,7 @@ public class SplitServiceImpl implements SplitService {
         stockDAO.updateStockWhileMergeAgainForParent(newStockDataForParent, splitProductDTO.getProductId());
         stockDAO.updateStockWhileSplitAgainForChild(newStockDataForChild, splitProductDTO.getUpdatedProductId());
     }
+
 
 
 
