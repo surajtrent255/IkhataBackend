@@ -409,7 +409,7 @@ CREATE TABLE receipt (
   branch_id int DEFAULT NULL,
   status boolean DEFAULT TRUE,
   PRIMARY KEY (SN)
-
+)
 -- DROP TABLE IF EXISTS public.bank;
 CREATE TABLE  bank (
 bank_id  SERIAL ,
@@ -617,4 +617,12 @@ SN SERIAL PRIMARY KEY,
 	credit_reason TEXT DEFAULT NULL,
 	credit_amount REAL DEFAULT NULL,
 	credit_tax_amount REAL DEFAULT NULL
+)
+CREATE TABLE user_counter(
+id SERIAL ,
+counter_id INT DEFAULT NULL,
+user_id INT DEFAULT NULL,
+company_id INT DEFAULT NULL,
+branch_id INT DEFAULT NULL,
+status BOOLEAN DEFAULT TRUE
 );
