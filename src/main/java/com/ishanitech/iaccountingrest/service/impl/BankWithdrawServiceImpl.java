@@ -36,7 +36,7 @@ public class BankWithdrawServiceImpl implements BankWithdrawService {
             return 1;
         } catch(JdbiException jdbiException){
 
-            System.out.println("error occured while adding user" +jdbiException.getMessage());
+            log.error("error occured while withdraw" +jdbiException.getMessage());
             return 0;
         }
 
@@ -48,12 +48,12 @@ public class BankWithdrawServiceImpl implements BankWithdrawService {
 
         try{
             BankWithdrawDAO.updatewithdraw(BankWithdrawDTO, BankWithdrawDTO.getWithdrawId());
-            System.out.println("service imp in update withdraw"+ BankWithdrawDTO );
+            log.info("service imp in update withdraw"+ BankWithdrawDTO );
             return 1;
         }
         catch (JdbiException jdbiException){
 
-            System.out.println("error in update withdraw"+jdbiException.getMessage() );
+            log.error("error in update withdraw"+jdbiException.getMessage() );
             return 0;
         }
 
@@ -64,6 +64,7 @@ public class BankWithdrawServiceImpl implements BankWithdrawService {
         try{
             BankWithdrawDAO BankWithdrawDAO = dbService.getDao(BankWithdrawDAO.class);
             BankWithdrawDAO.deletewithdraw(branchId,withdrawId);
+            log.info("info in deletewithdraw"+branchId + withdrawId);
             return withdrawId;
 
         }catch (JdbiException jdbiException){

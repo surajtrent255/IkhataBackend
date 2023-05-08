@@ -33,11 +33,12 @@ public class BankDepositeServiceImpl implements BankDepositeService {
 
             try{
                  BankDepositeServiceDAO.addBankDeposit( BankDepositDTO);
+                log.info("service imp in add deposite"+ BankDepositDTO );
                     return  1;
 
             } catch(JdbiException jdbiException){
-                log.error("error occured while fetching products : " + jdbiException.getMessage());
-                throw new CustomSqlException("Error occured while adding bank");
+                log.error("error occured while adddeposite : " + jdbiException.getMessage());
+                throw new CustomSqlException("Error occured while adding deposite");
 
 
 
@@ -50,11 +51,12 @@ public class BankDepositeServiceImpl implements BankDepositeService {
         BankDepositeServiceDAO bankDepositeServiceDAO = dbService.getDao(BankDepositeServiceDAO.class);
         try{
             bankDepositeServiceDAO.updateDeposite(bankDepositDTO, bankDepositDTO.getDepositId());
+            log.info("service imp in updating deposite"+ bankDepositDTO );
             return 1;
         }
         catch (JdbiException jdbiException){
 
-            System.out.println("error in update Deposite"+jdbiException.getMessage() );
+            log.error("error in update Deposite"+jdbiException.getMessage() );
             return 0;
         }
     }
@@ -66,6 +68,7 @@ public class BankDepositeServiceImpl implements BankDepositeService {
         try{
             BankDepositeServiceDAO bankDepositeServiceDAO = dbService.getDao(BankDepositeServiceDAO.class);
             bankDepositeServiceDAO.deleteDeposite(branchId,depositId );
+            log.info("info in deleting Deposite"+branchId + depositId);
             return 1;
         }catch (JdbiException jdbiException){
             log.error(jdbiException.getMessage());
