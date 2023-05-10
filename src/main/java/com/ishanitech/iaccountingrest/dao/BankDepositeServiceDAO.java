@@ -23,9 +23,8 @@ public interface BankDepositeServiceDAO {
 
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO bank_deposit( bank_id, company_id, branch_id, deposit_amount, deposit_type ,cheque_number) " +
-            "VALUES (:bankId, :companyId,  :branchId, :depositAmount,:depositType, :chequeNumber)")
-    @RegisterBeanMapper(BankDepositDTO.class)
+    @SqlUpdate("INSERT INTO bank_deposit( bank_id, company_id, branch_id, deposit_amount, deposit_type , submit_date ,cheque_number) " +
+            "VALUES (:bankId, :companyId,  :branchId, :depositAmount,:depositType,:submiteDate, :chequeNumber)")
     int addBankDeposit(@BindBean BankDepositDTO BankDepositeDTO);
 
 

@@ -365,16 +365,16 @@ CREATE TABLE post_date_check(
 );
 
 --drop scripts
-DELETE FROM branch;
-DELETE FROM company;
-DELETE FROM token;
-DELETE FROM user_branch;
-DELETE FROM user_company;
-DELETE FROM user_role;
-DELETE FROM user_company_role;
-DELETE FROM counter;
-DELETE FROM users;
-DELETE FROM payment;
+--DELETE FROM branch;
+--DELETE FROM company;
+--DELETE FROM token;
+--DELETE FROM user_branch;
+--DELETE FROM user_company;
+--DELETE FROM user_role;
+--DELETE FROM user_company_role;
+--DELETE FROM counter;
+--DELETE FROM users;
+--DELETE FROM payment;
 
 CREATE TABLE expenses (
   SN SERIAL,
@@ -563,6 +563,20 @@ CREATE TABLE split_product_log(
     product_name VARCHAR(100),
     qty INT,
 	split_qty INT,
+    total_qty INT,
+    unit VARCHAR(50),
+    price REAL,
+    updated_product_id INT,
+    updated_product_name VARCHAR(100),
+    company_id INT,
+    branch_id INT
+);
+CREATE TABLE merge_product_log(
+    id SERIAL PRIMARY KEY,
+    product_id INT ,
+    product_name VARCHAR(100),
+    qty INT,
+	merge_qty INT,
     total_qty INT,
     unit VARCHAR(50),
     price REAL,
