@@ -14,9 +14,9 @@ public class CreditNoteDTO {
 
     private Long panNumber;
 
-    private String receiverName;
+    private String customerName;
 
-    private String receiverAddress;
+    private String customerAddress;
 
     private String billNumber;
 

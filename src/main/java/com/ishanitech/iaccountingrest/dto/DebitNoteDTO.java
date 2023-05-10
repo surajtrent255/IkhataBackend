@@ -18,7 +18,7 @@ public class DebitNoteDTO {
 
     private String receiverAddress;
 
-    private String billNo;
+    private String billNumber;
 
     private Date date;
 

@@ -16,7 +16,7 @@ public interface CreditNoteDAO {
 
     @SqlUpdate("INSERT INTO credit_note_details(\n" +
             "  product_id, product_name, credit_reason, credit_amount, credit_tax_amount) " +
-            " VALUES (:productId, :productName, ?:creditReason, :creditAmount, :creditTaxAmount );")
+            " VALUES (:productId, :productName, :creditReason, :creditAmount, :creditTaxAmount );")
     @RegisterBeanMapper(CreditNoteDetailsDTO.class)
     void addCreditNoteDetails(@BindBean CreditNoteDetailsDTO creditNoteDetailsDTO);
 
