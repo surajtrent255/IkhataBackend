@@ -48,11 +48,11 @@ server:
 rest-microservice-api:
   protocol: http
   domain: localhost
-  port: 8888
+  port: 9999
 
 database:
   username: postgres
-  password: root
+  password: Postgres1*#
   databaseName: iaccountingdb
   port: 5432
   driverClassName: org.postgresql.Driver
@@ -65,7 +65,7 @@ file:
 rest:
   protocol: http
   domain: localhost
-  port: 8888
+  port: 9999
   resource-location: resource
 
 logging:
@@ -86,7 +86,7 @@ spring:
 
 ############## Server port configuration ################
 server:
-  port: 8888
+  port: 9999
 
 database:
   username: postgres
@@ -103,7 +103,7 @@ file:
 rest:
   protocol: http
   domain: 103.233.58.121
-  port: 8888
+  port: 9999
   resource-location: resource
 
 logging:

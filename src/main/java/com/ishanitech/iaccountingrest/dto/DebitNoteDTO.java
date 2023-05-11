@@ -26,6 +26,8 @@ public class DebitNoteDTO {
 
     private Double totalTax;
 
+    private int companyId;
+
 
 
 }

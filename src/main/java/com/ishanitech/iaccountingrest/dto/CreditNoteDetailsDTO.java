@@ -19,4 +19,6 @@ public class CreditNoteDetailsDTO {
     private Double creditAmount;
 
     private Double creditTaxAmount;
+
+    private int companyId;
 }

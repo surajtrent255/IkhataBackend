@@ -20,4 +20,6 @@ public class PurchaseBillDetailWithProdInfo {
     private int companyId;
     private int branchId;
     private String productName;
+
+    private String debitReason;
 }

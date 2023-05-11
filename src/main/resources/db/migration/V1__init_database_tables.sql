@@ -609,38 +609,45 @@ id SERIAL PRIMARY KEY,
 	bill_number VARCHAR(100) DEFAULT NULL,
 	date DATE DEFAULT NULL,
 	total_amount REAL DEFAULT NULL,
-	total_tax REAL DEFAULT NULL
+	total_tax REAL DEFAULT NULL,
+	company_id INT NOT NULL
 );
 
 CREATE TABLE debit_note_details(
-SN SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    SN  BIGINT DEFAULT NULL,
 	product_id INT DEFAULT NULL,
 	product_name VARCHAR(100),
 	debit_reason TEXT DEFAULT NULL,
 	debit_amount REAL DEFAULT NULL,
-	debit_tax_amount REAL DEFAULT NULL
+	debit_tax_amount REAL DEFAULT NULL,
+	company_id INT NOT NULL
 );
 
 CREATE TABLE credit_note(
-id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
 	pan_number BIGINT DEFAULT NULL,
 	customer_name VARCHAR(100) DEFAULT NULL,
 	customer_address VARCHAR(100) DEFAULT NULL,
 	bill_number VARCHAR(100) DEFAULT NULL,
 	date DATE DEFAULT NULL,
 	total_amount REAL DEFAULT NULL,
-	total_tax REAL DEFAULT NULL
+	total_tax REAL DEFAULT NULL,
+	company_id INT NOT NULL
 );
 
 
 CREATE TABLE credit_note_details(
-SN SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    SN BIGINT DEFAULT NULL ,
 	product_id INT DEFAULT NULL,
 	product_name VARCHAR(100),
 	credit_reason TEXT DEFAULT NULL,
 	credit_amount REAL DEFAULT NULL,
-	credit_tax_amount REAL DEFAULT NULL
-)
+	credit_tax_amount REAL DEFAULT NULL,
+	company_id INT NOT NULL
+);
+
 CREATE TABLE user_counter(
 id SERIAL ,
 counter_id INT DEFAULT NULL,
