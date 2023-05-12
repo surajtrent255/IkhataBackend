@@ -36,10 +36,11 @@ public class PaymentDTO {
 
     private Long checkNo;
 
-    private boolean status;
+    private boolean postDateCheckStatus;
+
+    private boolean paymentStatus;
 
     private PaymentModeDTO paymentModeDTO;
-
 
 
 }

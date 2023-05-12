@@ -16,8 +16,8 @@ public interface PaymentDAO {
     @SqlQuery("SELECT p.sn as SN, p.company_id as companyId,p.party_id as partyId," +
             " p.amount as amount ,p.payment_mode_id as paymentModeId," +
             " p.tds_deducted as tdsDeducted, p.post_date_check as postDateCheck," +
-            " p.branch_id as branchId, p.date as date ," +
-            " pc.check_no as checkNo , pc.pay_date as postCheckDate" +
+            " p.branch_id as branchId, p.date as date , p.status as paymentStatus ," +
+            " p.check_no as checkNo , pc.pay_date as postCheckDate" +
             " FROM payment p" +
             " LEFT JOIN post_date_check pc  " +
             " ON pc.payment_id = p.sn WHERE p.company_id = :companyId")
@@ -27,8 +27,8 @@ public interface PaymentDAO {
     @SqlQuery("SELECT p.sn as SN, p.company_id as companyId,p.party_id as partyId," +
             " p.amount as amount ,p.payment_mode_id as paymentModeId," +
             " p.tds_deducted as tdsDeducted, p.post_date_check as postDateCheck," +
-            " p.branch_id as branchId, p.date as date ," +
-            " pc.check_no as checkNo , pc.pay_date as postCheckDate" +
+            " p.branch_id as branchId, p.date as date ,p.status as paymentStatus ," +
+            " p.check_no as checkNo , pc.pay_date as postCheckDate" +
             " FROM payment p" +
             " LEFT JOIN post_date_check pc  " +
             " ON pc.payment_id = p.sn WHERE p.sn = :SN")
@@ -36,8 +36,8 @@ public interface PaymentDAO {
     PaymentDTO getPaymentDetailsById(@Bind int SN);
 
     @SqlUpdate("INSERT INTO payment( " +
-            " company_id, party_id, amount, payment_mode_id, tds_deducted, branch_id, date, post_date_check )" +
-            " VALUES ( :companyId, :partyId, :amount, :paymentModeId, :tdsDeducted, :branchId, :date, :postDateCheck );")
+            " company_id, party_id, amount, payment_mode_id, check_no , tds_deducted, branch_id, date, post_date_check )" +
+            " VALUES ( :companyId, :partyId, :amount, :paymentModeId, :checkNo , :tdsDeducted, :branchId, :date, :postDateCheck );")
     @RegisterBeanMapper(PaymentDTO.class)
     @GetGeneratedKeys
     Long addPaymentDetails(@BindBean PaymentDTO paymentDTO);
@@ -45,6 +45,14 @@ public interface PaymentDAO {
 
     @SqlUpdate("DELETE FROM payment WHERE sn= :SN")
     void deleteFromPayment(@Bind("SN") int SN);
+
+    @SqlUpdate("""
+            UPDATE payment
+            	SET  party_id=:partyId, amount=:amount, payment_mode_id=:paymentModeId,check_no = :checkNo, tds_deducted=:tdsDeducted, post_date_check=:postDateCheck
+            	WHERE sn=:SN;
+            """)
+    @RegisterBeanMapper(PaymentDTO.class)
+    void updatePaymentDetails(@BindBean PaymentDTO paymentDTO);
 
 
 

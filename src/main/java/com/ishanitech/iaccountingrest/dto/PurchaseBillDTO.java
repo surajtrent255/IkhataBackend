@@ -23,6 +23,8 @@ public class PurchaseBillDTO {
     private boolean realtime;
     private String sellerName ;
     private String sellerPan ;
+
+    private String sellerAddress;
     private Date billDate  ;
     private double amount ;
     private double discount ;

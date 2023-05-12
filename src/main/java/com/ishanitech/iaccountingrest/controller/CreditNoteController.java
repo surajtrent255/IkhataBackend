@@ -7,10 +7,7 @@ import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.CreditNoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -41,6 +38,27 @@ public class CreditNoteController {
             throw new CustomSqlException(e.getMessage());
         }
 
+    }
+
+
+    @GetMapping
+    public ResponseDTO<?> getCreditNoteInfo(@RequestParam("companyId") int companyId,@RequestParam("branchId") int branchId){
+        try{
+            return new ResponseDTO<>(creditNoteService.getCreditNoteInfo(companyId,branchId));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/details")
+    public ResponseDTO<?> getCreditNoteDetailInfo(@RequestParam("billNumber") String billNumber){
+        try{
+            return new ResponseDTO<>(creditNoteService.getCreditNoteDetailInfo(billNumber));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 
 }

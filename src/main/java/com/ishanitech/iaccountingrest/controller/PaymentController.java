@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.PaymentDTO;
+import com.ishanitech.iaccountingrest.dto.PostDateCheckDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.PaymentModeService;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -51,13 +53,11 @@ public class PaymentController {
     @PostMapping
     public ResponseDTO<?> addPaymentDetails(@RequestBody PaymentDTO paymentDTO){
         boolean PostCheck = paymentDTO.isPostDateCheck();
-        Long PaymentId;
+        Date payDate = paymentDTO.getPostCheckDate();
         try {
-            PaymentId = paymentService.addPaymentDetails(paymentDTO);
+           long PaymentId = paymentService.addPaymentDetails(paymentDTO);
             if(PostCheck){
-                long checkNo = paymentDTO.getCheckNo();
-                Date payDate = paymentDTO.getPostCheckDate();
-                postDateCheckService.addPostChequeInfo(checkNo,PaymentId,payDate);
+                postDateCheckService.addPostChequeInfo(PaymentId,payDate);
             }
             return new ResponseDTO<>("Added Successfully");
         }catch (Exception e){
@@ -86,6 +86,33 @@ public class PaymentController {
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @PutMapping
+    public ResponseDTO<?> updatePaymentDetails(@RequestBody PaymentDTO paymentDTO){
+        boolean PostCheck = paymentDTO.isPostDateCheck();
+        Date payDate = paymentDTO.getPostCheckDate();
+        long  PaymentId = paymentDTO.getSN();
+        List<PostDateCheckDTO> data = postDateCheckService.getAllPostChequeInfo(PaymentId);
+        try {
+            paymentService.updatePaymentDetails(paymentDTO);
+            if(PostCheck){
+                if(data.isEmpty()){
+                    postDateCheckService.addPostChequeInfo(PaymentId,payDate);
+                }else{
+                    postDateCheckService.updatePostDateCheck(PaymentId,payDate);
+                }
+            }
+            if(!PostCheck){
+                if(!data.isEmpty()){
+                    postDateCheckService.deletePostDateCheckInfo((int)PaymentId);
+                }
+            }
+            return new ResponseDTO<>("Updated Successfully");
+        }catch (Exception exception){
+            log.error(exception.getMessage());
+            throw new CustomSqlException(exception.getMessage());
         }
     }
 

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DebitNoteDetailsDTO {
 
-    private int SN;
+    private int serialNumber;
 
     private  int productId;
 
@@ -22,5 +22,9 @@ public class DebitNoteDetailsDTO {
     private Double debitTaxAmount;
 
     private int  companyId;
+
+    private int branchId;
+
+    private int billNumber;
 
 }

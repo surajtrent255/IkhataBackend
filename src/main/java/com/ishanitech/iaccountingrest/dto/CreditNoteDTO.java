@@ -28,4 +28,6 @@ public class CreditNoteDTO {
 
     private int companyId;
 
+    private int branchId;
+
 }
