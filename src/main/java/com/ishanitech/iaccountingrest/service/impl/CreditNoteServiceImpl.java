@@ -8,6 +8,8 @@ import com.ishanitech.iaccountingrest.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CreditNoteServiceImpl implements CreditNoteService {
     @Autowired
@@ -23,5 +25,17 @@ public class CreditNoteServiceImpl implements CreditNoteService {
         CreditNoteDAO creditNoteDAO = dbService.getDao(CreditNoteDAO.class);
         creditNoteDAO.addCreditNoteDetails(creditNoteDetailsDTO);
 
+    }
+
+    @Override
+    public List<CreditNoteDTO> getCreditNoteInfo(int companyId, int branchId) {
+        CreditNoteDAO creditNoteDAO = dbService.getDao(CreditNoteDAO.class);
+        return creditNoteDAO.getCreditNoteInfo(companyId,branchId);
+    }
+
+    @Override
+    public List<CreditNoteDetailsDTO> getCreditNoteDetailInfo(String billNumber) {
+        CreditNoteDAO creditNoteDAO = dbService.getDao(CreditNoteDAO.class);
+        return creditNoteDAO.getCreditNoteDetailInfo(billNumber);
     }
 }

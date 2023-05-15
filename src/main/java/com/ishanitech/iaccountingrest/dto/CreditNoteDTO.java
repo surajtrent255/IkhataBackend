@@ -10,13 +10,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreditNoteDTO {
-    private int sn;
+    private int id;
 
     private Long panNumber;
 
-    private String receiverName;
+    private String customerName;
 
-    private String receiverAddress;
+    private String customerAddress;
 
     private String billNumber;
 
@@ -25,5 +25,9 @@ public class CreditNoteDTO {
     private Double totalAmount;
 
     private Double totalTax;
+
+    private int companyId;
+
+    private int branchId;
 
 }

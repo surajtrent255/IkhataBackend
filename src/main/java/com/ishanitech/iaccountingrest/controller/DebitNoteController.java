@@ -1,15 +1,13 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.DebitNoteDTO;
+import com.ishanitech.iaccountingrest.dto.DebitNoteDetailsDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.DebitNoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -24,6 +22,37 @@ public class DebitNoteController {
         try{
             debitNoteService.addDebitNote(debitNoteDTO);
             return  new ResponseDTO<>("Successfully Added");
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @PostMapping("/details")
+    public ResponseDTO<?> addDebitNoteDetails(@RequestBody DebitNoteDetailsDTO debitNoteDetailsDTO){
+        try{
+            debitNoteService.addDebitNoteDetails(debitNoteDetailsDTO);
+            return new ResponseDTO<>("Data Added Successfully");
+        }catch(Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping
+    public ResponseDTO<?> getDebitNoteInfo(@RequestParam("companyId") int companyId,@RequestParam("branchId") int branchId){
+        try{
+            return new ResponseDTO<>(debitNoteService.getDebitNoteInfo(companyId,branchId));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/details")
+    public ResponseDTO<?> getDebitNoteDetailsInfo(@RequestParam("billNumber") long billNumber){
+        try{
+            return new ResponseDTO<>(debitNoteService.getDebitNoteDetailsInfo(billNumber));
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());

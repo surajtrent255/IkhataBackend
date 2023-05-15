@@ -11,8 +11,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class PostDateCheckDTO {
     private int SN;
-    private Long checkNo;
-
     private int paymentId;
 
     private Date payDate;

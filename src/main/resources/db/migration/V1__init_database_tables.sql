@@ -76,6 +76,15 @@ CREATE TABLE user_company_role (
   PRIMARY KEY (user_id,role_id,id)
 );
 
+CREATE TABLE user_counter(
+id SERIAL ,
+counter_id INT DEFAULT NULL,
+user_id INT DEFAULT NULL,
+company_id INT DEFAULT NULL,
+branch_id INT DEFAULT NULL,
+status BOOLEAN DEFAULT TRUE
+);
+
 CREATE TABLE user_role (
   id SERIAL,
   user_id int NOT NULL,
@@ -250,6 +259,7 @@ create table purchase_bill (
 	branch_id int not null,
     seller_name varchar(50) not null,
     seller_pan varchar(50) not null,
+    seller_address varchar(100) not null,
     bill_date Date default current_date not null,
     amount real not null,
     discount real not null,
@@ -374,6 +384,7 @@ CREATE TABLE payment (
   party_id int NOT NULL,
   amount REAL NOT NULL,
   payment_mode_id INT NOT NULL,
+	check_no bigint  NOT NULL,
   tds_deducted real DEFAULT 0,
   post_date_check boolean DEFAULT FALSE,
   branch_id int DEFAULT NULL,
@@ -381,6 +392,16 @@ CREATE TABLE payment (
   status boolean DEFAULT TRUE,
 
   PRIMARY KEY (SN)
+);
+
+
+CREATE TABLE post_date_check(
+
+	Sn SERIAL,
+	payment_id int NOT NULL,
+	pay_date DATE DEFAULT NULL,
+	status BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY(Sn)
 );
 
 CREATE TABLE payment_mode(
@@ -392,15 +413,7 @@ CREATE TABLE payment_mode(
 
 );
 
-CREATE TABLE post_date_check(
 
-	Sn SERIAL,
-	check_no bigint  NOT NULL,
-	payment_id int NOT NULL,
-	pay_date DATE DEFAULT NULL,
-	status BOOLEAN DEFAULT TRUE,
-	PRIMARY KEY(Sn)
-);
 
 
 
@@ -630,45 +643,58 @@ branch_id INT
 );
 
 CREATE TABLE debit_note(
-id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
 	pan_number BIGINT DEFAULT NULL,
 	receiver_name VARCHAR(100) DEFAULT NULL,
 	receiver_address VARCHAR(100) DEFAULT NULL,
-	bill_number VARCHAR(100) DEFAULT NULL,
+	bill_number BIGINT DEFAULT NULL,
 	date DATE DEFAULT NULL,
 	total_amount REAL DEFAULT NULL,
-	total_tax REAL DEFAULT NULL
+	total_tax REAL DEFAULT NULL,
+	company_id INT NOT NULL,
+	branch_id INT NOT NULL
 );
 
 CREATE TABLE debit_note_details(
-SN SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    serial_number  BIGINT DEFAULT NULL,
 	product_id INT DEFAULT NULL,
 	product_name VARCHAR(100),
 	debit_reason TEXT DEFAULT NULL,
 	debit_amount REAL DEFAULT NULL,
-	debit_tax_amount REAL DEFAULT NULL
+	debit_tax_amount REAL DEFAULT NULL,
+	company_id INT NOT NULL,
+	branch_id INT NOT NULL,
+	bill_number BIGINT NOT NULL
 );
 
 CREATE TABLE credit_note(
-id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
 	pan_number BIGINT DEFAULT NULL,
 	customer_name VARCHAR(100) DEFAULT NULL,
 	customer_address VARCHAR(100) DEFAULT NULL,
 	bill_number VARCHAR(100) DEFAULT NULL,
 	date DATE DEFAULT NULL,
 	total_amount REAL DEFAULT NULL,
-	total_tax REAL DEFAULT NULL
+	total_tax REAL DEFAULT NULL,
+	company_id INT NOT NULL,
+	branch_id INT NOT NULL
 );
 
 
 CREATE TABLE credit_note_details(
-SN SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    serial_number BIGINT DEFAULT NULL ,
 	product_id INT DEFAULT NULL,
 	product_name VARCHAR(100),
 	credit_reason TEXT DEFAULT NULL,
 	credit_amount REAL DEFAULT NULL,
-	credit_tax_amount REAL DEFAULT NULL
+	credit_tax_amount REAL DEFAULT NULL,
+	company_id INT NOT NULL,
+	branch_id INT NOT NULL,
+	bill_number VARCHAR(100)   NOT NULL
 );
+
 CREATE TABLE user_counter(
 id SERIAL ,
 counter_id INT DEFAULT NULL,

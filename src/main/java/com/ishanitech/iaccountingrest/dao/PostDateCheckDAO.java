@@ -11,17 +11,24 @@ import java.util.Date;
 import java.util.List;
 
 public interface PostDateCheckDAO {
-    @SqlQuery("SELECT * FROM post_date_check ")
+    @SqlQuery("SELECT * FROM post_date_check WHERE payment_id = :paymentId ")
     @RegisterBeanMapper(PostDateCheckDTO.class)
-    List<PostDateCheckDTO> getAllPostCheckInfo();
+    List<PostDateCheckDTO> getAllPostCheckInfo(@Bind long paymentId);
 
     @SqlUpdate("INSERT INTO post_date_check( " +
-            "  check_no, payment_id, pay_date) " +
-            " VALUES ( :checkNo, :paymentId, :payDate);")
+            "   payment_id, pay_date ) " +
+            " VALUES (  :paymentId, :payDate );")
     @RegisterBeanMapper(PostDateCheckDTO.class)
-    Integer addPostChequeInfo(@Bind long checkNo, @Bind long paymentId, @Bind Date payDate);
+    Integer addPostChequeInfo( @Bind long paymentId, @Bind Date payDate);
 
     @SqlUpdate("DELETE FROM post_date_check WHERE payment_id= :paymentId")
     @Nullable
     void DeletePostDateCheckInfo(@Bind int paymentId);
+
+    @SqlUpdate("""
+            UPDATE post_date_check
+            	SET   pay_date=:payDate
+            	WHERE  payment_id = :paymentId
+            """)
+    void updatePostDateCheck(@Bind long paymentId,@Bind Date payDate);
 }

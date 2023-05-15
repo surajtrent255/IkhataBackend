@@ -17,9 +17,9 @@ public class PostDateCheckController {
     private final PostDateCheckService postDateCheckService;
 
     @GetMapping
-    public ResponseDTO<?> getAllPostChequeInfo(){
+    public ResponseDTO<?> getAllPostChequeInfo(@RequestParam("paymentId") long paymentId){
         try {
-            return new ResponseDTO<>(postDateCheckService.getAllPostChequeInfo());
+            return new ResponseDTO<>(postDateCheckService.getAllPostChequeInfo(paymentId));
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());

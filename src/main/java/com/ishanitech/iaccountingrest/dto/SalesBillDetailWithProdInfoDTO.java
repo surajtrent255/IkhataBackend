@@ -21,4 +21,8 @@ public class SalesBillDetailWithProdInfoDTO {
     private String productName;
     private int taxRate;
     private double rowTotal;
+
+    private String creditReason = "";
+
+    private Double total;
 }

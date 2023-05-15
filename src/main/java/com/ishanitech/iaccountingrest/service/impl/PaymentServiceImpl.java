@@ -44,5 +44,11 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
+    @Override
+    public void updatePaymentDetails(PaymentDTO paymentDTO) {
+        PaymentDAO paymentDAO = dbService.getDao(PaymentDAO.class);
+        paymentDAO.updatePaymentDetails(paymentDTO);
+    }
+
 
 }

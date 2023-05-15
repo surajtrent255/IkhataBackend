@@ -40,6 +40,7 @@ public interface PurchaseBillDAO {
          " seller_id ,"+
          " seller_name ," +
          " seller_pan ," +
+            " seller_address ," +
          " amount  ," +
          " discount  ," +
          " taxable_amount  ," +
@@ -69,6 +70,7 @@ public interface PurchaseBillDAO {
          " :sellerId, "+
          " :sellerName ," +
          " :sellerPan ," +
+            " :sellerAddress ," +
          " :amount  ," +
          " :discount  ," +
          " :taxableAmount  ," +
@@ -132,8 +134,9 @@ public interface PurchaseBillDAO {
                  pb.fiscal_year as  fiscal_year, 
                  pb.purchase_bill_no as purchase_bill_no,
                  pb.seller_id as seller_id,
-                 pb.seller_name as customer_name, 
-                 pb.seller_pan as customer_pan, 
+                 pb.seller_name as sellerName, 
+                 pb.seller_pan as sellerPan, 
+                 pb.seller_address as sellerAddress, 
                  pb.bill_date as bill_date,  
                  pb.amount  as amount, 
                  pb.discount  as discount, 

@@ -18,13 +18,17 @@ public class DebitNoteDTO {
 
     private String receiverAddress;
 
-    private String billNo;
+    private Long billNumber;
 
     private Date date;
 
     private Double totalAmount;
 
     private Double totalTax;
+
+    private int companyId;
+
+    private int branchId;
 
 
 

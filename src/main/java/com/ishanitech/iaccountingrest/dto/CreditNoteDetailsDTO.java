@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreditNoteDetailsDTO {
-    private int SN;
+    private Long serialNumber;
 
     private  int productId;
 
@@ -19,4 +19,10 @@ public class CreditNoteDetailsDTO {
     private Double creditAmount;
 
     private Double creditTaxAmount;
+
+    private int companyId;
+
+    private int branchId;
+
+    private String billNumber;
 }

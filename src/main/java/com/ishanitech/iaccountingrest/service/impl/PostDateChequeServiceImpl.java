@@ -17,17 +17,17 @@ public class PostDateChequeServiceImpl implements PostDateCheckService {
     @Autowired
     private  DbService dbService;
     @Override
-    public List<PostDateCheckDTO> getAllPostChequeInfo() {
+    public List<PostDateCheckDTO> getAllPostChequeInfo(long paymentId) {
         PostDateCheckDAO postDateCheckDAO = dbService.getDao(PostDateCheckDAO.class);
-        return postDateCheckDAO.getAllPostCheckInfo();
+        return postDateCheckDAO.getAllPostCheckInfo(paymentId);
     }
 
     @Override
-    public Integer addPostChequeInfo(long checkNo, Long paymentId, Date payDate) {
+    public Integer addPostChequeInfo( Long paymentId, Date payDate) {
         PostDateCheckDAO postDateCheckDAO = dbService.getDao(PostDateCheckDAO.class);
 
         try{
-            postDateCheckDAO.addPostChequeInfo(checkNo,paymentId,payDate);
+            postDateCheckDAO.addPostChequeInfo(paymentId,payDate);
 
         }catch (JdbiException jdbiException){
             log.error(jdbiException.getMessage());
@@ -39,5 +39,11 @@ public class PostDateChequeServiceImpl implements PostDateCheckService {
     public void deletePostDateCheckInfo(int paymentId) {
         PostDateCheckDAO postDateCheckDAO = dbService.getDao(PostDateCheckDAO.class);
         postDateCheckDAO.DeletePostDateCheckInfo(paymentId);
+    }
+
+    @Override
+    public void updatePostDateCheck(long paymentId,  Date payDate) {
+        PostDateCheckDAO postDateCheckDAO = dbService.getDao(PostDateCheckDAO.class);
+        postDateCheckDAO.updatePostDateCheck(paymentId,payDate);
     }
 }

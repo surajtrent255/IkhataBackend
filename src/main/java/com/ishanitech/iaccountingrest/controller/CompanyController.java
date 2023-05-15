@@ -34,7 +34,7 @@ public class CompanyController {
             result = companyService.addCompany(companyDTO,userId);
            CompanyDTO companyDTO1 = (CompanyDTO) companyService.getCompanyByPanNo(companyDTO.getPanNo());
             userConfigurationService.addUserRole(userId,companyDTO1.getCompanyId(),new int[] {1});
-            return new ResponseDTO<>( "Company is Successfully Added");
+            return new ResponseDTO<>( result);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new CustomSqlException("Something went wrong while adding Company!");

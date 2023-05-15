@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.dto.BranchConfigDTO;
 import com.ishanitech.iaccountingrest.dto.BranchDTO;
 import com.ishanitech.iaccountingrest.dto.UserBranchDTO;
 import com.ishanitech.iaccountingrest.dto.UserCommonConfigDTO;
+import jakarta.annotation.Nullable;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -22,9 +23,10 @@ public interface BranchDAO {
     @SqlUpdate(" INSERT INTO branch (company_id, name, abbrv, description,  state, district, mun_vdc, ward_no, phone) VALUES ( :companyId, :name, :abbrv, :description,  :state, :district, :munVdc, :wardNo, :phone );")
     Integer addBranch(@BindBean BranchDTO branchDTO);
 
-    @SqlQuery("INSERT INTO user_branch("
+    @SqlUpdate("INSERT INTO user_branch("
             + " user_id, branch_id, company_id, status, create_date)"
             + "VALUES ( :userId, :branchId, :companyId, :status, :createDate);")
+    @Nullable
     @RegisterBeanMapper(UserBranchDTO.class)
     Integer AssignBranchToUser(@BindBean UserBranchDTO userBranchDTO);
 
