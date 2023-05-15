@@ -1,3 +1,50 @@
+-- DROP TABLE IF EXISTS split_product_log;
+-- DROP TABLE IF EXISTS split_product;
+-- DROP TABLE IF EXISTS unit;
+-- DROP TABLE IF EXISTS sale_type;
+-- DROP TABLE IF EXISTS user_feature;
+-- DROP TABLE IF EXISTS feature_control;
+-- DROP TABLE IF EXISTS counter;
+-- DROP TABLE IF EXISTS loan_name;
+-- DROP TABLE IF EXISTS loan_type;
+-- DROP TABLE IF EXISTS loan;
+-- DROP TABLE IF EXISTS bank_list;
+-- DROP TABLE IF EXISTS account_type;
+-- DROP TABLE IF EXISTS type_of_payment;
+-- DROP TABLE IF EXISTS bank_withdraw;
+-- DROP TABLE IF EXISTS bank_deposit;
+-- DROP TABLE IF EXISTS bank;
+-- DROP TABLE IF EXISTS receipt;
+-- DROP TABLE IF EXISTS fixed_assets;
+-- DROP TABLE IF EXISTS expenses;
+-- DROP TABLE IF EXISTS payment_mode;
+-- DROP TABLE IF EXISTS post_date_check;
+-- DROP TABLE IF EXISTS payment;
+-- DROP TABLE IF EXISTS municipality;
+-- DROP TABLE IF EXISTS province;
+-- DROP TABLE IF EXISTS districts;
+-- DROP TABLE IF EXISTS user_branch;
+-- DROP TABLE IF EXISTS branch;
+-- DROP TABLE IF EXISTS stock;
+-- DROP TABLE IF EXISTS purchase_bill_detail;
+-- DROP TABLE IF EXISTS purchase_bill;
+-- DROP TABLE IF EXISTS bill_no_generator;
+-- DROP TABLE IF EXISTS sales_bill_detail;
+-- DROP TABLE IF EXISTS sales_bill;
+-- DROP TABLE IF EXISTS category;
+-- DROP TABLE IF EXISTS product;
+-- DROP TABLE IF EXISTS user_company;
+-- DROP TABLE IF EXISTS company;
+-- DROP TABLE IF EXISTS token;
+-- DROP TABLE IF EXISTS user_company_role;
+-- DROP TABLE IF EXISTS user_role;
+-- DROP TABLE IF EXISTS user_company;
+-- DROP TABLE IF EXISTS role;
+-- DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS vat_rate_type;
+
+
+
 CREATE TABLE users(
    "id" SERIAL PRIMARY KEY,
    "firstname" VARCHAR(50) NOT NULL,
@@ -355,17 +402,7 @@ CREATE TABLE post_date_check(
 	PRIMARY KEY(Sn)
 );
 
---drop scripts
---DELETE FROM branch;
---DELETE FROM company;
---DELETE FROM token;
---DELETE FROM user_branch;
---DELETE FROM user_company;
---DELETE FROM user_role;
---DELETE FROM user_company_role;
---DELETE FROM counter;
---DELETE FROM users;
---DELETE FROM payment;
+
 
 CREATE TABLE expenses (
   SN SERIAL,
@@ -409,7 +446,7 @@ CREATE TABLE receipt (
   branch_id int DEFAULT NULL,
   status boolean DEFAULT TRUE,
   PRIMARY KEY (SN)
-)
+);
 -- DROP TABLE IF EXISTS public.bank;
 CREATE TABLE  bank (
 bank_id  SERIAL ,
@@ -461,7 +498,7 @@ CREATE TABLE bank_list(
 id SERIAL,
 name varchar(50),
 location VARCHAR(100)
-)
+);
 
 create table public.loan (
 	id  serial not null,
@@ -524,7 +561,7 @@ create table sale_type(
 	id serial not null,
 	sale_type_index int not null,
 	sale_type varchar(50) not null
-)
+);
 
 
 
@@ -631,7 +668,7 @@ SN SERIAL PRIMARY KEY,
 	credit_reason TEXT DEFAULT NULL,
 	credit_amount REAL DEFAULT NULL,
 	credit_tax_amount REAL DEFAULT NULL
-)
+);
 CREATE TABLE user_counter(
 id SERIAL ,
 counter_id INT DEFAULT NULL,
@@ -640,3 +677,5 @@ company_id INT DEFAULT NULL,
 branch_id INT DEFAULT NULL,
 status BOOLEAN DEFAULT TRUE
 );
+
+

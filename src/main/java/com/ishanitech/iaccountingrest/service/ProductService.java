@@ -22,4 +22,8 @@ public interface ProductService {
     List<ProductDTO> getAllProductsByProductsIds(int[] productsIds);
 
     List<ProductDTO> getProductsByWildCard(String name, Integer compId, Integer branchId);
+
+//    ProductDTO getProductForSearch(int compId, int branchId, String search);
+
+    List<ProductDTO> getProductForSearch(Integer compId, Integer branchId, String search);
 }

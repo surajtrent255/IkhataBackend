@@ -26,7 +26,7 @@ INSERT INTO public.vat_rate_type(
 	id, vate_rate, vat_rate_num)
 	VALUES (1, 'NO VAT', 0),
 (2, '0 VAT', 0),
-(3, '13% VAT', 13)
+(3, '13% VAT', 13);
 
 insert into loan_type (loan_type_index,loan_type) values (1, 'TERM'),
 (2,'OD');
@@ -253,9 +253,9 @@ INSERT INTO public.type_of_payment(
 	id, name)
 	VALUES (1, 'cheque'),(2,'ebanking'),(3,'cash') ,(4,'other');
 
-	INSERT INTO public.bank(
-    	bank_id, company_id, branch_id, bank_name, account_number, create_date, account_type)
-    	VALUES (1, 1, 1, 'testing', 132465897, '2023/01/01', 'saving');
+--	INSERT INTO public.bank(
+--    	bank_id, company_id, branch_id, bank_name, account_number, create_date, account_type)
+--    	VALUES (1, 1, 1, 'testing', 132465897, '2023/01/01', 'saving');
  INSERT INTO public.bank_list(
  	id, name, location)
  	VALUES (1,'Agriculture Development Bank','Ramshahpath, Kathmandu'),
@@ -280,7 +280,7 @@ INSERT INTO public.type_of_payment(
  (20,'Standard Chartered Bank','Nayabaneshwor, Kathmandu'),
  (21,'Sunrise Bank','Gairidhara, Kathmandu'),
  (22,'other','unknown');
->>>>>>> 1b765c3968b460bc8b1750eb3b0c7f2b6205ceb6
+
 
 insert into sale_type(
 	id,
@@ -295,10 +295,11 @@ insert into sale_type(
 
 INSERT INTO public.unit(
 	name)
-	VALUES ( 'Bora'),
-	 ( 'Carton'),
+	VALUES ( 'Carton'),
+	('pieces'),
+	 ( 'Bora'),
 	 ( 'package'),
-	 ( '?'),
+	 ( 'sack'),
 	 ( 'pkg'),
 	 ( 'Box'),
 	 ( 'Crate'),
@@ -309,5 +310,11 @@ INSERT INTO public.unit(
 	 ( 'Pouch'),
 	 ( 'Jar'),
 	 ( 'Can'),
-	( 'Barrel');
+	( 'Barrel'),
+	('other');
 
+INSERT INTO public.users (id, firstname, lastname, email, phone, password, deleted, create_date, edit_date)
+VALUES (DEFAULT, 'super', 'admin', 'super@gmail.com', '0123456789', 'password', false, NOW(), NOW());
+
+INSERT INTO public.user_role (id, user_id, role_id, status, deleted)
+VALUES (DEFAULT, 1, 6, true, false);
