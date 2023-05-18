@@ -12,14 +12,24 @@
             bill_no,
             active,
             company_id,
-            branch_id
+            branch_id,
+            hasAbr
         ) values
         (
             '2079/80',
             1,
             true,
             1,
-            1
+            1,
+            false
+        ),
+        (
+          '2079/80',
+          1,
+          true,
+          1,
+          1,
+          true
         );
 
 INSERT INTO public.vat_rate_type(

@@ -14,4 +14,5 @@ public class BillNoGenerationDTO {
     private int companyId;
     private int branchId;
     private String fiscalYear;
+    private boolean hasAbbr;
 }

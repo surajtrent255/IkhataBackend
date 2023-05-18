@@ -40,7 +40,7 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
         try{
             if(!salesBillDTO.isDraft()){
                 BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
-                bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId());
+                bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId(), salesBillDTO.isHasAbbr());
             }
             currentFiscalYear = dbService.getDao(BillNoGeneratorDAO.class).getCurrentFiscalYear();
         } catch (Exception ex){
@@ -55,6 +55,7 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
         int billId = 0 ;
         try{
             SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+            salesBillDTO.setPrintCount(0);
               billId = salesBillDAO.addNewBill(
                      salesBillDTO);
 

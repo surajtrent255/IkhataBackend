@@ -44,7 +44,15 @@ public class CompanyServiceImpl implements CompanyService {
             billNoGeneration.setFiscalYear(currentFiscalYear);
             billNoGeneration.setCompanyId(savedCompanyId);
             billNoGeneration.setBranchId(0);
+            billNoGeneration.setHasAbbr(false);
             billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
+
+            BillNoGenerationDTO billNoGeneration2 = new BillNoGenerationDTO();
+            billNoGeneration2.setFiscalYear(currentFiscalYear);
+            billNoGeneration2.setCompanyId(savedCompanyId);
+            billNoGeneration2.setBranchId(0);
+            billNoGeneration2.setHasAbbr(true);
+            billNoGeneratorDAO.createNewFiscalYear(billNoGeneration2);
 
         }catch (JdbiException jdbiException){
             log.error("error creating Company");

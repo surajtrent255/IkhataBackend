@@ -20,14 +20,16 @@ public interface BillNoGeneratorDAO {
                          bill_no,
                         active,
                         company_id,
-                        branch_id
+                        branch_id,
+                        has_abbr
                         ) values
                         (
                         :fiscalYear,
             				1,
             				true,
             				:companyId,
-            				:branchId   
+            				:branchId,
+            				:hasAbbr   
                         )
             """)
     int createNewFiscalYear(@BindBean BillNoGenerationDTO billNoGenerationDTO);
@@ -46,16 +48,16 @@ public interface BillNoGeneratorDAO {
         disableOtherYears(fiscalYear, companyId, branchId);
     }
 
-    @SqlQuery("select bill_no from bill_no_generator where active = true and company_id = :companyId and branch_id = :branchId;")
-    int getBillNo(int companyId, int branchId);
+    @SqlQuery("select bill_no from bill_no_generator where active = true and company_id = :companyId and branch_id = :branchId and has_abbr = :hasAbbr; ")
+    int getBillNo(int companyId, int branchId, boolean hasAbbr);
 
-    @SqlUpdate("update bill_no_generator set bill_no = bill_no +  1 where active = true and company_id = :companyId and branch_id = :branchId;")
-    void increaseBillNo(int companyId, int branchId);
+    @SqlUpdate("update bill_no_generator set bill_no = bill_no +  1 where active = true and company_id = :companyId and branch_id = :branchId and has_abbr = :hasAbbr;")
+    void increaseBillNo(int companyId, int branchId, boolean hasAbbr);
 
     @Transactional
-    default int getBillNoForCurrentFiscalYear(int companyId, int branchId){
-        int currentBillNo = getBillNo(companyId, branchId);
-        increaseBillNo(companyId, branchId);
+    default int getBillNoForCurrentFiscalYear(int companyId, int branchId, boolean hasAbbr){
+        int currentBillNo = getBillNo(companyId, branchId, hasAbbr);
+        increaseBillNo(companyId, branchId, hasAbbr);
         return currentBillNo;
     }
 

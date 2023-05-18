@@ -45,6 +45,7 @@ public class SalesBillDTO {
     private Integer customerSearchMethod;
     private Integer printCount;
     private Integer saleType;
+    private boolean hasAbbr;
 
 
 

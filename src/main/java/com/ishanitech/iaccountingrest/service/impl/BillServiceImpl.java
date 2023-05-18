@@ -69,7 +69,7 @@ public class BillServiceImpl implements BillService {
         StockDAO stockDAO = dbService.getDao(StockDAO.class);
 
         BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
-        int bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId());
+        int bill_no = billNoGeneratorDAO.getBillNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId(), salesBillDTO.isHasAbbr());
 
         String billNoToBeUpdated = "B01 "+bill_no;
         salesBillDetailDTOS.forEach((salesBillDetailDTO -> {

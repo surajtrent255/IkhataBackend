@@ -40,7 +40,15 @@ public class BranchServiceImpl implements BranchService {
         billNoGeneration.setFiscalYear(currentFiscalYear);
         billNoGeneration.setCompanyId(branchDTO.getCompanyId());
         billNoGeneration.setBranchId(branchAdded);
+        billNoGeneration.setHasAbbr(false);
         billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
+
+        BillNoGenerationDTO billNoGeneration2 = new BillNoGenerationDTO();
+        billNoGeneration2.setFiscalYear(currentFiscalYear);
+        billNoGeneration2.setCompanyId(branchDTO.getCompanyId());
+        billNoGeneration2.setBranchId(branchAdded);
+        billNoGeneration2.setHasAbbr(true);
+        billNoGeneratorDAO.createNewFiscalYear(billNoGeneration2);
       return branchAdded;
 
     }

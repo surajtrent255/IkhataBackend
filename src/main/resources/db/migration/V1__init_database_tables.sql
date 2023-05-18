@@ -220,7 +220,8 @@ create table sales_bill (
     draft boolean default false,
     tax_approach int not null,
     customer_search_method int not null,
-    sale_type int not null
+    sale_type int not null,
+    hasAbbr boolean not null,
 );
 
 
@@ -249,7 +250,8 @@ create table bill_no_generator (
     bill_no int not null,
     active boolean not null,
     company_id int not null,
-    branch_id int not null
+    branch_id int not null,
+    hasAbbr boolean default false not null
 );
 
 create table purchase_bill (
