@@ -14,8 +14,8 @@ import java.util.List;
 
 public interface PurchaseBillDetailDAO {
 
-    @SqlBatch("INSERT INTO purchase_bill_detail (product_id, qty, discount_per_unit, rate, purchase_bill_id, company_id, branch_id) " +
-            " VALUES (:productId, :qty, :discountPerUnit, :rate, :purchaseBillId, :companyId, :branchId)")
+    @SqlBatch("INSERT INTO purchase_bill_detail (product_id, qty, tax_type_id,discount_per_unit, rate, purchase_bill_id, company_id, branch_id) " +
+            " VALUES (:productId, :qty, :taxTypeId ,:discountPerUnit, :rate, :purchaseBillId, :companyId, :branchId)")
     void addNewPurchaseInfo(@BindBean List<PurchaseBillDetailDTO> purchaseBillDetailDTOS);
 
     @SqlQuery("SELECT pbd.id as id, pbd.product_id as product_id, pbd.qty as qty, pbd.date as date, pbd.rate as rate, pbd.bill_id as bill_id, pbd.company_id as company_id, pbd.branch_id as branch_id" +

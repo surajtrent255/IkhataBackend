@@ -39,6 +39,19 @@ public class ProductController {
         }
     }
 
+
+
+    @GetMapping("/search")
+    public ResponseDTO<List<ProductDTO>> getProductForSearch(@RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId,
+                                                             @RequestParam("search") String search) {
+        try {
+            return new ResponseDTO<List<ProductDTO>>( productService.getProductForSearch( compId, branchId, "%"+search+"%"));
+        } catch (Exception e) {
+            log.error("error occured while fetching product with search " + search + " " + e.getMessage());
+            throw new CustomSqlException("error occured while fetching product with search " + search + " ");
+        }
+    }
+
     @GetMapping("/getProductsByIds")
     public ResponseDTO<List<ProductDTO>> getAllProductsByProductsId(@RequestParam("productsIds") int[] productsIds){
         try{
@@ -74,6 +87,7 @@ public class ProductController {
             throw new CustomSqlException("error occured while fetching product with id " + id + " ");
         }
     }
+
 
 
     @PostMapping

@@ -10,9 +10,7 @@ import com.ishanitech.iaccountingrest.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionalEventListener;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +39,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Integer addNewProduct(ProductDTO product , int stockqtr) {
+        if(product.getTax() == 2)
+        {
+            product.setTaxApproch(1) ;
+        } else if  (product.getTax() == 3){
+           product.setTaxApproch(2);
+        }
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
 
         int createdProdId = productDAO.addNewProduct(product);
@@ -100,6 +104,16 @@ public class ProductServiceImpl implements ProductService {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
         List<ProductDTO> productDTOS;
         productDTOS = productDAO.getAllProductsByWildCardName(name, compId, branchId);
+        return productDTOS;
+    }
+
+
+
+    @Override
+    public  List<ProductDTO> getProductForSearch(Integer compId, Integer branchId, String search) {
+        ProductDAO productDAO = dbService.getDao(ProductDAO.class);
+        List<ProductDTO> productDTOS;
+        productDTOS = productDAO.getProductForSearch( compId, branchId ,search);
         return productDTOS;
     }
 }

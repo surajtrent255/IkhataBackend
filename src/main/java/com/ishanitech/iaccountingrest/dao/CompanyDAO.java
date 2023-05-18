@@ -78,4 +78,7 @@ public interface CompanyDAO {
             " SET  status= :status " +
             " WHERE company_id = :companyId; ")
     void updateCompanyStatus(@Bind boolean status, @Bind int companyId);
+
+
+
 }

@@ -42,8 +42,12 @@ public class PurchaseBillDTO {
     private Integer saleType;
 
     private Double transportation ;
+    private int transportationTaxType;
     private Double insurance ;
+    private int insuranceTaxType;
     private Double loading ;
+    private int loadingTaxType;
     private Double other ;
+    private int otherTaxType;
 
 }
