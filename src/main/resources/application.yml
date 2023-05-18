@@ -51,10 +51,10 @@ rest-microservice-api:
   port: 9999
 
 database:
-  username: suraj
-  password: Suraj123
+  username: postgres
+  password: admin
   databaseName: iaccountingdb
-  port: 5432
+  port: 5433
   driverClassName: org.postgresql.Driver
   databaseType: postgresql
 

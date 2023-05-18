@@ -25,8 +25,8 @@
 INSERT INTO public.vat_rate_type(
 	id, vate_rate, vat_rate_num)
 	VALUES (1, 'NO VAT', 0),
-(2, '0 VAT', 0),
-(3, '13% VAT', 13);
+(2, 'Inclusive 13% VAT', 13),
+(3, 'Exclusive 13% VAT', 13);
 
 insert into loan_type (loan_type_index,loan_type) values (1, 'TERM'),
 (2,'OD');

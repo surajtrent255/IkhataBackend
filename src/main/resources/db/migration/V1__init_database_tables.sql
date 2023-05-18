@@ -159,6 +159,7 @@ CREATE TABLE "product"(
     "barcode" varchar(250),
     "discount" real default 0.0 not null,
     "tax" integer ,
+    "tax_approch" integer,
     "unit" VARCHAR(100),
     "quantity_per_unit" integer,
     "deleted" boolean DEFAULT FALSE NOT NULL
@@ -280,15 +281,21 @@ create table purchase_bill (
 	user_id int not null,
 	sale_type int not null,
 	transportation real not null,
+	transportation_tax_type int not null,
 	insurance real not null,
+	insurance_tax_type int not null,
 	loading real not null,
-	other real
+	loading_tax_type int,
+	other real,
+	other_tax_type int
+
 );
 
 CREATE TABLE "purchase_bill_detail"(
    "id" SERIAL PRIMARY KEY ,
    "product_id" integer NOT NULL,
    "qty" real NOT NULL,
+   "tax_type_id" int NOT NULL,
    "date" date DEFAULT CURRENT_DATE NOT NULL,
    "discount_per_unit" real NOT NULL,
    "rate" real NOT NULL,
