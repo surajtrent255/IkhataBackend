@@ -9,12 +9,14 @@ import com.ishanitech.iaccountingrest.service.BillService;
 
 import com.ishanitech.iaccountingrest.service.DbService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BillServiceImpl implements BillService {
@@ -46,7 +48,10 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Integer printTheBill(int billId, int userId) {
-       return dbService.getDao(SalesBillDAO.class).printTheBillWithBillId(billId, new Date(), userId);
+        Integer printSuccess = dbService.getDao(SalesBillDAO.class).printTheBillWithBillId(billId, new Date(), userId);
+        SalesBillDTO salesBillDTO = dbService.getDao(SalesBillDAO.class).getBillById(billId);
+        log.info("Sales Bill with id"+ billId + " has been printed  by user with userId "+userId+ " salesBillDTO"+ salesBillDTO);
+       return printSuccess;
     }
 
     @Override

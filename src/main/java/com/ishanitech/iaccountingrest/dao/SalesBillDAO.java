@@ -69,8 +69,8 @@ public interface SalesBillDAO {
             " sb.draft as draft, "+
             " sb.status as status, "+
             " sb.tax_approach as taxApproach," +
-            "  sb.transaction_id  as transaction_id , " +
-            "   sb.customer_search_method as customerSearchMethod, " +
+            " sb.transaction_id  as transaction_id , " +
+            " sb.customer_search_method as customerSearchMethod, " +
             " sb.sale_type as sale_type"+
             " from sales_bill sb where  sb.id = :id;")
     @RegisterBeanMapper(SalesBillDTO.class)
