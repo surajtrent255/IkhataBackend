@@ -31,4 +31,5 @@ public class ProductDTO {
        private  Integer qtyPerUnit;
        private boolean deleted;
        private Integer stock;
+       private Integer taxApproach;
 }

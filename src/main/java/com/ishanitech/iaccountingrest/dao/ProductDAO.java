@@ -26,7 +26,7 @@ public interface ProductDAO {
                         +
                         " p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date"
                         +
-                        " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax,p.unit as unit ,p.quantity_per_unit as qtyPerUnit FROM product p WHERE p.id = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false ")
+                        " as update_date, p.tax_approach as taxApproach, p.barcode as barcode, p.discount as discount, p.tax as tax,p.unit as unit ,p.quantity_per_unit as qtyPerUnit FROM product p WHERE p.id = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false ")
         @RegisterBeanMapper(ProductDTO.class)
         ProductDTO getProductById(Integer id, int compId, int branchId);
 
@@ -78,7 +78,7 @@ public interface ProductDAO {
              
                 p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
             
-                as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax,p.unit as unit ,p.quantity_per_unit as qtyPerUnit FROM product p WHERE p.barcode = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false """)
+                as update_date, p.tax_approach as taxApproach, p.barcode as barcode, p.discount as discount, p.tax as tax,p.unit as unit ,p.quantity_per_unit as qtyPerUnit FROM product p WHERE p.barcode = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false """)
         @RegisterBeanMapper(ProductDTO.class)
     ProductDTO getProductByBarCode(String id, int compId, int branchId);
 }
