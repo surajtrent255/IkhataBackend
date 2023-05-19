@@ -18,7 +18,7 @@ public interface ProductDAO {
                         +
                         " p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date"
                         +
-                        " as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax ,p.unit as unit,p.quantity_per_unit as qtyPerUnit FROM product p WHERE p.deleted = false and p.company_id = :compId and p.branch_id = :branchId")
+                        " as update_date, p.barcode as barcode, p.tax_approch as taxApproach, p.discount as discount, p.tax as tax ,p.unit as unit,p.quantity_per_unit as qtyPerUnit FROM product p WHERE p.deleted = false and p.company_id = :compId and p.branch_id = :branchId")
         @RegisterBeanMapper(ProductDTO.class)
         List<ProductDTO> getAllProducts(@Bind int compId, @Bind int branchId);
 
@@ -33,7 +33,7 @@ public interface ProductDAO {
         @GetGeneratedKeys
         @SqlUpdate("INSERT INTO product (name, description, selling_price, cost_price, user_id, company_id, branch_id, seller_id, category_id, barcode, discount ,tax,tax_approch,unit ,quantity_per_unit)"
                         +
-                        "VALUES ( :name, :description, :sellingPrice, :costPrice, :userId, :companyId, :branchId, :sellerId, :categoryId, :barcode, :discount ,:tax,:taxApproch,:unit ,:qtyPerUnit)")
+                        "VALUES ( :name, :description, :sellingPrice, :costPrice, :userId, :companyId, :branchId, :sellerId, :categoryId, :barcode, :discount ,:tax,:taxApproach,:unit ,:qtyPerUnit)")
         Integer addNewProduct(@BindBean ProductDTO product);
 
         @SqlUpdate("UPDATE  product SET name = :name, description = :description, selling_price = :sellingPrice, cost_price = :costPrice, user_id = :userId, "
