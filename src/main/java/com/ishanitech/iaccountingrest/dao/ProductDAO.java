@@ -58,7 +58,7 @@ public interface ProductDAO {
         @SqlQuery("""
                         SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id,
                         p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
-                        as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax  ,p.unit as unit FROM product p WHERE p.deleted = false and p.id in (<newProdIds>)
+                        as update_date, p.barcode as barcode, p.tax_approach as taxApproach, p.discount as discount, p.tax as tax  ,p.unit as unit FROM product p WHERE p.deleted = false and p.id in (<newProdIds>)
                         """)
         @RegisterBeanMapper(ProductDTO.class)
         List<ProductDTO> getAllProductsByProductsIds(@Define String newProdIds);
