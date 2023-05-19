@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
             product.setTaxApproach(1);
         } else if  (product.getTax() == 3){
            product.setTaxApproach(2);
-        }else if (product.getTax()==0){
+        }else if (product.getTax()==1){
             product.setTaxApproach(0);
         }
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);

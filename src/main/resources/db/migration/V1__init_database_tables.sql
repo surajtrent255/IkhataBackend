@@ -221,7 +221,7 @@ create table sales_bill (
     tax_approach int not null,
     customer_search_method int not null,
     sale_type int not null,
-    hasAbbr boolean not null,
+    has_abbr boolean not null,
 );
 
 
