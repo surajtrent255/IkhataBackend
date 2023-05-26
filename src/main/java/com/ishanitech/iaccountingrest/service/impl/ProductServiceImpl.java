@@ -3,16 +3,17 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.ProductDAO;
 import com.ishanitech.iaccountingrest.dao.StockDAO;
 import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
+import com.ishanitech.iaccountingrest.dto.PaginationTypeDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.dto.StockDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.ProductService;
+import com.ishanitech.iaccountingrest.utils.PaginationTypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -118,4 +119,33 @@ public class ProductServiceImpl implements ProductService {
         productDTOS = productDAO.getProductForSearch( compId, branchId ,search);
         return productDTOS;
     }
+
+    @Override
+    public List<ProductDTO> getLimitedProducts(PaginationTypeDTO paginationTypeDTO, Integer compId, Integer branchId) {
+        ProductDAO productDAO = dbService.getDao(ProductDAO.class);
+        String caseQuery = "";
+
+        if(paginationTypeDTO.getType().equals(PaginationTypeEnum.NEXT)){
+            caseQuery += "and p.id < "+paginationTypeDTO.getCurrentLastObjectId()+" order by p.id desc limit "+paginationTypeDTO.getProductsLimit();
+        } else if(paginationTypeDTO.getType().equals(PaginationTypeEnum.PREVIOUS)){
+            caseQuery += "and p.id > "+paginationTypeDTO.getCurrentFirstObjectId()+" order by p.id asc limit "+paginationTypeDTO.getProductsLimit();;
+        } else if (paginationTypeDTO.getType().equals(PaginationTypeEnum.START)){
+            caseQuery += "order by p.id desc limit "+paginationTypeDTO.getProductsLimit();;
+        }
+        List<ProductDTO> products = productDAO.getLimitedProductsForInventoryByUserIdAndCompanyIdAndBranchId(caseQuery, compId, branchId);
+        if(paginationTypeDTO.getType().equals(PaginationTypeEnum.PREVIOUS)){
+            products = reverseList(products);
+        }
+        return products;
+    }
+
+    public static<T> List<T> reverseList(List<T> list)
+    {
+        List<T> reverse = new ArrayList<>(list);
+        Collections.reverse(reverse);
+        return reverse;
+    }
+
 }
+
+

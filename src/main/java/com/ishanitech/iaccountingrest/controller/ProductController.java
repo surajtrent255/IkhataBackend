@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
+import com.ishanitech.iaccountingrest.dto.PaginationTypeDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
@@ -23,6 +24,18 @@ public class ProductController {
     public ResponseDTO<List<ProductDTO>> getAllProducts(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId) {
         try {
             return new ResponseDTO<List<ProductDTO>>(productService.getAllProducts(compId, branchId));
+        } catch (Exception e) {
+            log.error("error occured while fetching products : " + e.getMessage());
+            throw new CustomSqlException("Error occured while fetching product");
+        }
+    }
+
+    @PostMapping("/limited")
+    public ResponseDTO<List<ProductDTO>> getLimitedProducts(@RequestBody PaginationTypeDTO paginationTypeDTO,
+                                                            @RequestParam("compId") Integer compId,
+                                                            @RequestParam("branchId") Integer branchId) {
+        try {
+            return new ResponseDTO<List<ProductDTO>>(productService.getLimitedProducts(paginationTypeDTO, compId, branchId));
         } catch (Exception e) {
             log.error("error occured while fetching products : " + e.getMessage());
             throw new CustomSqlException("Error occured while fetching product");

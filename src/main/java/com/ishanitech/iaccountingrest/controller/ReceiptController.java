@@ -9,12 +9,26 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/receipt")
 @RequiredArgsConstructor
 public class ReceiptController {
     private final ReceiptService receiptService;
+
+    @GetMapping("/limited")
+    public ResponseDTO<List<ReceiptDTO>> getLimitedReceiptsByCompId(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId){
+        try{
+            return new ResponseDTO<List<ReceiptDTO>>(receiptService.getLimitedReceiptsByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the receipts infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the receipts infos : " );
+        }
+    }
     @GetMapping("/{companyId}")
     public ResponseDTO<?> getReceipts(@PathVariable("companyId") int companyId){
         try{
@@ -24,6 +38,9 @@ public class ReceiptController {
             throw new CustomSqlException(e.getMessage());
         }
     }
+
+
+
 
     @PostMapping
     public ResponseDTO<?> addReceipts(@RequestBody ReceiptDTO receiptDTO){

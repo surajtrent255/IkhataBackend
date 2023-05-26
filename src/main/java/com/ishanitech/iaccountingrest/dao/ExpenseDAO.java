@@ -34,4 +34,10 @@ public interface ExpenseDAO {
     @Nullable
     void deleteFromExpense(@Bind int SN);
 
+
+    @SqlQuery("""
+            select * from expenses ex where ex.company_id = :compId and ex.branch_id = :branchId order by SN desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(ExpenseDTO.class)
+    List<ExpenseDTO> getLimitedExpensesByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

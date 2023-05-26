@@ -20,4 +20,6 @@ public interface SplitService {
     void updateSplitAgain(SplitProductDTO splitProductDTO);
 
     void updateMerge(SplitProductDTO splitProductDTO);
+
+    List<SplitProductDTO> getLimitedSplitProductByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

@@ -187,6 +187,12 @@ public interface SalesBillDAO {
     @RegisterBeanMapper(SalesBillDTO.class)
     List<SalesBillDTO> getSalesBillByCompanyId(int compId, int branchId);
 
+    @SqlQuery("""
+            select * from sales_bill sb where sb.company_id = :compId and sb.branch_id = :branchId order by id desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(SalesBillDTO.class)
+    List<SalesBillDTO> getLimitedSalesBillByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+
     @SqlUpdate("update sales_bill set bill_no = :billNo , draft=false where id = :billId")
     void makeDraftFalse(String billNo, int billId);
     //mj printedBy ? id or name

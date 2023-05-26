@@ -36,5 +36,10 @@ public interface CreditNoteDAO {
     @RegisterBeanMapper(CreditNoteDetailsDTO.class)
     List<CreditNoteDetailsDTO> getCreditNoteDetailInfo(@Bind String billNumber);
 
-
+    @SqlQuery("""
+        select DISTINCT * from credit_note cn where cn.company_id = :compId and cn.branch_id = :branchId 
+        order by id desc limit :pageTotalItems offset (:offset -1);
+    """)
+    @RegisterBeanMapper(CreditNoteDTO.class)
+    List<CreditNoteDTO> getLimitedCreditNotesByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

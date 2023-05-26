@@ -25,15 +25,20 @@ public class SplitServiceImpl implements SplitService {
     @Override
     public List<SplitProductDTO> getAllSplitProduct(int companyId, int branchId) {
         SplitProductDAO SplitProductDAO = dbService.getDao(SplitProductDAO.class);
-
         return SplitProductDAO.getAllSplitProduct(companyId,branchId);
+    }
+
+    @Override
+    public List<SplitProductDTO> getLimitedSplitProductByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<SplitProductDTO> splitProducts;
+        splitProducts = dbService.getDao(SplitProductDAO.class).getLimitedSplitProductByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return splitProducts;
     }
 
     @Override
     public int addsplit(SplitProductDTO splitProductDTO) {
         SplitProductDAO SplitProductDAO = dbService.getDao(SplitProductDAO.class);
         int Id =0;
-
 
         try{
 
@@ -98,7 +103,6 @@ public class SplitServiceImpl implements SplitService {
         System.out.println(Id);
         stockDAO.updateStockWhileSplitAgainForChild(newStockDataForChild, splitProductDTO.getUpdatedProductId());
     }
-
 
 
 

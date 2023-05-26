@@ -167,4 +167,11 @@ public interface PurchaseBillDAO {
             """)
     @RegisterBeanMapper(PurchaseBillDTO.class)
     PurchaseBillDTO getBillById(int billId, int companyId, int branchId);
+
+    @SqlQuery("""
+            select * from purchase_bill pb where pb.company_id = :compId and pb.branch_id = :branchId order by purchase_bill_no 
+            desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(PurchaseBillDTO.class)
+    List<PurchaseBillDTO> getLimitedPurchaseBillByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

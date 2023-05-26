@@ -17,6 +17,5 @@ public interface PaymentService {
 
     void updatePaymentDetails( PaymentDTO paymentDTO);
 
-
-
+    List<PaymentDTO> getLimitedPaymentBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

@@ -44,4 +44,11 @@ public class FixedAssetsServiceImpl implements FixedAssetsService {
         FixedAssetsDAO fixedAssetsDAO = dbService.getDao(FixedAssetsDAO.class);
         fixedAssetsDAO.deleteFromFixedAssets(SN);
     }
+
+    @Override
+    public List<FixedAssetsDTO> getLimitedFixedAssetsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<FixedAssetsDTO> fixedAssets;
+        fixedAssets = dbService.getDao(FixedAssetsDAO.class).getLimitedFixedAssetsByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return fixedAssets;
+    }
 }

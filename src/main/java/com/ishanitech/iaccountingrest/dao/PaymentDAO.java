@@ -54,6 +54,14 @@ public interface PaymentDAO {
     @RegisterBeanMapper(PaymentDTO.class)
     void updatePaymentDetails(@BindBean PaymentDTO paymentDTO);
 
-
-
+    @SqlQuery("SELECT p.sn as SN, p.company_id as companyId,p.party_id as partyId," +
+            " p.amount as amount ,p.payment_mode_id as paymentModeId," +
+            " p.tds_deducted as tdsDeducted, p.post_date_check as postDateCheck," +
+            " p.branch_id as branchId, p.date as date , p.status as paymentStatus ," +
+            " p.check_no as checkNo , pc.pay_date as postCheckDate" +
+            " FROM payment p" +
+            " LEFT JOIN post_date_check pc  " +
+            " ON pc.payment_id = p.sn WHERE p.company_id = :compId  and p.branch_id = :branchId order by p.sn desc limit :pageTotalItems offset (:offset -1) ;")
+    @RegisterBeanMapper(PaymentDTO.class)
+    List<PaymentDTO> getLimitedSalesBillByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

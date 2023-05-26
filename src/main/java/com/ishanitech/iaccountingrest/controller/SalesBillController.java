@@ -38,6 +38,18 @@ public class SalesBillController {
             throw new CustomSqlException("Error occured accessing the bill infos : " );
         }
     }
+
+    @GetMapping("/company/limited")
+    public ResponseDTO<List<SalesBillDTO>> getLimitedBillsByCompId(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") int compId, @RequestParam("branchId") int branchId){
+        try{
+            return new ResponseDTO<List<SalesBillDTO>>(billService.getLimitedSalesBillsByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the bill infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the bill infos : " );
+        }
+    }
     @GetMapping("/{id}")
     public ResponseDTO<SalesBillDTO> getBillById(@PathVariable int id){
         try{

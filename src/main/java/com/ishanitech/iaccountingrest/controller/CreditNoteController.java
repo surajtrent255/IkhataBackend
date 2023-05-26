@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -50,6 +52,19 @@ public class CreditNoteController {
             throw new CustomSqlException(e.getMessage());
         }
     }
+
+    @GetMapping("/limited")
+    public ResponseDTO<List<CreditNoteDTO>> getLimitedBillsByCompId(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") int compId, @RequestParam("branchId") int branchId){
+        try{
+            return new ResponseDTO<List<CreditNoteDTO>>(creditNoteService.getLimitedCreditNotessByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the bill infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the bill infos : " );
+        }
+    }
+
 
     @GetMapping("/details")
     public ResponseDTO<?> getCreditNoteDetailInfo(@RequestParam("billNumber") String billNumber){

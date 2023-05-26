@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.service;
 
 import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
+import com.ishanitech.iaccountingrest.dto.PaginationTypeDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface ProductService {
 //    ProductDTO getProductForSearch(int compId, int branchId, String search);
 
     List<ProductDTO> getProductForSearch(Integer compId, Integer branchId, String search);
+
+    List<ProductDTO> getLimitedProducts(PaginationTypeDTO paginationTypeDTO, Integer compId, Integer branchId);
 }

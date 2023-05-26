@@ -74,4 +74,10 @@ public interface BankDAO {
     @SqlQuery("SELECT * FROM account_type ")
     @RegisterBeanMapper(AccountTypeDTO.class)
     List<AccountTypeDTO> getAccountType();
+
+    @SqlQuery("""
+            select * from bank b where b.company_id = :compId and b.branch_id = :branchId order by bank_id desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(BankDTO.class)
+    List<BankDTO> getLimitedBanksByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

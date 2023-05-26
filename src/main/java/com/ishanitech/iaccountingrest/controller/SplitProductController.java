@@ -10,13 +10,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("/split")
 @RequiredArgsConstructor
 public class SplitProductController {
     private final SplitService splitService;
-    @GetMapping("/{companyid}/{branchid}")
+    @GetMapping("")
     public ResponseDTO<?> getAllSplitProduct(@RequestParam("companyid") int companyId , @RequestParam("branchid")  int branchId){
         try{
             return new ResponseDTO<>(splitService.getAllSplitProduct(companyId ,branchId));
@@ -25,6 +27,18 @@ public class SplitProductController {
             log.error(e.getMessage());
         }
         return new ResponseDTO<>(splitService.getAllSplitProduct(companyId,branchId));
+    }
+
+    @GetMapping("/company/limited")
+    public ResponseDTO<List<SplitProductDTO>> getLimitedBillsByCompId(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId){
+        try{
+            return new ResponseDTO<List <SplitProductDTO>>(splitService.getLimitedSplitProductByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the split product infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the split/product infos : " );
+        }
     }
     @GetMapping("/{ProductId}")
     public ResponseDTO<?> getAllSplitProductByProductId(@PathVariable("ProductId") int ProductId ){

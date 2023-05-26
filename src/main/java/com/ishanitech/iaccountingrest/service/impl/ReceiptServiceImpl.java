@@ -32,4 +32,11 @@ public class ReceiptServiceImpl implements ReceiptService {
         ReceiptDAO receiptDAO = dbService.getDao(ReceiptDAO.class);
         receiptDAO.deleteReceipt(SN);
     }
+
+    @Override
+    public List<ReceiptDTO> getLimitedReceiptsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<ReceiptDTO> receipts;
+        receipts = dbService.getDao(ReceiptDAO.class).getLimitedReceiptsByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return receipts;
+    }
 }

@@ -10,4 +10,6 @@ public interface ReceiptService {
     Integer addReceipts(ReceiptDTO receiptDTO);
 
     void deleteReceipts(int SN);
+
+    List<ReceiptDTO> getLimitedReceiptsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

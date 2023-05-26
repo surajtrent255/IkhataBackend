@@ -70,4 +70,12 @@ public class LoanServiceImpl implements LoanService {
         loanNamesDTOS = loanDAO.getAllLoanNames();
         return loanNamesDTOS;
     }
+
+    @Override
+    public List<LoanDTO> getLimitedLoanEntitiesForSingleCompAndBranch(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        LoanDAO loanDAO = dbService.getDao(LoanDAO.class);
+        List<LoanDTO> loanDTOS;
+        loanDTOS = loanDAO.getLimitedLoanEntityByCompAndBranch(offset, pageTotalItems, compId, branchId);
+        return loanDTOS;
+    }
 }

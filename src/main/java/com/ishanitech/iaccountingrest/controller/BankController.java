@@ -69,6 +69,18 @@ public class BankController {
         }
         return new ResponseDTO<>(bankService.getAllByBankBranch(companyId,branchId));
     }
+
+    @GetMapping("/limited")
+    public ResponseDTO<List<BankDTO>> getLimitedBanksByCompId(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId){
+        try{
+            return new ResponseDTO<List<BankDTO>>(bankService.getLimitedBanksByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the bank infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the bank infos : " );
+        }
+    }
     @PostMapping("/bank")
     public ResponseDTO<?> addbank(@RequestBody BankDTO bankDTO){
           return  new ResponseDTO<>(bankService.addbank(bankDTO))  ;

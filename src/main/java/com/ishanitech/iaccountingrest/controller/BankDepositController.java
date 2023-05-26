@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("/api/v1/bank/deposite")
@@ -24,6 +26,19 @@ public class BankDepositController {
         }
         return new ResponseDTO<>(BankDepositeService.getAllByBankBankDeposite(companyId,branchId));
     }
+
+    @GetMapping("/limited")
+    public ResponseDTO<List<BankDepositDTO>> getLimitedBillsByCompId(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId){
+        try{
+            return new ResponseDTO<List<BankDepositDTO>>(BankDepositeService.getLimitedBankDepositByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the bill infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the bill infos : " );
+        }
+    }
+
 //    @PostMapping
 //    public ResponseDTO<?> addBankDeposite(@RequestBody BankDepositeDTO bankDepositeDTO) {
 //        try {

@@ -60,6 +60,12 @@ public class BillServiceImpl implements BillService {
         return salesBillDTOList;
     }
 
+    @Override
+    public List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, int compId, int branchId) {
+        List<SalesBillDTO> salesBillDTOList;
+        salesBillDTOList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return salesBillDTOList;
+    }
     @Transactional
     @Override
     public Object approveTheBillById(int billId) {
@@ -78,4 +84,5 @@ public class BillServiceImpl implements BillService {
         salesBillDAO.makeDraftFalse(billNoToBeUpdated, billId);
         return salesBillDTO;
     }
+
 }

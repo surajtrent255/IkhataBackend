@@ -113,6 +113,13 @@ public class BankServiceImpl implements BankService {
 
     }
 
+    @Override
+    public List<BankDTO> getLimitedBanksByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<BankDTO> banks;
+        banks = dbService.getDao(BankDAO.class).getLimitedBanksByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return banks;
+    }
+
 
 }
 
