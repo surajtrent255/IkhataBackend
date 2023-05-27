@@ -1,16 +1,15 @@
 package com.ishanitech.iaccountingrest.controller;
 
-import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
-import com.ishanitech.iaccountingrest.dto.CompanyDTO;
-import com.ishanitech.iaccountingrest.dto.CompanyWithUserIdDTO;
-import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -29,9 +28,9 @@ public class CompanyController {
     public ResponseDTO<?> addCompany(@RequestBody CompanyWithUserIdDTO companyWithUserIdDTO) {
         int userId = companyWithUserIdDTO.getUserId();
         CompanyDTO companyDTO = companyWithUserIdDTO.getCompanyDTO();
-        Integer result = null;
+
         try {
-            result = companyService.addCompany(companyDTO,userId);
+         Integer   result = companyService.addCompany(companyDTO,userId);
            CompanyDTO companyDTO1 = (CompanyDTO) companyService.getCompanyByPanNo(companyDTO.getPanNo());
             userConfigurationService.addUserRole(userId,companyDTO1.getCompanyId(),new int[] {1});
             return new ResponseDTO<>( result);
@@ -95,5 +94,25 @@ public class CompanyController {
         }
     }
 
+    @GetMapping("/image")
+    public ResponseDTO<?> getCompanyLogo(@RequestParam("companyId") int companyId){
+        try{
+            return new ResponseDTO<>(companyService.getCompanyLogo(companyId)) ;
+        }catch(Exception ioException){
+            log.error(ioException.getMessage());
+            throw new CustomSqlException(ioException.getMessage());
+        }
+    }
+
+//    @PostMapping("/image/upload")
+//    public ResponseDTO<?> addCompanyLogo(@RequestParam("file")MultipartFile file,@RequestParam("companyId") int companyId) throws IOException{
+//                  try{
+//                    companyService.addCompanyLogo(file,companyId);
+//                    return new ResponseDTO<>("Logo Successfully Added");
+//                }catch (IOException e){
+//                    log.error(e.getMessage());
+//                    throw new IOException(e.getMessage());
+//                }
+//    }
 
 }

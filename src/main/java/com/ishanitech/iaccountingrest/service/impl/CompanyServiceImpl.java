@@ -3,16 +3,15 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
 import com.ishanitech.iaccountingrest.dao.BranchDAO;
 import com.ishanitech.iaccountingrest.dao.CompanyDAO;
-import com.ishanitech.iaccountingrest.dto.BillNoGenerationDTO;
-import com.ishanitech.iaccountingrest.dto.BranchDTO;
-import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
-import com.ishanitech.iaccountingrest.dto.CompanyDTO;
+import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.DbService;
 import org.jdbi.v3.core.JdbiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class CompanyServiceImpl implements CompanyService {
 
 
     @Override
-    public Integer addCompany(CompanyDTO companyDTO,int userId) {
+    public int addCompany(CompanyDTO companyDTO,int userId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
         BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
         int savedCompanyId =0;
@@ -114,5 +113,21 @@ companyDAO.deleteCompany(companyId);
     public void updateCompanyStatus(boolean status, int companyId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
         companyDAO.updateCompanyStatus(status,companyId);
+    }
+
+//    @Override
+//    public void addCompanyLogo(MultipartFile file,int companyId) throws IOException {
+//        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+//        CompanyLogoDTO companyLogoDTO = new CompanyLogoDTO();
+//        companyLogoDTO.setImageName(file.getOriginalFilename());
+//        companyLogoDTO.setImageData(file.getBytes());
+//        companyLogoDTO.setCompanyId(companyId);
+//        companyDAO.addCompanyLogo(companyLogoDTO);
+//    }
+
+    @Override
+    public CompanyLogoDTO getCompanyLogo(int companyId) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        return companyDAO.getCompanyLogo(companyId);
     }
 }

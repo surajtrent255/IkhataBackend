@@ -21,6 +21,8 @@ public class DebitNoteDetailsDTO {
 
     private Double debitAmount;
 
+    private Double totalDebitAmount;
+
     private Double debitTaxAmount;
 
     private int  companyId;

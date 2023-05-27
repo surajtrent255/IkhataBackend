@@ -672,6 +672,7 @@ CREATE TABLE debit_note_details(
 	product_unit VARCHAR DEFAULT NUll,
 	debit_reason TEXT DEFAULT NULL,
 	debit_amount REAL DEFAULT NULL,
+	total_debit_amount REAL DEFAULT NUll,
 	debit_tax_amount REAL DEFAULT NULL,
 	company_id INT NOT NULL,
 	branch_id INT NOT NULL,
@@ -717,4 +718,12 @@ branch_id INT DEFAULT NULL,
 status BOOLEAN DEFAULT TRUE
 );
 
+
+CREATE TABLE company_logo(
+id SERIAL,
+company_id INT DEFAULT NULL,
+image_name VARCHAR DEFAULT NULL,
+image_data VARCHAR DEFAULT NULL,
+PRIMARY KEY(id)
+);
 

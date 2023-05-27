@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
+import com.ishanitech.iaccountingrest.dto.CompanyLogoDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -78,6 +79,24 @@ public interface CompanyDAO {
             " SET  status= :status " +
             " WHERE company_id = :companyId; ")
     void updateCompanyStatus(@Bind boolean status, @Bind int companyId);
+
+
+//    company image
+//    @SqlUpdate("""
+//            INSERT INTO company_logo(
+//            	 image_name, image_data, company_id)
+//            	VALUES (:imageName, :imageData, :companyId);
+//            """)
+//    void addCompanyLogo(@BindBean CompanyLogoDTO companyLogoDTO);
+
+    @SqlQuery("""
+            SELECT id as id, image_name as imageName,
+             encode(image_data::bytea, 'base64') AS imageData
+             , company_id as companyId FROM company_logo
+              WHERE company_id=:companyId
+            """)
+    @RegisterBeanMapper(CompanyLogoDTO.class)
+    CompanyLogoDTO getCompanyLogo(@Bind int companyId);
 
 
 
