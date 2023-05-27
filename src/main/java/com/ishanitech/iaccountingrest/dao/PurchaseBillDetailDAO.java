@@ -28,7 +28,7 @@ public interface PurchaseBillDetailDAO {
             SELECT pbd.id as id, pbd.product_id as product_id, pbd.qty as qty, pbd.date as date, pbd.rate as rate, 
                                      pbd.discount_per_unit as discount_per_unit, pbd.purchase_bill_id as purchase_bill_id, pbd.company_id as company_id,
             						 vt.vat_rate_num as taxRate,
-                                     p.name as product_name  from purchase_bill_detail pbd 
+                                     p.name as product_name ,p.unit as unit  from purchase_bill_detail pbd 
                                      inner join product p on p.id = pbd.product_id
             						 inner join vat_rate_type vt on p.tax=vt.id
                                      where pbd.purchase_bill_id = :billId and pbd.company_id = :companyId and pbd.branch_id = :branchId;

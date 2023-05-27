@@ -19,8 +19,8 @@ public interface CreditNoteDAO {
     void addCreditNote(@BindBean CreditNoteDTO creditNoteDTO);
 
     @SqlUpdate("INSERT INTO credit_note_details( " +
-            " serial_number, product_id, product_name, credit_reason, credit_amount, credit_tax_amount , company_id,branch_id,bill_number) " +
-            " VALUES (:serialNumber,:productId, :productName, :creditReason, :creditAmount, :creditTaxAmount,:companyId,:branchId,:billNumber );")
+            " serial_number, product_id, product_name,product_qty,product_unit, credit_reason, credit_amount,total_credit_Amount, credit_tax_amount , company_id,branch_id,bill_number) " +
+            " VALUES (:serialNumber,:productId, :productName,:productQty,:productUnit, :creditReason, :creditAmount,:totalCreditAmount, :creditTaxAmount,:companyId,:branchId,:billNumber );")
     @RegisterBeanMapper(CreditNoteDetailsDTO.class)
     void addCreditNoteDetails(@BindBean CreditNoteDetailsDTO creditNoteDetailsDTO);
 

@@ -16,6 +16,7 @@ public class PurchaseBillDetailWithProdInfo {
     private Date date;
     private double discountPerUnit;
     private double rate;
+    private String unit;
     private int taxRate;
     private int purchaseBillId;
     private int companyId;

@@ -14,9 +14,16 @@ public class CreditNoteDetailsDTO {
 
     private String productName;
 
+    private int productQty;
+
+    private String productUnit;
+
+
     private String creditReason;
 
     private Double creditAmount;
+
+    private Double totalCreditAmount;
 
     private Double creditTaxAmount;
 

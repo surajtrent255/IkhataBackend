@@ -20,8 +20,8 @@ public interface DebitNoteDAO {
 
 
     @SqlUpdate("INSERT INTO debit_note_details( " +
-            "  serial_number,product_id, product_name, debit_reason, debit_amount, debit_tax_amount,company_id,branch_id,bill_number) " +
-            " VALUES (:serialNumber,:productId, :productName, :debitReason, :debitAmount, :debitTaxAmount,:companyId ,:branchId,:billNumber);")
+            "  serial_number,product_id, product_name,product_unit, debit_reason, debit_amount, debit_tax_amount,company_id,branch_id,bill_number) " +
+            " VALUES (:serialNumber,:productId, :productName,:productUnit, :debitReason, :debitAmount, :debitTaxAmount,:companyId ,:branchId,:billNumber);")
     @RegisterBeanMapper(DebitNoteDetailsDTO.class)
     void addDebitNoteDetails(@BindBean DebitNoteDetailsDTO debitNoteDetailsDTO);
 

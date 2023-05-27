@@ -15,6 +15,8 @@ public class DebitNoteDetailsDTO {
 
     private String productName;
 
+    private String productUnit;
+
     private String debitReason;
 
     private Double debitAmount;
