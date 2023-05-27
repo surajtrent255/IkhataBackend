@@ -1,8 +1,6 @@
 package com.ishanitech.iaccountingrest.service.impl;
-import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
-import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
-import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
-import com.ishanitech.iaccountingrest.dao.StockDAO;
+import com.ishanitech.iaccountingrest.dao.*;
+import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
 import com.ishanitech.iaccountingrest.service.BillService;
@@ -61,10 +59,21 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, int compId, int branchId) {
-        List<SalesBillDTO> salesBillDTOList;
-        salesBillDTOList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
-        return salesBillDTOList;
+    public List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId) {
+//        List<SalesBillDTO> salesBillDTOList;
+//        salesBillDTOList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+//        return salesBillDTOList;
+        List<SalesBillDTO> productList;
+        String caseQuery="";
+        if(searchBy.equals("id")){
+            caseQuery = " company_id = "+compId+" and branch_id = "+branchId+" and "+searchBy+" = '"+searchWildCard+"' order by "+sortBy+" desc "+
+                    "limit "+ pageTotalItems+" offset "+(offset-1);
+        } else {
+            caseQuery = " company_id = "+compId+" and branch_id = "+branchId+" and "+searchBy+" like '"+searchWildCard+"%' order by "+sortBy+" desc "+
+                    "limit "+ pageTotalItems+" offset "+(offset-1);
+        }
+        productList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(caseQuery);
+        return productList;
     }
     @Transactional
     @Override

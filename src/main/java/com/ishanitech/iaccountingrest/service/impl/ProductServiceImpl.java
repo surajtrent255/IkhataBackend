@@ -3,12 +3,10 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.ProductDAO;
 import com.ishanitech.iaccountingrest.dao.StockDAO;
 import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
-import com.ishanitech.iaccountingrest.dto.PaginationTypeDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.dto.StockDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.ProductService;
-import com.ishanitech.iaccountingrest.utils.PaginationTypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,22 +119,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getLimitedProducts(PaginationTypeDTO paginationTypeDTO, Integer compId, Integer branchId) {
-        ProductDAO productDAO = dbService.getDao(ProductDAO.class);
-        String caseQuery = "";
-
-        if(paginationTypeDTO.getType().equals(PaginationTypeEnum.NEXT)){
-            caseQuery += "and p.id < "+paginationTypeDTO.getCurrentLastObjectId()+" order by p.id desc limit "+paginationTypeDTO.getProductsLimit();
-        } else if(paginationTypeDTO.getType().equals(PaginationTypeEnum.PREVIOUS)){
-            caseQuery += "and p.id > "+paginationTypeDTO.getCurrentFirstObjectId()+" order by p.id asc limit "+paginationTypeDTO.getProductsLimit();;
-        } else if (paginationTypeDTO.getType().equals(PaginationTypeEnum.START)){
-            caseQuery += "order by p.id desc limit "+paginationTypeDTO.getProductsLimit();;
+    public List<ProductDTO> getLimitedProducts(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId) {
+        List<ProductDTO> productList;
+        String caseQuery="";
+        if(searchBy.equals("id")){
+             caseQuery = "and p.company_id = "+compId+" and p.branch_id = "+branchId+" and p."+searchBy+" = '"+searchWildCard+"' order by "+sortBy+" desc "+
+                    "limit "+ pageTotalItems+" offset "+(offset-1);
+        } else {
+             caseQuery = "and p.company_id = "+compId+" and p.branch_id = "+branchId+" and p."+searchBy+" like '"+searchWildCard+"%' order by "+sortBy+" desc "+
+                    "limit "+ pageTotalItems+" offset "+(offset-1);
         }
-        List<ProductDTO> products = productDAO.getLimitedProductsForInventoryByUserIdAndCompanyIdAndBranchId(caseQuery, compId, branchId);
-        if(paginationTypeDTO.getType().equals(PaginationTypeEnum.PREVIOUS)){
-            products = reverseList(products);
-        }
-        return products;
+        productList = dbService.getDao(ProductDAO.class).getLimitedProducts(caseQuery);
+        return productList;
     }
 
     public static<T> List<T> reverseList(List<T> list)

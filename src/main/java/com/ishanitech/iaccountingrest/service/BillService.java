@@ -18,5 +18,5 @@ public interface BillService {
 
         Object approveTheBillById(int billId);
 
-        List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, int compId, int branchId);
+        List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId);
 }

@@ -28,5 +28,5 @@ public interface ProductService {
 
     List<ProductDTO> getProductForSearch(Integer compId, Integer branchId, String search);
 
-    List<ProductDTO> getLimitedProducts(PaginationTypeDTO paginationTypeDTO, Integer compId, Integer branchId);
+    List<ProductDTO> getLimitedProducts(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId);
 }

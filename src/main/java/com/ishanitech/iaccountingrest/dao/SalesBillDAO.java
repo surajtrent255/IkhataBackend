@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -188,10 +189,10 @@ public interface SalesBillDAO {
     List<SalesBillDTO> getSalesBillByCompanyId(int compId, int branchId);
 
     @SqlQuery("""
-            select * from sales_bill sb where sb.company_id = :compId and sb.branch_id = :branchId order by id desc limit :pageTotalItems offset (:offset -1) ;
+            select * from sales_bill sb where <caseQuery> ;
             """)
     @RegisterBeanMapper(SalesBillDTO.class)
-    List<SalesBillDTO> getLimitedSalesBillByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+    List<SalesBillDTO> getLimitedSalesBillByCompanyAndBranchId(@Define String caseQuery);
 
     @SqlUpdate("update sales_bill set bill_no = :billNo , draft=false where id = :billId")
     void makeDraftFalse(String billNo, int billId);
