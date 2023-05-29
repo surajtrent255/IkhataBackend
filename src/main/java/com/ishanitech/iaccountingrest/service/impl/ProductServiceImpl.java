@@ -11,8 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -118,4 +117,29 @@ public class ProductServiceImpl implements ProductService {
         productDTOS = productDAO.getProductForSearch( compId, branchId ,search);
         return productDTOS;
     }
+
+    @Override
+    public List<ProductDTO> getLimitedProducts(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId) {
+        List<ProductDTO> productList;
+        String caseQuery="";
+        if(searchBy.equals("id")){
+             caseQuery = "and p.company_id = "+compId+" and p.branch_id = "+branchId+" and p."+searchBy+" = '"+searchWildCard+"' order by "+sortBy+" desc "+
+                    "limit "+ pageTotalItems+" offset "+(offset-1);
+        } else {
+             caseQuery = "and p.company_id = "+compId+" and p.branch_id = "+branchId+" and p."+searchBy+" like '"+searchWildCard+"%' order by "+sortBy+" desc "+
+                    "limit "+ pageTotalItems+" offset "+(offset-1);
+        }
+        productList = dbService.getDao(ProductDAO.class).getLimitedProducts(caseQuery);
+        return productList;
+    }
+
+    public static<T> List<T> reverseList(List<T> list)
+    {
+        List<T> reverse = new ArrayList<>(list);
+        Collections.reverse(reverse);
+        return reverse;
+    }
+
 }
+
+

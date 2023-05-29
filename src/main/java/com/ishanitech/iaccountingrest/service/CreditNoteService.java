@@ -17,7 +17,5 @@ public interface CreditNoteService {
 
     List<CreditNoteDetailsDTO> getCreditNoteDetailInfo( String billNumber);
 
-
-
-
+    List<CreditNoteDTO> getLimitedCreditNotessByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

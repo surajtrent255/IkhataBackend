@@ -17,6 +17,12 @@ public interface SplitProductDAO {
     @RegisterBeanMapper(SplitProductDTO.class)
     List<SplitProductDTO> getAllSplitProduct(int companyId, int branchId);
 
+    @SqlQuery("""
+            select * from split_product sp where sp.company_id = :compId and sp.branch_id = :branchId order by id desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(SplitProductDTO.class)
+    List<SplitProductDTO> getLimitedSplitProductByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+
 
     @GetGeneratedKeys
     @SqlUpdate("INSERT INTO split_product("
@@ -119,4 +125,5 @@ public interface SplitProductDAO {
             + ":companyId, "
             + ":branchId)")
     int addMergelog(@BindBean SplitProductDTO splitProductDTO ,int total);
+
 }

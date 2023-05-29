@@ -38,6 +38,18 @@ public class PaymentController {
 
     }
 
+    @GetMapping("/limited")
+    public ResponseDTO<List<PaymentDTO> > getLimitedBillsByCompId(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId){
+        try{
+            return new ResponseDTO<List<PaymentDTO> >(paymentService.getLimitedPaymentBillsByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
+        } catch(Exception e) {
+            log.error("Error occured accessing the payment infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the payment infos : " );
+        }
+    }
+
     @GetMapping("/{SN}")
     public ResponseDTO<?> getPaymentDetailsById(@PathVariable("SN") int SN){
 

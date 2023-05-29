@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -21,6 +23,20 @@ public class ExpenseController {
 
         try {
             return new ResponseDTO<>(expenseService.getExpenseDetails(companyId));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/limited")
+    public ResponseDTO<List<ExpenseDTO>> getLimitedExpenseDetails(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId
+    ){
+
+        try {
+            return new ResponseDTO<List<ExpenseDTO> >(expenseService.getLimitedExpenseDetails(offset, pageTotalItems, compId, branchId));
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());

@@ -20,4 +20,6 @@ public interface LoanService {
     List<LoanTypesDTO> getAllLoanTypes();
 
     List<LoanNamesDTO> getAllLoanNames();
+
+    List<LoanDTO> getLimitedLoanEntitiesForSingleCompAndBranch(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

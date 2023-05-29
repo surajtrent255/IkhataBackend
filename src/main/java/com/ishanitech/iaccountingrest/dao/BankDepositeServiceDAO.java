@@ -39,4 +39,10 @@ public interface BankDepositeServiceDAO {
     int updateDeposite(@BindBean BankDepositDTO bankDepositeDTO, @Bind int depositId);
     @SqlQuery("DELETE FROM bank_deposit WHERE  branch_id= :branchId AND deposit_id= :depositId")
     int deleteDeposite(@Bind int branchId ,@Bind int depositId);
+
+    @SqlQuery("""
+            select * from bank_deposit bd where bd.company_id = :compId and bd.branch_id = :branchId order by deposit_id desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(BankDepositDTO.class)
+    List<BankDepositDTO> getLimitedBankDepositByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

@@ -16,4 +16,5 @@ public interface ExpenseService {
 
     void deleteFromExpense(int SN);
 
+    List<ExpenseDTO> getLimitedExpenseDetails(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

@@ -13,7 +13,7 @@
             active,
             company_id,
             branch_id,
-            hasAbr
+            has_abbr
         ) values
         (
             '2079/80',
@@ -171,7 +171,9 @@ INSERT INTO feature_control(
 	(1, 'Edit_Price', 1),
 	(2, 'Search_By_Barcode', 2),
 	(3, 'Search_By_Id', 2),
-	(4, 'Search_By_Product_Name', 3);
+	(4, 'Search_By_Product_Name', 3),
+	(5, 'edit_discount', 4),
+    (6, 'has_abb',5);
 
 
 INSERT INTO public.account_type(

@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
+import com.ishanitech.iaccountingrest.dto.PaginationTypeDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
@@ -23,6 +24,22 @@ public class ProductController {
     public ResponseDTO<List<ProductDTO>> getAllProducts(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId) {
         try {
             return new ResponseDTO<List<ProductDTO>>(productService.getAllProducts(compId, branchId));
+        } catch (Exception e) {
+            log.error("error occured while fetching products : " + e.getMessage());
+            throw new CustomSqlException("Error occured while fetching product");
+        }
+    }
+
+    @GetMapping("/limited")
+    public ResponseDTO<List<ProductDTO>> getLimitedProducts( @RequestParam("offset") Integer offset,
+                                                             @RequestParam("pageTotalItems") Integer pageTotalItems,
+                                                            @RequestParam("searchBy") String searchBy,
+                                                            @RequestParam("searchWildCard") String searchWildCard,
+                                                            @RequestParam("sortBy") String sortBy,
+                                                            @RequestParam("compId") Integer compId,
+                                                            @RequestParam("branchId") Integer branchId) {
+        try {
+            return new ResponseDTO<List<ProductDTO>>(productService.getLimitedProducts(offset, pageTotalItems, searchBy, searchWildCard, sortBy, compId, branchId));
         } catch (Exception e) {
             log.error("error occured while fetching products : " + e.getMessage());
             throw new CustomSqlException("Error occured while fetching product");

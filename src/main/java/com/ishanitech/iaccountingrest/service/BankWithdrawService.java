@@ -11,4 +11,6 @@ public interface BankWithdrawService {
     int updatewithdraw(BankWithdrawDTO bankWithdrawDTO);
 
     int deletewithdraw(int branchId, int withdrawId);
+
+    List<BankWithdrawDTO> getLimitedBanksWithdrawByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

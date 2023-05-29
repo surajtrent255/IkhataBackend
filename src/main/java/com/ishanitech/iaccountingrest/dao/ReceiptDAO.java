@@ -26,4 +26,9 @@ public interface ReceiptDAO {
     @Nullable
     void deleteReceipt(@Bind int SN);
 
+    @SqlQuery("""
+            select * from receipt r where r.company_id = :compId and r.branch_id = :branchId order by SN desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(ReceiptDTO.class)
+    List<ReceiptDTO> getLimitedReceiptsByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

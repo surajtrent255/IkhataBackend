@@ -36,4 +36,12 @@ public interface BankWithdrawDAO {
     void updatewithdraw(@BindBean BankWithdrawDTO bankWithdrawDTO, @Bind int withdrawId);
     @SqlQuery("DELETE FROM bank_withdraw WHERE branch_id=:branchId AND withdraw_id  = :withdrawId ")
     int deletewithdraw(int branchId, int withdrawId);
+
+
+
+    @SqlQuery("""
+            select * from bank_withdraw bw where bw.company_id = :compId and bw.branch_id = :branchId order by withdraw_id desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(BankWithdrawDTO.class)
+    List<BankWithdrawDTO> getLimitedWithDrawsByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

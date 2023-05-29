@@ -38,4 +38,11 @@ public class CreditNoteServiceImpl implements CreditNoteService {
         CreditNoteDAO creditNoteDAO = dbService.getDao(CreditNoteDAO.class);
         return creditNoteDAO.getCreditNoteDetailInfo(billNumber);
     }
+
+    @Override
+    public List<CreditNoteDTO> getLimitedCreditNotessByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<CreditNoteDTO> creditNotes;
+        creditNotes = dbService.getDao(CreditNoteDAO.class).getLimitedCreditNotesByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return creditNotes;
+    }
 }

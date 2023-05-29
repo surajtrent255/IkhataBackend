@@ -18,5 +18,5 @@ public interface DebitNoteService {
     List<DebitNoteDetailsDTO> getDebitNoteDetailsInfo( Long billNumber);
 
 
-
+    List<DebitNoteDTO> getLimitedDebitNotessByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

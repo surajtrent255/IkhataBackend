@@ -77,6 +77,13 @@ public class BankDepositeServiceImpl implements BankDepositeService {
 
     }
 
+    @Override
+    public List<BankDepositDTO> getLimitedBankDepositByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<BankDepositDTO> bankDeposits;
+        bankDeposits = dbService.getDao(BankDepositeServiceDAO.class).getLimitedBankDepositByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return bankDeposits;
+    }
+
 }
 
 

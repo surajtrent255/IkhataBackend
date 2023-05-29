@@ -44,4 +44,11 @@ public class ExpenseServiceImpl implements ExpenseService {
         expenseDAO.deleteFromExpense(SN);
 
     }
+
+    @Override
+    public List<ExpenseDTO> getLimitedExpenseDetails(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<ExpenseDTO> expenses;
+        expenses = dbService.getDao(ExpenseDAO.class).getLimitedExpensesByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return expenses;
+    }
 }

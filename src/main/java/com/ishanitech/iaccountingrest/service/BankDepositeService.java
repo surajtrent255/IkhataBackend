@@ -14,5 +14,5 @@ public interface BankDepositeService  {
 
     int deleteFromBankDepositeBranchId(int branchId,int depositId);
 
-
+    List<BankDepositDTO> getLimitedBankDepositByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

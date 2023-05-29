@@ -37,4 +37,6 @@ public interface BankService {
     List<TypePaymentDTO> getAllPayment();
 
     List<AccountTypeDTO> getAccountType();
+
+    List<BankDTO> getLimitedBanksByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

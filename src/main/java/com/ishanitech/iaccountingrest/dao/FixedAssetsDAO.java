@@ -35,4 +35,9 @@ public interface FixedAssetsDAO {
     @Nullable
     void deleteFromFixedAssets(@Bind int SN);
 
+    @SqlQuery("""
+            select * from fixed_assets fa where fa.company_id = :compId and fa.branch_id = :branchId order by SN desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(FixedAssetsDTO.class)
+    List<FixedAssetsDTO> getLimitedFixedAssetsByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

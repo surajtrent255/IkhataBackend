@@ -38,4 +38,11 @@ public class DebitNoteServiceImpl implements DebitNoteService {
         DebitNoteDAO debitNoteDAO = dbService.getDao(DebitNoteDAO.class);
         return debitNoteDAO.getDebitNoteDetailsInfo(billNumber);
     }
+
+    @Override
+    public List<DebitNoteDTO> getLimitedDebitNotessByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<DebitNoteDTO> debitNotes;
+        debitNotes = dbService.getDao(DebitNoteDAO.class).getLimitedDebitNotesByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return debitNotes;
+    }
 }

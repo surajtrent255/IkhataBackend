@@ -17,4 +17,5 @@ public interface FixedAssetsService {
 
     void deleteFromAssets(int SN);
 
+    List<FixedAssetsDTO> getLimitedFixedAssetsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

@@ -37,5 +37,9 @@ public interface DebitNoteDAO {
     @RegisterBeanMapper(DebitNoteDetailsDTO.class)
     List<DebitNoteDetailsDTO> getDebitNoteDetailsInfo(@Bind Long billNumber);
 
-
+    @SqlQuery("""
+            select * from debit_note dn where dn.company_id = :compId and dn.branch_id = :branchId order by id desc limit :pageTotalItems offset (:offset -1) ;
+            """)
+    @RegisterBeanMapper(DebitNoteDTO.class)
+    List<DebitNoteDTO> getLimitedDebitNotesByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

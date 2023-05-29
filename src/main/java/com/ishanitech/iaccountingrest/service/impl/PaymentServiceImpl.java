@@ -50,5 +50,12 @@ public class PaymentServiceImpl implements PaymentService {
         paymentDAO.updatePaymentDetails(paymentDTO);
     }
 
+    @Override
+    public List<PaymentDTO> getLimitedPaymentBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+        List<PaymentDTO> paymentBillList;
+        paymentBillList = dbService.getDao(PaymentDAO.class).getLimitedSalesBillByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
+        return paymentBillList;
+    }
+
 
 }
