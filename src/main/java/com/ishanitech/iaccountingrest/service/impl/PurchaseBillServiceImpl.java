@@ -1,7 +1,9 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
+import com.ishanitech.iaccountingrest.dao.ProductDAO;
 import com.ishanitech.iaccountingrest.dao.PurchaseBillDAO;
-import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
+import com.ishanitech.iaccountingrest.dao.PurchaseBillDetailDAO;
+import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.PurchaseBillService;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +41,15 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
         List<PurchaseBillDTO> salesBillDTOList;
         salesBillDTOList = dbService.getDao(PurchaseBillDAO.class).getLimitedPurchaseBillByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
         return salesBillDTOList;
+    }
+
+    @Override
+    public PurchaseReportDTO getPurchaseBillInfoForReport(Integer id, Integer compId, Integer branchId) {
+        PurchaseReportDTO purchaseReportDTO = new PurchaseReportDTO();
+        PurchaseBillDTO purchaseBillDTO = dbService.getDao(PurchaseBillDAO.class).getSinglePurchaseBill(id);
+        List<PurchaseBillDetailWithProdInfo> purchaseBillDetailsWithProd = dbService.getDao(PurchaseBillDetailDAO.class).getPurchaseInfoWithProdNameByBillId(id, compId, branchId);
+        purchaseReportDTO.setPurchaseBill(purchaseBillDTO);
+        purchaseReportDTO.setPurchaseBillDetailWithProdInfos(purchaseBillDetailsWithProd);
+        return purchaseReportDTO;
     }
 }

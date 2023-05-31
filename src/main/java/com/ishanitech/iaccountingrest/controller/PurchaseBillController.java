@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
+import com.ishanitech.iaccountingrest.dto.PurchaseReportDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.PurchaseBillService;
@@ -58,6 +59,18 @@ public class PurchaseBillController {
         } catch(Exception e){
             log.error("error occured while fetching purchas bill with id " + id +" "+ e.getMessage());
             throw new CustomSqlException("error occured while fetching purchase bill with id " + id +" ");
+        }
+    }
+
+    @GetMapping("/report/{id}")
+    public ResponseDTO<PurchaseReportDTO> getPurchaseBillInfoForReport(@PathVariable("id") Integer id,
+                                                                       @RequestParam("compId") int compId,
+                                                                       @RequestParam("branchId") int branchId){
+        try{
+            return new ResponseDTO<PurchaseReportDTO>(purchaseBillService.getPurchaseBillInfoForReport(id, compId, branchId));
+        } catch(Exception ex){
+            log.error(" error occured while fetching purchase bill info for report with id "+id +" "+ ex.getMessage());
+            throw new CustomSqlException("error occured while fetching purchase bill infor for report");
         }
     }
 

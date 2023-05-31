@@ -23,4 +23,6 @@ public class PurchaseBillDetailWithProdInfo {
     private int branchId;
     private String productName;
     private String debitReason;
+    private Integer taxTypeId;
+
 }
