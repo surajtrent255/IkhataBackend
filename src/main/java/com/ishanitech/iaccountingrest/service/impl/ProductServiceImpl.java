@@ -39,13 +39,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Integer addNewProduct(ProductDTO product , int stockqtr) {
-        if(product.getTax() == 2)
+        if(product.getTax() == 1)
         {
+<<<<<<< HEAD
             product.setTaxApproach(1);
         } else if  (product.getTax() == 3){
            product.setTaxApproach(2);
         }else if (product.getTax()==1){
             product.setTaxApproach(0);
+=======
+            product.setTaxApproch(0) ;
+        } else if  (product.getTax() == 2){
+           product.setTaxApproch(1);
+        }else if (product.getTax()==3)
+        {
+            product.setTaxApproch(2);
+>>>>>>> 37657eb7e33a84f684fd5fc87c855b828d2a27ae
         }
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
 
