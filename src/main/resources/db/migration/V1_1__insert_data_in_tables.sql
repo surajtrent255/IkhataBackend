@@ -13,7 +13,7 @@
             active,
             company_id,
             branch_id,
-            hasAbr
+            has_abbr
         ) values
         (
             '2079/80',
@@ -171,7 +171,9 @@ INSERT INTO feature_control(
 	(1, 'Edit_Price', 1),
 	(2, 'Search_By_Barcode', 2),
 	(3, 'Search_By_Id', 2),
-	(4, 'Search_By_Product_Name', 3);
+	(4, 'Search_By_Product_Name', 3),
+	(5, 'edit_discount', 4),
+       (6,'has_abb',5);
 
 
 INSERT INTO public.account_type(
@@ -243,7 +245,20 @@ INSERT INTO public.unit(
 	('other');
 
 INSERT INTO public.users (id, firstname, lastname, email, phone, password, deleted, create_date, edit_date)
-VALUES (DEFAULT, 'super', 'admin', 'super@gmail.com', '0123456789', 'password', false, NOW(), NOW());
+VALUES (DEFAULT, 'super', 'admin', 'super@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'admin', 'admin', 'admin@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'employee', 'employee', 'employee@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'staff', 'staff', 'staff@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'account', 'account', 'account@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'user', 'user', 'user@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'auditor', 'auditor', 'auditor@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW());
+
 
 INSERT INTO public.user_role (id, user_id, role_id, status, deleted)
-VALUES (DEFAULT, 1, 6, true, false);
+VALUES (DEFAULT, 1, 6, true, false),
+(DEFAULT, 1, 1, true, false),
+(DEFAULT, 1, 2, true, false),
+(DEFAULT, 1, 5, true, false),
+(DEFAULT, 1, 4, true, false),
+(DEFAULT, 1, 2, true, false),
+(DEFAULT, 1, 3, true, false);
