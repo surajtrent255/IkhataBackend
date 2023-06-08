@@ -56,17 +56,17 @@ public interface ProductDAO {
                                                                                              int branchId);
 
         @SqlQuery("""
-                SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id,
+                SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, s.qty as stock,
                 p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
-                as update_date, p.barcode as barcode, p.tax_approch as taxApproach, p.discount as discount, p.tax as tax  ,p.unit as unit FROM product p WHERE p.deleted = false and p.id in (<newProdIds>)
+                as update_date, p.barcode as barcode, p.tax_approch as taxApproach, p.discount as discount, p.tax as tax  ,p.unit as unit FROM product p inner join stock s on p.id = s.product_id WHERE p.deleted = false and p.id in (<newProdIds>)
                 """)
         @RegisterBeanMapper(ProductDTO.class)
         List<ProductDTO> getAllProductsByProductsIds(@Define String newProdIds);
 
         @SqlQuery("""
-                SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id,
+                SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, s.qty as stock,
                 p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
-                as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE LOWER(p.name) like LOWER(:name) and p.deleted = false  and p.company_id = :compId and
+                as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p inner join stock s on p.id = s.product_id  WHERE LOWER(p.name) like LOWER(:name) and p.deleted = false  and p.company_id = :compId and
                 p.branch_id = :branchId
                 """)
         @RegisterBeanMapper(ProductDTO.class)
@@ -75,36 +75,36 @@ public interface ProductDAO {
 
         @SqlQuery("""
         SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id,  p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, 
-     
-        p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
+        p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, s.qty as stock, p.update_date
     
-        as update_date, p.tax_approch as taxApproach, p.barcode as barcode, p.discount as discount, p.tax as tax,p.unit as unit ,p.quantity_per_unit as qtyPerUnit FROM product p WHERE p.barcode = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false """)
+        as update_date, p.tax_approch as taxApproach, p.barcode as barcode, p.discount as discount, p.tax as tax,p.unit as unit ,p.quantity_per_unit as qtyPerUnit FROM product p
+        inner join stock s on p.id = s.product_id WHERE p.barcode = :id AND p.company_id = :compId AND p.branch_id = :branchId AND p.deleted = false """)
         @RegisterBeanMapper(ProductDTO.class)
         ProductDTO getProductByBarCode(String id, int compId, int branchId);
 
         @SqlQuery("""
-                SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id,
+                SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, s.qty as stock,
                 p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
-                as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p WHERE LOWER(p.name) like LOWER(:search) and p.deleted = false  and p.company_id = :compId and
+                as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p inner join stock s on p.id = s.product_id WHERE LOWER(p.name) like LOWER(:search) and p.deleted = false  and p.company_id = :compId and
                 p.branch_id = :branchId
                 """)
         @RegisterBeanMapper(ProductDTO.class)
         List<ProductDTO> getProductForSearch(@Bind int compId, @Bind int branchId,@Bind String search);
 
         @SqlQuery("""
-        SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price,
+        SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, s.qty as stock,
         p.user_id as user_id, p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
         as update_date, p.barcode as barcode, p.tax_approch as taxApproach, p.discount as discount, p.tax as tax ,p.unit as unit,p.quantity_per_unit as qtyPerUnit
-        FROM product p WHERE p.deleted = false and p.company_id = :compId and p.branch_id = :branchId <caseQuery> ;
+        FROM product p inner join stock s on p.id = s.product_id WHERE p.deleted = false and p.company_id = :compId and p.branch_id = :branchId <caseQuery> ;
         """)
         @RegisterBeanMapper(ProductDTO.class)
         List<ProductDTO> getLimitedProductsForInventoryByUserIdAndCompanyIdAndBranchId(@Define String caseQuery, Integer compId, Integer branchId);
 
         @SqlQuery("""
-    SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price,
+    SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, s.qty as stock,
     p.user_id as user_id, p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
     as update_date, p.barcode as barcode, p.tax_approch as taxApproach, p.discount as discount, p.tax as tax ,p.unit as unit,p.quantity_per_unit as qtyPerUnit
-    FROM product p WHERE p.deleted = false  <caseQuery> ;
+    FROM product p inner join stock s on p.id = s.product_id WHERE p.deleted = false  <caseQuery> ;
     """)
         @RegisterBeanMapper(ProductDTO.class)
         List<ProductDTO> getLimitedProducts(@Define String caseQuery);

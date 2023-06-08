@@ -131,7 +131,8 @@ INSERT INTO districts (district_id, district_name, province_id, disabled) VALUES
      	(4, 'Gandaki Province', b'0'),
      	(5, 'Lumbini Province', b'0'),
      	(6, 'Karnali Province',b'0'),
-     	(7, 'Sudurpashchim Province', b'0');
+     	(7, 'Sudurpashchim Province', b'0'),
+     	(8, 'other', b'0');
 
 
   INSERT INTO municipality (municipality_id, municipality_name,province_id, district_id, disabled) VALUES

@@ -37,13 +37,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Integer addNewProduct(ProductDTO product , int stockqtr) {
+    public ProductDTO addNewProduct(ProductDTO product , int stockqtr) {
         if(product.getTax() == 2)
         {
             product.setTaxApproach(1);
         } else if  (product.getTax() == 3){
            product.setTaxApproach(2);
-        }else if (product.getTax()==1){
+        } else if (product.getTax()==1){
             product.setTaxApproach(0);
         }
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
@@ -57,7 +57,9 @@ public class ProductServiceImpl implements ProductService {
         stockDTO.setCompanyId(product.getCompanyId());
         stockDTO.setBranchId(product.getBranchId());
         dbService.getDao(StockDAO.class).addNewStock(stockDTO);
-        return createdProdId;
+        ProductDTO newProduct;
+        newProduct = productDAO.getProductById(createdProdId, product.getCompanyId(), product.getBranchId());
+        return newProduct;
     }
 
     @Override
