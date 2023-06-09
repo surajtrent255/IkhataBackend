@@ -17,6 +17,9 @@ public class ProductDTO {
        private String description;
        private Double sellingPrice;
        private Double costPrice;
+       private boolean productType; // false for inventory items  true for non inventory items
+       private boolean averagePriceStatus;//false for defult if true then rate percentage  should be given
+       private Integer ratePercentage;
        private Date createDate;
        private Date updateDate;
        private Integer userId;

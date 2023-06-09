@@ -21,7 +21,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseDTO<List<ProductDTO>> getAllProducts(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId) {
+    public ResponseDTO<List<ProductDTO>> getAllProducts(@RequestParam("compId") int compId,
+            @RequestParam("branchId") int branchId) {
         try {
             return new ResponseDTO<List<ProductDTO>>(productService.getAllProducts(compId, branchId));
         } catch (Exception e) {
@@ -31,15 +32,16 @@ public class ProductController {
     }
 
     @GetMapping("/limited")
-    public ResponseDTO<List<ProductDTO>> getLimitedProducts( @RequestParam("offset") Integer offset,
-                                                             @RequestParam("pageTotalItems") Integer pageTotalItems,
-                                                            @RequestParam("searchBy") String searchBy,
-                                                            @RequestParam("searchWildCard") String searchWildCard,
-                                                            @RequestParam("sortBy") String sortBy,
-                                                            @RequestParam("compId") Integer compId,
-                                                            @RequestParam("branchId") Integer branchId) {
+    public ResponseDTO<List<ProductDTO>> getLimitedProducts(@RequestParam("offset") Integer offset,
+            @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("searchBy") String searchBy,
+            @RequestParam("searchWildCard") String searchWildCard,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("compId") Integer compId,
+            @RequestParam("branchId") Integer branchId) {
         try {
-            return new ResponseDTO<List<ProductDTO>>(productService.getLimitedProducts(offset, pageTotalItems, searchBy, searchWildCard, sortBy, compId, branchId));
+            return new ResponseDTO<List<ProductDTO>>(productService.getLimitedProducts(offset, pageTotalItems, searchBy,
+                    searchWildCard, sortBy, compId, branchId));
         } catch (Exception e) {
             log.error("error occured while fetching products : " + e.getMessage());
             throw new CustomSqlException("Error occured while fetching product");
@@ -47,22 +49,24 @@ public class ProductController {
     }
 
     @GetMapping("/searchByWildCard")
-    public ResponseDTO<List<ProductDTO>> getProductsByWildcards(@RequestParam("name") String name, @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId) {
+    public ResponseDTO<List<ProductDTO>> getProductsByWildcards(@RequestParam("name") String name,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId) {
         try {
-            return new ResponseDTO<List<ProductDTO>>(productService.getProductsByWildCard(name+"%", compId, branchId));
+            return new ResponseDTO<List<ProductDTO>>(
+                    productService.getProductsByWildCard(name + "%", compId, branchId));
         } catch (Exception e) {
             log.error("error occured while fetching products by wildcard : " + e.getMessage());
             throw new CustomSqlException("Error occured while fetching product ");
         }
     }
 
-
-
     @GetMapping("/search")
-    public ResponseDTO<List<ProductDTO>> getProductForSearch(@RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId,
-                                                             @RequestParam("search") String search) {
+    public ResponseDTO<List<ProductDTO>> getProductForSearch(@RequestParam("compId") Integer compId,
+            @RequestParam("branchId") Integer branchId,
+            @RequestParam("search") String search) {
         try {
-            return new ResponseDTO<List<ProductDTO>>( productService.getProductForSearch( compId, branchId, "%"+search+"%"));
+            return new ResponseDTO<List<ProductDTO>>(
+                    productService.getProductForSearch(compId, branchId, "%" + search + "%"));
         } catch (Exception e) {
             log.error("error occured while fetching product with search " + search + " " + e.getMessage());
             throw new CustomSqlException("error occured while fetching product with search " + search + " ");
@@ -70,24 +74,24 @@ public class ProductController {
     }
 
     @GetMapping("/getProductsByIds")
-    public ResponseDTO<List<ProductDTO>> getAllProductsByProductsId(@RequestParam("productsIds") int[] productsIds){
-        try{
-            int [] arrProductsIds = productsIds;
+    public ResponseDTO<List<ProductDTO>> getAllProductsByProductsId(@RequestParam("productsIds") int[] productsIds) {
+        try {
+            int[] arrProductsIds = productsIds;
             return new ResponseDTO<List<ProductDTO>>(productService.getAllProductsByProductsIds(productsIds));
-        }catch(Exception ex){
+        } catch (Exception ex) {
             log.error("error during fetching products by ids " + ex.getMessage());
             throw new CustomSqlException("Something went wrong !! ");
         }
 
-
     }
+
     @GetMapping("/inventory")
     public ResponseDTO<List<InventoryProductsDTO>> getAllProductsForInventory(
-//            @RequestParam("userId") int userId ,
-            @RequestParam("companyId") int companyId, @RequestParam("branchId") int branchId
-    ) {
+            // @RequestParam("userId") int userId ,
+            @RequestParam("companyId") int companyId, @RequestParam("branchId") int branchId) {
         try {
-            return new ResponseDTO<List<InventoryProductsDTO>>(productService.getAllProductsForInventory(companyId, branchId));
+            return new ResponseDTO<List<InventoryProductsDTO>>(
+                    productService.getAllProductsForInventory(companyId, branchId));
         } catch (Exception e) {
             log.error("error occured while fetching products : " + e.getMessage());
             throw new CustomSqlException("Error occured while fetching product");
@@ -95,8 +99,9 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseDTO<ProductDTO> getProductById(@PathVariable("productId") String id, @RequestParam("compId") int compId, @RequestParam("branchId") int branchId,
-                                                  @RequestParam("searchByBarCode") boolean searchByBarCode) {
+    public ResponseDTO<ProductDTO> getProductById(@PathVariable("productId") String id,
+            @RequestParam("compId") int compId, @RequestParam("branchId") int branchId,
+            @RequestParam("searchByBarCode") boolean searchByBarCode) {
         try {
             return new ResponseDTO<ProductDTO>(productService.getProductById(id, compId, branchId, searchByBarCode));
         } catch (Exception e) {
@@ -105,16 +110,15 @@ public class ProductController {
         }
     }
 
-
-
     @PostMapping
-    public ResponseDTO<ProductDTO> addNewProduct(@RequestBody ProductDTO product,@RequestParam ("stockqty") int stockqtr) {
+    public ResponseDTO<ProductDTO> addNewProduct(@RequestBody ProductDTO product,
+            @RequestParam("stockqty") int stockqtr) {
         try {
             System.out.println("entering ******************************** " + stockqtr);
-            return new ResponseDTO<ProductDTO>(productService.addNewProduct(product,stockqtr));
+            return new ResponseDTO<ProductDTO>(productService.addNewProduct(product, stockqtr));
         } catch (Exception ex) {
             log.error("error occured while adding product " + ex.getMessage());
-            throw new CustomSqlException("error occured while adding product " + ex.getMessage());
+            throw new CustomSqlException("error occured while adding product " + ex.getMessage() + product);
         }
     }
 

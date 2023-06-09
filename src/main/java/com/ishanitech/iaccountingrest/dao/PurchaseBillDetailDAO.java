@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.dao;
 
+import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDetailDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDetailWithProdInfo;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
@@ -36,4 +37,11 @@ public interface PurchaseBillDetailDAO {
             """)
     @RegisterBeanMapper(PurchaseBillDetailWithProdInfo.class)
     List<PurchaseBillDetailWithProdInfo> getPurchaseInfoWithProdNameByBillId(int billId, int companyId, int branchId);
+
+
+    @SqlQuery("""
+            select * from purchase_bill_detail pbd where pbd.product_id = :productId and pbd.company_id = :companyId and pbd.branch_id = :branchId; 
+            """)
+    @RegisterBeanMapper(PurchaseBillDetailDTO.class)
+    List<PurchaseBillDetailDTO> getPurchaseBillsOfParticularProduct(Integer productId, Integer companyId, Integer branchId);
 }

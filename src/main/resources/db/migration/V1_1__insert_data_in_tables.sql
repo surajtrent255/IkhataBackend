@@ -16,7 +16,7 @@
             has_abbr
         ) values
         (
-            '2079/80',
+            '2079/2080',
             1,
             true,
             1,
@@ -24,7 +24,7 @@
             false
         ),
         (
-          '2079/80',
+          '2079/2080',
           1,
           true,
           1,
@@ -246,7 +246,38 @@ INSERT INTO public.unit(
 	('other');
 
 INSERT INTO public.users (id, firstname, lastname, email, phone, password, deleted, create_date, edit_date)
-VALUES (DEFAULT, 'super', 'admin', 'super@gmail.com', '0123456789', 'password', false, NOW(), NOW());
+VALUES (DEFAULT, 'super', 'admin', 'super@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'admin', 'admin', 'admin@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'employee', 'employee', 'employee@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'staff', 'staff', 'staff@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'account', 'account', 'account@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'user', 'user', 'user@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (DEFAULT, 'auditor', 'auditor', 'auditor@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW());
+
 
 INSERT INTO public.user_role (id, user_id, role_id, status, deleted)
-VALUES (DEFAULT, 1, 6, true, false);
+VALUES (DEFAULT, 1, 6, true, false),
+(DEFAULT, 1, 1, true, false),
+(DEFAULT, 1, 2, true, false),
+(DEFAULT, 1, 5, true, false),
+(DEFAULT, 1, 4, true, false),
+(DEFAULT, 1, 2, true, false),
+(DEFAULT, 1, 3, true, false);
+
+
+
+insert into receipt_no_generator
+(
+    fiscal_year,
+    receipt_no,
+    active,
+    company_id,
+    branch_id
+) values
+(
+    '2079/2080',
+    1,
+    true,
+    1,
+    1
+);

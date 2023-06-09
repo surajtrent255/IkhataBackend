@@ -42,6 +42,14 @@
 -- DROP TABLE IF EXISTS role;
 -- DROP TABLE IF EXISTS users;
 -- DROP TABLE IF EXISTS vat_rate_type;
+-- DROP TABLE IF EXISTS credit_note;
+-- DROP TABLE IF EXISTS credit_note_details;
+-- DROP TABLE IF EXISTS user_counter;
+-- DROP TABLE IF EXISTS debit_note_details;
+-- DROP TABLE IF EXISTS debit_note;
+-- DROP TABLE IF EXISTS merge_product;
+-- DROP TABLE IF EXISTS merge_product_log;
+
 
 
 
@@ -75,6 +83,7 @@ CREATE TABLE user_company_role (
    deleted BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (user_id,role_id,id)
 );
+
 
 CREATE TABLE user_counter(
 id SERIAL ,
@@ -149,6 +158,9 @@ CREATE TABLE "product"(
    "description" TEXT  NOT NULL,
    "selling_price" REAL NOT NULL,
    "cost_price" REAL ,
+   "product_type" boolean Default FALSE NOT NULL,
+   "is_average_price" boolean DEFAULT FALSE NOT NULL,
+   "rate_percentage" integer NOT Null ,
    "create_date" date DEFAULT CURRENT_DATE NOT NULL,
    "update_date" timestamp default current_timestamp NOT NULL,
    "user_id" integer NOT NULL,
@@ -222,6 +234,7 @@ create table sales_bill (
     customer_search_method int not null,
     sale_type int not null,
     has_abbr boolean not null,
+    receipt boolean not null
 );
 
 
@@ -244,14 +257,16 @@ CREATE TABLE "sales_bill_detail"(
 --     REFERENCES company(id)
 );
 
+
 create table bill_no_generator (
     id serial primary key,
     fiscal_year varchar(50) not null,
     bill_no int not null,
+    receipt_no int not null,
     active boolean not null,
     company_id int not null,
     branch_id int not null,
-    hasAbbr boolean default false not null
+    has_abbr boolean default false not null
 );
 
 create table purchase_bill (
@@ -469,7 +484,6 @@ CREATE TABLE receipt (
   status boolean DEFAULT TRUE,
   PRIMARY KEY (SN)
 );
--- DROP TABLE IF EXISTS public.bank;
 CREATE TABLE  bank (
 bank_id  SERIAL ,
 company_id  int  NOT NULL ,
@@ -480,7 +494,7 @@ initial_amount real ,
 create_date date default current_date,
 account_type   CHAR(50)
 );
--- DROP TABLE IF EXISTS public.bank_deposit;
+
 CREATE TABLE  bank_deposit (
 deposit_id SERIAL ,
 bank_id  int  NOT NULL ,
@@ -491,7 +505,7 @@ deposit_type VARCHAR(50) NOT NULL,
 submit_date date default current_date,
 cheque_number  VARCHAR(50)
 );
--- DROP TABLE IF EXISTS public.bank_withdraw;
+
 CREATE TABLE  bank_withdraw(
 withdraw_id SERIAL,
 bank_id int ,
@@ -504,13 +518,13 @@ cheque_number  VARCHAR(50)
 );
 
 
--- DROP TABLE IF EXISTS public.type_of_payment;
+
 CREATE TABLE type_of_payment(
 id SERIAL,
 name VARCHAR(50)
 );
 
--- DROP TABLE IF EXISTS public.account_type;
+
 CREATE TABLE account_type(
 id SERIAL,
 name varchar(50)
@@ -709,14 +723,7 @@ CREATE TABLE credit_note_details(
 	bill_number VARCHAR(100)   NOT NULL
 );
 
-CREATE TABLE user_counter(
-id SERIAL ,
-counter_id INT DEFAULT NULL,
-user_id INT DEFAULT NULL,
-company_id INT DEFAULT NULL,
-branch_id INT DEFAULT NULL,
-status BOOLEAN DEFAULT TRUE
-);
+
 
 
 CREATE TABLE company_logo(
@@ -727,3 +734,23 @@ image_data VARCHAR DEFAULT NULL,
 PRIMARY KEY(id)
 );
 
+
+create table receipt_no_generator (
+    id serial primary key,
+    fiscal_year varchar(50) not null,
+    receipt_no int not null,
+    active boolean not null,
+    company_id int not null,
+    branch_id int not null
+);
+
+create table sales_receipt(
+	id serial primary key,
+	receipt_no int not null,
+	receipt_date date not null,
+	receipt_amount serial ,
+	bill_no varchar(40) not null,
+	has_abbr boolean not null,
+	company_id int not null,
+	branch_id int not null
+)

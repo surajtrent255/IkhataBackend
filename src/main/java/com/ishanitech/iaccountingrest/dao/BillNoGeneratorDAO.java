@@ -2,6 +2,8 @@ package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.BillNoGenerationDTO;
 import com.ishanitech.iaccountingrest.dto.BillNoGeneratorDTO;
+import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
+import com.ishanitech.iaccountingrest.dto.SalesReceiptDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -70,4 +72,32 @@ public interface BillNoGeneratorDAO {
             " where active=true;")
     @RegisterBeanMapper(BillNoGeneratorDTO.class)
     BillNoGeneratorDTO getBillNoGeneratorEntityByActive();
+
+
+
+
+    @SqlQuery("select receipt_no from receipt_no_generator where active = true and company_id = :companyId and branch_id = :branchId; ")
+    int getSalesReceiptNo(int companyId, int branchId);
+
+    @SqlUpdate("update receipt_no_generator set receipt_no = receipt_no +  1 where active = true and company_id = :companyId and branch_id = :branchId;")
+    void increaseReceiptNo(int companyId, int branchId);
+    @Transactional
+    default int getSalesReceiptNoForCurrentFiscalYear(Integer companyId, Integer branchId, boolean hasAbbr){
+        int currentReceiptNo = getSalesReceiptNo(companyId, branchId);
+         increaseReceiptNo(companyId, branchId);
+         return currentReceiptNo;
+    }
+
+    @GetGeneratedKeys
+    @SqlUpdate("""
+            INSERT INTO sales_receipt(
+            	 receipt_no, receipt_date, receipt_amount, bill_no, has_abbr, company_id, branch_id)
+            	VALUES (:receiptNo, :receiptDate, :receiptAmount, :billNo, :hasAbbr, :companyId, :branchId);
+            """)
+    int createNewSalesReceipt(@BindBean SalesReceiptDTO salesBillDTO);
+
+
+    @SqlQuery("SELECT * FROM sales_receipt sr where sr.bill_no = :billNo")
+    @RegisterBeanMapper(SalesReceiptDTO.class)
+    SalesReceiptDTO getSalesReceipt(String billNo);
 }
