@@ -20,9 +20,9 @@ public class PurchaseBillDetailController {
     private final PurchaseBillDetailService purchaseBillDetailService;
 
     @GetMapping("/{id}")
-    public ResponseDTO<PurchaseBillDetailDTO> getSinglePurchaseInfo(@PathVariable int id){
+    public ResponseDTO<List<PurchaseBillDetailDTO>> getSinglePurchaseInfo(@PathVariable int id){
         try{
-            return new ResponseDTO<PurchaseBillDetailDTO>(purchaseBillDetailService.getSinglePurchaseInfo(id));
+            return new ResponseDTO<List<PurchaseBillDetailDTO>>(purchaseBillDetailService.getSinglePurchaseInfo(id));
         } catch(Exception ex){
             log.error("error occured accesing purchase info " + ex.getMessage());
             throw new CustomSqlException("error occured accesing purchase info " + ex.getMessage());

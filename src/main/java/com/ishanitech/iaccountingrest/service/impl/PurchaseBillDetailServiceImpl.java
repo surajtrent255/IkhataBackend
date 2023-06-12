@@ -18,7 +18,7 @@ public class PurchaseBillDetailServiceImpl implements PurchaseBillDetailService 
     private final DbService dbService;
 
     @Override
-    public PurchaseBillDetailDTO getSinglePurchaseInfo(int id) {
+    public List<PurchaseBillDetailDTO> getSinglePurchaseInfo(int id) {
         return dbService.getDao(PurchaseBillDetailDAO.class).getSinglePurchaseInfoById(id);
     }
 

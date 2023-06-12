@@ -46,6 +46,7 @@ public class SalesBillDTO {
     private Integer printCount;
     private Integer saleType;
     private boolean hasAbbr;
+    private boolean receipt;
 
 
 

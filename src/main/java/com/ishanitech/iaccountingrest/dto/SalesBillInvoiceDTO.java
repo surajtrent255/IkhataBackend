@@ -13,6 +13,7 @@ import java.util.List;
 public class SalesBillInvoiceDTO {
     private List<SalesBillDetailWithProdInfoDTO> salesBillDetailsWithProd;
     private SalesBillDTO salesBillDTO;
+    private SalesReceiptDTO salesReceipt;
     private CompanyDTO sellerCompany;
     private String customerAddress;
 

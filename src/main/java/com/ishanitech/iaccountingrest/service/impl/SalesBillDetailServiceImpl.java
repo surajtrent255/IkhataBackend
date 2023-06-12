@@ -1,9 +1,6 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
-import com.ishanitech.iaccountingrest.dao.CompanyDAO;
-import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
-import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
-import com.ishanitech.iaccountingrest.dao.UserConfigutarionDAO;
+import com.ishanitech.iaccountingrest.dao.*;
 import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.SalesBillDetailService;
@@ -36,6 +33,8 @@ public class SalesBillDetailServiceImpl implements SalesBillDetailService {
         int compId = salesBillInvoiceDTO.getSalesBillDTO().getCompanyId();
         CompanyDTO sellerCompany =  dbService.getDao(CompanyDAO.class).getCompanyByCompanyId(compId);
         salesBillInvoiceDTO.setSellerCompany(sellerCompany);
+        SalesReceiptDTO salesReceiptDTO = dbService.getDao(BillNoGeneratorDAO.class).getSalesReceipt(salesBillInvoiceDTO.getSalesBillDTO().getBillNo());
+        salesBillInvoiceDTO.setSalesReceipt(salesReceiptDTO);
         return salesBillInvoiceDTO;
     }
 

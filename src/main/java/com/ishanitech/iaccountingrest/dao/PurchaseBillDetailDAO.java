@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.dao;
 
+import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDetailDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDetailWithProdInfo;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
@@ -22,10 +23,11 @@ public interface PurchaseBillDetailDAO {
             " from purchase_bill_detail pbd " +
             " where bill_id = :id")
     @RegisterBeanMapper(PurchaseBillDetailDTO.class)
-    PurchaseBillDetailDTO getSinglePurchaseInfoById(int id);
+    List<PurchaseBillDetailDTO> getSinglePurchaseInfoById(int id);
 
     @SqlQuery("""
             SELECT pbd.id as id, pbd.product_id as product_id, pbd.qty as qty, pbd.date as date, pbd.rate as rate, 
+                                    pbd.tax_type_id as tax_type_id,
                                      pbd.discount_per_unit as discount_per_unit, pbd.purchase_bill_id as purchase_bill_id, pbd.company_id as company_id,
             						 vt.vat_rate_num as taxRate,
                                      p.name as product_name ,p.unit as unit  from purchase_bill_detail pbd 
@@ -35,4 +37,11 @@ public interface PurchaseBillDetailDAO {
             """)
     @RegisterBeanMapper(PurchaseBillDetailWithProdInfo.class)
     List<PurchaseBillDetailWithProdInfo> getPurchaseInfoWithProdNameByBillId(int billId, int companyId, int branchId);
+
+
+    @SqlQuery("""
+            select * from purchase_bill_detail pbd where pbd.product_id = :productId and pbd.company_id = :companyId and pbd.branch_id = :branchId; 
+            """)
+    @RegisterBeanMapper(PurchaseBillDetailDTO.class)
+    List<PurchaseBillDetailDTO> getPurchaseBillsOfParticularProduct(Integer productId, Integer companyId, Integer branchId);
 }

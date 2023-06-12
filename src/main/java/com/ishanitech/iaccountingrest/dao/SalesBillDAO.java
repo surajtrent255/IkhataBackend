@@ -73,7 +73,8 @@ public interface SalesBillDAO {
             " sb.transaction_id  as transaction_id , " +
             " sb.customer_search_method as customerSearchMethod, " +
             " sb.sale_type as sale_type,"+
-            " sb.has_abbr as has_abbr"+
+            " sb.has_abbr as has_abbr,"+
+            " sb.receipt as receipt" +
             " from sales_bill sb where  sb.id = :id;")
     @RegisterBeanMapper(SalesBillDTO.class)
     SalesBillDTO getBillById(int id);
@@ -110,7 +111,8 @@ public interface SalesBillDAO {
             " customer_search_method, "+
             " print_count, "+
             " sale_type, "+
-            " has_abbr"+
+            " has_abbr, "+
+            " receipt"+
             ") values (" +
             " :fiscalYear," +
             " :billNo ," +
@@ -142,7 +144,8 @@ public interface SalesBillDAO {
             " :customerSearchMethod,"+
             " :printCount,"+
             " :saleType,"+
-            " :hasAbbr"+
+            " :hasAbbr,"+
+            " :receipt"+
             ")")
      int addNewBill(@BindBean SalesBillDTO salesBillDTO);
 

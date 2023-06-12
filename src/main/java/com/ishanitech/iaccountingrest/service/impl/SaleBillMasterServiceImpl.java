@@ -4,10 +4,7 @@ import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
 import com.ishanitech.iaccountingrest.dao.StockDAO;
-import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
-import com.ishanitech.iaccountingrest.dto.ResponseDTO;
-import com.ishanitech.iaccountingrest.dto.SaleBillMasterDTO;
-import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
+import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.SaleBillMasterService;
@@ -16,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +46,15 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
             throw new CustomSqlException("something went wrong while generating  bill no");
         }
 
-        salesBillDTO.setBillNo("B01 "+bill_no);
+        String waiter = currentFiscalYear;
+        StringBuilder sb = new StringBuilder(waiter);
+        int[] indicesToRemove ={6,5,4,1,0};
+        for (int j : indicesToRemove) {
+            sb.deleteCharAt(j);
+        }
+
+        String billNumberAdvanced = "B01-"+ sb.toString()+"-"+bill_no;
+        salesBillDTO.setBillNo(billNumberAdvanced);
         salesBillDTO.setFiscalYear(currentFiscalYear);
 
 
@@ -92,6 +98,26 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
         } catch (Exception ex){
             log.error("addNewSalesInfo() ========> "+ex.getMessage());
             throw new CustomSqlException("something went wrong while adding billdetail");
+        }
+
+//        for salesReceiptGeneraton
+        SalesReceiptDTO salesReceiptDTO = new SalesReceiptDTO();
+        salesReceiptDTO.setReceiptDate(LocalDate.now());
+        salesReceiptDTO.setHasAbbr(salesBillDTO.isHasAbbr());
+        salesReceiptDTO.setBillNo(billNumberAdvanced);
+        salesReceiptDTO.setReceiptAmount(salesBillDTO.getTotalAmount());
+        salesReceiptDTO.setCompanyId(salesBillDTO.getCompanyId());
+        salesReceiptDTO.setBranchId(salesBillDTO.getBranchId());
+
+        int receiptNo;
+
+        try{
+            BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+            receiptNo = billNoGeneratorDAO.getSalesReceiptNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId(), salesBillDTO.isHasAbbr());
+            salesReceiptDTO.setReceiptNo(receiptNo);
+            billNoGeneratorDAO.createNewSalesReceipt(salesReceiptDTO);
+        } catch (Exception ex){
+            log.error("sales_receipt no generation () ======> " + ex.getMessage());
         }
 
         return new ResponseDTO<Integer>(billId);
