@@ -62,6 +62,15 @@ file:
   upload:
     directory: /home/suraj/Documents/ishanitech/iaccounting/Files/
 
+---
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 2MB
+      max-request-size: 7MB
+
 rest:
   protocol: http
   domain: localhost
@@ -115,3 +124,12 @@ logging:
 
 webservice:
   host-url: http://103.233.58.121:9999/
+
+---
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 2MB
+      max-request-size: 3MB

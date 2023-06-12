@@ -1,15 +1,21 @@
 package com.ishanitech.iaccountingrest.controller;
 
-import com.ishanitech.iaccountingrest.dto.*;
+import com.ishanitech.iaccountingrest.dto.CompanyDTO;
+import com.ishanitech.iaccountingrest.dto.CompanyLogoDTO;
+import com.ishanitech.iaccountingrest.dto.CompanyWithUserIdDTO;
+import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
+import com.ishanitech.iaccountingrest.utils.FileUtilService;
+import com.ishanitech.iaccountingrest.utils.HostDetailsUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -22,6 +28,12 @@ public class CompanyController {
     private final CompanyService companyService;
 
     private final UserConfigurationService userConfigurationService;
+
+    private final FileUtilService fileUtilService;
+
+    @Autowired
+    private HostDetailsUtil resolveHostAddress;
+
 
 
     @PostMapping("/add")
@@ -52,10 +64,10 @@ public class CompanyController {
 
     }
 
-    @GetMapping("/{PanNo}")
-    public ResponseDTO<?> getCompanyById(@PathVariable("PanNo") Long PanNo){
+    @GetMapping("/getById")
+    public ResponseDTO<?> getCompanyByIdForEdit(@RequestParam("companyId") int companyId){
         try{
-            return new ResponseDTO<>(companyService.getCompanyByPanNo(PanNo));
+            return new ResponseDTO<>(companyService.getCompanyByIdForEdit(companyId));
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
@@ -94,25 +106,44 @@ public class CompanyController {
         }
     }
 
-    @GetMapping("/image")
-    public ResponseDTO<?> getCompanyLogo(@RequestParam("companyId") int companyId){
-        try{
-            return new ResponseDTO<>(companyService.getCompanyLogo(companyId)) ;
-        }catch(Exception ioException){
-            log.error(ioException.getMessage());
-            throw new CustomSqlException(ioException.getMessage());
+    @PostMapping("/logo/upload")
+    public ResponseDTO<?> uploadLogo(@RequestParam("file") MultipartFile file,@RequestParam("companyId") int companyId){
+        try {
+            fileUtilService.storeFile(file);
+            CompanyLogoDTO companyLogoDTO = new CompanyLogoDTO();
+            companyLogoDTO.setCompanyId(companyId);
+            companyLogoDTO.setImageName(file.getOriginalFilename());
+            companyService.addCompanyLogo(companyLogoDTO);
+            return new ResponseDTO<>("Logo successfully uploaded: " + file.getOriginalFilename());
+        } catch (Exception e) {
+           log.error(e.getMessage());
+           throw new CustomSqlException(e.getMessage());
         }
     }
 
-//    @PostMapping("/image/upload")
-//    public ResponseDTO<?> addCompanyLogo(@RequestParam("file")MultipartFile file,@RequestParam("companyId") int companyId) throws IOException{
-//                  try{
-//                    companyService.addCompanyLogo(file,companyId);
-//                    return new ResponseDTO<>("Logo Successfully Added");
-//                }catch (IOException e){
-//                    log.error(e.getMessage());
-//                    throw new IOException(e.getMessage());
-//                }
-//    }
+    @GetMapping("/logo")
+    public ResponseDTO<?> getCompanyLogo(@RequestParam("companyId") int companyId){
+        try{
+           CompanyLogoDTO companyLogoDTO = companyService.getCompanyLogo(companyId);
+            String url = resolveHostAddress.getHostUrl()+"images/"+companyLogoDTO.getImageName();
+            companyLogoDTO.setImageUrl(url);
+            return new ResponseDTO<>(companyLogoDTO);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @PutMapping("/edit")
+    public ResponseDTO<String> editCompany(@RequestBody CompanyDTO companyDTO){
+        try{
+            companyService.editCompany(companyDTO);
+            return new ResponseDTO<>("Successfully Edited");
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
 
 }

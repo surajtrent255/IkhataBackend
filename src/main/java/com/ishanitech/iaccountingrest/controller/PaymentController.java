@@ -66,10 +66,11 @@ public class PaymentController {
     public ResponseDTO<?> addPaymentDetails(@RequestBody PaymentDTO paymentDTO){
         boolean PostCheck = paymentDTO.isPostDateCheck();
         Date payDate = paymentDTO.getPostCheckDate();
+
         try {
            long PaymentId = paymentService.addPaymentDetails(paymentDTO);
             if(PostCheck){
-                postDateCheckService.addPostChequeInfo(PaymentId,payDate);
+                postDateCheckService.addPostChequeInfo(PaymentId,payDate,paymentDTO.getPostCheckDateNepali());
             }
             return new ResponseDTO<>("Added Successfully");
         }catch (Exception e){
@@ -111,7 +112,7 @@ public class PaymentController {
             paymentService.updatePaymentDetails(paymentDTO);
             if(PostCheck){
                 if(data.isEmpty()){
-                    postDateCheckService.addPostChequeInfo(PaymentId,payDate);
+                    postDateCheckService.addPostChequeInfo(PaymentId,payDate,paymentDTO.getPostCheckDateNepali());
                 }else{
                     postDateCheckService.updatePostDateCheck(PaymentId,payDate);
                 }

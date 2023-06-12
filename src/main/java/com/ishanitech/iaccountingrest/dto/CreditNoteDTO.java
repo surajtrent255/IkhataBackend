@@ -22,6 +22,8 @@ public class CreditNoteDTO {
 
     private Date date;
 
+    private String nepaliDate;
+
     private Double totalAmount;
 
     private Double totalTax;

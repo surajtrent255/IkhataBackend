@@ -16,10 +16,10 @@ public interface PostDateCheckDAO {
     List<PostDateCheckDTO> getAllPostCheckInfo(@Bind long paymentId);
 
     @SqlUpdate("INSERT INTO post_date_check( " +
-            "   payment_id, pay_date ) " +
-            " VALUES (  :paymentId, :payDate );")
+            "   payment_id, pay_date , pay_date_nepali ) " +
+            " VALUES (  :paymentId, :payDate , :payDateNepali );")
     @RegisterBeanMapper(PostDateCheckDTO.class)
-    Integer addPostChequeInfo( @Bind long paymentId, @Bind Date payDate);
+    Integer addPostChequeInfo( @Bind long paymentId, @Bind Date payDate ,@Bind Date payDateNepali);
 
     @SqlUpdate("DELETE FROM post_date_check WHERE payment_id= :paymentId")
     @Nullable

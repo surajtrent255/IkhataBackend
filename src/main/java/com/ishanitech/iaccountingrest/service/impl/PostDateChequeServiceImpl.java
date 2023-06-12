@@ -23,11 +23,11 @@ public class PostDateChequeServiceImpl implements PostDateCheckService {
     }
 
     @Override
-    public Integer addPostChequeInfo( Long paymentId, Date payDate) {
+    public Integer addPostChequeInfo( Long paymentId, Date payDate,Date payDateNepali) {
         PostDateCheckDAO postDateCheckDAO = dbService.getDao(PostDateCheckDAO.class);
 
         try{
-            postDateCheckDAO.addPostChequeInfo(paymentId,payDate);
+            postDateCheckDAO.addPostChequeInfo(paymentId,payDate,payDateNepali);
 
         }catch (JdbiException jdbiException){
             log.error(jdbiException.getMessage());

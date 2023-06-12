@@ -17,7 +17,8 @@ public interface PaymentDAO {
             " p.amount as amount ,p.payment_mode_id as paymentModeId," +
             " p.tds_deducted as tdsDeducted, p.post_date_check as postDateCheck," +
             " p.branch_id as branchId, p.date as date , p.status as paymentStatus ," +
-            " p.check_no as checkNo , pc.pay_date as postCheckDate" +
+            " p.check_no as checkNo , pc.pay_date as postCheckDate," +
+            " p.nepali_date as nepaliDate" +
             " FROM payment p" +
             " LEFT JOIN post_date_check pc  " +
             " ON pc.payment_id = p.sn WHERE p.company_id = :companyId")
@@ -28,7 +29,8 @@ public interface PaymentDAO {
             " p.amount as amount ,p.payment_mode_id as paymentModeId," +
             " p.tds_deducted as tdsDeducted, p.post_date_check as postDateCheck," +
             " p.branch_id as branchId, p.date as date ,p.status as paymentStatus ," +
-            " p.check_no as checkNo , pc.pay_date as postCheckDate" +
+            " p.check_no as checkNo , pc.pay_date as postCheckDate," +
+            " p.nepali_date as nepaliDate" +
             " FROM payment p" +
             " LEFT JOIN post_date_check pc  " +
             " ON pc.payment_id = p.sn WHERE p.sn = :SN")
@@ -36,8 +38,8 @@ public interface PaymentDAO {
     PaymentDTO getPaymentDetailsById(@Bind int SN);
 
     @SqlUpdate("INSERT INTO payment( " +
-            " company_id, party_id, amount, payment_mode_id, check_no , tds_deducted, branch_id, date, post_date_check )" +
-            " VALUES ( :companyId, :partyId, :amount, :paymentModeId, :checkNo , :tdsDeducted, :branchId, :date, :postDateCheck );")
+            " company_id, party_id, amount, payment_mode_id, check_no , tds_deducted, branch_id, date,nepali_date, post_date_check )" +
+            " VALUES ( :companyId, :partyId, :amount, :paymentModeId, :checkNo , :tdsDeducted, :branchId, :date,:nepaliDate, :postDateCheck );")
     @RegisterBeanMapper(PaymentDTO.class)
     @GetGeneratedKeys
     Long addPaymentDetails(@BindBean PaymentDTO paymentDTO);
@@ -58,7 +60,8 @@ public interface PaymentDAO {
             " p.amount as amount ,p.payment_mode_id as paymentModeId," +
             " p.tds_deducted as tdsDeducted, p.post_date_check as postDateCheck," +
             " p.branch_id as branchId, p.date as date , p.status as paymentStatus ," +
-            " p.check_no as checkNo , pc.pay_date as postCheckDate" +
+            " p.check_no as checkNo , pc.pay_date as postCheckDate," +
+            " p.nepali_date as nepaliDate" +
             " FROM payment p" +
             " LEFT JOIN post_date_check pc  " +
             " ON pc.payment_id = p.sn WHERE p.company_id = :compId  and p.branch_id = :branchId order by p.sn desc limit :pageTotalItems offset (:offset -1) ;")

@@ -15,8 +15,44 @@ import java.util.List;
 
 public interface CompanyDAO {
 
+
+
     @GetGeneratedKeys
-    @SqlUpdate(" insert into company( name,email, description, pan_no, state,  district, mun_vdc, ward_no, phone, customer) values ( :name,:email, :description, :panNo, :state,  :district, :munVdc, :wardNo, :phone, :customer)")
+    @SqlUpdate("""
+                INSERT INTO company (
+                        name,
+                        email,
+                        description,
+                        pan_no,
+                        state,
+                        district,
+                        mun_vdc,
+                        ward_no,
+                        phone,
+                        customer,
+                        owner_name,
+                        landline_number,
+                        registration_type,
+                        created_date,
+                        created_date_nepali
+                        ) VALUES (
+                        :name,
+                        :email,
+                        :description,
+                        :panNo,
+                        :state,
+                        :district,
+                        :munVdc,
+                        :wardNo,
+                        :phone,
+                        :customer,
+                        :ownerName,
+                        :landlineNumber,
+                        :registrationType,
+                        :createdDate,
+                        :createdDateNepali
+                     )                                                                            
+            """)
     Integer addCompany(@BindBean CompanyDTO companyDTO);
 
     @Transaction
@@ -40,34 +76,81 @@ public interface CompanyDAO {
     @RegisterBeanMapper(CompanyDTO.class)
     CompanyDTO getCompanyByPanNo(@Bind("PanNo") Long PanNo);
 
-    @SqlQuery("select c.company_id as companyId"
-            + ",c.name as name"
-            + ",c.description as description"
-            + ",c.pan_no as panNo "
-            + ",c.state as state "
-            + ", c.district as district"
-            + ", c.mun_vdc as munVdc,"
-            + "c.ward_no as wardNo"
-            + ",c.phone as phone ,"
-            + "u.user_id as userId from company c "
-            + "inner join user_company u on u.company_id = c.company_id where u.user_id = :userId AND  u.status = true and c.customer = false "
-            +
-            " AND c.status = true ")
+    @SqlQuery("""
+            SELECT c.company_id AS companyId,
+                               c.name AS name,
+                               c.description AS description,
+                               c.pan_no AS panNo,
+                               c.state AS state,
+                               c.district AS district,
+                               c.mun_vdc AS munVdc,
+                               c.ward_no AS wardNo,
+                               c.email AS email,
+                               c.phone AS phone,
+                               c.owner_name as ownerName,
+                               c.landline_number as landlineNumber,
+                               c.registration_type as registrationType,
+                               c.created_date as createdDate,
+                               c.created_date_nepali as createdDateNepali,
+                        	   cl.image_name as imageName,
+                        	   cl.id as imageId
+                        FROM company c
+                        INNER JOIN company_logo cl ON cl.company_id = c.company_id
+                        WHERE c.company_id=:companyId
+            """)
+    @RegisterBeanMapper(CompanyAndUserCompanyDTO.class)
+    CompanyAndUserCompanyDTO getCompanyByIdForEdit(@Bind("companyId") int companyId);
+
+    @SqlQuery("""
+            SELECT c.company_id AS companyId,
+                   c.name AS name,
+                   c.description AS description,
+                   c.pan_no AS panNo,
+                   c.state AS state,
+                   c.district AS district,
+                   c.mun_vdc AS munVdc,
+                   c.ward_no AS wardNo,
+                   c.phone AS phone,
+                   c.email AS email,
+                   c.owner_name as ownerName,
+                   c.landline_number as landlineNumber,
+                   c.registration_type as registrationType,
+                   c.created_date as createdDate,
+                   c.created_date_nepali as createdDateNepali,
+                   u.user_id AS userId,
+            	   cl.image_name as imageName,
+            	   cl.id as imageId
+            FROM company c
+            INNER JOIN user_company u ON u.company_id = c.company_id
+            LEFT JOIN company_logo cl ON cl.company_id = c.company_id
+            WHERE u.user_id = :userId
+              AND u.status = true
+              AND c.customer = false
+              AND c.status = true;
+            """)
     @RegisterBeanMapper(CompanyAndUserCompanyDTO.class)
     List<CompanyAndUserCompanyDTO> getCompanyByUserId(@Bind("userId") int userId);
 
     // suraj
-    @SqlQuery("select c.company_id as companyId"
-            + ",c.name as name"
-            + ",c.description as description"
-            + ",c.pan_no as panNo "
-            + ",c.state as state "
-            + ", c.district as district"
-            + ", c.mun_vdc as munVdc,"
-            + "c.ward_no as wardNo"
-            + ",c.phone as phone "
-            + " from company c "
-            + " where c.company_id = :compId  and c.deleted = false ;")
+    @SqlQuery("""
+            SELECT c.company_id AS companyId,
+                   c.name AS name,
+                   c.description AS description,
+                   c.pan_no AS panNo,
+                   c.state AS state,
+                   c.district AS district,
+                   c.mun_vdc AS munVdc,
+                   c.ward_no AS wardNo,
+                   c.email AS email,
+                   c.phone AS phone,
+                   c.owner_name as ownerName,
+                   c.landline_number as landlineNumber,
+                   c.registration_type as registrationType,
+                   c.created_date as createdDate,
+                   c.created_date_nepali as createdDateNepali
+            FROM company c
+            WHERE c.company_id = :compId AND c.deleted = false;
+            """)
     @RegisterBeanMapper(CompanyDTO.class)
     CompanyDTO getCompanyByCompanyId(@Bind("compId") int compId);
 
@@ -82,22 +165,36 @@ public interface CompanyDAO {
 
 
 //    company image
-//    @SqlUpdate("""
-//            INSERT INTO company_logo(
-//            	 image_name, image_data, company_id)
-//            	VALUES (:imageName, :imageData, :companyId);
-//            """)
-//    void addCompanyLogo(@BindBean CompanyLogoDTO companyLogoDTO);
+    @SqlUpdate("""
+            INSERT INTO company_logo(
+            	 image_name,  company_id)
+            	VALUES (:imageName, :companyId);
+            """)
+    void addCompanyLogo(@BindBean CompanyLogoDTO companyLogoDTO);
 
     @SqlQuery("""
-            SELECT id as id, image_name as imageName,
-             encode(image_data::bytea, 'base64') AS imageData
-             , company_id as companyId FROM company_logo
+            SELECT * FROM company_logo
               WHERE company_id=:companyId
             """)
     @RegisterBeanMapper(CompanyLogoDTO.class)
     CompanyLogoDTO getCompanyLogo(@Bind int companyId);
 
+    @SqlUpdate("""
+            UPDATE company
+            SET owner_name = :ownerName,
+                landline_number = :landlineNumber,
+                registration_type = :registrationType,
+                email = :email,
+                description = :description,
+                state = :state,
+                district = :district,
+                mun_vdc = :munVdc,
+                ward_no = :wardNo,
+                phone = :phone
+            WHERE company_id = :companyId;      
+            """)
+    @RegisterBeanMapper(CompanyDTO.class)
+    void editCompany(@BindBean CompanyDTO companyDTO);
 
 
 }

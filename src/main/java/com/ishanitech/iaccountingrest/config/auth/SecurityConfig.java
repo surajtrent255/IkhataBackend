@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,6 +32,8 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET,"/resource/**", "/home").permitAll()
+                .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/userconfig/**").permitAll()
                 .requestMatchers("/api/v1/branch/**").permitAll()

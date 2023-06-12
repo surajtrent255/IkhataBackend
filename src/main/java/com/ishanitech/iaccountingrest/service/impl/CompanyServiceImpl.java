@@ -4,10 +4,13 @@ import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
 import com.ishanitech.iaccountingrest.dao.BranchDAO;
 import com.ishanitech.iaccountingrest.dao.CompanyDAO;
 import com.ishanitech.iaccountingrest.dto.*;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.DbService;
+import com.ishanitech.iaccountingrest.utils.HostDetailsUtil;
 import org.jdbi.v3.core.JdbiException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +28,9 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyServiceImpl(DbService dbService) {
         this.dbService = dbService;
     }
+
+    @Autowired
+    private HostDetailsUtil resolveHostAddress;
 
 
     @Override
@@ -83,7 +89,19 @@ companyDAO.deleteCompany(companyId);
     @Override
     public List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
-        return companyDAO.getCompanyByUserId(userId);
+        List<CompanyAndUserCompanyDTO> companyDTOS = companyDAO.getCompanyByUserId(userId);
+
+        for (CompanyAndUserCompanyDTO companyDTO : companyDTOS) {
+            if(companyDTO.getImageName() != null){
+                String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
+                companyDTO.setImageUrl(imageUrl);
+
+            }else {
+                companyDTO.setImageUrl(null);
+            }
+        }
+
+        return companyDTOS;
     }
 
     @Override
@@ -115,19 +133,48 @@ companyDAO.deleteCompany(companyId);
         companyDAO.updateCompanyStatus(status,companyId);
     }
 
-//    @Override
-//    public void addCompanyLogo(MultipartFile file,int companyId) throws IOException {
-//        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
-//        CompanyLogoDTO companyLogoDTO = new CompanyLogoDTO();
-//        companyLogoDTO.setImageName(file.getOriginalFilename());
-//        companyLogoDTO.setImageData(file.getBytes());
-//        companyLogoDTO.setCompanyId(companyId);
-//        companyDAO.addCompanyLogo(companyLogoDTO);
-//    }
 
     @Override
     public CompanyLogoDTO getCompanyLogo(int companyId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
         return companyDAO.getCompanyLogo(companyId);
+    }
+
+    @Override
+    public void addCompanyLogo(CompanyLogoDTO companyLogoDTO) {
+        try{
+            CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+            companyDAO.addCompanyLogo(companyLogoDTO);
+        }catch (JdbiException e){
+            log.error(e.getMessage());
+        }
+    }
+
+    @Override
+    public CompanyAndUserCompanyDTO getCompanyByIdForEdit(int companyId) {
+        try{
+            CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+
+            CompanyAndUserCompanyDTO companyDTO = companyDAO.getCompanyByIdForEdit(companyId);
+
+            String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
+            companyDTO.setImageUrl(imageUrl);
+            return companyDTO;
+
+        }catch (JdbiException e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void editCompany(CompanyDTO companyDTO) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        try{
+            companyDAO.editCompany(companyDTO);
+        }catch (JdbiException e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
     }
 }

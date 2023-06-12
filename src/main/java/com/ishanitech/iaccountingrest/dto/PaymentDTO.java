@@ -31,7 +31,11 @@ public class PaymentDTO {
 
     private Date date;
 
+    private Date nepaliDate;
+
     private Date postCheckDate ;
+
+    private Date postCheckDateNepali;
 
     private Long checkNo;
 

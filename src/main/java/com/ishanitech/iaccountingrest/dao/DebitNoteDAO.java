@@ -13,8 +13,8 @@ import java.util.List;
 public interface DebitNoteDAO {
 
     @SqlUpdate(" INSERT INTO debit_note( " +
-            " pan_number, receiver_name, receiver_address, bill_number, date, total_amount, total_tax,company_id,branch_id) " +
-            " VALUES (:panNumber, :receiverName, :receiverAddress, :billNumber, :date, :totalAmount, :totalTax,:companyId,:branchId);")
+            " pan_number, receiver_name, receiver_address, bill_number, date, nepali_date , total_amount, total_tax,company_id,branch_id) " +
+            " VALUES (:panNumber, :receiverName, :receiverAddress, :billNumber, :date,:nepaliDate, :totalAmount, :totalTax,:companyId,:branchId);")
     @RegisterBeanMapper(DebitNoteDTO.class)
     void addDebitNote(@BindBean DebitNoteDTO debitNoteDTO);
 

@@ -15,5 +15,7 @@ public class PostDateCheckDTO {
 
     private Date payDate;
 
+    private Date payDateNepali;
+
     private boolean status;
 }

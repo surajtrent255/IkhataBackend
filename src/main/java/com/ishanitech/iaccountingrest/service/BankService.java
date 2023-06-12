@@ -18,8 +18,6 @@ public interface BankService {
     List<BankDTO> getAllByBank();
 
 
-
-
     List<BankDTO> getAllByBankCompany(int companyId);
 
     List <BankDTO> getAllByBankBranch(int companyId, int branchId);

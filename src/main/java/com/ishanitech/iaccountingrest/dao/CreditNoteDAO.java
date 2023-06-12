@@ -13,8 +13,8 @@ import java.util.List;
 public interface CreditNoteDAO {
 
     @SqlUpdate(" INSERT INTO credit_note( " +
-            " pan_number, customer_name, customer_address, bill_number, date, total_amount, total_tax,company_id,branch_id) " +
-            " VALUES (:panNumber, :customerName, :customerAddress, :billNumber, :date, :totalAmount, :totalTax,:companyId,:branchId );")
+            " pan_number, customer_name, customer_address, bill_number, date,nepali_date, total_amount, total_tax,company_id,branch_id) " +
+            " VALUES (:panNumber, :customerName, :customerAddress, :billNumber, :date,:nepaliDate, :totalAmount, :totalTax,:companyId,:branchId );")
     @RegisterBeanMapper(CreditNoteDTO.class)
     void addCreditNote(@BindBean CreditNoteDTO creditNoteDTO);
 

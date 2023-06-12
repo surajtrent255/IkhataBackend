@@ -9,7 +9,7 @@ import java.util.List;
 public interface PostDateCheckService {
     List<PostDateCheckDTO> getAllPostChequeInfo(long paymentId);
 
-    Integer addPostChequeInfo( Long paymentId, Date payDate);
+    Integer addPostChequeInfo( Long paymentId, Date payDate,Date payDateNepali);
 
     void deletePostDateCheckInfo(int paymentId);
     void updatePostDateCheck( long paymentId,   Date payDate);

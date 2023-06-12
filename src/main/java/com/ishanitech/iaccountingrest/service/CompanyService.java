@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyLogoDTO;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,5 +29,11 @@ public interface CompanyService {
 //    public void addCompanyLogo(MultipartFile file,int companyId) throws IOException;
 
     public CompanyLogoDTO getCompanyLogo(int companyId);
+
+    void addCompanyLogo(CompanyLogoDTO companyLogoDTO);
+
+    CompanyAndUserCompanyDTO getCompanyByIdForEdit( int companyId);
+
+    void editCompany( CompanyDTO companyDTO);
 
 }

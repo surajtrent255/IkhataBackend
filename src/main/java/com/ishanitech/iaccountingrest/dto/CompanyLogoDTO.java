@@ -15,14 +15,9 @@ public class CompanyLogoDTO {
 
     private String imageName;
 
-    private String imageData;
+   private String imageUrl;
 
     private int companyId;
 
-
-    public void setImageData(byte[] imageData) {
-        // Convert the byte array to a Base64-encoded string
-        this.imageData = Base64.getEncoder().encodeToString(imageData);
-    }
 
 }

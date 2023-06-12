@@ -43,10 +43,9 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     public void addMultipleUserRole(int[] userId, int companyId, int roleId) {
 
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        int newUserId;
-        for(int i = 0;i<userId.length;i++){
-            newUserId = userId[i];
-            userConfigutarionDAO.addRoleToUser(newUserId,companyId,roleId);
+
+        for (int newUserId : userId) {
+            userConfigutarionDAO.addRoleToUser(newUserId, companyId, roleId);
         }
     }
 
@@ -60,10 +59,9 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     @Override
     public void AssignCompanyToUser(int companyId, int[] userId) {
         UserConfigutarionDAO userConfigutarionDAO =dbService.getDao(UserConfigutarionDAO.class);
-        int newUserId;
-        for(int i=0;i<userId.length;i++){
-            newUserId = userId[i];
-            userConfigutarionDAO.AssignCompanyToUser(companyId,newUserId);
+
+        for (int newUserId : userId) {
+            userConfigutarionDAO.AssignCompanyToUser(companyId, newUserId);
         }
     }
 

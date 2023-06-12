@@ -22,6 +22,8 @@ public class DebitNoteDTO {
 
     private Date date;
 
+    private String nepaliDate;
+
     private Double totalAmount;
 
     private Double totalTax;

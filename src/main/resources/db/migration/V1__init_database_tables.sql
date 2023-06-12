@@ -109,17 +109,22 @@ CREATE TABLE  token (
 CREATE TABLE  company (
   company_id SERIAL NOT NULL ,
   name varchar(50) NOT NULL,
+  owner_name VARCHAR(100) DEFAULT NULL ,
+  landline_number BIGINT DEFAULT NULL,
+  registration_type VARCHAR(50) DEFAULT NULL,
   email VARCHAR(100) DEFAULT NUll,
-  description text NOT NULL,
+  description text DEFAULT NULL,
   pan_no bigint NOT NULL ,
   state int Default NULL  ,
-  district varchar(50) NOT NULL ,
-  mun_vdc varchar(50) NOT NULL ,
-  ward_no int NOT NULL ,
+  district varchar(50) DEFAULT NULL ,
+  mun_vdc varchar(50) DEFAULT NULL ,
+  ward_no int DEFAULT NULL ,
   deleted BOOLEAN DEFAULT FALSE,
    customer boolean default false,
    phone bigint DEFAULT NULL,
    status BOOLEAN DEFAULT TRUE,
+   created_date DATE DEFAULT NULL,
+   created_date_nepali VARCHAR(20) DEFAULT NULL,
   PRIMARY KEY (company_id),
 	constraint valid_number
       check (phone <= 9999999999)
@@ -393,13 +398,13 @@ CREATE TABLE payment (
   party_id int NOT NULL,
   amount REAL NOT NULL,
   payment_mode_id INT NOT NULL,
-	check_no bigint  NOT NULL,
+  check_no bigint  NOT NULL,
   tds_deducted real DEFAULT 0,
   post_date_check boolean DEFAULT FALSE,
   branch_id int DEFAULT NULL,
   date DATE DEFAULT NULL,
+  nepali_date DATE DEFAULT NULL,
   status boolean DEFAULT TRUE,
-
   PRIMARY KEY (SN)
 );
 
@@ -409,6 +414,7 @@ CREATE TABLE post_date_check(
 	Sn SERIAL,
 	payment_id int NOT NULL,
 	pay_date DATE DEFAULT NULL,
+	pay_date_nepali DATE DEFAULT NULL,
 	status BOOLEAN DEFAULT TRUE,
 	PRIMARY KEY(Sn)
 );
@@ -658,6 +664,7 @@ CREATE TABLE debit_note(
 	receiver_address VARCHAR(100) DEFAULT NULL,
 	bill_number BIGINT DEFAULT NULL,
 	date DATE DEFAULT NULL,
+	nepali_date VARCHAR DEFAULT NULL,
 	total_amount REAL DEFAULT NULL,
 	total_tax REAL DEFAULT NULL,
 	company_id INT NOT NULL,
@@ -686,6 +693,7 @@ CREATE TABLE credit_note(
 	customer_address VARCHAR(100) DEFAULT NULL,
 	bill_number VARCHAR(100) DEFAULT NULL,
 	date DATE DEFAULT NULL,
+	nepali_date VARCHAR DEFAULT NULL,
 	total_amount REAL DEFAULT NULL,
 	total_tax REAL DEFAULT NULL,
 	company_id INT NOT NULL,
@@ -723,7 +731,18 @@ CREATE TABLE company_logo(
 id SERIAL,
 company_id INT DEFAULT NULL,
 image_name VARCHAR DEFAULT NULL,
-image_data VARCHAR DEFAULT NULL,
 PRIMARY KEY(id)
 );
 
+create table company_label_data(
+id SERIAL,
+	label_id INT,
+	text TEXT,
+	company_id INT
+);
+
+
+create table company_label(
+     id SERIAL,
+	name VARCHAR(100)
+);
