@@ -100,4 +100,27 @@ public interface BillNoGeneratorDAO {
     @SqlQuery("SELECT * FROM sales_receipt sr where sr.bill_no = :billNo")
     @RegisterBeanMapper(SalesReceiptDTO.class)
     SalesReceiptDTO getSalesReceipt(String billNo);
+
+
+    @GetGeneratedKeys
+    @SqlUpdate("""
+        insert into receipt_no_generator
+        (
+            fiscal_year,
+            receipt_no,
+            active,
+            company_id,
+            branch_id
+        ) values
+        (
+            :fiscalYear,
+            1,
+            true,
+            :companyId,
+            :branchId,
+        );
+            """)
+   int  createNewRecieptNo(String fiscalYear, Integer companyId, Integer branchId);
 }
+
+

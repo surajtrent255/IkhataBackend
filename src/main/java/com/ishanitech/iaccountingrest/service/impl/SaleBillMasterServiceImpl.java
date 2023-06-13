@@ -101,24 +101,27 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
         }
 
 //        for salesReceiptGeneraton
-        SalesReceiptDTO salesReceiptDTO = new SalesReceiptDTO();
-        salesReceiptDTO.setReceiptDate(LocalDate.now());
-        salesReceiptDTO.setHasAbbr(salesBillDTO.isHasAbbr());
-        salesReceiptDTO.setBillNo(billNumberAdvanced);
-        salesReceiptDTO.setReceiptAmount(salesBillDTO.getTotalAmount());
-        salesReceiptDTO.setCompanyId(salesBillDTO.getCompanyId());
-        salesReceiptDTO.setBranchId(salesBillDTO.getBranchId());
+        if(salesBillDTO.isReceipt()){
+            SalesReceiptDTO salesReceiptDTO = new SalesReceiptDTO();
+            salesReceiptDTO.setReceiptDate(LocalDate.now());
+            salesReceiptDTO.setHasAbbr(salesBillDTO.isHasAbbr());
+            salesReceiptDTO.setBillNo(billNumberAdvanced);
+            salesReceiptDTO.setReceiptAmount(salesBillDTO.getTotalAmount());
+            salesReceiptDTO.setCompanyId(salesBillDTO.getCompanyId());
+            salesReceiptDTO.setBranchId(salesBillDTO.getBranchId());
 
-        int receiptNo;
+            int receiptNo;
 
-        try{
-            BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
-            receiptNo = billNoGeneratorDAO.getSalesReceiptNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId(), salesBillDTO.isHasAbbr());
-            salesReceiptDTO.setReceiptNo(receiptNo);
-            billNoGeneratorDAO.createNewSalesReceipt(salesReceiptDTO);
-        } catch (Exception ex){
-            log.error("sales_receipt no generation () ======> " + ex.getMessage());
+            try{
+                BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+                receiptNo = billNoGeneratorDAO.getSalesReceiptNoForCurrentFiscalYear(salesBillDTO.getCompanyId(), salesBillDTO.getBranchId(), salesBillDTO.isHasAbbr());
+                salesReceiptDTO.setReceiptNo(receiptNo);
+                billNoGeneratorDAO.createNewSalesReceipt(salesReceiptDTO);
+            } catch (Exception ex){
+                log.error("sales_receipt no generation () ======> " + ex.getMessage());
+            }
         }
+
 
         return new ResponseDTO<Integer>(billId);
     }

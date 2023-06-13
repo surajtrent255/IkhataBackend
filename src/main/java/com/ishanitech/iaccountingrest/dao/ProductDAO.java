@@ -128,7 +128,7 @@ public interface ProductDAO {
         inner join
         stock s
         on p.id=
-        s.product_id WHERE p.deleted=false<caseQuery>;""")
+        s.product_id WHERE p.deleted=false <caseQuery>;""")
 
         @RegisterBeanMapper(ProductDTO.class)
         List<ProductDTO> getLimitedProducts(@Define String caseQuery);

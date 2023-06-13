@@ -12,7 +12,7 @@ public interface ProductService {
 
     ProductDTO getProductById(String id, int compId, int branchId, boolean searchByBarCode);
 
-    ProductDTO addNewProduct(ProductDTO product ,int stockqtr);
+    ProductDTO  addNewProduct(ProductDTO product ,int stockqtr);
 
     void updateProduct(ProductDTO productDTO, Integer id);
 
