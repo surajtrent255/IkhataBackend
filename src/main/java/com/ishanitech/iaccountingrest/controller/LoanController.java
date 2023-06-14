@@ -44,9 +44,12 @@ public class LoanController {
     @GetMapping("/limited")
     public ResponseDTO<List<LoanDTO>> getLimitedBillsByCompId(
             @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("searchBy") String searchBy,
+            @RequestParam("searchWildCard") String searchWildCard,
+            @RequestParam("sortBy") String sortBy,
             @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId){
         try{
-            return new ResponseDTO<List<LoanDTO>>(loanService.getLimitedLoanEntitiesForSingleCompAndBranch(offset, pageTotalItems, compId, branchId));
+            return new ResponseDTO<List<LoanDTO>>(loanService.getLimitedLoanEntitiesForSingleCompAndBranch(offset, pageTotalItems, searchBy, searchWildCard, sortBy, compId, branchId));
         } catch(Exception e) {
             log.error("Error occured accessing the loan infos : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the loan infos : " );

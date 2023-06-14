@@ -74,7 +74,7 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
             salesBillDetailDTO.setBillId(billId);
             salesBillDetailDTO.setCompanyId(salesBillDTO.getCompanyId());
             salesBillDetailDTO.setBranchId(salesBillDTO.getBranchId());
-            salesBillDetailDTO.setDate(salesBillDTO.getBillDate());
+            salesBillDetailDTO.setDate(salesBillDTO.getBillDateNepali());
 
         }
 //        for updating stock qty count
