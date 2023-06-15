@@ -17,8 +17,8 @@ public interface ReceiptDAO {
     List<ReceiptDTO> getAllReceipts(@Bind int companyId);
 
     @SqlUpdate("INSERT INTO receipt( " +
-            "  company_id, party_id, amount, date, mode_id, tds_deducted_amount, post_date_check, branch_id) " +
-            " VALUES ( :companyId, :partyId, :amount, :date, :modeId, :tdsDeductedAmount, :postDateCheck, :branchId);")
+            "  company_id, party_id, amount, date,nepali_date, mode_id, tds_deducted_amount, post_date_check, branch_id) " +
+            " VALUES ( :companyId, :partyId, :amount, :date,:nepaliDate, :modeId, :tdsDeductedAmount, :postDateCheck, :branchId);")
     Integer addReceipt(@BindBean ReceiptDTO receiptDTO);
 
 

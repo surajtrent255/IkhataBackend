@@ -36,4 +36,7 @@ public interface CompanyService {
 
     void editCompany( CompanyDTO companyDTO);
 
+    void editCompanyLogo( String imageName, int companyId);
+
+
 }

@@ -177,4 +177,10 @@ companyDAO.deleteCompany(companyId);
             throw new CustomSqlException(e.getMessage());
         }
     }
+
+    @Override
+    public void editCompanyLogo(String imageName, int companyId) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        companyDAO.editCompanyLogo(imageName,companyId);
+    }
 }

@@ -95,6 +95,13 @@ public class FileUtilService {
         }
     }
 
+    public Boolean checkIfFileExists(String imageName){
+
+            File file = new File(this.storageLocation+imageName);
+            boolean exist = file.exists();
+             return exist;
+    }
+
 
     public void saveImageForIcon(String fileName, MultipartFile image) {
 
@@ -157,5 +164,6 @@ public class FileUtilService {
         InputStream inputStream = new FileInputStream(fullPath);
         return inputStream;
     }
+
 
 }

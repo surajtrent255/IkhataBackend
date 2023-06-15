@@ -20,6 +20,8 @@ public class ReceiptDTO {
 
     private Date date;
 
+    private String  nepaliDate;
+
     private int modeId;
 
     private Double tdsDeductedAmount;

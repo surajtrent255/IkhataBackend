@@ -145,5 +145,49 @@ public class CompanyController {
         }
     }
 
+    @GetMapping("/panNo")
+    public ResponseDTO<?> getCompanyByPan(@RequestParam("panNo") Long panNo){
+        try {
+            return new ResponseDTO<>(companyService.getCompanyByPanNo(panNo));
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @PutMapping("/edit/companyLogo")
+    public ResponseDTO<String> EditCompanyLogo(@RequestParam("file") MultipartFile file,@RequestParam("companyId") int companyId){
+        try {
+            CompanyLogoDTO companyLogoDTO = companyService.getCompanyLogo(companyId);
+            if (companyLogoDTO != null){
+                companyService.editCompanyLogo(file.getOriginalFilename(),companyId);
+
+                boolean fileExist;
+                fileExist = fileUtilService.checkIfFileExists(file.getOriginalFilename());
+                if (fileExist){
+                    fileUtilService.deleteFile(file.getOriginalFilename());
+                }
+                fileUtilService.storeFile(file);
+
+            }
+            if(null == companyLogoDTO){
+                CompanyLogoDTO companyLogoDTO1 = new CompanyLogoDTO();
+                companyLogoDTO1.setCompanyId(companyId);
+                companyLogoDTO1.setImageName(file.getOriginalFilename());
+                companyService.addCompanyLogo(companyLogoDTO1);
+                boolean fileExist;
+                fileExist = fileUtilService.checkIfFileExists(file.getOriginalFilename());
+                if (fileExist){
+                    fileUtilService.deleteFile(file.getOriginalFilename());
+                }
+                fileUtilService.storeFile(file);
+            }
+            return new ResponseDTO<>("Logo Successfully Changed");
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
 
 }

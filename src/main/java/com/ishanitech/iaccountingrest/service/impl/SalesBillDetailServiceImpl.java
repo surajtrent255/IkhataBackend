@@ -39,6 +39,24 @@ public class SalesBillDetailServiceImpl implements SalesBillDetailService {
     }
 
     @Override
+    public SalesBillInvoiceDTO getSalesInfoByBillNo(String billNo) {
+        SalesBillInvoiceDTO salesBillInvoiceDTO = new SalesBillInvoiceDTO();
+        List<SalesBillDetailWithProdInfoDTO> salesBillDetailWithProdInfoDTOS = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoWithProdNameByBillNo(billNo);
+        salesBillInvoiceDTO.setSalesBillDetailsWithProd(salesBillDetailWithProdInfoDTOS);
+        salesBillInvoiceDTO.setSalesBillDTO(dbService.getDao(SalesBillDAO.class).getBillByBillNo(billNo));
+        CompanyDTO customer = dbService.getDao(CompanyDAO.class).getCompanyByCompanyId(salesBillInvoiceDTO.getSalesBillDTO().getCustomerId());
+        if(customer != null){
+            salesBillInvoiceDTO.setCustomerAddress(customer.getMunVdc() +" "+ customer.getDistrict());
+        }
+        int compId = salesBillInvoiceDTO.getSalesBillDTO().getCompanyId();
+        CompanyDTO sellerCompany =  dbService.getDao(CompanyDAO.class).getCompanyByCompanyId(compId);
+        salesBillInvoiceDTO.setSellerCompany(sellerCompany);
+        SalesReceiptDTO salesReceiptDTO = dbService.getDao(BillNoGeneratorDAO.class).getSalesReceipt(salesBillInvoiceDTO.getSalesBillDTO().getBillNo());
+        salesBillInvoiceDTO.setSalesReceipt(salesReceiptDTO);
+        return salesBillInvoiceDTO;
+    }
+
+    @Override
     public List<SalesBillDetailDTO> getSaleBillDetailByBillId(int billId) {
         List<SalesBillDetailDTO> salesBillDetailDTOS = dbService.getDao(SalesBillDetailDAO.class).getSalesInfoByBillId(billId);
 

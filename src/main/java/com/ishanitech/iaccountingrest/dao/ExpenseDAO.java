@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface ExpenseDAO {
     @SqlUpdate("INSERT INTO expenses( " +
-            " company_id, amount, topic, bill_no, pay_to, date, branch_id) " +
-            " VALUES (:companyId, :amount, :topic, :billNo, :payTo, :date, :branchId );")
+            " company_id, amount, topic, bill_no, pay_to, date,nepali_date, branch_id) " +
+            " VALUES (:companyId, :amount, :topic, :billNo, :payTo, :date,:nepaliDate, :branchId );")
     Integer addExpenseDetails(@BindBean ExpenseDTO expenseDTO);
 
 
@@ -26,7 +26,7 @@ public interface ExpenseDAO {
     ExpenseDTO getExpenseDetailsBySN(@Bind int SN);
 
     @SqlUpdate("UPDATE public.expenses " +
-            " SET   amount=:amount, topic=:topic, bill_no=:billNo, pay_to=:payTo, date=:date " +
+            " SET   amount=:amount, topic=:topic, bill_no=:billNo, pay_to=:payTo, date=:date,nepali_date=:nepaliDate " +
             " WHERE sn=:SN;")
     void updateExpenseDetails(@BindBean ExpenseDTO expenseDTO);
 

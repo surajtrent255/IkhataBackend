@@ -12,5 +12,9 @@ public interface SalesBillDetailService {
 
     SalesBillInvoiceDTO getSalesInfoByBillId(int billId);
 
+    SalesBillInvoiceDTO getSalesInfoByBillNo(String billNo);
+
+
+
     List<SalesBillDetailDTO> getSaleBillDetailByBillId(int billId);
 }
