@@ -1,9 +1,11 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.LoanDAO;
+import com.ishanitech.iaccountingrest.dao.ProductDAO;
 import com.ishanitech.iaccountingrest.dto.LoanDTO;
 import com.ishanitech.iaccountingrest.dto.LoanNamesDTO;
 import com.ishanitech.iaccountingrest.dto.LoanTypesDTO;
+import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.LoanService;
 import lombok.RequiredArgsConstructor;
@@ -72,10 +74,25 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanDTO> getLimitedLoanEntitiesForSingleCompAndBranch(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId) {
+    public List<LoanDTO> getLimitedLoanEntitiesForSingleCompAndBranch(Integer offset, Integer pageTotalItems,String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId) {
         LoanDAO loanDAO = dbService.getDao(LoanDAO.class);
         List<LoanDTO> loanDTOS;
-        loanDTOS = loanDAO.getLimitedLoanEntityByCompAndBranch(offset, pageTotalItems, compId, branchId);
+        String caseQuery = "";
+        if(searchBy.equals("")){
+            caseQuery = "and l.company_id = " + compId + " and l.branch_id = " + branchId +  " order by " + sortBy + " desc " +
+                    "limit " + pageTotalItems + " offset " + (offset - 1);
+        } else
+        if (searchBy.equals("loan_number") || searchBy.equals("loan_type") || searchBy.equals("lender_id")) {
+            caseQuery = "and l.company_id = " + compId + " and l.branch_id = " + branchId + " and l." + searchBy
+                    + " = '" + searchWildCard + "' order by " + sortBy + " desc " +
+                    "limit " + pageTotalItems + " offset " + (offset - 1);
+        } else
+        {
+            caseQuery = "and l.company_id = " + compId + " and l.branch_id = " + branchId + " and lower(l." + searchBy
+                    + ") like lower('" + searchWildCard + "%') order by " + sortBy + " desc " +
+                    "limit " + pageTotalItems + " offset " + (offset - 1);
+        }
+        loanDTOS = loanDAO.getLimitedLoanEntityByCompAndBranch(caseQuery);
         return loanDTOS;
     }
 }

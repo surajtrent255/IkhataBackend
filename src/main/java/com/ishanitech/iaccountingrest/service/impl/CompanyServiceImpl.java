@@ -43,21 +43,27 @@ public class CompanyServiceImpl implements CompanyService {
 //            BranchDTO branchDTO = new BranchDTO();
 //            branchDTO.setCompanyId(savedCompanyId);
 //            int branchAdded = branchDAO.addBranch(branchDTO);
-            BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
-            String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
-            BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
-            billNoGeneration.setFiscalYear(currentFiscalYear);
-            billNoGeneration.setCompanyId(savedCompanyId);
-            billNoGeneration.setBranchId(0);
-            billNoGeneration.setHasAbbr(false);
-            billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
+            if(!companyDTO.isCustomer()){
+                BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+                String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
+                BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
+                billNoGeneration.setFiscalYear(currentFiscalYear);
+                billNoGeneration.setCompanyId(savedCompanyId);
+                billNoGeneration.setBranchId(0);
+                billNoGeneration.setHasAbbr(false);
+                billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
 
-            BillNoGenerationDTO billNoGeneration2 = new BillNoGenerationDTO();
-            billNoGeneration2.setFiscalYear(currentFiscalYear);
-            billNoGeneration2.setCompanyId(savedCompanyId);
-            billNoGeneration2.setBranchId(0);
-            billNoGeneration2.setHasAbbr(true);
-            billNoGeneratorDAO.createNewFiscalYear(billNoGeneration2);
+                BillNoGenerationDTO billNoGeneration2 = new BillNoGenerationDTO();
+                billNoGeneration2.setFiscalYear(currentFiscalYear);
+                billNoGeneration2.setCompanyId(savedCompanyId);
+                billNoGeneration2.setBranchId(0);
+                billNoGeneration2.setHasAbbr(true);
+                billNoGeneratorDAO.createNewFiscalYear(billNoGeneration2);
+
+//            for receipt no generation
+                billNoGeneratorDAO.createNewRecieptNo(currentFiscalYear, savedCompanyId, 0);
+            }
+
 
         }catch (JdbiException jdbiException){
             log.error("error creating Company");

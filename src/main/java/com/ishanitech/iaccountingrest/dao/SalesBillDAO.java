@@ -125,6 +125,7 @@ public interface SalesBillDAO {
             " customer_name ," +
             " customer_pan ," +
             " bill_date, "+
+            " bill_date_nepali, "+
             " amount  ," +
             " discount  ," +
             " discount_approach , "+
@@ -158,6 +159,7 @@ public interface SalesBillDAO {
             " :customerName ," +
             " :customerPan ," +
             " :billDate, "+
+            " :billDateNepali, "+
             " :amount  ," +
             " :discount  ," +
             " :discountApproach, "+

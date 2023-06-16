@@ -5,6 +5,7 @@ import com.ishanitech.iaccountingrest.dto.LoanNamesDTO;
 import com.ishanitech.iaccountingrest.dto.LoanTypesDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -73,8 +74,8 @@ public interface LoanDAO {
     @SqlQuery("""
             SELECT l.id as id, l.company_id as company_id, l.branch_id as branch_id, l.bank_id as bank_id, l.lender_id as lender_id, l.loan_type as loan_type, l.loan_number as loan_number, l.loan_name as loan_name,
             l.loan_amount as loan_amount, l.received_amount as received_amount, l.service_charge as service_charge, l.other_expenses as other_expenses
-            	FROM loan l  where l.company_id= :compId and l.branch_id = :branchId and l.deleted=false order by id desc limit :pageTotalItems offset (:offset -1) ;
+            	FROM loan l  where l.deleted=false <caseQuery> ;
             """)
     @RegisterBeanMapper(LoanDTO.class)
-    List<LoanDTO> getLimitedLoanEntityByCompAndBranch(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+    List<LoanDTO> getLimitedLoanEntityByCompAndBranch(@Define String caseQuery);
 }

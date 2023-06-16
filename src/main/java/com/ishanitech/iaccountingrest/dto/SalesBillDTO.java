@@ -23,7 +23,8 @@ public class SalesBillDTO {
     private boolean realtime;
     private String customerName ;
     private long customerPan ;
-    private Date billDate  ;
+    private String billDate  ;
+    private String billDateNepali;
     private Double amount ;
     private Double discount ;
     private Integer discountApproach;

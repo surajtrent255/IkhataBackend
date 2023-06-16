@@ -38,16 +38,19 @@ public class ProductServiceImpl implements ProductService {
         }
         Double totalPrice = 0.0;
         List<PurchaseBillDetailDTO> purchaseBillDetailsDTOs = null;
-        if (product.isAveragePriceStatus()) {
-            PurchaseBillDetailDAO purchaseBillDetailDAO = dbService.getDao(PurchaseBillDetailDAO.class);
-            purchaseBillDetailsDTOs = purchaseBillDetailDAO.getPurchaseBillsOfParticularProduct(product.getId(), product.getCompanyId(), product.getBranchId());
-            for (PurchaseBillDetailDTO purchaseBillDetailDTO : purchaseBillDetailsDTOs) {
-                totalPrice += purchaseBillDetailDTO.getRate();
+        if(product != null){
+            if (product.isAveragePriceStatus()) {
+                PurchaseBillDetailDAO purchaseBillDetailDAO = dbService.getDao(PurchaseBillDetailDAO.class);
+                purchaseBillDetailsDTOs = purchaseBillDetailDAO.getPurchaseBillsOfParticularProduct(product.getId(), product.getCompanyId(), product.getBranchId());
+                for (PurchaseBillDetailDTO purchaseBillDetailDTO : purchaseBillDetailsDTOs) {
+                    totalPrice += purchaseBillDetailDTO.getRate();
+                }
+                Double averagePrice = totalPrice / purchaseBillDetailsDTOs.size() ;
+                Double newSp = averagePrice + (product.getRatePercentage()/100 * averagePrice);
+                product.setSellingPrice(newSp);
             }
-            Double averagePrice = totalPrice / purchaseBillDetailsDTOs.size() ;
-            Double newSp = averagePrice + (product.getRatePercentage()/100 * averagePrice);
-            product.setSellingPrice(newSp);
         }
+
 
         return product;
     }
@@ -143,8 +146,8 @@ public class ProductServiceImpl implements ProductService {
                     + " = '" + searchWildCard + "' order by " + sortBy + " desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
         } else {
-            caseQuery = "and p.company_id = " + compId + " and p.branch_id = " + branchId + " and p." + searchBy
-                    + " like '" + searchWildCard + "%' order by " + sortBy + " desc " +
+            caseQuery = "and p.company_id = " + compId + " and p.branch_id = " + branchId + " and lower(p." + searchBy
+                    + ") like lower('" + searchWildCard + "%') order by " + sortBy + " desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
         }
         productList = dbService.getDao(ProductDAO.class).getLimitedProducts(caseQuery);

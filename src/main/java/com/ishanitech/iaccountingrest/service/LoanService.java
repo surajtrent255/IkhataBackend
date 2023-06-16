@@ -21,5 +21,5 @@ public interface LoanService {
 
     List<LoanNamesDTO> getAllLoanNames();
 
-    List<LoanDTO> getLimitedLoanEntitiesForSingleCompAndBranch(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+    List<LoanDTO> getLimitedLoanEntitiesForSingleCompAndBranch(Integer offset, Integer pageTotalItems,String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId);
 }

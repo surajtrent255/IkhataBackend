@@ -49,6 +49,8 @@ public class BranchServiceImpl implements BranchService {
         billNoGeneration2.setBranchId(branchAdded);
         billNoGeneration2.setHasAbbr(true);
         billNoGeneratorDAO.createNewFiscalYear(billNoGeneration2);
+
+        billNoGeneratorDAO.createNewRecieptNo(currentFiscalYear, branchDTO.getCompanyId(), branchAdded);
       return branchAdded;
 
     }
