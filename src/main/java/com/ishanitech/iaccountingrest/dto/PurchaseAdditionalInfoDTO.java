@@ -28,4 +28,10 @@ public class PurchaseAdditionalInfoDTO {
     private int branchId;
 
     private String billNo;
+
+    private int attributeId;
+
+    private String attributeName;
+
+
 }

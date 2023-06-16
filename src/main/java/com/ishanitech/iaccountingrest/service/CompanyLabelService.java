@@ -9,6 +9,9 @@ import java.util.List;
 public interface CompanyLabelService {
     List<CompanyLabelInfoDTO> getCompanyLabelInfo( int companyId) ;
 
+    CompanyLabelInfoDTO getCompanyLabelInfoByCompanyIdAndLabelName( int companyId, String labelName) ;
+
+
     void addLabel( String name);
 
     void addLabelData( CompanyLabelInfoDTO companyLabelInfoDTO);

@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PurchaseAdditionalInfoServiceImpl implements PurchaseAdditionalInfoService {
@@ -19,5 +21,11 @@ public class PurchaseAdditionalInfoServiceImpl implements PurchaseAdditionalInfo
     public void addPurchaseAdditionalInfo(PurchaseAdditionalInfoDTO purchaseAdditionalInfoDTO) {
         PurchaseAdditionalInfoDAO purchaseAdditionalInfoDAO = dbService.getDao(PurchaseAdditionalInfoDAO.class);
         purchaseAdditionalInfoDAO.addPurchaseAdditionalInfo(purchaseAdditionalInfoDTO);
+    }
+
+    @Override
+    public List<PurchaseAdditionalInfoDTO> getPurchaseAdditionalAttributes(int companyId) {
+        PurchaseAdditionalInfoDAO purchaseAdditionalInfoDAO = dbService.getDao(PurchaseAdditionalInfoDAO.class);
+        return purchaseAdditionalInfoDAO.getPurchaseAdditionalAttributes(companyId);
     }
 }

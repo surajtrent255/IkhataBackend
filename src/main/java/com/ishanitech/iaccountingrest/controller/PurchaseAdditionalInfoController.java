@@ -2,14 +2,12 @@ package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.PurchaseAdditionalInfoDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.exception.FileStorageException;
 import com.ishanitech.iaccountingrest.service.PurchaseAdditionalInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +25,16 @@ public class PurchaseAdditionalInfoController {
         }catch (Exception e){
             log.error(e.getMessage());
             throw new FileStorageException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/attribute")
+    public ResponseDTO<?> getPurchaseAdditionalAttribute(@RequestParam("companyId") int companyId){
+        try{
+            return new ResponseDTO<>(purchaseAdditionalInfoService.getPurchaseAdditionalAttributes(companyId));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
     }
 }

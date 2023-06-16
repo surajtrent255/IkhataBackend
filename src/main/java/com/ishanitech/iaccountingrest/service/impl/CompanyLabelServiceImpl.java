@@ -22,6 +22,12 @@ public class CompanyLabelServiceImpl implements CompanyLabelService {
     }
 
     @Override
+    public CompanyLabelInfoDTO getCompanyLabelInfoByCompanyIdAndLabelName(int companyId, String labelName) {
+        CompanyLabelDAO companyLabelDAO = dbService.getDao(CompanyLabelDAO.class);
+        return companyLabelDAO.getCompanyLabelInfoByCompanyIdAndLabelName(companyId,labelName);
+    }
+
+    @Override
     public void addLabel(String name) {
         CompanyLabelDAO companyLabelDAO = dbService.getDao(CompanyLabelDAO.class);
         companyLabelDAO.addLabel(name);
