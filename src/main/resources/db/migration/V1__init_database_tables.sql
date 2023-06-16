@@ -269,7 +269,6 @@ create table bill_no_generator (
     id serial primary key,
     fiscal_year varchar(50) not null,
     bill_no int not null,
-    receipt_no int not null,
     active boolean not null,
     company_id int not null,
     branch_id int not null,
