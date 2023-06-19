@@ -30,7 +30,7 @@ public class DatasourceConfig {
 
 		config.setDriverClassName(dsb.getDriverClassName());
 //		config.setJdbcUrl("jdbc:postgresql://localhost:5433/iaccountingdb");
-		config.setJdbcUrl(String.format("jdbc:%s://localhost:%s/%s", dsb.getDatabaseType(), dsb.getPort(), dsb.getDatabaseName()));
+		config.setJdbcUrl(String.format("jdbc:%s://103.233.58.121:%s/%s", dsb.getDatabaseType(), dsb.getPort(), dsb.getDatabaseName()));
 		return new HikariDataSource(config);
 	}
 

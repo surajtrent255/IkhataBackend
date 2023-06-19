@@ -281,3 +281,10 @@ insert into receipt_no_generator
     1,
     1
 );
+
+
+INSERT INTO public.purchase_additional_attributes(
+	id, attribute_name, company_id)
+	VALUES (1,'Transportation', 0),
+	(2,'Insurance', 0),
+	(3,'Loading', 0);

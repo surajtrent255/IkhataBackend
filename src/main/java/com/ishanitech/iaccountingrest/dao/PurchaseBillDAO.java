@@ -63,7 +63,10 @@ public interface PurchaseBillDAO {
             "loading, "+
             "loading_tax_type, "+
             "other,"+
-            "other_tax_type"+
+            "other_tax_type,"+
+            "transactional_date," +
+            "transactional_date_nepali" +
+
          ") values (" +
          " :fiscalYear," +
          " :purchaseBillNo ," +
@@ -97,7 +100,10 @@ public interface PurchaseBillDAO {
             ":loading, "+
             ":loadingTaxType, "+
             ":other, "+
-            ":otherTaxType "+
+            ":otherTaxType, "+
+            ":transactionalDate," +
+            ":transactionalDateNepali" +
+
          ")")
     int addNewPurchaseBill(@BindBean PurchaseBillDTO purchaseBill);
 

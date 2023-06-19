@@ -18,7 +18,9 @@ public class FixedAssetsDTO {
 
     private Date date;
 
-    private int billNo;
+    private String nepaliDate;
+
+    private String billNo;
 
     private Double cash;
 

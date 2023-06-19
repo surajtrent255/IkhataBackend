@@ -196,5 +196,11 @@ public interface CompanyDAO {
     @RegisterBeanMapper(CompanyDTO.class)
     void editCompany(@BindBean CompanyDTO companyDTO);
 
+    @SqlUpdate("""
+            UPDATE company_logo
+            	SET  image_name=:imageName
+            	WHERE company_id = :companyId;
+            """)
+    void editCompanyLogo(@Bind String imageName,@Bind int companyId);
 
 }

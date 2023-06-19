@@ -19,11 +19,13 @@ public class ExpenseDTO {
 
     private String topic;
 
-    private  int billNo;
+    private  String billNo;
 
     private String payTo;
 
     private Date date;
+
+    private String nepaliDate;
 
     private int branchId;
 

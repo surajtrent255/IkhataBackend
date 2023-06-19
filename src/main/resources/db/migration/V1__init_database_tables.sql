@@ -123,15 +123,14 @@ CREATE TABLE  company (
   registration_type VARCHAR(50) DEFAULT NULL,
   email VARCHAR(100) DEFAULT NUll,
   description text DEFAULT NULL,
-  pan_no bigint NOT NULL ,
+  pan_no bigint UNIQUE NOT NULL ,
   state int Default NULL  ,
   district varchar(50) DEFAULT NULL ,
   mun_vdc varchar(50) DEFAULT NULL ,
   ward_no int DEFAULT NULL ,
   deleted BOOLEAN DEFAULT FALSE,
    customer boolean default false,
-   phone bigint DEFAULT NULL,
-   status BOOLEAN DEFAULT TRUE,
+   phone bigint  DEFAULT NULL,
    status BOOLEAN DEFAULT TRUE,
    created_date DATE DEFAULT NULL,
    created_date_nepali VARCHAR(20) DEFAULT NULL,
@@ -285,6 +284,8 @@ create table purchase_bill (
     seller_pan varchar(50) not null,
     seller_address varchar(100) not null,
     bill_date Date default current_date not null,
+    transactional_date VARCHAR(50) DEFAULT NUll,
+    transactional_date_nepali VARCHAR(50) DEFAULT NULL,
     amount real not null,
     discount real not null,
     taxable_amount real not null,
@@ -453,9 +454,10 @@ CREATE TABLE expenses (
   company_id int DEFAULT NULL,
   amount REAL NOT NULL,
   topic VARCHAR(200),
-  bill_no INT,
+  bill_no VARCHAR(50),
   pay_to VARCHAR(50),
   date DATE DEFAULT NULL,
+  nepali_date VARCHAR(20) DEFAULT NULL,
   branch_id int DEFAULT NULL,
   status boolean DEFAULT TRUE,
   PRIMARY KEY (SN)
@@ -468,7 +470,8 @@ CREATE TABLE fixed_assets (
   name VARCHAR(50),
 	amount REAL NOT NULL,
 	date DATE DEFAULT NULL,
-	bill_no INT,
+	nepali_date VARCHAR(50) DEFAULT NULL,
+	bill_no VARCHAR(50),
 	cash REAL ,
 	loan VARCHAR(100),
 	loan_id INT,
@@ -484,6 +487,7 @@ CREATE TABLE receipt (
   party_id INT NOT  NULL,
 	amount REAL NOT NULL,
 	date DATE DEFAULT NULL,
+	nepali_date VARCHAR(50) DEFAULT NULL,
 	mode_id INT DEFAULT NULL,
 	tds_deducted_amount REAL NOT NULL ,
 	post_date_check BOOLEAN DEFAULT FALSE,
@@ -491,6 +495,8 @@ CREATE TABLE receipt (
   status boolean DEFAULT TRUE,
   PRIMARY KEY (SN)
 );
+
+
 CREATE TABLE  bank (
 bank_id  SERIAL ,
 company_id  int  NOT NULL ,
@@ -773,4 +779,28 @@ create table sales_receipt(
 	has_abbr boolean not null,
 	company_id int not null,
 	branch_id int not null
-)
+);
+
+
+CREATE TABLE purchase_additional_info (
+	id SERIAL PRIMARY KEY,
+	purchase_bill_id INT DEFAULT NULL,
+    expense_id INT ,
+    supplier_pan BIGINT,
+    supplier_name VARCHAR(50),
+    invoice_date VARCHAR(20),
+    invoice_no VARCHAR(50),
+    amount REAL,
+    vat_bill BOOLEAN,
+    company_id INT,
+    branch_id INT,
+    purchase_bill_id INT,
+    bill_no VARCHAR(50)
+);
+
+
+CREATE TABLE purchase_additional_attributes(
+id SERIAL,
+	attribute_name VARCHAR(50),
+	company_id INT
+);

@@ -26,6 +26,20 @@ public interface CompanyLabelDAO {
 
 
     @SqlQuery("""
+            Select cld.id as companyLabelDataId, cld.label_id as LabelId, cld.text as text,cld.company_id as companyId,
+                               cl.id as companyLabelId, cl.name as name
+                               FROM company_label_data cld
+                               INNER JOIN company_label cl
+                               ON cl.id = cld.label_id
+                               WHERE cld.company_id = :companyId
+                               AND cl.name = :labelName
+            """)
+    @RegisterBeanMapper(CompanyLabelInfoDTO.class)
+    CompanyLabelInfoDTO getCompanyLabelInfoByCompanyIdAndLabelName(@Bind int companyId,@Bind String labelName) ;
+
+
+
+    @SqlQuery("""
             Select id as companyLabelId, name as name from company_label
             """)
     @RegisterBeanMapper(CompanyLabelInfoDTO.class)

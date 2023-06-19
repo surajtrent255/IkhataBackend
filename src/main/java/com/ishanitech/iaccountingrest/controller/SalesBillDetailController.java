@@ -50,5 +50,14 @@ public class SalesBillDetailController {
         }
     }
 
+    @GetMapping("/billNo")
+    public ResponseDTO<SalesBillInvoiceDTO> getSalesInfoByBillNo(@RequestParam("billNo") String billNo){
+        try{
+            return new ResponseDTO<SalesBillInvoiceDTO>(salesBillDetailService.getSalesInfoByBillNo(billNo));
+        } catch(Exception ex){
+            log.error("error occured accesing sales info by Bill Number" + ex.getMessage());
+            throw new CustomSqlException("error occured accesing sales info By Bill Number" + ex.getMessage());
+        }
+    }
 
 }

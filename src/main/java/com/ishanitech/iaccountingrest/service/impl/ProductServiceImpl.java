@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-
+        System.out.println("*********** "+product);
         return product;
     }
 

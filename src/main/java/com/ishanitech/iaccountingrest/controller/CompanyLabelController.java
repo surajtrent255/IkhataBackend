@@ -36,6 +36,16 @@ public class CompanyLabelController {
         }
     }
 
+    @GetMapping("/{companyId}/{labelName}")
+    public ResponseDTO<?> getCompanyLabelInfoByCompanyIdAndLabelName(@PathVariable("companyId") int companyId,@PathVariable("labelName") String labelName){
+        try{
+            return new ResponseDTO<>(companyLabelService.getCompanyLabelInfoByCompanyIdAndLabelName(companyId,labelName));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
     @PostMapping("/data")
     public ResponseDTO<String> addCompanyLabelData(@RequestBody CompanyLabelInfoDTO companyLabelInfoDTO){
         try

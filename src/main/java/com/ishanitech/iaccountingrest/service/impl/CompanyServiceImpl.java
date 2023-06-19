@@ -67,6 +67,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         }catch (JdbiException jdbiException){
             log.error("error creating Company");
+            throw new CustomSqlException(jdbiException.getMessage());
         }
 
         return savedCompanyId;
@@ -182,5 +183,11 @@ companyDAO.deleteCompany(companyId);
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
         }
+    }
+
+    @Override
+    public void editCompanyLogo(String imageName, int companyId) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        companyDAO.editCompanyLogo(imageName,companyId);
     }
 }
