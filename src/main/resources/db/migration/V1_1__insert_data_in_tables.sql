@@ -258,11 +258,11 @@ VALUES (DEFAULT, 'super', 'admin', 'super@gmail.com', '0123456789', '$2a$10$98oI
 INSERT INTO public.user_role (id, user_id, role_id, status, deleted)
 VALUES (DEFAULT, 1, 6, true, false),
 (DEFAULT, 1, 1, true, false),
-(DEFAULT, 1, 2, true, false),
-(DEFAULT, 1, 5, true, false),
-(DEFAULT, 1, 4, true, false),
-(DEFAULT, 1, 2, true, false),
-(DEFAULT, 1, 3, true, false);
+(DEFAULT, 2, 2, true, false),
+(DEFAULT, 3, 2, true, false),
+(DEFAULT, 4, 2, true, false),
+(DEFAULT, 5, 2, true, false),
+(DEFAULT, 6, 2, true, false);
 
 
 
