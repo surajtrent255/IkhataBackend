@@ -24,5 +24,6 @@ public class SplitProductDTO {
     private String updatedProductName;
     private int companyId;
     private int branchId;
+    private int tax;
 
 }
