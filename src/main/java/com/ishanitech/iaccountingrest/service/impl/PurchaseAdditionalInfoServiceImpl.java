@@ -28,4 +28,10 @@ public class PurchaseAdditionalInfoServiceImpl implements PurchaseAdditionalInfo
         PurchaseAdditionalInfoDAO purchaseAdditionalInfoDAO = dbService.getDao(PurchaseAdditionalInfoDAO.class);
         return purchaseAdditionalInfoDAO.getPurchaseAdditionalAttributes(companyId);
     }
+
+    @Override
+    public void addNewAttributes(String attributeName, int companyId) {
+        PurchaseAdditionalInfoDAO purchaseAdditionalInfoDAO = dbService.getDao(PurchaseAdditionalInfoDAO.class);
+        purchaseAdditionalInfoDAO.addNewAttributes(attributeName,companyId);
+    }
 }

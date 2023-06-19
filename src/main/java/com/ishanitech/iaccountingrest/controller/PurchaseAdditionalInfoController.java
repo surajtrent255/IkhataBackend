@@ -37,4 +37,15 @@ public class PurchaseAdditionalInfoController {
             throw new CustomSqlException(e.getMessage());
         }
     }
+
+    @PostMapping("/add/attribute")
+    public ResponseDTO<?> addNewAttribute(@RequestParam("attributeName") String attributeName,@RequestParam("companyId") int companyId){
+        try{
+            purchaseAdditionalInfoService.addNewAttributes(attributeName,companyId);
+            return new ResponseDTO<>("successfully added");
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
 }

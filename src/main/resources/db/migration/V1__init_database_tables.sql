@@ -130,8 +130,7 @@ CREATE TABLE  company (
   ward_no int DEFAULT NULL ,
   deleted BOOLEAN DEFAULT FALSE,
    customer boolean default false,
-   phone bigint UNIQUE DEFAULT NULL,
-   status BOOLEAN DEFAULT TRUE,
+   phone bigint  DEFAULT NULL,
    status BOOLEAN DEFAULT TRUE,
    created_date DATE DEFAULT NULL,
    created_date_nepali VARCHAR(20) DEFAULT NULL,
@@ -269,7 +268,6 @@ create table bill_no_generator (
     id serial primary key,
     fiscal_year varchar(50) not null,
     bill_no int not null,
-    receipt_no int not null,
     active boolean not null,
     company_id int not null,
     branch_id int not null,
@@ -781,11 +779,12 @@ create table sales_receipt(
 	has_abbr boolean not null,
 	company_id int not null,
 	branch_id int not null
-)
+);
 
 
 CREATE TABLE purchase_additional_info (
 	id SERIAL PRIMARY KEY,
+	purchase_bill_id INT DEFAULT NULL,
     expense_id INT ,
     supplier_pan BIGINT,
     supplier_name VARCHAR(50),
@@ -801,7 +800,7 @@ CREATE TABLE purchase_additional_info (
 
 
 CREATE TABLE purchase_additional_attributes(
-id SERIAL PRIMARY KEY,
+id SERIAL,
 	attribute_name VARCHAR(50),
 	company_id INT
 );

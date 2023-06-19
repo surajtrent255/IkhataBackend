@@ -13,10 +13,10 @@ public interface PurchaseAdditionalInfoDAO {
 
   @SqlUpdate("""
           INSERT INTO purchase_additional_info (
-              expense_id, supplier_pan, supplier_name, invoice_date, invoice_no, amount, vat_bill, company_id, branch_id, bill_no
+              expense_id, supplier_pan, supplier_name, invoice_date, invoice_no, amount, vat_bill, company_id, branch_id, bill_no,purchase_bill_id
           )
           VALUES (
-              :expenseId, :supplierPan, :supplierName, :invoiceDate, :invoiceNo, :amount, :vatBill, :companyId, :branchId, :billNo
+              :expenseId, :supplierPan, :supplierName, :invoiceDate, :invoiceNo, :amount, :vatBill, :companyId, :branchId, :billNo,:purchaseBillId
           );         
           """)
   @RegisterBeanMapper(PurchaseAdditionalInfoDTO.class)
@@ -29,5 +29,13 @@ public interface PurchaseAdditionalInfoDAO {
           """)
   @RegisterBeanMapper(PurchaseAdditionalInfoDTO.class)
   List<PurchaseAdditionalInfoDTO> getPurchaseAdditionalAttributes(@Bind int companyId);
+
+
+  @SqlUpdate("""
+          INSERT INTO purchase_additional_attributes(
+          	 attribute_name, company_id)
+          	VALUES (:attributeName, :companyId);
+          """)
+  void addNewAttributes(@Bind String attributeName,@Bind int companyId);
 
 }

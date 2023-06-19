@@ -67,6 +67,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         }catch (JdbiException jdbiException){
             log.error("error creating Company");
+            throw new CustomSqlException(jdbiException.getMessage());
         }
 
         return savedCompanyId;

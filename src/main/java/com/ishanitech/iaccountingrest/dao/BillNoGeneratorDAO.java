@@ -117,7 +117,7 @@ public interface BillNoGeneratorDAO {
             1,
             true,
             :companyId,
-            :branchId,
+            :branchId
         );
             """)
    int  createNewRecieptNo(String fiscalYear, Integer companyId, Integer branchId);

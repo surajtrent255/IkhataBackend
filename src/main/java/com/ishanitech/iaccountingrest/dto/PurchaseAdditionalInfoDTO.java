@@ -33,5 +33,7 @@ public class PurchaseAdditionalInfoDTO {
 
     private String attributeName;
 
+    private int purchaseBillId;
+
 
 }
