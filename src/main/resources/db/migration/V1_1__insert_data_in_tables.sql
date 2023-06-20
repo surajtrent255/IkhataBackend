@@ -246,23 +246,23 @@ INSERT INTO public.unit(
 	('other');
 
 INSERT INTO public.users (id, firstname, lastname, email, phone, password, deleted, create_date, edit_date)
-VALUES (DEFAULT, 'super', 'admin', 'super@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
- (DEFAULT, 'admin', 'admin', 'admin@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
- (DEFAULT, 'employee', 'employee', 'employee@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
- (DEFAULT, 'staff', 'staff', 'staff@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
- (DEFAULT, 'account', 'account', 'account@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
- (DEFAULT, 'user', 'user', 'user@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
- (DEFAULT, 'auditor', 'auditor', 'auditor@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW());
+VALUES (1, 'super', 'admin', 'super@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (2, 'admin', 'admin', 'admin@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (3, 'employee', 'employee', 'employee@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (4, 'staff', 'staff', 'staff@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (5, 'account', 'account', 'account@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (6, 'user', 'user', 'user@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW()),
+ (7, 'auditor', 'auditor', 'auditor@gmail.com', '0123456789', '$2a$10$98oIuT9bhOyEJK5GCmOwk.Mk0XrF6OPR9uEzJF4d7LnYgzYYEI.xa', false, NOW(), NOW());
 
 
 INSERT INTO public.user_role (id, user_id, role_id, status, deleted)
 VALUES (DEFAULT, 1, 6, true, false),
-(DEFAULT, 1, 1, true, false),
-(DEFAULT, 2, 2, true, false),
+(DEFAULT, 2, 1, true, false),
 (DEFAULT, 3, 2, true, false),
 (DEFAULT, 4, 2, true, false),
 (DEFAULT, 5, 2, true, false),
-(DEFAULT, 6, 2, true, false);
+(DEFAULT, 6, 2, true, false),
+(DEFAULT, 7, 2, true, false);
 
 
 

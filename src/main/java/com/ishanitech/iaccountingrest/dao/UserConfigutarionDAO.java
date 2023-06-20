@@ -40,7 +40,7 @@ public interface UserConfigutarionDAO {
 
 
 
-    @SqlQuery(" SELECT DISTINCT users.id as userId, users.firstname as firstName, users.lastname as lastName, users.email as email " +
+    @SqlQuery(" SELECT DISTINCT users.id as userId, users.firstname as firstName, users.lastname as lastName,users.phone as phone, users.email as email " +
             " FROM users " +
             " LEFT JOIN user_company ON users.id = user_company.user_id " +
             "   INNER JOIN user_role on user_role.user_id =  users.id " +
