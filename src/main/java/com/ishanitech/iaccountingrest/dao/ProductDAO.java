@@ -66,7 +66,7 @@ public interface ProductDAO {
         List<ProductDTO> getAllProductsByProductsIds(@Define String newProdIds);
 
         @SqlQuery("""
-                        SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id, s.qty as stock,
+                        SELECT p.id as id, p.name as name, p.description as description, p.branch_id as branch_id, p.selling_price as selling_price, p.cost_price as cost_price, p.user_id as user_id,p.tax_approch as tax_approach, s.qty as stock,
                         p.rate_percentage as ratePercentage,  p.is_average_price as averagePriceStatus,
                         p.company_id as company_id, p.seller_id as seller_id, p.category_id as category_id, p.create_date as create_date, p.update_date
                         as update_date, p.barcode as barcode, p.discount as discount, p.tax as tax FROM product p inner join stock s on p.id = s.product_id  WHERE LOWER(p.name) like LOWER(:name) and p.deleted = false  and p.company_id = :compId and
