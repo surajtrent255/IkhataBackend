@@ -88,6 +88,7 @@ public interface SalesBillDAO {
             "  sb.customer_name as customer_name,  " +
             "  sb.customer_pan as customer_pan,  " +
             "  sb.bill_date as bill_date,   " +
+            " sb.bill_date_nepali as bill_date_nepali, "+
             "  sb.amount  as amount,  " +
             "  sb.discount  as discount,  " +
             "  sb.discount_approach as discount_approach, "+

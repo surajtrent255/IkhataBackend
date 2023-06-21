@@ -28,7 +28,9 @@ public class SalesBillDetailServiceImpl implements SalesBillDetailService {
         salesBillInvoiceDTO.setSalesBillDTO(dbService.getDao(SalesBillDAO.class).getBillById(billId));
         CompanyDTO customer = dbService.getDao(CompanyDAO.class).getCompanyByCompanyId(salesBillInvoiceDTO.getSalesBillDTO().getCustomerId());
         if(customer != null){
-            salesBillInvoiceDTO.setCustomerAddress(customer.getMunVdc() +" "+ customer.getDistrict());
+            if(customer.getState() != 8){
+                salesBillInvoiceDTO.setCustomerAddress(customer.getMunVdc() +" "+ customer.getDistrict());
+            }
         }
         int compId = salesBillInvoiceDTO.getSalesBillDTO().getCompanyId();
         CompanyDTO sellerCompany =  dbService.getDao(CompanyDAO.class).getCompanyByCompanyId(compId);

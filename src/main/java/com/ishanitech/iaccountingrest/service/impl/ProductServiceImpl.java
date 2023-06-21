@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
                     totalPrice += purchaseBillDetailDTO.getRate();
                 }
                 Double averagePrice = totalPrice / purchaseBillDetailsDTOs.size() ;
-                Double newSp = averagePrice + (product.getRatePercentage()/100 * averagePrice);
+                Double newSp = averagePrice + (Double.valueOf(product.getRatePercentage())/100 * averagePrice);
                 product.setSellingPrice(newSp);
             }
         }
@@ -124,7 +124,24 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> getProductsByWildCard(String name, Integer compId, Integer branchId) {
         ProductDAO productDAO = dbService.getDao(ProductDAO.class);
         List<ProductDTO> productDTOS;
+
         productDTOS = productDAO.getAllProductsByWildCardName(name, compId, branchId);
+        productDTOS.forEach(product->{
+            Double totalPrice = 0.0;
+            List<PurchaseBillDetailDTO> purchaseBillDetailsDTOs = null;
+            if(product != null){
+                if (product.isAveragePriceStatus()) {
+                    PurchaseBillDetailDAO purchaseBillDetailDAO = dbService.getDao(PurchaseBillDetailDAO.class);
+                    purchaseBillDetailsDTOs = purchaseBillDetailDAO.getPurchaseBillsOfParticularProduct(product.getId(), product.getCompanyId(), product.getBranchId());
+                    for (PurchaseBillDetailDTO purchaseBillDetailDTO : purchaseBillDetailsDTOs) {
+                        totalPrice += purchaseBillDetailDTO.getRate();
+                    }
+                    Double averagePrice = totalPrice / purchaseBillDetailsDTOs.size() ;
+                    Double newSp = averagePrice + (Double.valueOf(product.getRatePercentage())/100 * averagePrice);
+                    product.setSellingPrice(newSp);
+                }
+            }
+        });
         return productDTOS;
     }
 
