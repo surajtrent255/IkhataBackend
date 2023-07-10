@@ -4,9 +4,12 @@ import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BillService;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +31,17 @@ public class SalesBillController {
             throw new CustomSqlException("Error occured accessing the bill infos : " );
         }
     }
+
+//    @GetMapping
+//    public Single<ResponseDTO<Flux<SalesBillDTO>>> getAllBills() {
+//        return Single.fromCallable(() -> billService.getAllBills())
+//                .map(bills -> new ResponseDTO<>(bills))
+//                .subscribeOn(Schedulers.io())
+//                .onErrorResumeNext(throwable -> {
+//                    log.error("Error occurred accessing the bill info: " + throwable.getMessage());
+//                    return Single.error(new CustomSqlException("Error occurred accessing the bill info."));
+//                });
+//    }
 
     @GetMapping("/company")
     public ResponseDTO<List<SalesBillDTO>> getAllBillsByCompId(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId){

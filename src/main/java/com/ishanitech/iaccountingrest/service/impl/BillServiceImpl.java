@@ -4,14 +4,20 @@ import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
 import com.ishanitech.iaccountingrest.dao.StockDAO;
+import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
+import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BillService;
 import com.ishanitech.iaccountingrest.service.DbService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.Date;
 import java.util.List;
@@ -27,6 +33,13 @@ public class BillServiceImpl implements BillService {
     public List<SalesBillDTO> getAllBills() {
         return dbService.getDao(SalesBillDAO.class).getAllBills();
     }
+
+//    @Override
+//    public Flux<SalesBillDTO> getAllBills() {
+//        return Flux.defer(() -> Flux.fromIterable(dbService.getDao(SalesBillDAO.class).getAllBills()));
+//    }
+
+
 
     @Override
     public SalesBillDTO getBillById(int id) {
