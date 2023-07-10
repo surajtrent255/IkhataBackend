@@ -79,4 +79,17 @@ try {
             throw new CustomSqlException(e.getMessage());
         }
     }
+
+    @GetMapping("/for/search")
+    public ResponseDTO<?> getLimitedUsersFeatureForSearch(@RequestParam("offset") Integer offset,@RequestParam("pageTotalItems") Integer pageTotalItems,
+    @RequestParam("companyId") int companyId,@RequestParam("searchInput") String searchInput
+    )
+    {
+        try{
+          return new ResponseDTO<>(featureControlService.getLimitedUserFeatureForSearch(offset,pageTotalItems,companyId,searchInput))  ;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
 }

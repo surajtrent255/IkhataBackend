@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -53,19 +54,6 @@ public class CreditNoteController {
         }
     }
 
-    @GetMapping("/limited")
-    public ResponseDTO<List<CreditNoteDTO>> getLimitedBillsByCompId(
-            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
-            @RequestParam("compId") int compId, @RequestParam("branchId") int branchId){
-        try{
-            return new ResponseDTO<List<CreditNoteDTO>>(creditNoteService.getLimitedCreditNotessByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
-        } catch(Exception e) {
-            log.error("Error occured accessing the bill infos : " + e.getMessage());
-            throw new CustomSqlException("Error occured accessing the bill infos : " );
-        }
-    }
-
-
     @GetMapping("/details")
     public ResponseDTO<?> getCreditNoteDetailInfo(@RequestParam("billNumber") String billNumber){
         try{
@@ -73,6 +61,18 @@ public class CreditNoteController {
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/searchBy")
+    public ResponseDTO<List<CreditNoteDTO>> searchCreditNoteByAttribute(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") int compId,@RequestParam("searchInput") String searchInput,@RequestParam("searchValue") String searchValue){
+        try{
+            return new ResponseDTO<List<CreditNoteDTO>>(creditNoteService.searchCreditNoteBySearchInput(offset,pageTotalItems,compId,searchInput,searchValue));
+        } catch(Exception e) {
+            log.error("Error occurred accessing the Credit Note info : " + e.getMessage());
+            throw new CustomSqlException("Error occurred accessing the Credit Note info : " );
         }
     }
 

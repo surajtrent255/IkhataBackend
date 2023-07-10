@@ -5,6 +5,7 @@ import com.ishanitech.iaccountingrest.dto.CreditNoteDetailsDTO;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CreditNoteService {
@@ -17,5 +18,8 @@ public interface CreditNoteService {
 
     List<CreditNoteDetailsDTO> getCreditNoteDetailInfo( String billNumber);
 
-    List<CreditNoteDTO> getLimitedCreditNotessByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+    List<CreditNoteDTO> searchCreditNoteBySearchInput(Integer offset,Integer pageTotalItems,Integer companyId,String searchInput,String searchValue);
+
+
+
 }

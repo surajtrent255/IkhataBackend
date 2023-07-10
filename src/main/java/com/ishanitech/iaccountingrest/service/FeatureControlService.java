@@ -20,6 +20,8 @@ public interface FeatureControlService {
 
     List<UserFeatureDTO> getFeatureControlDetailsForLocalStorage( int companyId, int userId);
 
+    List<UserFeatureDTO> getLimitedUserFeatureForSearch(Integer offset,Integer PageTotalItems,Integer companyId,String searchInput);
+
 
 
 }

@@ -32,4 +32,6 @@ public class CreditNoteDTO {
 
     private int branchId;
 
+    private String fiscalYear;
+
 }

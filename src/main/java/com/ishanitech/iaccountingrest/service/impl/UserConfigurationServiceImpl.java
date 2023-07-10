@@ -98,10 +98,33 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     }
 
     @Override
-    public void enableDisableUsersBySuperAdmin(boolean status, int userId) {
-        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        userConfigutarionDAO.enableDisableUsersBySuperAdmin(status,userId);
+    public List<UserCommonConfigDTO> getLimitedUsersForSearchInUserConfiguration(Integer offset, Integer pageTotalItems, int companyId,String searchInput) {
+        String caseQuery = "";
+        if(searchInput.length() !=0 )
+            caseQuery = " company_id = " + companyId + " and " + "email" + " = '" + searchInput + "' order by " + "users.phone" + " desc " +
+                    "limit " + pageTotalItems + " offset " + (offset - 1);
+        else {
+            caseQuery = " company_id = "+companyId+" order by "+"users.phone"+" desc "+
+                    "limit "+ pageTotalItems+" offset "+(offset-1);
+        }
 
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        return userConfigutarionDAO.getLimitedUsersForSearchInUserConfiguration(caseQuery);
+    }
+
+    @Override
+    public List<UserConfigurationDTO> getLimitedUsersRoleForSearchInUserConfiguration(Integer offset, Integer pageTotalItems, int companyId, String searchInput) {
+        String caseQuery = "";
+        if (searchInput.length() != 0) {
+            caseQuery = " user_company_role.company_id = " + companyId + " AND user_company_role.status = true AND email = '" + searchInput + "' order by users.phone desc " +
+                    "limit " + pageTotalItems + " offset " + (offset - 1);
+        } else {
+            caseQuery = " user_company_role.company_id = " + companyId + " AND user_company_role.status = true order by users.phone desc " +
+                    "limit " + pageTotalItems + " offset " + (offset - 1);
+        }
+
+        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
+        return userConfigutarionDAO.getLimitedUserRoleForSearch(caseQuery);
     }
 
 

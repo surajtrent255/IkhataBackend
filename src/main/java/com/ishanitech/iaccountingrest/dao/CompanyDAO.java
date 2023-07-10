@@ -1,6 +1,6 @@
 package com.ishanitech.iaccountingrest.dao;
 
-import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
+import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyLogoDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -98,8 +98,8 @@ public interface CompanyDAO {
                         INNER JOIN company_logo cl ON cl.company_id = c.company_id
                         WHERE c.company_id=:companyId
             """)
-    @RegisterBeanMapper(CompanyAndUserCompanyDTO.class)
-    CompanyAndUserCompanyDTO getCompanyByIdForEdit(@Bind("companyId") int companyId);
+    @RegisterBeanMapper(CompanyDTO.class)
+    CompanyDTO getCompanyByIdForEdit(@Bind("companyId") int companyId);
 
     @SqlQuery("""
             SELECT c.company_id AS companyId,
@@ -117,6 +117,7 @@ public interface CompanyDAO {
                    c.registration_type as registrationType,
                    c.created_date as createdDate,
                    c.created_date_nepali as createdDateNepali,
+                   c.is_approved AS isApproved,
                    u.user_id AS userId,
             	   cl.image_name as imageName,
             	   cl.id as imageId
@@ -128,8 +129,8 @@ public interface CompanyDAO {
               AND c.customer = false
               AND c.status = true;
             """)
-    @RegisterBeanMapper(CompanyAndUserCompanyDTO.class)
-    List<CompanyAndUserCompanyDTO> getCompanyByUserId(@Bind("userId") int userId);
+    @RegisterBeanMapper(CompanyDTO.class)
+    List<CompanyDTO> getCompanyByUserId(@Bind("userId") int userId);
 
     // suraj
     @SqlQuery("""

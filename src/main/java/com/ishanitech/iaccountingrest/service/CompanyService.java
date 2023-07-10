@@ -1,13 +1,9 @@
 package com.ishanitech.iaccountingrest.service;
 
-import com.ishanitech.iaccountingrest.dto.CompanyAndUserCompanyDTO;
+import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyLogoDTO;
-import org.jdbi.v3.sqlobject.customizer.Bind;
-import org.jdbi.v3.sqlobject.customizer.BindBean;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface CompanyService {
@@ -19,7 +15,7 @@ public interface CompanyService {
 
     CompanyDTO getCompanyByPanNo(Long PanNo);
 
-    List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId);
+    List<CompanyDTO> getCompanyByUserId(int userId);
 
     List<CompanyDTO> getCustomerInfosByPanOrPhone(int searchMethod, long customerPhoneOrPan);
 
@@ -32,7 +28,7 @@ public interface CompanyService {
 
     void addCompanyLogo(CompanyLogoDTO companyLogoDTO);
 
-    CompanyAndUserCompanyDTO getCompanyByIdForEdit( int companyId);
+    CompanyDTO getCompanyByIdForEdit(int companyId);
 
     void editCompany( CompanyDTO companyDTO);
 

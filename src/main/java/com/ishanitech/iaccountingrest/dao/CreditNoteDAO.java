@@ -5,16 +5,18 @@ import com.ishanitech.iaccountingrest.dto.CreditNoteDetailsDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CreditNoteDAO {
 
     @SqlUpdate(" INSERT INTO credit_note( " +
-            " pan_number, customer_name, customer_address, bill_number, date,nepali_date, total_amount, total_tax,company_id,branch_id) " +
-            " VALUES (:panNumber, :customerName, :customerAddress, :billNumber, :date,:nepaliDate, :totalAmount, :totalTax,:companyId,:branchId );")
+            " pan_number, customer_name, customer_address, bill_number, date,nepali_date, total_amount, total_tax,company_id,branch_id,fiscal_year) " +
+            " VALUES (:panNumber, :customerName, :customerAddress, :billNumber, :date,:nepaliDate, :totalAmount, :totalTax,:companyId,:branchId,:fiscalYear );")
     @RegisterBeanMapper(CreditNoteDTO.class)
     void addCreditNote(@BindBean CreditNoteDTO creditNoteDTO);
 
@@ -31,15 +33,15 @@ public interface CreditNoteDAO {
     List<CreditNoteDTO> getCreditNoteInfo(@Bind int companyId,@Bind int branchId);
 
     @SqlQuery("""
+            select  * from credit_note cn where <caseQuery>
+            """)
+    @RegisterBeanMapper(CreditNoteDTO.class)
+    List<CreditNoteDTO> searchCreditNoteBySearchInput(@Define String caseQuery);
+
+    @SqlQuery("""
             SELECT * FROM credit_note_details WHERE bill_number = :billNumber;
             """)
     @RegisterBeanMapper(CreditNoteDetailsDTO.class)
     List<CreditNoteDetailsDTO> getCreditNoteDetailInfo(@Bind String billNumber);
 
-    @SqlQuery("""
-        select DISTINCT * from credit_note cn where cn.company_id = :compId and cn.branch_id = :branchId 
-        order by id desc limit :pageTotalItems offset (:offset -1);
-    """)
-    @RegisterBeanMapper(CreditNoteDTO.class)
-    List<CreditNoteDTO> getLimitedCreditNotesByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
 }

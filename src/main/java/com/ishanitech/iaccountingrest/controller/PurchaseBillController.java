@@ -42,9 +42,10 @@ public class PurchaseBillController {
     @GetMapping("/company/limited")
     public ResponseDTO<List<PurchaseBillDTO>> getLimitedBillsByCompId(
             @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
-            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId){
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId
+            ,@RequestParam("searchInput") String searchInput, @RequestParam("searchValue") String searchValue)   {
         try{
-            return new ResponseDTO<List<PurchaseBillDTO>>(purchaseBillService.getLimitedPurchaseBillsByCompIdAndBranchId(offset, pageTotalItems, compId, branchId));
+            return new ResponseDTO<List<PurchaseBillDTO>>(purchaseBillService.getLimitedPurchaseBillsByCompIdAndBranchId(offset, pageTotalItems, compId, branchId,searchInput,searchValue));
         } catch(Exception e) {
             log.error("Error occured accessing the bill infos : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the purchase bill infos : " );

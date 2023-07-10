@@ -2,8 +2,10 @@ package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.FeatureControlDTO;
 import com.ishanitech.iaccountingrest.dto.UserFeatureDTO;
+import com.ishanitech.iaccountingrest.model.User;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -32,6 +34,27 @@ public interface FeatureControlDAO {
     @RegisterBeanMapper(UserFeatureDTO.class)
     List<UserFeatureDTO> getFeatureControlOfUsersForListing(@Bind int companyId);
 
+    @SqlQuery("""
+            SELECT
+                u.id AS userId,
+                u.firstname AS firstName,
+                u.lastname AS lastName,
+                u.email AS email,
+                u.phone AS phone,
+                uf.feature_id AS featureId,
+                uf.status AS status,
+                uf.company_id AS companyId,
+                f.feature AS feature
+            FROM
+                users u
+            INNER JOIN
+                user_feature uf ON u.id = uf.user_id
+            INNER JOIN
+                feature_control f ON f.id = uf.feature_id   
+                WHERE <caseQuery>                                 
+            """)
+    @RegisterBeanMapper(UserFeatureDTO.class)
+    List<UserFeatureDTO> getLimitedUserFeatureControlForSearch(@Define String caseQuery);
 
     @SqlUpdate("UPDATE user_feature " +
             " SET  status=:status " +

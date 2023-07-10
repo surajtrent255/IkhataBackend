@@ -5,6 +5,7 @@ import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -173,9 +174,8 @@ public interface PurchaseBillDAO {
     PurchaseBillDTO getBillById(int billId, int companyId, int branchId);
 
     @SqlQuery("""
-            select * from purchase_bill pb where pb.company_id = :compId and pb.branch_id = :branchId order by purchase_bill_no 
-            desc limit :pageTotalItems offset (:offset -1) ;
+            select * from purchase_bill  where <caseQuery> ;
             """)
     @RegisterBeanMapper(PurchaseBillDTO.class)
-    List<PurchaseBillDTO> getLimitedPurchaseBillByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+    List<PurchaseBillDTO> getLimitedPurchaseBillByCompanyAndBranchId(@Define String caseQuery);
 }

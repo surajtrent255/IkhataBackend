@@ -32,6 +32,6 @@ public class DebitNoteDTO {
 
     private int branchId;
 
-
+    private String fiscalYear;
 
 }

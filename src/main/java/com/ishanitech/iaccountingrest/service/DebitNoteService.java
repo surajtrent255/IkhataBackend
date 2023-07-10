@@ -19,4 +19,6 @@ public interface DebitNoteService {
 
 
     List<DebitNoteDTO> getLimitedDebitNotessByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+
+    List<DebitNoteDTO> searchDebitNoteBySearchInput(Integer offset, Integer pageTotalItems,Integer companyId ,String searchInput, String searchValue);
 }

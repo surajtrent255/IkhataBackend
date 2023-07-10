@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.controller;
 
+import com.ishanitech.iaccountingrest.dto.CreditNoteDTO;
 import com.ishanitech.iaccountingrest.dto.DebitNoteDTO;
 import com.ishanitech.iaccountingrest.dto.DebitNoteDetailsDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
@@ -60,6 +61,18 @@ public class DebitNoteController {
         } catch(Exception e) {
             log.error("Error occured accessing the bill infos : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the bill infos : " );
+        }
+    }
+
+    @GetMapping("/searchBy")
+    public ResponseDTO<List<DebitNoteDTO>> searchDebitNoteBySearchInput(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") int compId,@RequestParam("searchInput") String searchInput,@RequestParam("searchValue") String searchValue){
+        try{
+            return new ResponseDTO<List<DebitNoteDTO>>(debitNoteService.searchDebitNoteBySearchInput(offset,pageTotalItems,compId,searchInput,searchValue));
+        } catch(Exception e) {
+            log.error("Error occurred accessing the Debit Note info : " + e.getMessage());
+            throw new CustomSqlException("Error occurred accessing the Debit Note info : " );
         }
     }
 

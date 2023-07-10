@@ -12,9 +12,7 @@ import org.jdbi.v3.core.JdbiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,11 +92,11 @@ companyDAO.deleteCompany(companyId);
     }
 
     @Override
-    public List<CompanyAndUserCompanyDTO> getCompanyByUserId(int userId) {
+    public List<CompanyDTO> getCompanyByUserId(int userId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
-        List<CompanyAndUserCompanyDTO> companyDTOS = companyDAO.getCompanyByUserId(userId);
+        List<CompanyDTO> companyDTOS = companyDAO.getCompanyByUserId(userId);
 
-        for (CompanyAndUserCompanyDTO companyDTO : companyDTOS) {
+        for (CompanyDTO companyDTO : companyDTOS) {
             if(companyDTO.getImageName() != null){
                 String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
                 //            for Production comment above line and uncomment below line
@@ -160,11 +158,11 @@ companyDAO.deleteCompany(companyId);
     }
 
     @Override
-    public CompanyAndUserCompanyDTO getCompanyByIdForEdit(int companyId) {
+    public CompanyDTO getCompanyByIdForEdit(int companyId) {
         try{
             CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
 
-            CompanyAndUserCompanyDTO companyDTO = companyDAO.getCompanyByIdForEdit(companyId);
+            CompanyDTO companyDTO = companyDAO.getCompanyByIdForEdit(companyId);
 
             String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
             //            for Production comment above line and uncomment below line

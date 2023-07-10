@@ -191,4 +191,29 @@ public class UserConfigurationController {
         }
     }
 
+
+    @GetMapping("/search/users")
+    public  ResponseDTO<?> getLimitedUsersForSearchInUserConfiguration( @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+                                                                        @RequestParam("compId") Integer compId,@RequestParam("searchInput") String searchInput )
+    {
+        try{
+            return new ResponseDTO<>(userConfigurationService.getLimitedUsersForSearchInUserConfiguration(offset,pageTotalItems,compId,searchInput)) ;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/search/users/role")
+    public  ResponseDTO<?> getLimitedUsersRoleForSearchInUserConfiguration( @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+                                                                        @RequestParam("compId") Integer compId,@RequestParam("searchInput") String searchInput )
+    {
+        try{
+            return new ResponseDTO<>(userConfigurationService.getLimitedUsersRoleForSearchInUserConfiguration(offset,pageTotalItems,compId,searchInput)) ;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
 }

@@ -14,7 +14,7 @@ public interface PurchaseBillService {
 
     List<PurchaseBillDTO> getAllPurchaseBillsByCompanyId(int compId, int branchId);
 
-    List<PurchaseBillDTO> getLimitedPurchaseBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+    List<PurchaseBillDTO> getLimitedPurchaseBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer companyId, Integer branchId,String searchInput, String searchValue);
 
     PurchaseReportDTO getPurchaseBillInfoForReport(Integer id, Integer compId, Integer branchId);
 }

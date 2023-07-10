@@ -1,7 +1,4 @@
-/**
- * @author Umesh Bhujel <yoomesbhujel@gmail.com>
- * Since Feb 1, 2020
- */
+
 package com.ishanitech.iaccountingrest.config.properties;
 
 import lombok.Data;

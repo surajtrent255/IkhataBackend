@@ -46,5 +46,6 @@ public class CompanyDTO {
 
     private String createdDateNepali;
 
+    private Boolean isApproved;
 
 }

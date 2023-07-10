@@ -33,9 +33,10 @@ public void addMultipleUserRole(int[] userId,int companyId,int roleId);
 
     void assignAdminRoleFromSuperAdmin(int userId,int roleId);
 
-    void enableDisableUsersBySuperAdmin(boolean status,int userId);
 
+    List<UserCommonConfigDTO> getLimitedUsersForSearchInUserConfiguration(Integer offset,Integer pageTotalItems, int companyId,String searchInput);
 
+    List<UserConfigurationDTO> getLimitedUsersRoleForSearchInUserConfiguration(Integer offset,Integer pageTotalItems, int companyId,String searchInput);
 
 
 }

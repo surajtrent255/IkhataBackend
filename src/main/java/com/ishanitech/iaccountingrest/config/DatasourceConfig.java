@@ -1,7 +1,4 @@
-/**
- * @author Suraj Adhikari <suraj.trent255@gmail.com>
- * Since March 11, 2023
- */
+
 package com.ishanitech.iaccountingrest.config;
 
 import com.zaxxer.hikari.HikariConfig;

@@ -134,6 +134,7 @@ CREATE TABLE  company (
    status BOOLEAN DEFAULT TRUE,
    created_date DATE DEFAULT NULL,
    created_date_nepali VARCHAR(20) DEFAULT NULL,
+   is_approved BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (company_id),
 	constraint valid_number
       check (phone <= 9999999999)

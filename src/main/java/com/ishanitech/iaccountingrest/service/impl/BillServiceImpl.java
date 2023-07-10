@@ -1,10 +1,12 @@
 package com.ishanitech.iaccountingrest.service.impl;
-import com.ishanitech.iaccountingrest.dao.*;
-import com.ishanitech.iaccountingrest.dto.ProductDTO;
+
+import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
+import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
+import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
+import com.ishanitech.iaccountingrest.dao.StockDAO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
 import com.ishanitech.iaccountingrest.service.BillService;
-
 import com.ishanitech.iaccountingrest.service.DbService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -59,17 +62,43 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId) {
-//        List<SalesBillDTO> salesBillDTOList;
-//        salesBillDTOList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
-//        return salesBillDTOList;
+    public List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, Integer compId, Integer branchId) {
+
         List<SalesBillDTO> productList;
         String caseQuery="";
-        if(searchBy.equals("id")){
-            caseQuery = " company_id = "+compId+" and branch_id = "+branchId+" and "+searchBy+" = '"+searchWildCard+"' order by "+sortBy+" desc "+
-                    "limit "+ pageTotalItems+" offset "+(offset-1);
-        } else {
-            caseQuery = " company_id = "+compId+" and branch_id = "+branchId+" and "+searchBy+" like '"+searchWildCard+"%' order by "+sortBy+" desc "+
+        if (Objects.equals(searchBy,"pan") ){
+            caseQuery = "company_id=" +compId + " and branch_id = " + branchId + " and customer_pan = '"+  searchWildCard + "' order by bill_no desc "+
+                    " limit "+ pageTotalItems+" offset "+(offset-1);
+        }
+        if(Objects.equals(searchBy,"date")){
+            caseQuery = "company_id=" +compId + " and branch_id = " + branchId + " and bill_date = CAST( '" + searchWildCard + "' AS DATE)" + " order by bill_no desc "+
+                    " limit "+ pageTotalItems+" offset "+(offset-1);
+        }
+        if(Objects.equals(searchBy,"billNo")){
+            caseQuery  = "company_id=" +compId + " and branch_id = " + branchId + " and bill_no = '" + searchWildCard + "' order by bill_no desc "+
+                    " limit "+ pageTotalItems+" offset "+(offset-1);
+        }
+        if(Objects.equals(searchBy,"customerOrSellerName")){
+            caseQuery  = "company_id=" +compId + " and branch_id = " + branchId + " and customer_name = '" + searchWildCard + "' order by bill_no desc "+
+                    " limit "+ pageTotalItems+" offset "+(offset-1);
+        }
+        if (Objects.equals(searchBy,"month")){
+            caseQuery  = "company_id=" +compId + " and branch_id = " + branchId + " AND bill_date_nepali LIKE '%-" + searchWildCard + "-%'" + " ORDER BY bill_no DESC " +
+                    "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
+        }
+        if (Objects.equals(searchBy,"fiscalYear")){
+            caseQuery  = "company_id=" +compId + " and branch_id = " + branchId + " AND fiscal_year = '" + searchWildCard + "'" + " ORDER BY bill_no DESC " +
+                    "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
+        }
+        if (Objects.equals(searchBy,"dateBetween")){
+            String[] dateArray = searchWildCard.split(" ");
+            String startDate = dateArray[0];
+            String endDate = dateArray[1];
+            caseQuery  = "company_id=" +compId + " and branch_id = " + branchId + " AND bill_date BETWEEN CAST('"+ startDate +"' AS DATE) AND CAST('"+ endDate +"' AS DATE) " + " ORDER BY bill_no DESC " +
+                    "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
+        }
+        if(Objects.equals(searchBy, "") || searchBy.length() == 0 ){
+            caseQuery = " company_id = "+compId+" and branch_id ="+branchId+" order by bill_no "+" desc "+
                     "limit "+ pageTotalItems+" offset "+(offset-1);
         }
         productList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(caseQuery);

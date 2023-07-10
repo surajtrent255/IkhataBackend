@@ -5,6 +5,7 @@ import com.ishanitech.iaccountingrest.dto.DebitNoteDetailsDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -13,8 +14,8 @@ import java.util.List;
 public interface DebitNoteDAO {
 
     @SqlUpdate(" INSERT INTO debit_note( " +
-            " pan_number, receiver_name, receiver_address, bill_number, date, nepali_date , total_amount, total_tax,company_id,branch_id) " +
-            " VALUES (:panNumber, :receiverName, :receiverAddress, :billNumber, :date,:nepaliDate, :totalAmount, :totalTax,:companyId,:branchId);")
+            " pan_number, receiver_name, receiver_address, bill_number, date, nepali_date , total_amount, total_tax,company_id,branch_id,fiscal_year) " +
+            " VALUES (:panNumber, :receiverName, :receiverAddress, :billNumber, :date,:nepaliDate, :totalAmount, :totalTax,:companyId,:branchId,:fiscalYear);")
     @RegisterBeanMapper(DebitNoteDTO.class)
     void addDebitNote(@BindBean DebitNoteDTO debitNoteDTO);
 
@@ -42,4 +43,11 @@ public interface DebitNoteDAO {
             """)
     @RegisterBeanMapper(DebitNoteDTO.class)
     List<DebitNoteDTO> getLimitedDebitNotesByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+
+
+    @SqlQuery("""
+            Select * from debit_note where <caseQuery>
+            """)
+    @RegisterBeanMapper(DebitNoteDTO.class)
+    List<DebitNoteDTO> searchDebitNoteBySearchInput(@Define String caseQuery);
 }
