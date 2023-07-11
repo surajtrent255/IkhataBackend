@@ -2,8 +2,10 @@ package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.CategoryProductDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.AllowUnusedBindings;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -39,5 +41,10 @@ public interface CategoryProductDAO {
     @SqlQuery("SELECT * FROM category WHERE parent_id = :parentId AND deleted = false")
     @RegisterBeanMapper(CategoryProductDTO.class)
     List<CategoryProductDTO> getCategoryByParentId(@Bind int parentId);
+
+    @SqlQuery(""" 
+            select id from category where lower(name) like lower(:searchWildCard) 
+            """)
+    int[] getCategoriesIdsByCloseName(@Bind String searchWildCard);
 }
 

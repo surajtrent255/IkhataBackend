@@ -22,5 +22,7 @@ public class BankWithdrawDTO {
     private  String withdrawType;
     private  Date withdrawDate;
     private String chequeNumber;
+    private String nepaliDate;
+    private Date englishDate;
 
 }

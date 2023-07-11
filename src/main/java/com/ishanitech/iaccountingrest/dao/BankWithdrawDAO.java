@@ -21,7 +21,7 @@ public interface BankWithdrawDAO {
 
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO bank_withdraw ( bank_id, company_id , branch_id , withdraw_amount , withdraw_type , withdraw_date , cheque_number) VALUES ( :bankId, :companyId ,  :branchId ,  :withdrawAmount ,:withdrawType , :withdrawDate, :chequeNumber )")
+    @SqlUpdate("INSERT INTO bank_withdraw ( bank_id, company_id , branch_id , withdraw_amount , withdraw_type , withdraw_date , cheque_number, nepali_date, english_date) VALUES ( :bankId, :companyId ,  :branchId ,  :withdrawAmount ,:withdrawType , :withdrawDate, :chequeNumber, :nepaliDate, :englishDate)")
     int addwithdraw(@BindBean BankWithdrawDTO bankWithdrawDTO);
 
     @SqlUpdate("UPDATE bank_withdraw SET " +

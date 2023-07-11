@@ -23,25 +23,23 @@ public class SalesBillController {
     private final BillService billService;
 
     @GetMapping
-    public ResponseDTO<List<SalesBillDTO>> getAllBills(){
-        try{
-            return new ResponseDTO<List<SalesBillDTO>>(billService.getAllBills());
-        } catch(Exception e) {
-            log.error("Error occured accessing the bill infos : " + e.getMessage());
-            throw new CustomSqlException("Error occured accessing the bill infos : " );
-        }
-    }
-
-//    @GetMapping
-//    public Single<ResponseDTO<Flux<SalesBillDTO>>> getAllBills() {
-//        return Single.fromCallable(() -> billService.getAllBills())
-//                .map(bills -> new ResponseDTO<>(bills))
-//                .subscribeOn(Schedulers.io())
-//                .onErrorResumeNext(throwable -> {
-//                    log.error("Error occurred accessing the bill info: " + throwable.getMessage());
-//                    return Single.error(new CustomSqlException("Error occurred accessing the bill info."));
-//                });
+//    public ResponseDTO<List<SalesBillDTO>> getAllBills(){
+//        try{
+//            return new ResponseDTO<List<SalesBillDTO>>(billService.getAllBills());
+//        } catch(Exception e) {
+//            log.error("Error occured accessing the bill infos : " + e.getMessage());
+//            throw new CustomSqlException("Error occured accessing the bill infos : " );
+//        }
 //    }
+
+    public Single<ResponseDTO<List<SalesBillDTO>>> getAllBills() {
+        return Single.fromCallable(() -> new ResponseDTO<>(billService.getAllBills()))
+                .subscribeOn(Schedulers.io())
+                .onErrorResumeNext(throwable -> {
+                    log.error("Error occurred accessing the bill info: " + throwable.getMessage());
+                    return Single.error(new CustomSqlException("Error occurred accessing the bill info."));
+                });
+    }
 
     @GetMapping("/company")
     public ResponseDTO<List<SalesBillDTO>> getAllBillsByCompId(@RequestParam("compId") int compId, @RequestParam("branchId") int branchId){

@@ -517,7 +517,9 @@ branch_id  int NOT NULL,
 deposit_amount bigint NOT NULL,
 deposit_type VARCHAR(50) NOT NULL,
 submit_date date default current_date,
-cheque_number  VARCHAR(50)
+cheque_number  VARCHAR(50),
+nepali_date varchar(50) not null,
+english_date date not null
 );
 
 CREATE TABLE  bank_withdraw(
@@ -528,7 +530,9 @@ branch_id  int NOT NULL,
 withdraw_amount bigint NOT NULL,
 withdraw_type VARCHAR(50) NOT NULL,
 withdraw_date date default current_date,
-cheque_number  VARCHAR(50)
+cheque_number  VARCHAR(50),
+nepali_date varchar(50) not null,
+english_date date not null
 );
 
 
@@ -805,3 +809,9 @@ id SERIAL,
 	attribute_name VARCHAR(50),
 	company_id INT
 );
+
+
+create table deposit_withdraw_types (
+	id int not null,
+	name varchar not null
+)
