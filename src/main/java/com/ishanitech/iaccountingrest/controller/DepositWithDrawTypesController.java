@@ -22,14 +22,6 @@ public class DepositWithDrawTypesController {
     private final DepositWithDrawTypeService depositWithDrawTypeService;
 
     @GetMapping
-//    public ResponseDTO<List<DepositWithdrawTypesDTO>> getAllDepositWithDrawTypes(){
-//        try{
-//            return new ResponseDTO<List<DepositWithdrawTypesDTO>>(depositWithDrawTypeService.getAllTypesOfDepositWithdraw());
-//        } catch (Exception ex){
-//            log.error("error fetching depositWithDrawTypes ===> " + ex.getMessage());
-//            throw new CustomSqlException(" something went wrong while fetching depositWithDrawTypes ");
-//        }
-//    }
     public Mono<ResponseDTO<List<DepositWithdrawTypesDTO>>> getAllDepositWithDrawTypes() {
         return Mono.fromCallable(() -> new ResponseDTO<>(depositWithDrawTypeService.getAllTypesOfDepositWithdraw()))
                 .onErrorResume(throwable -> {

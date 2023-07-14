@@ -6,6 +6,7 @@ import com.ishanitech.iaccountingrest.service.BankDepositeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -26,6 +27,29 @@ public class BankDepositController {
         }
         return new ResponseDTO<>(BankDepositeService.getAllByBankBankDeposite(companyId,branchId));
     }
+
+    @GetMapping("/single")
+    public Mono<ResponseDTO<BankDepositDTO>> getBankDepositEntity(
+            @RequestParam("compId") Integer companyId,
+            @RequestParam("branchId") Integer branchId,
+            @RequestParam("id") Integer id
+    ){
+
+//        try{
+//            return new ResponseDTO<BankDepositDTO>(BankDepositeService.getSingleBankDeposit(id, companyId, branchId));
+//        } catch(Exception e) {
+//            log.error("Error occured accessing the bill infos : " + e.getMessage());
+//            throw new CustomSqlException("Error occured accessing the bill infos : " );
+//        }
+
+        return Mono.fromCallable(()->  new ResponseDTO<BankDepositDTO>(BankDepositeService.getSingleBankDeposit(id, companyId, branchId))).onErrorResume(
+                throwable -> {
+                log.error("error fetching single bank deposit Info " + throwable.getMessage());
+                return Mono.error(new CustomSqlException(" something went wrong while fetching single bank deposit info"));
+                }
+        );
+    }
+
 
     @GetMapping("/limited")
     public ResponseDTO<List<BankDepositDTO>> getLimitedBillsByCompId(
@@ -59,10 +83,10 @@ public ResponseDTO<?> addBankDeposit(@RequestBody BankDepositDTO bankDepositDTO)
 
 
     @PutMapping
-    public int updateDeposite(@RequestBody BankDepositDTO bankDepositDTO){
+    public ResponseDTO<Integer> updateDeposite(@RequestBody BankDepositDTO bankDepositDTO){
         try{
             BankDepositeService.updateDeposite(bankDepositDTO);
-            return 1;
+            return new ResponseDTO<>(1);
         } catch (Exception e){
             log.error("error while updating deposite it " + e.getMessage());
             throw new CustomSqlException("Something went wrong while updating deposite");

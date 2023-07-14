@@ -13,4 +13,6 @@ public interface BankWithdrawService {
     int deletewithdraw(int branchId, int withdrawId);
 
     List<BankWithdrawDTO> getLimitedBanksWithdrawByCompIdAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+
+    BankWithdrawDTO getSingleBankWithdraw(Integer id, Integer companyId, Integer branchId);
 }

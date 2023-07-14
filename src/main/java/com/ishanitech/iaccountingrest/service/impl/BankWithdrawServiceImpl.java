@@ -72,9 +72,6 @@ public class BankWithdrawServiceImpl implements BankWithdrawService {
             return 0;
 
         }
-
-
-
     }
 
     @Override
@@ -82,6 +79,13 @@ public class BankWithdrawServiceImpl implements BankWithdrawService {
         List<BankWithdrawDTO> withdraws;
         withdraws = dbService.getDao(BankWithdrawDAO.class).getLimitedWithDrawsByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
         return withdraws;
+    }
+
+    @Override
+    public BankWithdrawDTO getSingleBankWithdraw(Integer id, Integer companyId, Integer branchId) {
+        BankWithdrawDTO singleWithDraw;
+        singleWithDraw = dbService.getDao(BankWithdrawDAO.class).getSingleWithDraw(id, companyId, branchId);
+        return singleWithDraw;
     }
 
 

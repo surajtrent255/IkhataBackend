@@ -8,6 +8,7 @@ import com.ishanitech.iaccountingrest.service.BankWithdrawService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -29,6 +30,18 @@ public class BankWithdrawController {
         return new ResponseDTO<>(bankWithdrawService.getAllWithdraw(companyId, branchId));
     }
 
+    @GetMapping("/single")
+    public Mono<ResponseDTO<BankWithdrawDTO>> getSingleBankWithDraw(
+            @RequestParam("id") Integer id,
+            @RequestParam("compId") Integer companyId,
+            @RequestParam("branchId") Integer branchId
+    ){
+        return Mono.fromCallable(()-> new ResponseDTO<BankWithdrawDTO>(bankWithdrawService.getSingleBankWithdraw(id, companyId, branchId)))
+                .onErrorResume(throwable -> {
+                    log.error(" went wrong in getting single Bank WithDraw " + throwable.getMessage());
+                    return Mono.error(new CustomSqlException("Somethiing went wrong while fetching BankWithDrawInfo"));
+                });
+    }
     @GetMapping("/limited")
     public ResponseDTO<List<BankWithdrawDTO>> getLimitedBillsByCompId(
             @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
@@ -55,11 +68,10 @@ public class BankWithdrawController {
 
 
     @PutMapping
-    public int updatewithdraw(@RequestBody BankWithdrawDTO bankWithdrawDTO){
+    public ResponseDTO<Integer> updatewithdraw(@RequestBody BankWithdrawDTO bankWithdrawDTO){
         try{
-
             bankWithdrawService.updatewithdraw(bankWithdrawDTO);
-            return 1;
+            return new ResponseDTO<>(1);
         } catch (Exception e){
             log.error("error while updating deposit it " + e.getMessage());
             throw new CustomSqlException("Something went wrong while updating deposit");

@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.dao;
 
+import com.ishanitech.iaccountingrest.dto.BankDepositDTO;
 import com.ishanitech.iaccountingrest.dto.BankWithdrawDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -25,12 +26,14 @@ public interface BankWithdrawDAO {
     int addwithdraw(@BindBean BankWithdrawDTO bankWithdrawDTO);
 
     @SqlUpdate("UPDATE bank_withdraw SET " +
-            "bank_id = : bankId"+
+            "bank_id = :bankId,"+
             "company_id = :companyId, " +
             "branch_id = :branchId, " +
             "withdraw_amount = :withdrawAmount,"+
             "withdraw_type = :withdrawType,"+
             "withdraw_date = :withdrawDate,"+
+            "nepali_date = :nepaliDate,"+
+            "english_date = :englishDate,"+
             "cheque_number = :chequeNumber"+" WHERE withdraw_id  = :withdrawId ")
 //    @RegisterBeanMapper(BankWithdrawDTO.class)
     void updatewithdraw(@BindBean BankWithdrawDTO bankWithdrawDTO, @Bind int withdrawId);
@@ -44,4 +47,10 @@ public interface BankWithdrawDAO {
             """)
     @RegisterBeanMapper(BankWithdrawDTO.class)
     List<BankWithdrawDTO> getLimitedWithDrawsByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+
+    @SqlQuery("""
+        select * from bank_withdraw bw where bw.company_id = :companyId and bw.branch_id = :branchId and bw.withdraw_id = :id;
+            """)
+    @RegisterBeanMapper(BankWithdrawDTO.class)
+    BankWithdrawDTO getSingleWithDraw(Integer id, Integer companyId, Integer branchId);
 }

@@ -815,3 +815,46 @@ create table deposit_withdraw_types (
 	id int not null,
 	name varchar not null
 )
+
+
+create table employee (
+	sn serial,
+	name varchar(50),
+	designation int not null,
+	panNo int unique,
+	salary real not null,
+	employee_type int not null,
+	married boolean not null,
+	company_id int not null,
+	branch_id int not null,
+	join_date Date not null,
+	entry_date Date default current_date,
+	deleted boolean default false
+);
+
+create table otherIncome (
+	sn serial,
+	source int not null,
+	amount real not null,
+	date Date not null,
+	company_id int not null,
+	deleted boolean default false
+);
+
+
+create table otherIncomeSource(
+	id serial,
+	name varchar(50) not null
+);
+
+create table designation (
+	id serial,
+	title varchar(50) not null,
+	company_id int not null
+);
+
+
+create table employee_type(
+	id serial,
+	name varchar(50)
+)

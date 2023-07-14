@@ -84,6 +84,13 @@ public class BankDepositeServiceImpl implements BankDepositeService {
         return bankDeposits;
     }
 
+    @Override
+    public BankDepositDTO getSingleBankDeposit(Integer id, Integer companyId, Integer branchId) {
+        BankDepositDTO bankDepositEntity;
+        bankDepositEntity = dbService.getDao(BankDepositeServiceDAO.class).getSingleBankDeposit(id, companyId, branchId);
+        return bankDepositEntity;
+    }
+
 }
 
 
