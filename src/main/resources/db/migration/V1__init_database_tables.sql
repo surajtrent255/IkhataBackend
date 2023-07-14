@@ -285,6 +285,7 @@ create table purchase_bill (
     seller_pan varchar(50) not null,
     seller_address varchar(100) not null,
     bill_date Date default current_date not null,
+    bill_date_nepali VARCHAR(20) DEFAULT NULL,
     transactional_date VARCHAR(50) DEFAULT NUll,
     transactional_date_nepali VARCHAR(50) DEFAULT NULL,
     amount real not null,

@@ -66,7 +66,8 @@ public interface PurchaseBillDAO {
             "other,"+
             "other_tax_type,"+
             "transactional_date," +
-            "transactional_date_nepali" +
+            "transactional_date_nepali," +
+            "bill_date_nepali" +
 
          ") values (" +
          " :fiscalYear," +
@@ -103,7 +104,8 @@ public interface PurchaseBillDAO {
             ":other, "+
             ":otherTaxType, "+
             ":transactionalDate," +
-            ":transactionalDateNepali" +
+            ":transactionalDateNepali," +
+            ":billDateNepali" +
 
          ")")
     int addNewPurchaseBill(@BindBean PurchaseBillDTO purchaseBill);
@@ -178,4 +180,39 @@ public interface PurchaseBillDAO {
             """)
     @RegisterBeanMapper(PurchaseBillDTO.class)
     List<PurchaseBillDTO> getLimitedPurchaseBillByCompanyAndBranchId(@Define String caseQuery);
+
+    /*
+    For DashBoard Section
+    return Param totalAmount of today this Month and FiscalYear
+     */
+    @SqlQuery("""
+            select SUM(total_amount) AS totalAmount from purchase_bill where  bill_date = CAST(:todayDate AS DATE) AND company_id = :companyId AND branch_id = :branchId ;
+            """)
+    Double todayTotalPurchaseBillAmount(@Bind String todayDate,@Bind int companyId,@Bind int branchId);
+
+    @SqlQuery("""
+           SELECT SUM(total_amount) FROM purchase_bill WHERE <caseQuery>
+            """)
+    Double  monthTotalPurchaseBillAmount(@Define String caseQuery);
+
+    @SqlQuery("""
+            select SUM(total_amount) FROM purchase_bill where <caseQuery>
+            """)
+    Double fiscalYearTotalPurchaseBillAmount(@Define String caseQuery);
+
+    @SqlQuery("""
+            select SUM(tax_amount) AS totalTax from purchase_bill where  bill_date = CAST(:todayDate AS DATE) AND company_id = :companyId AND branch_id = :branchId ;
+            """)
+    Double todayTotalPurchaseBillTaxAmount(@Bind String todayDate,@Bind int companyId,@Bind int branchId);
+
+    @SqlQuery("""
+           SELECT SUM(tax_amount) AS totalTax FROM purchase_bill WHERE <caseQuery>
+            """)
+    Double  monthTotalPurchaseBillTaxAmount(@Define String caseQuery);
+
+    @SqlQuery("""
+            select SUM(tax_amount) AS totalTax FROM purchase_bill where <caseQuery>
+            """)
+    Double fiscalYearTotalPurchaseBillTaxAmount(@Define String caseQuery);
+
 }

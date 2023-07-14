@@ -18,4 +18,9 @@ public interface StockService {
     void updateStockByCompAndProdId(StockDTO stockDTO);
 
     StockDTO getStockBYProductId(int ProductId);
+
+    List<String> getTopFiveStock();
+
+    List<String> getLeastFiveStock();
+
 }

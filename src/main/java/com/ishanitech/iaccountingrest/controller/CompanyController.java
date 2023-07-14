@@ -189,4 +189,48 @@ public class CompanyController {
         }
     }
 
+        /*
+    controller for total Amount (today , this month, this year)
+    @param date
+     */
+
+    @GetMapping("/date/today")
+    public ResponseDTO<Integer> getTodayTotalSalesBillAmount(@RequestParam("todayDate")String todayDate,
+                                                            @RequestParam("companyId") int companyId)
+                                                            {
+        try {
+            return new ResponseDTO<>(companyService.customerAddedToday(todayDate,companyId));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/month")
+    public ResponseDTO<Integer> getThisMonthTotalSalesBillAmount(@RequestParam("month")String month,
+                                                                @RequestParam("companyId") int companyId)
+                                                               {
+        try {
+            return new ResponseDTO<>(companyService.customerAddedInMonth(month,companyId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/fiscalYear")
+    public ResponseDTO<Integer> getThisFiscalYearTotalSalesBillAmount(@RequestParam("fiscalYear")String fiscalYear,
+                                                                     @RequestParam("companyId") int companyId)
+                                                                    {
+        try {
+            return new ResponseDTO<>(companyService.customerAddedThisYear(fiscalYear,companyId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
 }

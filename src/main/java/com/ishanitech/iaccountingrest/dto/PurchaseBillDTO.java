@@ -26,6 +26,7 @@ public class PurchaseBillDTO {
 
     private String sellerAddress;
     private Date billDate  ;
+    private String billDateNepali;
     private String transactionalDate;
     private String transactionalDateNepali;
     private double amount ;

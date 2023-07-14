@@ -104,6 +104,47 @@ public class BillServiceImpl implements BillService {
         productList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(caseQuery);
         return productList;
     }
+
+    @Override
+    public Double todayTotalSalesBillAmount(String todayDate,int companyId,int branchId) {
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        return salesBillDAO.todayTotalSalesBillAmount(todayDate,companyId,branchId);
+    }
+
+    @Override
+    public Double ThisMonthTotalSalesBillAmount(String month, int companyId, int branchId) {
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        String   caseQuery  = "company_id=" +companyId + " and branch_id = " + branchId + " AND bill_date_nepali LIKE '%-" + month + "-%'" ;
+        return salesBillDAO.monthTotalSalesBillAmount(caseQuery);
+    }
+
+    @Override
+    public Double fiscalYearTotalSalesBillAmount(String fiscalYear, int companyId, int branchId) {
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        String caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " AND fiscal_year LIKE '%" + fiscalYear + "%'";
+        return salesBillDAO.fiscalYearTotalSalesBillAmount(caseQuery);
+    }
+
+    @Override
+    public Double todayTotalSalesBillTaxAmount(String todayDate, int companyId, int branchId) {
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        return salesBillDAO.todayTotalSalesBillTaxAmount(todayDate,companyId,branchId);
+    }
+
+    @Override
+    public Double ThisMonthTotalSalesBillTaxAmount(String month, int companyId, int branchId) {
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        String   caseQuery  = "company_id=" +companyId + " and branch_id = " + branchId + " AND bill_date_nepali LIKE '%-" + month + "-%'" ;
+        return salesBillDAO.monthTotalSalesBillTaxAmount(caseQuery);
+    }
+
+    @Override
+    public Double fiscalYearTotalSalesBillTaxAmount(String fiscalYear, int companyId, int branchId) {
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        String caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " AND fiscal_year LIKE '%" + fiscalYear + "%'";
+        return salesBillDAO.fiscalYearTotalSalesBillTaxAmount(caseQuery);
+    }
+
     @Transactional
     @Override
     public Object approveTheBillById(int billId) {

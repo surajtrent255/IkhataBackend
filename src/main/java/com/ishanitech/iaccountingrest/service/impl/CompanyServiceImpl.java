@@ -10,6 +10,7 @@ import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.utils.HostDetailsUtil;
 import org.jdbi.v3.core.JdbiException;
 import lombok.extern.slf4j.Slf4j;
+import org.jdbi.v3.core.mapper.ColumnMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -192,5 +193,25 @@ companyDAO.deleteCompany(companyId);
     public void editCompanyLogo(String imageName, int companyId) {
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
         companyDAO.editCompanyLogo(imageName,companyId);
+    }
+
+    @Override
+    public Integer customerAddedToday(String todayDate, int companyId) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        return companyDAO.customerAddedToday(todayDate,companyId);
+    }
+
+    @Override
+    public Integer customerAddedInMonth(String month, int companyId) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        String   caseQuery  = "company_id=" +companyId + " AND customer='true' AND created_date_nepali LIKE '%-" + month + "-%'" ;
+        return companyDAO.customerAddedInMonth(caseQuery);
+    }
+
+    @Override
+    public Integer customerAddedThisYear(String fiscalYear, int companyId) {
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        String   caseQuery  = "company_id=" +companyId + " AND customer='true' AND created_date_nepali LIKE '%" + fiscalYear + "%'" ;
+        return companyDAO.customerAddedThisYear(caseQuery);
     }
 }

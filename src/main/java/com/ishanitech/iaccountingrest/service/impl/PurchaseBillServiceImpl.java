@@ -89,4 +89,45 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
         purchaseReportDTO.setPurchaseBillDetailWithProdInfos(purchaseBillDetailsWithProd);
         return purchaseReportDTO;
     }
+
+    @Override
+    public Double todayTotalPurchaseBillAmount(String todayDate, int companyId, int branchId) {
+        PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        return purchaseBillDAO.todayTotalPurchaseBillAmount(todayDate,companyId,branchId);
+    }
+
+    @Override
+    public Double ThisMonthTotalPurchaseBillAmount(String month, int companyId, int branchId) {
+        PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        String   caseQuery  = "company_id=" +companyId + " and branch_id = " + branchId + " AND bill_date_nepali LIKE '%-" + month + "-%'" ;
+        return purchaseBillDAO.monthTotalPurchaseBillAmount(caseQuery);
+    }
+
+    @Override
+    public Double fiscalYearTotalPurchaseBillAmount(String fiscalYear, int companyId, int branchId) {
+        PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        String caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " AND fiscal_year LIKE '%" + fiscalYear + "%'";
+        return purchaseBillDAO.fiscalYearTotalPurchaseBillAmount(caseQuery);
+    }
+
+    @Override
+    public Double todayTotalPurchaseBillTaxAmount(String todayDate, int companyId, int branchId) {
+        PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        return purchaseBillDAO.todayTotalPurchaseBillTaxAmount(todayDate,companyId,branchId);
+    }
+
+    @Override
+    public Double ThisMonthTotalPurchaseBillTaxAmount(String month, int companyId, int branchId) {
+        PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        String   caseQuery  = "company_id=" +companyId + " and branch_id = " + branchId + " AND bill_date_nepali LIKE '%-" + month + "-%'" ;
+        return purchaseBillDAO.monthTotalPurchaseBillTaxAmount(caseQuery);
+    }
+
+    @Override
+    public Double fiscalYearTotalPurchaseBillTaxAmount(String fiscalYear, int companyId, int branchId) {
+        PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        String caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " AND fiscal_year LIKE '%" + fiscalYear + "%'";
+        return purchaseBillDAO.fiscalYearTotalPurchaseBillTaxAmount(caseQuery);
+
+    }
 }

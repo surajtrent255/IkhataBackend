@@ -4,10 +4,12 @@ import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BillService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +96,91 @@ public class SalesBillController {
         } catch(Exception ex){
             log.error("error occured while updating printing info");
             throw new CustomSqlException("Something went wrong while updating printing info");
+        }
+    }
+
+    /*
+    controller for total Amount (today , this month, this year)
+    @param date
+     */
+
+    @GetMapping("/date/today")
+    public ResponseDTO<Double> getTodayTotalSalesBillAmount(@RequestParam("todayDate")String todayDate,
+                                                            @RequestParam("companyId") int companyId,
+                                                            @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(billService.todayTotalSalesBillAmount(todayDate,companyId,branchId));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/month")
+    public ResponseDTO<Double> getThisMonthTotalSalesBillAmount(@RequestParam("month")String month,
+                                                            @RequestParam("companyId") int companyId,
+                                                            @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(billService.ThisMonthTotalSalesBillAmount(month,companyId,branchId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/fiscalYear")
+    public ResponseDTO<Double> getThisFiscalYearTotalSalesBillAmount(@RequestParam("fiscalYear")String fiscalYear,
+                                                                @RequestParam("companyId") int companyId,
+                                                                @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(billService.fiscalYearTotalSalesBillAmount(fiscalYear,companyId,branchId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/tax/today")
+    public ResponseDTO<Double> getTodayTotalSalesBillTaxAmount(@RequestParam("todayDate")String todayDate,
+                                                            @RequestParam("companyId") int companyId,
+                                                            @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(billService.todayTotalSalesBillTaxAmount(todayDate,companyId,branchId));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/tax/month")
+    public ResponseDTO<Double> getThisMonthTotalSalesBillTaxAmount(@RequestParam("month")String month,
+                                                                @RequestParam("companyId") int companyId,
+                                                                @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(billService.ThisMonthTotalSalesBillTaxAmount(month,companyId,branchId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/tax/fiscalYear")
+    public ResponseDTO<Double> getThisFiscalYearTotalSalesBillTaxAmount(@RequestParam("fiscalYear")String fiscalYear,
+                                                                     @RequestParam("companyId") int companyId,
+                                                                     @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(billService.fiscalYearTotalSalesBillTaxAmount(fiscalYear,companyId,branchId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
         }
     }
 

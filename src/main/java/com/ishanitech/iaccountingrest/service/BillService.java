@@ -2,6 +2,7 @@ package com.ishanitech.iaccountingrest.service;
 
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BillService {
@@ -19,4 +20,18 @@ public interface BillService {
         Object approveTheBillById(int billId);
 
         List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, Integer compId, Integer branchId);
+
+        Double todayTotalSalesBillAmount(String todayDate,int companyId,int branchId);
+
+        Double ThisMonthTotalSalesBillAmount(String month,int companyId,int branchId);
+
+        Double fiscalYearTotalSalesBillAmount(String fiscalYear,int companyId,int branchId);
+
+        Double todayTotalSalesBillTaxAmount(String todayDate,int companyId,int branchId);
+
+        Double ThisMonthTotalSalesBillTaxAmount(String month,int companyId,int branchId);
+
+        Double fiscalYearTotalSalesBillTaxAmount(String fiscalYear,int companyId,int branchId);
+
+
 }
