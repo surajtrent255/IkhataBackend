@@ -1,15 +1,15 @@
 package com.ishanitech.iaccountingrest.controller;
 
-import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BillService;
-import lombok.Data;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,13 +22,22 @@ public class SalesBillController {
     private final BillService billService;
 
     @GetMapping
-    public ResponseDTO<List<SalesBillDTO>> getAllBills(){
-        try{
-            return new ResponseDTO<List<SalesBillDTO>>(billService.getAllBills());
-        } catch(Exception e) {
-            log.error("Error occured accessing the bill infos : " + e.getMessage());
-            throw new CustomSqlException("Error occured accessing the bill infos : " );
-        }
+//    public ResponseDTO<List<SalesBillDTO>> getAllBills(){
+//        try{
+//            return new ResponseDTO<List<SalesBillDTO>>(billService.getAllBills());
+//        } catch(Exception e) {
+//            log.error("Error occured accessing the bill infos : " + e.getMessage());
+//            throw new CustomSqlException("Error occured accessing the bill infos : " );
+//        }
+//    }
+
+    public Single<ResponseDTO<List<SalesBillDTO>>> getAllBills() {
+        return Single.fromCallable(() -> new ResponseDTO<>(billService.getAllBills()))
+                .subscribeOn(Schedulers.io())
+                .onErrorResumeNext(throwable -> {
+                    log.error("Error occurred accessing the bill info: " + throwable.getMessage());
+                    return Single.error(new CustomSqlException("Error occurred accessing the bill info."));
+                });
     }
 
     @GetMapping("/company")

@@ -28,6 +28,13 @@ public class BillServiceImpl implements BillService {
         return dbService.getDao(SalesBillDAO.class).getAllBills();
     }
 
+//    @Override
+//    public Flux<SalesBillDTO> getAllBills() {
+//        return Flux.defer(() -> Flux.fromIterable(dbService.getDao(SalesBillDAO.class).getAllBills()));
+//    }
+
+
+
     @Override
     public SalesBillDTO getBillById(int id) {
         return dbService.getDao(SalesBillDAO.class).getBillById(id);

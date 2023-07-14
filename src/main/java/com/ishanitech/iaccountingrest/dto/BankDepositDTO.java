@@ -18,7 +18,9 @@ public class BankDepositDTO {
     private  int branchId;
     private  int depositAmount;
     private  String depositType;
-    private Date submiteDate;
+    private Date submitDate;
     private  Long chequeNumber ;
+    private String nepaliDate;
+    private Date englishDate;
 
 }

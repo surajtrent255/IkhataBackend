@@ -23,19 +23,22 @@ public interface BankDepositeServiceDAO {
 
 
     @GetGeneratedKeys
-    @SqlUpdate("INSERT INTO bank_deposit( bank_id, company_id, branch_id, deposit_amount, deposit_type , submit_date ,cheque_number) " +
-            "VALUES (:bankId, :companyId,  :branchId, :depositAmount,:depositType,:submiteDate, :chequeNumber)")
+    @SqlUpdate("INSERT INTO bank_deposit( bank_id, company_id, branch_id, deposit_amount, deposit_type , submit_date ,cheque_number, nepali_date, english_date) " +
+            "VALUES (:bankId, :companyId,  :branchId, :depositAmount,:depositType,:submiteDate, :chequeNumber, :nepaliDate, :englishDate)")
     int addBankDeposit(@BindBean BankDepositDTO BankDepositeDTO);
 
 
 
-        @SqlUpdate("UPDATE bank_deposit SET " +
-        "bank_id= :bankId, " +
-        "company_id = :companyId, " +
-        "branch_id = :branchId,"+
-        "deposit_amount = :depositAmount,"+
-        "deposit_type = :depositType,"+
-        "cheque_number = :chequeNumber"+" WHERE deposit_id  = :depositId ")
+@SqlUpdate("UPDATE bank_deposit SET " +
+"bank_id= :bankId, " +
+"company_id = :companyId, " +
+"branch_id = :branchId,"+
+"deposit_amount = :depositAmount,"+
+"deposit_type = :depositType,"+
+        "submit_date = :submitDate,"+
+        "nepali_date = :nepaliDate,"+
+        "english_date = :englishDate,"+
+"cheque_number = :chequeNumber"+" WHERE deposit_id  = :depositId ")
     int updateDeposite(@BindBean BankDepositDTO bankDepositeDTO, @Bind int depositId);
     @SqlQuery("DELETE FROM bank_deposit WHERE  branch_id= :branchId AND deposit_id= :depositId")
     int deleteDeposite(@Bind int branchId ,@Bind int depositId);
@@ -45,4 +48,10 @@ public interface BankDepositeServiceDAO {
             """)
     @RegisterBeanMapper(BankDepositDTO.class)
     List<BankDepositDTO> getLimitedBankDepositByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+
+    @SqlQuery("""
+        select * from bank_deposit bd where bd.company_id = :companyId and bd.branch_id = :branchId and bd.deposit_id = :id;
+            """)
+    @RegisterBeanMapper(BankDepositDTO.class)
+    BankDepositDTO getSingleBankDeposit(Integer id, Integer companyId, Integer branchId);
 }

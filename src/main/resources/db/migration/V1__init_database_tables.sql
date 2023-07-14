@@ -518,7 +518,9 @@ branch_id  int NOT NULL,
 deposit_amount bigint NOT NULL,
 deposit_type VARCHAR(50) NOT NULL,
 submit_date date default current_date,
-cheque_number  VARCHAR(50)
+cheque_number  VARCHAR(50),
+nepali_date varchar(50) not null,
+english_date date not null
 );
 
 CREATE TABLE  bank_withdraw(
@@ -529,7 +531,9 @@ branch_id  int NOT NULL,
 withdraw_amount bigint NOT NULL,
 withdraw_type VARCHAR(50) NOT NULL,
 withdraw_date date default current_date,
-cheque_number  VARCHAR(50)
+cheque_number  VARCHAR(50),
+nepali_date varchar(50) not null,
+english_date date not null
 );
 
 
@@ -806,3 +810,52 @@ id SERIAL,
 	attribute_name VARCHAR(50),
 	company_id INT
 );
+
+
+create table deposit_withdraw_types (
+	id int not null,
+	name varchar not null
+)
+
+
+create table employee (
+	sn serial,
+	name varchar(50),
+	designation int not null,
+	panNo int unique,
+	salary real not null,
+	employee_type int not null,
+	married boolean not null,
+	company_id int not null,
+	branch_id int not null,
+	join_date Date not null,
+	entry_date Date default current_date,
+	deleted boolean default false
+);
+
+create table otherIncome (
+	sn serial,
+	source int not null,
+	amount real not null,
+	date Date not null,
+	company_id int not null,
+	deleted boolean default false
+);
+
+
+create table otherIncomeSource(
+	id serial,
+	name varchar(50) not null
+);
+
+create table designation (
+	id serial,
+	title varchar(50) not null,
+	company_id int not null
+);
+
+
+create table employee_type(
+	id serial,
+	name varchar(50)
+)

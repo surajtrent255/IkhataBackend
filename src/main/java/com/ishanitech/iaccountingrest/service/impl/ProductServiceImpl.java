@@ -1,9 +1,6 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
-import com.ishanitech.iaccountingrest.dao.ProductDAO;
-import com.ishanitech.iaccountingrest.dao.PurchaseBillDAO;
-import com.ishanitech.iaccountingrest.dao.PurchaseBillDetailDAO;
-import com.ishanitech.iaccountingrest.dao.StockDAO;
+import com.ishanitech.iaccountingrest.dao.*;
 import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDetailDTO;
@@ -162,7 +159,21 @@ public class ProductServiceImpl implements ProductService {
             caseQuery = "and p.company_id = " + compId + " and p.branch_id = " + branchId + " and p." + searchBy
                     + " = '" + searchWildCard + "' order by " + sortBy + " desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
-        } else {
+        } else if(searchBy.equals("category_id")){
+            int [] catIds =
+                    dbService.getDao(CategoryProductDAO.class).getCategoriesIdsByCloseName("%"+searchWildCard+"%");
+            String categoryIds = "";
+            for (int i = 0; i < catIds.length; i++) {
+                categoryIds += catIds[i] + ",";
+
+            }
+            String newCatIds = categoryIds.substring(0, categoryIds.length() - 1);
+            caseQuery = "and p.company_id = " + compId + " and p.branch_id = " + branchId + " and p." + searchBy
+                    + " in ( " + newCatIds + ")  order by " + sortBy + " desc " +
+                    "limit " + pageTotalItems + " offset " + (offset - 1);
+
+        }
+        else {
             caseQuery = "and p.company_id = " + compId + " and p.branch_id = " + branchId + " and lower(p." + searchBy
                     + ") like lower('" + searchWildCard + "%') order by " + sortBy + " desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
