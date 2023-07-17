@@ -52,6 +52,90 @@ public class PurchaseBillController {
         }
     }
 
+    /*
+    controller for total Amount (today , this month, this year)
+    @param date
+     */
+
+    @GetMapping("/date/today")
+    public ResponseDTO<Double> getTodayTotalSalesBillAmount(@RequestParam("todayDate")String todayDate,
+                                                            @RequestParam("companyId") int companyId,
+                                                            @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(purchaseBillService.todayTotalPurchaseBillAmount(todayDate,companyId,branchId));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/month")
+    public ResponseDTO<Double> getThisMonthTotalSalesBillAmount(@RequestParam("month")String month,
+                                                                @RequestParam("companyId") int companyId,
+                                                                @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(purchaseBillService.ThisMonthTotalPurchaseBillAmount(month,companyId,branchId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/fiscalYear")
+    public ResponseDTO<Double> getThisFiscalYearTotalSalesBillAmount(@RequestParam("fiscalYear")String fiscalYear,
+                                                                     @RequestParam("companyId") int companyId,
+                                                                     @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(purchaseBillService.fiscalYearTotalPurchaseBillAmount(fiscalYear,companyId,branchId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/tax/today")
+    public ResponseDTO<Double> getTodayTotalSalesBillTaxAmount(@RequestParam("todayDate")String todayDate,
+                                                            @RequestParam("companyId") int companyId,
+                                                            @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(purchaseBillService.todayTotalPurchaseBillTaxAmount(todayDate,companyId,branchId));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/tax/month")
+    public ResponseDTO<Double> getThisMonthTotalSalesBillTaxAmount(@RequestParam("month")String month,
+                                                                @RequestParam("companyId") int companyId,
+                                                                @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(purchaseBillService.ThisMonthTotalPurchaseBillTaxAmount(month,companyId,branchId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/date/tax/fiscalYear")
+    public ResponseDTO<Double> getThisFiscalYearTotalSalesBillTaxAmount(@RequestParam("fiscalYear")String fiscalYear,
+                                                                     @RequestParam("companyId") int companyId,
+                                                                     @RequestParam("branchId") int branchId){
+        try {
+            return new ResponseDTO<>(purchaseBillService.fiscalYearTotalPurchaseBillTaxAmount(fiscalYear,companyId,branchId));
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseDTO<PurchaseBillDTO> getSinglePurchasBillInfo(@PathVariable("id") Integer id){

@@ -80,4 +80,27 @@ public interface StockDAO {
             """)
     void updateStockWhileSplitAgainForChild(int newStockDataForChild, int id);
 
+    /*
+    For Dashboard Section
+     */
+    @SqlQuery("""
+            SELECT product.name
+            FROM stock
+            inner Join product
+            on stock.product_id = product.id
+            ORDER BY qty DESC
+            LIMIT 5;
+            """)
+    List<String> getTopFiveMaxStock();
+
+    @SqlQuery("""
+            SELECT product.name
+            FROM stock
+            inner Join product
+            on stock.product_id = product.id
+            ORDER BY qty ASC
+            LIMIT 5;
+            """)
+    List<String> getLastFiveMaxStock();
+
 }

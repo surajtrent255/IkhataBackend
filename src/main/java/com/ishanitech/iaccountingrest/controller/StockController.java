@@ -87,6 +87,26 @@ public class StockController {
         }
     }
 
+    @GetMapping("/top")
+    public ResponseDTO<List<String>> getTopFiveStock(){
+        try{
+            return new ResponseDTO<>(stockService.getTopFiveStock());
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/last")
+    public ResponseDTO<List<String>> getLastFiveStock(){
+        try{
+            return new ResponseDTO<>(stockService.getLeastFiveStock());
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
 }
 
 

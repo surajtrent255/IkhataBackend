@@ -3,6 +3,8 @@ package com.ishanitech.iaccountingrest.service;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyLogoDTO;
+import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.customizer.Define;
 
 import java.util.List;
 
@@ -33,6 +35,15 @@ public interface CompanyService {
     void editCompany( CompanyDTO companyDTO);
 
     void editCompanyLogo( String imageName, int companyId);
+
+    Integer customerAddedToday( String todayDate,  int companyId);
+
+    Integer  customerAddedInMonth( String month,int companyId);
+
+    Integer customerAddedThisYear( String fiscalYear,int companyId);
+
+
+
 
 
 }

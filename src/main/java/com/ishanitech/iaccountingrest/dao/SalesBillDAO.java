@@ -242,4 +242,40 @@ public interface SalesBillDAO {
     void makeDraftFalse(String billNo, int billId);
     //mj printedBy ? id or name
 
+    /*
+    * for dashboard Section
+    * @param totalAmount for today , this month , this year
+    * */
+
+    @SqlQuery("""
+            select SUM(total_amount) AS totalAmount from sales_bill where  bill_date = CAST(:todayDate AS DATE) AND company_id = :companyId AND branch_id = :branchId ;
+            """)
+    Double todayTotalSalesBillAmount(@Bind String todayDate,@Bind int companyId,@Bind int branchId);
+
+    @SqlQuery("""
+           SELECT SUM(total_amount) FROM sales_bill WHERE <caseQuery>
+            """)
+    Double  monthTotalSalesBillAmount(@Define String caseQuery);
+
+    @SqlQuery("""
+            select SUM(total_amount) FROM sales_bill where <caseQuery>
+            """)
+    Double fiscalYearTotalSalesBillAmount(@Define String caseQuery);
+
+
+    @SqlQuery("""
+            select SUM(tax_amount) AS totalAmount from sales_bill where  bill_date = CAST(:todayDate AS DATE) AND company_id = :companyId AND branch_id = :branchId ;
+            """)
+    Double todayTotalSalesBillTaxAmount(@Bind String todayDate,@Bind int companyId,@Bind int branchId);
+
+    @SqlQuery("""
+           SELECT SUM(tax_amount) FROM sales_bill WHERE <caseQuery>
+            """)
+    Double  monthTotalSalesBillTaxAmount(@Define String caseQuery);
+
+    @SqlQuery("""
+            select SUM(tax_amount) FROM sales_bill where <caseQuery>
+            """)
+    Double fiscalYearTotalSalesBillTaxAmount(@Define String caseQuery);
+
 }

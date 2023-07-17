@@ -6,6 +6,7 @@ import com.ishanitech.iaccountingrest.dto.CompanyLogoDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -203,5 +204,24 @@ public interface CompanyDAO {
             	WHERE company_id = :companyId;
             """)
     void editCompanyLogo(@Bind String imageName,@Bind int companyId);
+
+    /*
+ For DashBoard Section
+ return Param totalAmount of today this Month and FiscalYear
+  */
+    @SqlQuery("""
+            select COUNT(customer) from company where customer='true' and created_date = CAST(:todayDate AS DATE) and company_id = :companyId;
+            """)
+    Integer customerAddedToday(@Bind String todayDate,@Bind int companyId);
+
+    @SqlQuery("""
+           select COUNT(customer) from company  WHERE <caseQuery>
+            """)
+    Integer  customerAddedInMonth(@Define String caseQuery);
+
+    @SqlQuery("""
+            select COUNT(customer) from company  WHERE <caseQuery>
+            """)
+    Integer customerAddedThisYear(@Define String caseQuery);
 
 }
