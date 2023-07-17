@@ -850,7 +850,9 @@ create table otherIncomeSource(
 create table designation (
 	id serial,
 	title varchar(50) not null,
-	company_id int not null
+	company_id int not null,
+	branch_id int not null,
+	deleted boolean not null
 );
 
 

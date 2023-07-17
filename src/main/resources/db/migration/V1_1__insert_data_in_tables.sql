@@ -290,3 +290,10 @@ INSERT INTO public.purchase_additional_attributes(
 
 insert into deposit_withdraw_types values(1, 'Cheque'), (2, 'Cash'), (3, 'Online');
 
+INSERT INTO public.employee_type(
+	id, name)
+	VALUES (1, 'Part Time'),(2, 'Full Time');
+
+INSERT INTO public.designation(
+	id, title, company_id, branch_id)
+	VALUES (1, 'Jr Developer', 1, 0);

@@ -21,8 +21,7 @@ public class EmployeeController {
 
     @GetMapping
     public Mono<ResponseDTO<List<EmployeeDTO>>> getAllEmployees( @RequestParam("compId") Integer companyId,
-                                                                @RequestParam("branchId") Integer branchId){
-        return Mono.fromCallable(()-> new ResponseDTO<List<EmployeeDTO>>(employeeService.getAllEmployees(companyId, branchId)))
+                                                                @RequestParam("branchId") Integer branchId){return Mono.fromCallable(()-> new ResponseDTO<List<EmployeeDTO>>(employeeService.getAllEmployees(companyId, branchId)))
                 .onErrorResume(throwable -> {
                     log.error("something went wrong  while fetching all employees => "+throwable.getMessage());
                     return Mono.error(new CustomSqlException("some thing went wrong "));
