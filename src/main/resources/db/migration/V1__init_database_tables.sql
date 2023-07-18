@@ -829,6 +829,7 @@ create table employee (
 	company_id int not null,
 	branch_id int not null,
 	join_date Date not null,
+	join_date_nepali varchar(50) not null,
 	entry_date Date default current_date,
 	deleted boolean default false
 );
@@ -853,7 +854,7 @@ create table designation (
 	title varchar(50) not null,
 	company_id int not null,
 	branch_id int not null,
-	deleted boolean not null
+	deleted boolean default false not null
 );
 
 

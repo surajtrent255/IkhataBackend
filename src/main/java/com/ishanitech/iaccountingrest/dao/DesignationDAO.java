@@ -11,12 +11,11 @@ import java.util.List;
 
 public interface DesignationDAO {
 
-    @SqlQuery("SELECT * FROM designation WHERE companyId = :companyId AND branchId = :branchId")
+    @SqlQuery("SELECT * FROM designation WHERE company_id = :companyId AND branch_id = :branchId")
     @RegisterBeanMapper(DesignationDTO.class)
     List<DesignationDTO> getALlDesignations(Integer companyId, Integer branchId);
 
-    @SqlUpdate("INSERT INTO designation (title, companyId, branchId) VALUES (:title, :companyId, :branchId)")
+    @SqlUpdate("INSERT INTO designation (title, company_id, branch_id) VALUES (:title, :companyId, :branchId)")
     @GetGeneratedKeys
-    int insertDesignation(@BindBean DesignationDTO designation);
-    int addNewDesignation(DesignationDTO designation);
+    int addNewDesignation(@BindBean DesignationDTO designation);
 }

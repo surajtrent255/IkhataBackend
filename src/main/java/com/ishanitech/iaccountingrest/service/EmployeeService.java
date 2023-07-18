@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.service;
 
 import com.ishanitech.iaccountingrest.dto.EmployeeDTO;
+import com.ishanitech.iaccountingrest.dto.EmployeeTypeDTO;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface EmployeeService {
     void updateGivenEmployee(EmployeeDTO employeeDTO);
 
     void deleteEmployeeById(Integer id, Integer companyId, Integer branchId);
+
+    List<EmployeeTypeDTO> getAllEmployeeType();
 }
