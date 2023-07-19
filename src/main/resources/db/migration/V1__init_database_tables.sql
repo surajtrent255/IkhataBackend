@@ -862,3 +862,21 @@ create table employee_type(
 	id serial,
 	name varchar(50)
 )
+
+CREATE TABLE other_income (
+  sn SERIAL PRIMARY KEY,
+  source INTEGER,
+  amount NUMERIC,
+  date_english DATE,
+  date_nepali VARCHAR(255),
+  company_id INTEGER,
+  branch_id INTEGER,
+  deleted BOOLEAN DEFAULT FALSE NOT NULL
+);
+
+CREATE TABLE other_income_source (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  company_id INTEGER,
+  branch_id INTEGER
+);

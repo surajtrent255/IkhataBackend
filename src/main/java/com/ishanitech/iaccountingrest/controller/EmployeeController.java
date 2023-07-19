@@ -59,14 +59,6 @@ public class EmployeeController {
                return Mono.error(new CustomSqlException("Something went wrong"));
            }
        });
-
-//        Mono.defer(()-> {
-//            employeeService.updateGivenEmployee(employeeDTO);
-//            return Mono.empty();
-//        }).onErrorResume(throwable -> {
-//            log.error("something went wrong while updating given employee "+throwable.getMessage());
-//           return Mono.error(new CustomSqlException(("something went wrong")));
-//        });
     }
 
     @DeleteMapping("/{id}")
