@@ -2,12 +2,14 @@ package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.EmployeeDAO;
 import com.ishanitech.iaccountingrest.dto.EmployeeDTO;
+import com.ishanitech.iaccountingrest.dto.EmployeeTypeDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.EmailService;
 import com.ishanitech.iaccountingrest.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +36,7 @@ public class EmployeeServiceImpl  implements EmployeeService {
     @Override
     public Integer insertNewEmployee(EmployeeDTO employee) {
         EmployeeDAO employeeDAO = dbService.getDao(EmployeeDAO.class);
+        employee.setEntryDate(new Date());
         int id;
         id = employeeDAO.addNewAnotherEmployee(employee);
         return id;
@@ -50,5 +53,14 @@ public class EmployeeServiceImpl  implements EmployeeService {
     public void deleteEmployeeById(Integer id, Integer companyId, Integer branchId) {
         EmployeeDAO employeeDAO = dbService.getDao(EmployeeDAO.class);
         employeeDAO.deleteParticularEmployee(id, companyId, branchId);
+    }
+
+    @Override
+    public List<EmployeeTypeDTO> getAllEmployeeType() {
+        EmployeeDAO employeeDAO = dbService.getDao(EmployeeDAO.class);
+        List<EmployeeTypeDTO> employeeTypeDTOS;
+        employeeTypeDTOS = employeeDAO.getAllEmployeeTypes();
+        return employeeTypeDTOS;
+
     }
 }

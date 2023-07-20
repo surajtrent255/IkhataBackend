@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.EmployeeDTO;
+import com.ishanitech.iaccountingrest.dto.EmployeeTypeDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.EmployeeService;
@@ -21,8 +22,7 @@ public class EmployeeController {
 
     @GetMapping
     public Mono<ResponseDTO<List<EmployeeDTO>>> getAllEmployees( @RequestParam("compId") Integer companyId,
-                                                                @RequestParam("branchId") Integer branchId){
-        return Mono.fromCallable(()-> new ResponseDTO<List<EmployeeDTO>>(employeeService.getAllEmployees(companyId, branchId)))
+                                                                @RequestParam("branchId") Integer branchId){return Mono.fromCallable(()-> new ResponseDTO<List<EmployeeDTO>>(employeeService.getAllEmployees(companyId, branchId)))
                 .onErrorResume(throwable -> {
                     log.error("something went wrong  while fetching all employees => "+throwable.getMessage());
                     return Mono.error(new CustomSqlException("some thing went wrong "));
@@ -59,14 +59,6 @@ public class EmployeeController {
                return Mono.error(new CustomSqlException("Something went wrong"));
            }
        });
-
-//        Mono.defer(()-> {
-//            employeeService.updateGivenEmployee(employeeDTO);
-//            return Mono.empty();
-//        }).onErrorResume(throwable -> {
-//            log.error("something went wrong while updating given employee "+throwable.getMessage());
-//           return Mono.error(new CustomSqlException(("something went wrong")));
-//        });
     }
 
     @DeleteMapping("/{id}")
@@ -78,6 +70,17 @@ public class EmployeeController {
         }).onErrorResume(throwable -> {
             log.error("something went wrong while deleting given employee " + throwable.getMessage());
             return Mono.error(new CustomSqlException("something went wrong"));
-        });
+        }).subscribe();
+    }
+
+
+    @GetMapping("/types")
+    public Mono<ResponseDTO<List<EmployeeTypeDTO>>> getALlEmployeeTypes(){
+        return Mono.fromCallable(()-> new ResponseDTO<List<EmployeeTypeDTO>>(employeeService.getAllEmployeeType()))
+                .onErrorResume(throwable -> {
+                   log.error("error fetching employee type ===> "+ throwable.getMessage());
+                   return Mono.error(new CustomSqlException("something went wrong"));
+                });
+
     }
 }

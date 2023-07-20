@@ -21,6 +21,7 @@ public class EmployeeDTO {
     private Integer companyId;
     private Integer branchId;
     private Date joinDate;
+    private String joinDateNepali;
     private Date entryDate;
     private boolean deleted;
 }

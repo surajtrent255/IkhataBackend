@@ -828,6 +828,7 @@ create table employee (
 	company_id int not null,
 	branch_id int not null,
 	join_date Date not null,
+	join_date_nepali varchar(50) not null,
 	entry_date Date default current_date,
 	deleted boolean default false
 );
@@ -850,7 +851,9 @@ create table otherIncomeSource(
 create table designation (
 	id serial,
 	title varchar(50) not null,
-	company_id int not null
+	company_id int not null,
+	branch_id int not null,
+	deleted boolean default false not null
 );
 
 
@@ -872,4 +875,23 @@ id serial,
 	nepali_date VARCHAR(20) DEFAULT NULL,
 	company_id INT NOT NULL,
 	branch_id INT
+
+)
+
+CREATE TABLE other_income (
+  sn SERIAL PRIMARY KEY,
+  source INTEGER,
+  amount NUMERIC,
+  date_english DATE,
+  date_nepali VARCHAR(255),
+  company_id INTEGER,
+  branch_id INTEGER,
+  deleted BOOLEAN DEFAULT FALSE NOT NULL
+);
+
+CREATE TABLE other_income_source (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  company_id INTEGER,
+  branch_id INTEGER
 );
