@@ -108,6 +108,18 @@ public class LoanController {
             throw new CustomSqlException("Something went wrong while fetching loan name");
         }
     }
+
+    @GetMapping("/name/repay")
+    public ResponseDTO<String> getLoanNameForLoanRepay(@RequestParam("Id") int Id,
+                                                       @RequestParam("companyId") int companyId,
+                                                       @RequestParam("branchId") int branchId){
+        try{
+            return new ResponseDTO<>(loanService.getLoanNameForLoanRepay(Id,companyId,branchId));
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
 }
 
 

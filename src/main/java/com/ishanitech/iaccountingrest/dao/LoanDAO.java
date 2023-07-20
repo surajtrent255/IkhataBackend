@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.dto.LoanDTO;
 import com.ishanitech.iaccountingrest.dto.LoanNamesDTO;
 import com.ishanitech.iaccountingrest.dto.LoanTypesDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
@@ -78,4 +79,17 @@ public interface LoanDAO {
             """)
     @RegisterBeanMapper(LoanDTO.class)
     List<LoanDTO> getLimitedLoanEntityByCompAndBranch(@Define String caseQuery);
+
+/*
+* Loan Details For  LoanRepay */
+@SqlQuery("""
+        SELECT loan_name.loan_name AS loanName
+        FROM loan
+        INNER JOIN loan_name ON loan.loan_name = loan_name.id
+        WHERE loan.company_id = :companyId AND
+        loan.branch_id = :branchId AND
+        loan.id = :Id        
+        """)
+    String getLoanNameForLoanRepay(@Bind int Id, @Bind int companyId,@Bind int branchId);
+
 }

@@ -159,7 +159,7 @@ public interface SalesBillDAO {
             " :customerId, "+
             " :customerName ," +
             " :customerPan ," +
-            " :billDate, "+
+            " CAST(:billDate AS DATE) , "+
             " :billDateNepali, "+
             " :amount  ," +
             " :discount  ," +
