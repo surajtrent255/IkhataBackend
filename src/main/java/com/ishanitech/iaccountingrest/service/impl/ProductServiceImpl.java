@@ -54,6 +54,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO addNewProduct(ProductDTO product, int stockqtr) {
+
+
         if (product.getTax() == 1) {
             product.setTaxApproach(0);
         } else if (product.getTax() == 2) {
