@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service;
 import com.ishanitech.iaccountingrest.dto.LoanDTO;
 import com.ishanitech.iaccountingrest.dto.LoanNamesDTO;
 import com.ishanitech.iaccountingrest.dto.LoanTypesDTO;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface LoanService {
     List<LoanNamesDTO> getAllLoanNames();
 
     List<LoanDTO> getLimitedLoanEntitiesForSingleCompAndBranch(Integer offset, Integer pageTotalItems,String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId);
+
+    String getLoanNameForLoanRepay( int Id,  int companyId,  int branchId);
+
 }

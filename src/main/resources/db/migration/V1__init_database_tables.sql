@@ -213,7 +213,7 @@ create table sales_bill (
     customer_id int not null,
     customer_name varchar(50),
     customer_pan varchar(50) ,
-    bill_date varchar(50) not null,
+    bill_date DATE DEFAULT null,
     bill_date_nepali varchar(50),
     amount real not null,
     discount real not null,
@@ -800,7 +800,6 @@ CREATE TABLE purchase_additional_info (
     vat_bill BOOLEAN,
     company_id INT,
     branch_id INT,
-    purchase_bill_id INT,
     bill_no VARCHAR(50)
 );
 
@@ -861,6 +860,22 @@ create table designation (
 create table employee_type(
 	id serial,
 	name varchar(50)
+);
+
+CREATE TABLE loan_repay(
+id serial,
+	loan_no INT DEFAULT NULL,
+	loan_name VARCHAR(50) DEFAULT NULL,
+	amount REAL DEFAULT 0 ,
+	interest BOOLEAN DEFAULT FALSE,
+	penalty BOOLEAN DEFAULT FALSE,
+	service BOOLEAN DEFAULT FALSE,
+	principle BOOLEAN DEFAULT FALSE,
+	date DATE DEFAULT CURRENT_DATE,
+	nepali_date VARCHAR(20) DEFAULT NULL,
+	company_id INT NOT NULL,
+	branch_id INT
+
 )
 
 CREATE TABLE other_income (

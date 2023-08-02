@@ -95,4 +95,10 @@ public class LoanServiceImpl implements LoanService {
         loanDTOS = loanDAO.getLimitedLoanEntityByCompAndBranch(caseQuery);
         return loanDTOS;
     }
+
+    @Override
+    public String getLoanNameForLoanRepay(int Id, int companyId, int branchId) {
+        LoanDAO loanDAO = dbService.getDao(LoanDAO.class);
+        return loanDAO.getLoanNameForLoanRepay(Id,companyId,branchId);
+    }
 }
