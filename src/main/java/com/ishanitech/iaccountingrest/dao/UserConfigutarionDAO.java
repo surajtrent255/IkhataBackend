@@ -14,10 +14,11 @@ import java.util.Optional;
 
 public interface UserConfigutarionDAO {
 
-@SqlQuery("select users.id as userId,users.firstname as firstname, users.lastname as lastname, users.email as email, "
+@SqlQuery("select users.id as userId,users.firstname as firstname, users.lastname as lastname, users.email as email, company.name as companyName, "
         + "user_company_role.role_id as roleId, user_company_role.status as roleStatus, role.id as id, role.role as role "
         + "from users inner join user_company_role on users.id=user_company_role.user_id "
         + "inner join role on role.id=user_company_role.role_id "
+        + "inner join company on company.company_id = user_company_role.company_id "
         + "where user_company_role.company_id=:companyId AND user_company_role.status = true")
     @RegisterBeanMapper(UserConfigurationDTO.class)
     List<UserConfigurationDTO> getUserRoleDetailsBasedOnCompanyId(@Bind("companyId") int companyId);
@@ -31,13 +32,15 @@ public interface UserConfigutarionDAO {
                 user_company_role.role_id AS roleId,
                 user_company_role.status AS roleStatus,
                 role.id AS id,
-                role.role AS role
+                role.role AS role,
+                company.name as companyName
             FROM
                 users
             INNER JOIN
                 user_company_role ON users.id = user_company_role.user_id
             INNER JOIN
                 role ON role.id = user_company_role.role_id
+            INNER JOIN company ON company.company_id = user_company_role.company_id 
             WHERE
                 <caseQuery>
             """)
@@ -75,23 +78,41 @@ public interface UserConfigutarionDAO {
     List<UserCommonConfigDTO> getAllUser(@Bind int companyId);
 
 //    WHERE id NOT IN (SELECT user_id FROM user_company)
-    @SqlQuery("SELECT users.id as userId ,users.firstname as firstName,users.lastname as lastName,users.email as email,user_company.status as companyStatus FROM users inner join user_company on user_company.user_id = users.id WHERE user_company.company_id = :companyId ;")
-    @RegisterBeanMapper(UserCommonConfigDTO.class)
-    List<UserCommonConfigDTO> getUsersByCompanyId(@Bind("companyId") int companyId);
-
     @SqlQuery("""
             SELECT
                 users.id AS userId,
                 users.firstname AS firstName,
                 users.lastname AS lastName,
                 users.email AS email,
-                users.phone AS phone,
-                user_company.status AS companyStatus
+                user_company.status AS companyStatus,
+                company.name AS companyName
             FROM
                 users
             INNER JOIN
                 user_company ON user_company.user_id = users.id
+            INNER JOIN
+                company ON user_company.company_id = company.company_id
             WHERE
+                user_company.company_id = :companyId;         
+            """)
+    @RegisterBeanMapper(UserCommonConfigDTO.class)
+    List<UserCommonConfigDTO> getUsersByCompanyId(@Bind("companyId") int companyId);
+
+    @SqlQuery("""
+            SELECT
+                     users.id AS userId,
+                     users.firstname AS firstName,
+                     users.lastname AS lastName,
+                     users.email AS email,
+                     user_company.status AS companyStatus,
+                     company.name AS companyName
+                 FROM
+                     users
+                 INNER JOIN
+                     user_company ON user_company.user_id = users.id
+                 INNER JOIN
+                     company ON user_company.company_id = company.company_id
+                 WHERE
                 <caseQuery>
             """)
     @RegisterBeanMapper(UserCommonConfigDTO.class)

@@ -17,6 +17,8 @@ public class UserCommonConfigDTO {
     private Long phone;
 
     private boolean companyStatus;
+
+    private String companyName;
 //    private String mobileNumber;
 //    private String password;
 //    private int accountType;

@@ -60,7 +60,7 @@ public class BankController {
         return new ResponseDTO<>(bankService.getAllByBankCompany(companyId));
     }
     @GetMapping("branchid")
-    public ResponseDTO<?> getAllByBankBranch(@RequestParam("companyid") int companyId ,@RequestParam("branchid")  int branchId){
+    public ResponseDTO<?> getAllByBankBranch(@RequestParam("companyId") int companyId ,@RequestParam("branchId")  int branchId){
         try{
             return new ResponseDTO<>(bankService.getAllByBankBranch(companyId ,branchId));
         }catch (Exception e){
@@ -91,7 +91,7 @@ public class BankController {
         try{
             bankService.updateBank(BankDTO);
         } catch (Exception e){
-            log.error("error while updating bankedit " + e.getMessage());
+            log.error("error while updating bank edit " + e.getMessage());
             throw new CustomSqlException("Something went wrong while updating category");
         }
         return 1;
