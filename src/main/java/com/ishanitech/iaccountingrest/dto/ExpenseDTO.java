@@ -21,7 +21,7 @@ public class ExpenseDTO {
 
     private  String billNo;
 
-    private String payTo;
+    private long payTo;
 
     private Date date;
 

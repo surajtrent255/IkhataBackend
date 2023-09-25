@@ -457,7 +457,7 @@ CREATE TABLE expenses (
   amount REAL NOT NULL,
   topic int not null,
   bill_no VARCHAR(50),
-  pay_to VARCHAR(50),
+  pay_to BIGINT not null,
   date DATE DEFAULT NULL,
   nepali_date VARCHAR(20) DEFAULT NULL,
   branch_id int DEFAULT NULL,
