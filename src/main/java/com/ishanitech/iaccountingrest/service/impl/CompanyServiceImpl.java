@@ -166,7 +166,7 @@ companyDAO.deleteCompany(companyId);
             CompanyDTO companyDTO = companyDAO.getCompanyByIdForEdit(companyId);
 
             String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
-            //            for Production comment above line and uncomment below line
+//                        for Production comment above line and uncomment below line
 //            String imageUrl = "http://103.233.58.121:9999/"+"images/"+companyDTO.getImageName();
 
             companyDTO.setImageUrl(imageUrl);

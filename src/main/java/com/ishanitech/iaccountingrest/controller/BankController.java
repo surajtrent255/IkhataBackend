@@ -91,7 +91,7 @@ public class BankController {
         try{
             bankService.updateBank(BankDTO);
         } catch (Exception e){
-            log.error("error while updating bankedit " + e.getMessage());
+            log.error("error while updating bank edit " + e.getMessage());
             throw new CustomSqlException("Something went wrong while updating category");
         }
         return 1;
