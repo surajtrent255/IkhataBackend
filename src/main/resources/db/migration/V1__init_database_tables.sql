@@ -455,7 +455,7 @@ CREATE TABLE expenses (
   SN SERIAL,
   company_id int DEFAULT NULL,
   amount REAL NOT NULL,
-  topic VARCHAR(200),
+  topic int not null,
   bill_no VARCHAR(50),
   pay_to VARCHAR(50),
   date DATE DEFAULT NULL,
@@ -894,4 +894,12 @@ CREATE TABLE other_income_source (
   name VARCHAR(255) NOT NULL,
   company_id INTEGER,
   branch_id INTEGER
+);
+
+
+create TABLE expense_topics (
+    id SERIAL PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    company_id INTEGER,
+    branch_id INTEGER
 );

@@ -28,6 +28,8 @@ public class CategoryProductServiceImpl implements CategoryProductService {
     public void deleteCategory(Integer categoryId, Integer compId, Integer branchId) {
         CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
         categoryDAO.deleteCategory(categoryId, compId, branchId);
+//        List<CategoryProductDTO> category = categoryDAO.getAllCategoriesByCompIdAndBranchId(compId, branchId);
+
     }
 
     @Override
@@ -59,9 +61,9 @@ public class CategoryProductServiceImpl implements CategoryProductService {
     }
 
     @Override
-    public CategoryProductDTO getCategoryByCategoryId(Integer categoryId) {
+    public CategoryProductDTO getCategoryByCategoryId(Integer categoryId, Integer companyId, Integer branchId) {
         CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
-        CategoryProductDTO category = categoryDAO.getCategoryByCategoryId(categoryId);
+        CategoryProductDTO category = categoryDAO.getCategoryByCategoryId(categoryId, companyId, branchId);
         return category;
     }
 
@@ -95,6 +97,7 @@ public class CategoryProductServiceImpl implements CategoryProductService {
                 childCategory.setId(p.getId());
                 childCategory.setParentId(p.getParentId());
                 childCategory.setName(p.getName());
+                childCategory.setDeleted(p.isDeleted());
                 // no need to set ChildrenItems list because the constructor created a new empty list
 
                 // ------ Parent ----
@@ -104,17 +107,19 @@ public class CategoryProductServiceImpl implements CategoryProductService {
                     parentCategory = categoryMap.get(p.getParentId());
                     parentCategory.setId(parentCategory.getId());
                     parentCategory.setParentId(parentCategory.getParentId());
+                    parentCategory.setDeleted(parentCategory.isDeleted());
                 } else {
                     //mmdParent = new MegaMenuDTO();
                     parentCategory = new CategoryProductDTO();
                     parentCategory.setId(p.getId());
                     parentCategory.setParentId(p.getParentId());
+                    parentCategory.setDeleted(p.isDeleted());
                     categoryMap.put(p.getParentId(), parentCategory);
                 }
 
                 parentCategory.addChildCategory(childCategory);
             } else {
-                categoryMap.put(p.getId(), new CategoryProductDTO(p.getId(), p.getName(), p.getParentId()));
+                categoryMap.put(p.getId(), new CategoryProductDTO(p.getId(), p.getName(), p.getParentId(), p.isDeleted()));
             }
 
 

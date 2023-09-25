@@ -60,7 +60,7 @@ public class BankController {
         return new ResponseDTO<>(bankService.getAllByBankCompany(companyId));
     }
     @GetMapping("branchid")
-    public ResponseDTO<?> getAllByBankBranch(@RequestParam("companyid") int companyId ,@RequestParam("branchid")  int branchId){
+    public ResponseDTO<?> getAllByBankBranch(@RequestParam("companyId") int companyId ,@RequestParam("branchId")  int branchId){
         try{
             return new ResponseDTO<>(bankService.getAllByBankBranch(companyId ,branchId));
         }catch (Exception e){

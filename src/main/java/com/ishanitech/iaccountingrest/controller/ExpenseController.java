@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.ExpenseDTO;
+import com.ishanitech.iaccountingrest.dto.ExpenseTopicDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.ExpenseService;
@@ -88,6 +89,29 @@ public class ExpenseController {
             throw new CustomSqlException(e.getMessage());
         }
     }
+
+
+    @PostMapping("/topic/create")
+    public ResponseDTO<Integer> expenseTopicDetail(@RequestBody ExpenseTopicDTO expenseTopicDTO ){
+        try{
+            return new ResponseDTO<Integer>(expenseService.createTopicDTO(expenseTopicDTO));
+        } catch(Exception ex){
+            log.error(ex.getMessage());
+            throw new CustomSqlException(ex.getMessage());
+        }
+    }
+
+    @GetMapping("topic/all")
+    public ResponseDTO<List<ExpenseTopicDTO>> getAllExpensesDetail(@RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId){
+        try{
+            return new ResponseDTO<List<ExpenseTopicDTO>>(expenseService.getAllExpenseTopicsByCompIdAndBranchId(compId, branchId));
+        } catch (Exception ex){
+            log.error(ex.getMessage());
+            throw new CustomSqlException(ex.getMessage());
+        }
+    }
+
+
 
 
 }

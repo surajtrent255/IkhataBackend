@@ -5,6 +5,7 @@ import com.ishanitech.iaccountingrest.dto.EmployeeTypeDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.EmployeeService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,9 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public Mono<ResponseDTO<List<EmployeeDTO>>> getAllEmployees( @RequestParam("compId") Integer companyId,
-                                                                @RequestParam("branchId") Integer branchId){return Mono.fromCallable(()-> new ResponseDTO<List<EmployeeDTO>>(employeeService.getAllEmployees(companyId, branchId)))
+    public Mono<ResponseDTO<List<EmployeeDTO>>> getAllEmployees(
+                                                                HttpServletRequest request){
+        return Mono.fromCallable(()-> new ResponseDTO<List<EmployeeDTO>>(employeeService.getAllEmployees(request)))
                 .onErrorResume(throwable -> {
                     log.error("something went wrong  while fetching all employees => "+throwable.getMessage());
                     return Mono.error(new CustomSqlException("some thing went wrong "));

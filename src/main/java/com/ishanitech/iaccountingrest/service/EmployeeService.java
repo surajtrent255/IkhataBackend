@@ -2,11 +2,12 @@ package com.ishanitech.iaccountingrest.service;
 
 import com.ishanitech.iaccountingrest.dto.EmployeeDTO;
 import com.ishanitech.iaccountingrest.dto.EmployeeTypeDTO;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
 public interface EmployeeService {
-    List<EmployeeDTO> getAllEmployees(Integer companyId, Integer branchId);
+    List<EmployeeDTO> getAllEmployees(HttpServletRequest request);
 
     EmployeeDTO getEmployeeById(Integer id, Integer companyId, Integer branchId);
 

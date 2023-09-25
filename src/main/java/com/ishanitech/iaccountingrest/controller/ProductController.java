@@ -6,6 +6,8 @@ import com.ishanitech.iaccountingrest.dto.ProductDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.ProductService;
+import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -32,16 +34,17 @@ public class ProductController {
     }
 
     @GetMapping("/limited")
-    public ResponseDTO<List<ProductDTO>> getLimitedProducts(@RequestParam("offset") Integer offset,
-            @RequestParam("pageTotalItems") Integer pageTotalItems,
-            @RequestParam("searchBy") String searchBy,
-            @RequestParam("searchWildCard") String searchWildCard,
-            @RequestParam("sortBy") String sortBy,
-            @RequestParam("compId") Integer compId,
-            @RequestParam("branchId") Integer branchId) {
+    public ResponseDTO<List<ProductDTO>> getLimitedProducts(@Nullable  @RequestParam("offset") Integer offset,
+                                                            @Nullable  @RequestParam("pageTotalItems") Integer pageTotalItems,
+                                                            @Nullable  @RequestParam("searchBy") String searchBy,
+                                                            @Nullable  @RequestParam("searchWildCard") String searchWildCard,
+                                                            @Nullable  @RequestParam("sortBy") String sortBy,
+                                                            @Nullable  @RequestParam("compId") Integer compId,
+                                                            @Nullable  @RequestParam("branchId") Integer branchId,
+                                                            HttpServletRequest request) {
         try {
             return new ResponseDTO<List<ProductDTO>>(productService.getLimitedProducts(offset, pageTotalItems, searchBy,
-                    searchWildCard, sortBy, compId, branchId));
+                    searchWildCard, sortBy, compId, branchId, request));
         } catch (Exception e) {
             log.error("error occured while fetching products : " + e.getMessage());
             throw new CustomSqlException("Error occured while fetching product");

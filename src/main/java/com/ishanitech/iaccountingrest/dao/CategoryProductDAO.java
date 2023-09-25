@@ -22,7 +22,7 @@ public interface CategoryProductDAO {
     @SqlUpdate("Update category set deleted = true where id = :categoryId and company_id = :compId and branch_id = :branchId;")
     void deleteCategory(@Bind("categoryId") Integer categoryId, Integer compId, Integer branchId);
 
-    @SqlQuery("SELECT * FROM category WHERE deleted = false and company_id = :compId and branch_id = :branchId")
+    @SqlQuery("SELECT * FROM category WHERE company_id = :compId and branch_id = :branchId")
     @RegisterBeanMapper(CategoryProductDTO.class)
     List<CategoryProductDTO> getAllCategoriesByCompIdAndBranchId(@Bind int compId, @Bind int branchId);
 
@@ -34,11 +34,11 @@ public interface CategoryProductDAO {
     @SqlBatch("UPDATE category SET deleted = true WHERE category_id = :categoryIds")
     void deleteParentandChildCategories(List<Integer> categoryIds);
 
-    @SqlQuery("SELECT * FROM category WHERE id = :categoryId AND deleted = false")
+    @SqlQuery("SELECT * FROM category WHERE id = :categoryId AND company_id = :companyId and branch_id = :branchId;")
     @RegisterBeanMapper(CategoryProductDTO.class)
-    CategoryProductDTO getCategoryByCategoryId(@Bind("categoryId") Integer categoryId);
+    CategoryProductDTO getCategoryByCategoryId(@Bind("categoryId") Integer categoryId, Integer companyId, Integer branchId);
 
-    @SqlQuery("SELECT * FROM category WHERE parent_id = :parentId AND deleted = false")
+    @SqlQuery("SELECT * FROM category WHERE parent_id = :parentId;")
     @RegisterBeanMapper(CategoryProductDTO.class)
     List<CategoryProductDTO> getCategoryByParentId(@Bind int parentId);
 

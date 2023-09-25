@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.dto.EmployeeDTO;
 import com.ishanitech.iaccountingrest.dto.EmployeeTypeDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -13,10 +14,10 @@ import java.util.List;
 public interface EmployeeDAO {
 
     @SqlQuery("""
-            select * from employee where company_id = :companyId and branch_id = :branchId and deleted = false;
+            select * from employee where <caseQuery>;
             """)
     @RegisterBeanMapper(EmployeeDTO.class)
-    List<EmployeeDTO> getAllEmployee(int companyId, int branchId);
+    List<EmployeeDTO> getAllEmployee(@Define  String caseQuery);
 
     @SqlQuery("""
             select * from employee where company_id = :companyId and branch_id = :branchId and sn = :id and deleted = false;

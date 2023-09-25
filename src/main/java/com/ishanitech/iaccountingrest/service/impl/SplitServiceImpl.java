@@ -71,8 +71,9 @@ public class SplitServiceImpl implements SplitService {
     @Override
     public List<SplitProductDTO> getSplitProductById(int id) {
         SplitProductDAO SplitProductDAO = dbService.getDao(SplitProductDAO.class);
-
-        return SplitProductDAO.getSplitProductById(id);
+        List<SplitProductDTO> splitProductDTOS;
+        splitProductDTOS = SplitProductDAO.getSplitProductById(id);;
+        return splitProductDTOS;
     }
 
     @Transactional

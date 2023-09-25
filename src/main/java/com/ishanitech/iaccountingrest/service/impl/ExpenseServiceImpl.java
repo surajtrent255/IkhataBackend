@@ -2,11 +2,13 @@ package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.ExpenseDAO;
 import com.ishanitech.iaccountingrest.dto.ExpenseDTO;
+import com.ishanitech.iaccountingrest.dto.ExpenseTopicDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,5 +52,27 @@ public class ExpenseServiceImpl implements ExpenseService {
         List<ExpenseDTO> expenses;
         expenses = dbService.getDao(ExpenseDAO.class).getLimitedExpensesByCompanyAndBranchId(offset, pageTotalItems, compId, branchId);
         return expenses;
+    }
+
+    @Override
+    public Integer createTopicDTO(ExpenseTopicDTO expenseTopicDTO) {
+        ExpenseDAO expenseDAO = dbService.getDao(ExpenseDAO.class);
+        Integer expenseTopicId = 0;
+        expenseTopicId = expenseDAO.createNewExpenseTopicByCompanyAndBranch(expenseTopicDTO);
+        return expenseTopicId;
+    }
+
+    @Override
+    public List<ExpenseTopicDTO> getAllExpenseTopicsByCompIdAndBranchId(Integer compId, Integer branchId) {
+        ExpenseDAO expenseDAO = dbService.getDao(ExpenseDAO.class);
+        List<ExpenseTopicDTO> expensesList = new ArrayList<>();
+//        ExpenseTopicDTO e1  = new ExpenseTopicDTO();
+//        e1.setId(1);
+//        e1.setName("hero");
+//        expensesList.add(e1);
+        expensesList = expenseDAO.getAllExpenseTopicsByCompanyANdBranch(compId, branchId);
+
+        return expensesList;
+
     }
 }

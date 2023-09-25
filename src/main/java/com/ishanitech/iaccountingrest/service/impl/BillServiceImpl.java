@@ -71,7 +71,7 @@ public class BillServiceImpl implements BillService {
     @Override
     public List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, Integer compId, Integer branchId) {
 
-        List<SalesBillDTO> productList;
+        List<SalesBillDTO> salesBillList;
         String caseQuery="";
         if (Objects.equals(searchBy,"pan") ){
             caseQuery = "company_id=" +compId + " and branch_id = " + branchId + " and customer_pan = '"+  searchWildCard + "' order by bill_no desc "+
@@ -105,11 +105,11 @@ public class BillServiceImpl implements BillService {
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if(Objects.equals(searchBy, "") || searchBy.length() == 0 ){
-            caseQuery = " company_id = "+compId+" and branch_id ="+branchId+" order by bill_no "+" desc "+
+            caseQuery = " company_id = "+compId+" and branch_id ="+branchId+" order by id "+" desc "+
                     "limit "+ pageTotalItems+" offset "+(offset-1);
         }
-        productList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(caseQuery);
-        return productList;
+        salesBillList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(caseQuery);
+        return salesBillList;
     }
 
     @Override

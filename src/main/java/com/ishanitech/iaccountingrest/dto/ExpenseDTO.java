@@ -17,7 +17,7 @@ public class ExpenseDTO {
 
     private Double amount;
 
-    private String topic;
+    private Integer topic;
 
     private  String billNo;
 

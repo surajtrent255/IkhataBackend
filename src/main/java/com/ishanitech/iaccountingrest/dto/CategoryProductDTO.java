@@ -22,11 +22,13 @@ public class CategoryProductDTO {
     private Date editedDate;
     private List<CategoryProductDTO> childCategories = new ArrayList<>();
     private boolean showChildren;
+    private boolean deleted;
 
-    public CategoryProductDTO(int id, String name, int parentId) {
+    public CategoryProductDTO(int id, String name, int parentId, boolean deleted) {
         this.id = id;
         this.name = name;
         this.parentId = parentId;
+        this.deleted = deleted;
 //        this.childCategories = new ArrayList<>();
     }
 

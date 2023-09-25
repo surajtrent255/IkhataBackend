@@ -35,7 +35,7 @@ public interface StockDAO {
             " VALUES (:productId, :qty, :companyId, :branchId)")
     Integer addNewStock(@BindBean StockDTO stockDTO);
 
-    @SqlUpdate("update stock set qty = qty - :qty where product_id = :productId and company_id = :companyId and branch_id = :branchId ")
+    @SqlUpdate("update stock set qty = qty + :qty where product_id = :productId and company_id = :companyId and branch_id = :branchId ")
     void increaseStockQuantityWithAttrs(@Bind int productId, @Bind int companyId, @Bind int branchId,  @Bind int qty);
     @SqlUpdate("update stock set qty = qty + :qty where product_id = :productId and company_id = :companyId and branch_id = :branchId")
     void increaseStockQuantity(@BindBean StockDTO stockDTO);

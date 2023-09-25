@@ -44,10 +44,10 @@ public class CategoryProduct {
         }
     }
     @RequestMapping(method = RequestMethod.GET, value = "/single/{id}")
-    public ResponseDTO<?> getCategoryByCategoryId(@PathVariable int id){
+    public ResponseDTO<?> getCategoryByCategoryId(@PathVariable int id, @RequestParam("compId") int compId, @RequestParam("branchId") int branchId){
         CategoryProductDTO categoryProductDTO;
         try{
-            categoryProductDTO = categoryProductService.getCategoryByCategoryId(id);
+            categoryProductDTO = categoryProductService.getCategoryByCategoryId(id, compId, branchId);
             return new ResponseDTO<>(categoryProductDTO);
         } catch(Exception ex){
             log.error("error occured during fetching categories : "+ ex.getMessage());

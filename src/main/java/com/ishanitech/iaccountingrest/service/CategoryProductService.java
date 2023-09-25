@@ -10,7 +10,7 @@ public interface CategoryProductService {
     List<CategoryProductDTO> getAllCategoriesByCompIdAndBranchId(int compId, int branchId);
     int updateCategoryProduct(CategoryProductDTO categoryProductDTO);
     void deleteParentandChildCategories(List<Integer> categoryIds);
-    CategoryProductDTO getCategoryByCategoryId(Integer categoryId);
+    CategoryProductDTO getCategoryByCategoryId(Integer categoryId, Integer compId, Integer branchId);
 
     List<CategoryProductDTO> getCategoryByParentId(Integer parentId);
 }

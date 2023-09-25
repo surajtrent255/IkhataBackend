@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.ExpenseDTO;
+import com.ishanitech.iaccountingrest.dto.ExpenseTopicDTO;
 import jakarta.annotation.Nullable;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -40,4 +41,17 @@ public interface ExpenseDAO {
             """)
     @RegisterBeanMapper(ExpenseDTO.class)
     List<ExpenseDTO> getLimitedExpensesByCompanyAndBranchId(Integer offset, Integer pageTotalItems, Integer compId, Integer branchId);
+
+
+    @SqlQuery("""
+            select * from expense_topics where company_id = :compId and branch_id = :branchId
+            """)
+    @RegisterBeanMapper(ExpenseTopicDTO.class)
+    List<ExpenseTopicDTO> getAllExpenseTopicsByCompanyANdBranch(Integer compId, Integer branchId);
+
+
+    @SqlUpdate("""
+            insert into expense_topics (name, company_id, branch_id) VALUES ( :name,  :companyId, :branchId)
+            """)
+    Integer createNewExpenseTopicByCompanyAndBranch(@BindBean ExpenseTopicDTO expenseTopicDTO);
 }

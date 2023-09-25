@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service;
 import com.ishanitech.iaccountingrest.dto.InventoryProductsDTO;
 import com.ishanitech.iaccountingrest.dto.PaginationTypeDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -28,5 +29,5 @@ public interface ProductService {
 
     List<ProductDTO> getProductForSearch(Integer compId, Integer branchId, String search);
 
-    List<ProductDTO> getLimitedProducts(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId);
+    List<ProductDTO> getLimitedProducts(Integer offset, Integer pageTotalItems, String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId, HttpServletRequest request);
 }
