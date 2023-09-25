@@ -101,10 +101,10 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     public List<UserCommonConfigDTO> getLimitedUsersForSearchInUserConfiguration(Integer offset, Integer pageTotalItems, int companyId,String searchInput) {
         String caseQuery = "";
         if(searchInput.length() !=0 )
-            caseQuery = " user_company.company_id = " + companyId + " and " + "users.email" + " = '" + searchInput + "' order by " + "users.phone" + " desc " +
+            caseQuery = " user_company.company_id = " + companyId + " and " + "users.email like '"  + searchInput + "%' order by " + "users.id" + " desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
         else {
-            caseQuery = " user_company.company_id = "+companyId+" order by "+"users.phone"+" desc "+
+            caseQuery = " user_company.company_id = "+companyId+" order by "+"users.id"+" desc "+
                     "limit "+ pageTotalItems+" offset "+(offset-1);
         }
 
@@ -116,10 +116,10 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     public List<UserConfigurationDTO> getLimitedUsersRoleForSearchInUserConfiguration(Integer offset, Integer pageTotalItems, int companyId, String searchInput) {
         String caseQuery = "";
         if (searchInput.length() != 0) {
-            caseQuery = " user_company_role.company_id = " + companyId + " AND user_company_role.status = true AND users.email = '" + searchInput + "' order by users.phone desc " +
+            caseQuery = " user_company_role.company_id = " + companyId + " AND user_company_role.status = true AND users.email like '" + searchInput + "%' order by users.id desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
         } else {
-            caseQuery = " user_company_role.company_id = " + companyId + " AND user_company_role.status = true order by users.phone desc " +
+            caseQuery = " user_company_role.company_id = " + companyId + " AND user_company_role.status = true order by users.id desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
         }
 

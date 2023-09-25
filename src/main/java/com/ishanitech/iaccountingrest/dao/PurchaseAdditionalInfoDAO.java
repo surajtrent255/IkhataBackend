@@ -38,4 +38,10 @@ public interface PurchaseAdditionalInfoDAO {
           """)
   void addNewAttributes(@Bind String attributeName,@Bind int companyId);
 
+  @SqlQuery("""
+          SELECT * FROM purchase_additional_info WHERE bill_no = :billNo
+          """)
+  @RegisterBeanMapper(PurchaseAdditionalInfoDTO.class)
+  List<PurchaseAdditionalInfoDTO> getPurchaseAdditionalInfoByBillNo(@Bind String billNo);
+
 }

@@ -42,38 +42,38 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
         List<PurchaseBillDTO> salesBillDTOList;
         String caseQuery = "";
         if (Objects.equals(searchInput,"pan") ){
-            caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " and seller_pan = '" + searchValue + "' order by purchase_bill_no desc "+
+            caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " and seller_pan = '" + searchValue + "' order by bill_date desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }
         if(Objects.equals(searchInput,"date")){
-            caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " and bill_date = CAST( '" + searchValue + "' AS DATE)" + " order by purchase_bill_no desc "+
+            caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " and bill_date = CAST( '" + searchValue + "' AS DATE)" + " order by bill_date desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }
         if(Objects.equals(searchInput,"billNo")){
-            caseQuery = "company_id=" +companyId + " and branch_id = "+ branchId + "  and purchase_bill_no = '" + searchValue + "' order by purchase_bill_no desc "+
+            caseQuery = "company_id=" +companyId + " and branch_id = "+ branchId + "  and purchase_bill_no = '" + searchValue + "' order by bill_date desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }
         if(Objects.equals(searchInput,"customerOrSellerName")){
-            caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " and seller_name = '" + searchValue + "' order by purchase_bill_no desc "+
+            caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " and seller_name = '" + searchValue + "' order by bill_date desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }
         if (Objects.equals(searchInput,"month")){
-            caseQuery = "company_id = " + companyId + " AND branch_id = " + branchId + " AND transactional_date_nepali LIKE '%-" + searchValue + "-%'" + " ORDER BY purchase_bill_no DESC " +
+            caseQuery = "company_id = " + companyId + " AND branch_id = " + branchId + " AND transactional_date_nepali LIKE '%-" + searchValue + "-%'" + " ORDER BY bill_date DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchInput,"fiscalYear")){
-            caseQuery = "company_id = " + companyId + " AND branch_id = " + branchId + " AND fiscal_year = '" + searchValue + "'" + " ORDER BY purchase_bill_no DESC " +
+            caseQuery = "company_id = " + companyId + " AND branch_id = " + branchId + " AND fiscal_year = '" + searchValue + "'" + " ORDER BY bill_date DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchInput,"dateBetween")){
             String[] dateArray = searchValue.split(" ");
             String startDate = dateArray[0];
             String endDate = dateArray[1];
-            caseQuery = "company_id = " + companyId + " AND branch_id = " + branchId + " AND bill_date BETWEEN CAST('"+ startDate +"' AS DATE) AND CAST('"+ endDate +"' AS DATE) " + " ORDER BY purchase_bill_no DESC " +
+            caseQuery = "company_id = " + companyId + " AND branch_id = " + branchId + " AND bill_date BETWEEN CAST('"+ startDate +"' AS DATE) AND CAST('"+ endDate +"' AS DATE) " + " ORDER BY bill_date DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if(Objects.equals(searchInput, " ") || searchInput.length() == 0 ){
-            caseQuery = "company_id=" +companyId + " AND branch_id =" + branchId + " order by purchase_bill_no desc "+
+            caseQuery = "company_id=" +companyId + " AND branch_id =" + branchId + " order by bill_date desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }
         salesBillDTOList = dbService.getDao(PurchaseBillDAO.class).getLimitedPurchaseBillByCompanyAndBranchId(caseQuery);

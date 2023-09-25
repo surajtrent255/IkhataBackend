@@ -1,11 +1,14 @@
 package com.ishanitech.iaccountingrest.controller;
 
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
+import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.SuperAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -39,5 +42,17 @@ public class SuperAdminController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseDTO<List<UserConfigurationDTO>> fetchLimitedUsersForSuperAdminListing(@RequestParam("offset") Integer offset,
+                                                                                         @RequestParam("pageTotalItems") Integer pageTotalItems,
+                                                                                         @RequestParam("searchInput") String searchInput,
+                                                                                         @RequestParam("searchValue") String searchValue){
+        try{
+            return new ResponseDTO<List<UserConfigurationDTO>>(superAdminService.fetchLimitedUsersForSuperAdminListing(offset,pageTotalItems,searchInput,searchValue)) ;
+        }catch (Exception e){
+            throw new CustomSqlException(e.getMessage());
+        }
+
+    }
 
 }

@@ -56,7 +56,7 @@ public class FeatureControlServiceImpl implements FeatureControlService {
     public List<UserFeatureDTO> getLimitedUserFeatureForSearch(Integer offset, Integer pageTotalItems, Integer companyId, String searchInput) {
         String caseQuery = "";
         if (searchInput.length() != 0) {
-            caseQuery = " uf.company_id = " + companyId + " AND u.email = '" + searchInput + "' order by u.phone desc" + " limit " + pageTotalItems + " offset " + (offset - 1);
+            caseQuery = " uf.company_id = " + companyId + " AND u.email like '" + searchInput + "%' order by u.phone desc" + " limit " + pageTotalItems + " offset " + (offset - 1);
         } else {
             caseQuery = " uf.company_id = " + companyId + " order by u.phone desc" + " limit " + pageTotalItems + " offset " + (offset - 1);
         }

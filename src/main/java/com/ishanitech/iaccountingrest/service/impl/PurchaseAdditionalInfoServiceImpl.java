@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.PurchaseAdditionalInfoDAO;
+import com.ishanitech.iaccountingrest.dao.PurchaseBillDAO;
 import com.ishanitech.iaccountingrest.dto.PurchaseAdditionalInfoDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.PurchaseAdditionalInfoService;
@@ -33,5 +34,11 @@ public class PurchaseAdditionalInfoServiceImpl implements PurchaseAdditionalInfo
     public void addNewAttributes(String attributeName, int companyId) {
         PurchaseAdditionalInfoDAO purchaseAdditionalInfoDAO = dbService.getDao(PurchaseAdditionalInfoDAO.class);
         purchaseAdditionalInfoDAO.addNewAttributes(attributeName,companyId);
+    }
+
+    @Override
+    public List<PurchaseAdditionalInfoDTO> getPurchaseAdditionalInfoByBillNo(String billNo) {
+        PurchaseAdditionalInfoDAO purchaseAdditionalInfoDAO = dbService.getDao(PurchaseAdditionalInfoDAO.class);
+        return purchaseAdditionalInfoDAO.getPurchaseAdditionalInfoByBillNo(billNo);
     }
 }

@@ -1,7 +1,9 @@
 package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
+import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -42,4 +44,11 @@ public interface SuperAdminDAO {
             	WHERE company_id = :companyId;
             """)
     void allowDisallowUserToProceedBySuperAdmin(int companyId,Boolean status);
+
+    @SqlQuery(" SELECT users.id AS userId, users.firstname AS firstname, users.lastname AS lastname, users.email AS email, " +
+            " users.phone as phone,user_role.status as roleStatus,role.role as role,user_role.role_id as roleId" +
+            " from users inner join user_role on users.id = user_role.user_id " +
+            " inner join role on role.id = user_role.role_id WHERE role.role <> 'SUPER_ADMIN' <caseQuery> ; ")
+    @RegisterBeanMapper(UserConfigurationDTO.class)
+    List<UserConfigurationDTO>  fetchLimitedUsersForSuperAdminList(@Define String caseQuery);
 }

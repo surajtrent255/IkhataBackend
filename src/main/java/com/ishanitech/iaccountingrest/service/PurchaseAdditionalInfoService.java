@@ -13,5 +13,7 @@ public interface PurchaseAdditionalInfoService {
 
     void addNewAttributes( String attributeName, int companyId);
 
+    List<PurchaseAdditionalInfoDTO> getPurchaseAdditionalInfoByBillNo(String billNo);
+
 
 }

@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -45,6 +47,15 @@ public class PurchaseAdditionalInfoController {
             return new ResponseDTO<>("successfully added");
         }catch (Exception e){
             log.error(e.getMessage());
+            throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/billno")
+    public ResponseDTO<List<PurchaseAdditionalInfoDTO>> getPurchaseAdditionalInfoById(@RequestParam("billNo") String billNo){
+        try{
+            return new ResponseDTO<>(purchaseAdditionalInfoService.getPurchaseAdditionalInfoByBillNo(billNo));
+        }catch (Exception e){
             throw new CustomSqlException(e.getMessage());
         }
     }
