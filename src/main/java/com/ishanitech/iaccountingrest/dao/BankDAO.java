@@ -22,7 +22,7 @@ public interface BankDAO {
     @RegisterBeanMapper(BankDTO.class)
     List<BankDTO> getAllByBankName(String bankName);
 
-    @SqlQuery("SELECT * FROM bank ")
+    @SqlQuery("SELECT * FROM bank order by bank_id desc")
     @RegisterBeanMapper(BankDTO.class)
     List<BankDTO>  getAllByBank();
 
@@ -30,14 +30,14 @@ public interface BankDAO {
     @RegisterBeanMapper(BankDTO.class)
     List<BankDTO> getAllByBankCompany(int companyId);
 
-    @SqlQuery("SELECT * FROM bank where company_id=:companyId AND branch_id=:branchId")
+    @SqlQuery("SELECT * FROM bank where company_id=:companyId AND branch_id=:branchId order by bank_id desc")
     @RegisterBeanMapper(BankDTO.class)
     List<BankDTO> getALLBYBranch(int companyId, int branchId);
     @GetGeneratedKeys
     @SqlUpdate("INSERT INTO bank( "
             + " company_id,"
             + " branch_id,"
-            + " bank_name,"
+            + " bank_type_id,"
             + " account_number,"
             +" account_type, "
             +" initial_amount "
@@ -45,14 +45,14 @@ public interface BankDAO {
             + " VALUES ("
             + " :companyId, "
             + " :branchId, "
-            + " :bankName,"
+            + " :bankTypeId,"
             + " :accountNumber,"
             + " :accountType,"
             + " :initialAmount "
             + "  )")
     int addBank(@BindBean BankDTO bankDTO);
     @SqlUpdate("UPDATE bank SET company_id = :companyId, "
-            + "branch_id = :branchId, bank_name = :bankName,  account_number = :accountNumber, "
+            + "branch_id = :branchId, bank_type_id = :bankTypeId,  account_number = :accountNumber, "
             + "account_type = :accountType, initial_amount = :initialAmount WHERE bank_id  = :Id")
     int editbank(@BindBean BankDTO bankDTO, @Bind int Id);
 

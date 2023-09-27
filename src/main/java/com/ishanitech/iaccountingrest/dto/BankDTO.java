@@ -17,9 +17,9 @@ public class BankDTO {
     private int bankId;
     private  int companyId;
     private  int branchId;
-    private  String bankName;
-    private int accountNumber;
+    private  int bankTypeId;
+    private long accountNumber;
     private  int initialAmount;
-    private Date creationDate;
-    private  String accountType;
+    private Date createDate;
+    private  int accountType;
 }

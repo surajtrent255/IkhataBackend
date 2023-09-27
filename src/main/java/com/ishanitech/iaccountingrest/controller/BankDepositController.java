@@ -76,6 +76,7 @@ public class BankDepositController {
 @PostMapping
 public ResponseDTO<?> addBankDeposit(@RequestBody BankDepositDTO bankDepositDTO){
 
+
         return  new ResponseDTO<>(BankDepositeService.addBankDeposit(bankDepositDTO))  ;
 
 }
