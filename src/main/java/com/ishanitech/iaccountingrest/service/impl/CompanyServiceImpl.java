@@ -7,7 +7,9 @@ import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.DbService;
+import com.ishanitech.iaccountingrest.utils.CustomQueryCreator;
 import com.ishanitech.iaccountingrest.utils.HostDetailsUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.jdbi.v3.core.JdbiException;
 import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.mapper.ColumnMapper;
@@ -213,5 +215,13 @@ companyDAO.deleteCompany(companyId);
         CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
         String   caseQuery  = "company_id=" +companyId + " AND customer='true' AND created_date_nepali LIKE '%" + fiscalYear + "%'" ;
         return companyDAO.customerAddedThisYear(caseQuery);
+    }
+
+    @Override
+    public List<CompanyDTO> getAllCustomersByCompAndBranchId(HttpServletRequest request) {
+        String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.CUSTOMER, dbService);
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        List<CompanyDTO> customers = companyDAO.getAllCustomers( caseQuery);
+        return customers;
     }
 }

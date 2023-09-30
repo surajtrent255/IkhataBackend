@@ -9,6 +9,8 @@ import com.ishanitech.iaccountingrest.service.CompanyService;
 import com.ishanitech.iaccountingrest.service.UserConfigurationService;
 import com.ishanitech.iaccountingrest.utils.FileUtilService;
 import com.ishanitech.iaccountingrest.utils.HostDetailsUtil;
+import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -231,6 +233,16 @@ public class CompanyController {
         catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
+        }
+    }
+
+    @GetMapping("/customers")
+    public ResponseDTO<List<CompanyDTO>> getAllCustomersOfSpecificCompanyAndBranch(HttpServletRequest request){
+        try{
+            return new ResponseDTO<>(companyService.getAllCustomersByCompAndBranchId(request));
+        } catch (Exception ex){
+            log.error(ex.getMessage());
+            throw new CustomSqlException("something went wrong while fetching customer");
         }
     }
 }
