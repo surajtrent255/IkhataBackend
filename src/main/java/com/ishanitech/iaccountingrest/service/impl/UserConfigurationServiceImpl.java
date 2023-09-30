@@ -51,9 +51,21 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
 
 
     @Override
-    public List<UserCommonConfigDTO> getAllUser(int companyId) {
+    public List<UserCommonConfigDTO> getAllUser(int companyId,Integer offset,Integer pageTotalItems,String searchInput) {
         UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        return  userConfigutarionDAO.getAllUser(companyId);
+        String caseQuery = "";
+        if(searchInput.length() !=0 ){
+            caseQuery = " WHERE (user_company.company_id <> " + companyId +
+                    " OR user_company.company_id IS NULL) AND users.id NOT IN (SELECT user_id FROM user_company WHERE company_id = " + companyId +
+                    ") AND user_role.role_id <> 6" + " and " + "users.email like '"  + searchInput + "%' order by " + " users.id "+" desc "+
+                    "limit "+ pageTotalItems + " offset "+(offset-1);
+        }else{
+            caseQuery = " WHERE (user_company.company_id <> " + companyId +
+                    " OR user_company.company_id IS NULL) AND users.id NOT IN (SELECT user_id FROM user_company WHERE company_id =" + companyId +
+                    ") AND user_role.role_id <> 6" + " order by users.id " + " desc "+
+                    "limit " + pageTotalItems + " offset "+(offset-1);
+        }
+        return  userConfigutarionDAO.getAllUser(caseQuery);
     }
 
     @Override

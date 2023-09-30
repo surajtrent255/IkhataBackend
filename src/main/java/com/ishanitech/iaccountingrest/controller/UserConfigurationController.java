@@ -109,9 +109,10 @@ public class UserConfigurationController {
     }
 
     @GetMapping("/users")
-    public ResponseDTO<?> getAllUsers(@RequestParam("companyId") int companyId){
+    public ResponseDTO<?> getAllUsers(@RequestParam("companyId") int companyId, @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+                                      @RequestParam("searchInput") String searchInput){
         try{
-            return new ResponseDTO<>(userConfigurationService.getAllUser(companyId)) ;
+            return new ResponseDTO<>(userConfigurationService.getAllUser(companyId,offset,pageTotalItems,searchInput)) ;
         }catch (Exception e){
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
