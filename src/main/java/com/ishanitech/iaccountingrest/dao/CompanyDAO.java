@@ -224,4 +224,7 @@ public interface CompanyDAO {
             """)
     Integer customerAddedThisYear(@Define String caseQuery);
 
+    @SqlQuery(" select * from company where <caseQuery>")
+    @RegisterBeanMapper(CompanyDTO.class)
+    List<CompanyDTO> getAllCustomers(@Define  String caseQuery);
 }

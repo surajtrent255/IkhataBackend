@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.CompanyLogoDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.Define;
 
@@ -42,8 +43,6 @@ public interface CompanyService {
 
     Integer customerAddedThisYear( String fiscalYear,int companyId);
 
-
-
-
+    List<CompanyDTO> getAllCustomersByCompAndBranchId(HttpServletRequest request);
 
 }

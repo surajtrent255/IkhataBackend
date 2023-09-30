@@ -503,11 +503,11 @@ CREATE TABLE  bank (
 bank_id  SERIAL ,
 company_id  int  NOT NULL ,
 branch_id  int NOT NULL,
-bank_name  VARCHAR(50) NOT NULL ,
+bank_type_id  int NOT NULL ,
 account_number BIGINT NOT NULL,
 initial_amount real ,
 create_date date default current_date,
-account_type   CHAR(50)
+account_type  int not null
 );
 
 CREATE TABLE  bank_deposit (
@@ -519,6 +519,7 @@ deposit_amount bigint NOT NULL,
 deposit_type VARCHAR(50) NOT NULL,
 submit_date date default current_date,
 cheque_number  VARCHAR(50),
+deposited_by bigint not null,
 nepali_date varchar(50) not null,
 english_date date not null
 );

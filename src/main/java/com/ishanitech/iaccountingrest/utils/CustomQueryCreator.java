@@ -80,6 +80,21 @@ public class CustomQueryCreator{
                 }
                 caseQuery += " OFFSET  " + (offset - 1) + " LIMIT " + pageSize;
             }
+
+            case CUSTOMER -> {
+                caseQuery += " deleted = false and customer = true ";
+                if (!searchBy.isEmpty()) {
+
+                        caseQuery += " AND lower(" + searchBy + "::text) LIKE '%" + searchWildCard + "%'";
+
+                }
+                if (!orderBy.isEmpty()) {
+                    caseQuery += " ORDER BY " + orderBy + " " + orderType;
+                } else {
+                    caseQuery += "order by company_id desc";
+                }
+                caseQuery += " OFFSET  " + (offset - 1) + " LIMIT " + pageSize;
+            }
         }
         return caseQuery;
     }
