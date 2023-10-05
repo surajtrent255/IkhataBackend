@@ -8,5 +8,6 @@ import java.util.List;
 public interface SaleBillMasterService {
 
     ResponseDTO<Integer> addNewSaleBill(SaleBillMasterDTO saleBillMasterDTO);
+    void changeFiscalYear(String fiscalYear);
 
 }

@@ -4,10 +4,12 @@ import com.ishanitech.iaccountingrest.dao.CategoryProductDAO;
 import com.ishanitech.iaccountingrest.dto.CategoryProductDTO;
 import com.ishanitech.iaccountingrest.service.CategoryProductService;
 import com.ishanitech.iaccountingrest.service.DbService;
+import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 @Service
@@ -27,11 +29,38 @@ public class CategoryProductServiceImpl implements CategoryProductService {
     @Override
     public void deleteCategory(Integer categoryId, Integer compId, Integer branchId) {
         CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
-        categoryDAO.deleteCategory(categoryId, compId, branchId);
+        List<CategoryProductDTO> categories = new ArrayList<>();
+
+        findSubChildCategories(categoryId, categories, categoryDAO);
+        StringBuilder catIds = new StringBuilder();
+        catIds.append("(").append(categoryId).append(",");
+
+        for(CategoryProductDTO c: categories){
+            catIds.append(c.getId()).append(",");
+        }
+
+        if (catIds.length() > 1) {
+            catIds.deleteCharAt(catIds.length() -1);
+        }
+        catIds.append(")");
+
+//        int[]  catIds = categoryIds.stream().mapToInt(Integer::intValue).toArray();
+
+
+        categoryDAO.deleteParentandChildCategories(catIds.toString());
+//        categoryDAO.deleteCategory(categoryId, compId, branchId);
 //        List<CategoryProductDTO> category = categoryDAO.getAllCategoriesByCompIdAndBranchId(compId, branchId);
 
     }
 
+    void findSubChildCategories(int id, List<CategoryProductDTO> categories, CategoryProductDAO categoryDAO){
+        List<CategoryProductDTO> categoryList = categoryDAO.getCategoryByParentId(id);
+        categories.addAll(categoryList);
+        categoryList.forEach(cl->{
+            findSubChildCategories(cl.getId(), categories, categoryDAO);
+        });
+        System.out.println(" ");
+    }
     @Override
     public List<CategoryProductDTO> getAllCategoriesByCompIdAndBranchId(int compId, int branchId) {
         CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
@@ -54,11 +83,6 @@ public class CategoryProductServiceImpl implements CategoryProductService {
         return categoryProductDAO.updateCategoryProduct(categoryProductDTO, categoryProductDTO.getId());
     }
 
-    @Override
-    public void deleteParentandChildCategories(List<Integer> categoryIds) {
-        CategoryProductDAO categoryDAO = dbService.getDao(CategoryProductDAO.class);
-        categoryDAO.deleteParentandChildCategories(categoryIds);
-    }
 
     @Override
     public CategoryProductDTO getCategoryByCategoryId(Integer categoryId, Integer companyId, Integer branchId) {

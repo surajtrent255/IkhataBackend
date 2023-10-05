@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.CategoryProductDTO;
+import jdk.jfr.Category;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.AllowUnusedBindings;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -31,8 +32,8 @@ public interface CategoryProductDAO {
             + "company_id = :companyId, branch_id = :branchId, edit_date = :editedDate WHERE id = :categoryId")
     int updateCategoryProduct(@BindBean CategoryProductDTO categoryProductDTO, @Bind int categoryId);
 
-    @SqlBatch("UPDATE category SET deleted = true WHERE category_id = :categoryIds")
-    void deleteParentandChildCategories(List<Integer> categoryIds);
+    @SqlUpdate("UPDATE category SET deleted = true WHERE id in <categoryIds>")
+    void deleteParentandChildCategories(@Define String categoryIds);
 
     @SqlQuery("SELECT * FROM category WHERE id = :categoryId AND company_id = :companyId and branch_id = :branchId;")
     @RegisterBeanMapper(CategoryProductDTO.class)
@@ -46,5 +47,6 @@ public interface CategoryProductDAO {
             select id from category where lower(name) like lower(:searchWildCard) 
             """)
     int[] getCategoriesIdsByCloseName(@Bind String searchWildCard);
+
 }
 

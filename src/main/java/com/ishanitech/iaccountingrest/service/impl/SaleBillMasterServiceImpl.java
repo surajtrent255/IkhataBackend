@@ -1,9 +1,6 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
-import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
-import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
-import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
-import com.ishanitech.iaccountingrest.dao.StockDAO;
+import com.ishanitech.iaccountingrest.dao.*;
 import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.DbService;
@@ -14,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -124,5 +120,49 @@ public class SaleBillMasterServiceImpl implements SaleBillMasterService {
 
 
         return new ResponseDTO<Integer>(billId);
+    }
+
+
+
+    public void changeFiscalYear(String fiscalYear){
+
+//        also including customers;
+//        default branch 0 branch table ma basdaina;
+        BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
+        CompanyDAO companyDAO = dbService.getDao(CompanyDAO.class);
+        List<CompanyDTO> companies  = companyDAO.getAllCompanyList();
+        List<BranchDTO> branches = branchDAO.getAllCompanyAndBranch();
+        List<BillNoGenerationDTO> billNoGenerationDTOs = new ArrayList<>();
+
+
+        branches.forEach(b -> {
+            BillNoGenerationDTO billNoGenerationDTO = BillNoGenerationDTO.builder()
+                    .companyId(b.getCompanyId())
+                    .branchId(b.getId())
+                    .active(true)
+                    .hasAbbr(false)
+                    .fiscalYear(fiscalYear).build();
+            billNoGenerationDTOs.add(billNoGenerationDTO);
+
+            BillNoGenerationDTO billNoGenerationDTO2 = BillNoGenerationDTO.builder()
+                    .companyId(b.getCompanyId())
+                    .active(true)
+                    .hasAbbr(true)
+                    .branchId(b.getId()) .fiscalYear(fiscalYear).build();
+            billNoGenerationDTOs.add(billNoGenerationDTO2);
+        });
+
+        companies.forEach(ci->{
+            BillNoGenerationDTO billNoGenerationDTO = BillNoGenerationDTO.builder().companyId(ci.getCompanyId()).branchId(0).active(true).hasAbbr(false) .fiscalYear(fiscalYear).build();
+            billNoGenerationDTOs.add(billNoGenerationDTO);
+
+            BillNoGenerationDTO billNoGenerationDTO2= BillNoGenerationDTO.builder().companyId(ci.getCompanyId()).branchId(0).active(true).hasAbbr(true) .fiscalYear(fiscalYear).build();
+            billNoGenerationDTOs.add(billNoGenerationDTO2);
+        });
+
+        BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
+//        billNoGeneratorDAO.createNewFiscalYear(billNoGenerationDTOs)
+        System.out.println("dsfsdf");
+        billNoGeneratorDAO.initilizeBillNoForNewFiscalYear(billNoGenerationDTOs);
     }
 }

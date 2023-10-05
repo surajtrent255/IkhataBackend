@@ -69,7 +69,7 @@ public interface CompanyDAO {
     @SqlUpdate("delete from company where company_id = :companyId")
     void deleteCompany(@Bind("companyId") Integer companyId);
 
-    @SqlQuery("SELECT * FROM company ")
+    @SqlQuery("SELECT * FROM company  WHERE deleted = false")
     @RegisterBeanMapper(CompanyDTO.class)
     List<CompanyDTO> getAllCompanyList();
 

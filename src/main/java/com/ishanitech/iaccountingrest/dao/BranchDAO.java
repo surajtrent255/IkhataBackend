@@ -62,4 +62,8 @@ public interface BranchDAO {
 
 
 
+    @SqlQuery("SELECT id, company_id FROM branch WHERE deleted = false"  )
+    @RegisterBeanMapper(BranchDTO.class)
+    List<BranchDTO> getAllCompanyAndBranch();
+
 }
