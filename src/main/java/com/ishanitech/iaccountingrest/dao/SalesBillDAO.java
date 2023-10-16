@@ -1,6 +1,7 @@
 package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
+import com.ishanitech.iaccountingrest.dto.TaxFileIrdDTO;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
@@ -279,4 +280,16 @@ public interface SalesBillDAO {
             """)
     Double fiscalYearTotalSalesBillTaxAmount(@Define String caseQuery);
 
+
+    @SqlQuery("""
+    SELECT
+            (SELECT COUNT(*) FROM sales_bill WHERE company_id = :compId AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear) AS totalSalesBill,
+            (SELECT SUM(total_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear) AS totalSale,
+            (SELECT SUM(tax_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear) AS totalVatOnSale,
+            (SELECT COUNT(*) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear) AS totalPurchaseBill,
+            (SELECT SUM(total_amount) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear) AS totalPurchase,
+            (SELECT SUM(tax_amount) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear) AS totalVatOnPurchase;
+            """)
+    @RegisterBeanMapper(TaxFileIrdDTO.class)
+    TaxFileIrdDTO findTotalSalesAmountForCompany(int compId, String fiscalYear);
 }
