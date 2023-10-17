@@ -47,19 +47,23 @@ public class CompanyServiceImpl implements CompanyService {
             if(!companyDTO.isCustomer()){
                 BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
                 String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
+                List<BillNoGenerationDTO> billNoGenerationDTOS = new ArrayList<>();
                 BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
                 billNoGeneration.setFiscalYear(currentFiscalYear);
                 billNoGeneration.setCompanyId(savedCompanyId);
                 billNoGeneration.setBranchId(0);
                 billNoGeneration.setHasAbbr(false);
-                billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
+                billNoGeneration.setActive(true);
+                billNoGenerationDTOS.add(billNoGeneration);
 
                 BillNoGenerationDTO billNoGeneration2 = new BillNoGenerationDTO();
                 billNoGeneration2.setFiscalYear(currentFiscalYear);
                 billNoGeneration2.setCompanyId(savedCompanyId);
                 billNoGeneration2.setBranchId(0);
                 billNoGeneration2.setHasAbbr(true);
-                billNoGeneratorDAO.createNewFiscalYear(billNoGeneration2);
+                billNoGeneration2.setActive(true);
+                billNoGenerationDTOS.add(billNoGeneration2);
+                billNoGeneratorDAO.createNewFiscalYear(billNoGenerationDTOS);
 
 //            for receipt no generation
                 billNoGeneratorDAO.createNewRecieptNo(currentFiscalYear, savedCompanyId, 0);

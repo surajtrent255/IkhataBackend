@@ -904,3 +904,14 @@ create TABLE expense_topics (
     company_id INTEGER,
     branch_id INTEGER
 );
+
+
+create table fiscal_year (
+    id serial NOT null,
+    fiscal_year varchar(10) not null,
+    first_quarter Date not null,
+    second_quarter Date not null,
+    third_quarter Date not null,
+    fourth_quarter Date not null
+)
+

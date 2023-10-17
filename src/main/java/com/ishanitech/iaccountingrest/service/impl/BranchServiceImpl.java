@@ -11,6 +11,7 @@ import com.ishanitech.iaccountingrest.service.BranchService;
 import com.ishanitech.iaccountingrest.service.DbService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,23 +37,32 @@ public class BranchServiceImpl implements BranchService {
       int branchAdded = branchDAO.addBranch(branchDTO);
         BillNoGeneratorDAO billNoGeneratorDAO = dbService.getDao(BillNoGeneratorDAO.class);
         String currentFiscalYear = billNoGeneratorDAO.getCurrentFiscalYear();
+        List<BillNoGenerationDTO> billNoGenerations = getBillNoGenerationDTOS(branchDTO, currentFiscalYear, branchAdded);
+        billNoGeneratorDAO.createNewFiscalYear(billNoGenerations);
+
+        billNoGeneratorDAO.createNewRecieptNo(currentFiscalYear, branchDTO.getCompanyId(), branchAdded);
+      return branchAdded;
+
+    }
+
+    private static List<BillNoGenerationDTO> getBillNoGenerationDTOS(BranchDTO branchDTO, String currentFiscalYear, int branchAdded) {
         BillNoGenerationDTO billNoGeneration = new BillNoGenerationDTO();
         billNoGeneration.setFiscalYear(currentFiscalYear);
         billNoGeneration.setCompanyId(branchDTO.getCompanyId());
         billNoGeneration.setBranchId(branchAdded);
         billNoGeneration.setHasAbbr(false);
-        billNoGeneratorDAO.createNewFiscalYear(billNoGeneration);
+        billNoGeneration.setActive(true);
+        List<BillNoGenerationDTO> billNoGenerations =new ArrayList<>();
+        billNoGenerations.add(billNoGeneration);
 
         BillNoGenerationDTO billNoGeneration2 = new BillNoGenerationDTO();
         billNoGeneration2.setFiscalYear(currentFiscalYear);
         billNoGeneration2.setCompanyId(branchDTO.getCompanyId());
         billNoGeneration2.setBranchId(branchAdded);
         billNoGeneration2.setHasAbbr(true);
-        billNoGeneratorDAO.createNewFiscalYear(billNoGeneration2);
-
-        billNoGeneratorDAO.createNewRecieptNo(currentFiscalYear, branchDTO.getCompanyId(), branchAdded);
-      return branchAdded;
-
+        billNoGeneration2.setActive(true);
+        billNoGenerations.add(billNoGeneration2);
+        return billNoGenerations;
     }
 
     @Override
