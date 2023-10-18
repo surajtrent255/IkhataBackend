@@ -5,5 +5,5 @@ import com.ishanitech.iaccountingrest.dto.TaxFileIrdDTO;
 
 public interface UtilityService {
 
-    TaxFileIrdDTO findTaxFileUtilitySummary(int compId, String fiscalYear);
+    TaxFileIrdDTO findTaxFileUtilitySummary(int compId, String fiscalYear, Integer quarter);
 }
