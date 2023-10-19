@@ -561,8 +561,8 @@ create table public.loan (
 	company_id int not null,
 	branch_id int not null,
 	bank_id int not null,
-	lender_id int not null,
-	loan_type int not null,
+	lender_id int ,
+	loan_type int ,
 	loan_number int not null,
 	loan_name int not null,
 	loan_amount real not null,
@@ -909,9 +909,13 @@ create TABLE expense_topics (
 create table fiscal_year (
     id serial NOT null,
     fiscal_year varchar(10) not null,
-    first_quarter Date not null,
-    second_quarter Date not null,
-    third_quarter Date not null,
-    fourth_quarter Date not null
-)
-
+    first_quarter_start Date not null,
+    first_quarter_end Date not null,
+    second_quarter_start Date not null,
+    second_quarter_end Date not null,
+    third_quarter_start Date not null,
+    third_quarter_end Date not null,
+    fourth_quarter_start Date not null,
+    fourth_quarter_end Date not null,
+    active boolean not null;
+);

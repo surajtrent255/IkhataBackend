@@ -1,6 +1,5 @@
 package com.ishanitech.iaccountingrest.controller;
 
-
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.dto.TaxFileIrdDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
@@ -21,11 +20,12 @@ public class UtilityController {
     private final UtilityService utilityService;
 
     @GetMapping("/summary")
-    public ResponseDTO<TaxFileIrdDTO> taxFileUtilitySummary(@RequestParam("compId") Integer compId, @RequestParam("fiscal_year") String fiscalYear){
-        try{
-            return new ResponseDTO<>(utilityService.findTaxFileUtilitySummary(compId, fiscalYear));
-        } catch (Exception ex){
-            log.error("something went wrong while fetching utility summary");
+    public ResponseDTO<TaxFileIrdDTO> taxFileUtilitySummary(@RequestParam("compId") Integer compId,
+            @RequestParam("fiscal_year") String fiscalYear, @RequestParam("quarter") Integer quarter) {
+        try {
+            return new ResponseDTO<>(utilityService.findTaxFileUtilitySummary(compId, fiscalYear, quarter));
+        } catch (Exception ex) {
+            log.error("something went wrong while fetching utility summary" + ex.getMessage());
             throw new CustomSqlException("something went wrong.. ");
         }
     }

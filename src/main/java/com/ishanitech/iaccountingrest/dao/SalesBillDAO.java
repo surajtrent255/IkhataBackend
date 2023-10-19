@@ -10,6 +10,7 @@ import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -283,13 +284,27 @@ public interface SalesBillDAO {
 
     @SqlQuery("""
     SELECT
-            (SELECT COUNT(*) FROM sales_bill WHERE company_id = :compId AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear) AS totalSalesBill,
-            (SELECT SUM(total_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear) AS totalSale,
-            (SELECT SUM(tax_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear) AS totalVatOnSale,
-            (SELECT COUNT(*) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear) AS totalPurchaseBill,
-            (SELECT SUM(total_amount) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear) AS totalPurchase,
-            (SELECT SUM(tax_amount) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear) AS totalVatOnPurchase;
+            (SELECT COUNT(*) FROM sales_bill WHERE company_id = :compId AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalSalesBill,
+            (SELECT SUM(total_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalSale,
+            (SELECT SUM(tax_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalVatOnSale,
+            (SELECT COUNT(*) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalPurchaseBill,
+            (SELECT SUM(total_amount) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalPurchase,
+            (SELECT SUM(tax_amount) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalVatOnPurchase;
             """)
     @RegisterBeanMapper(TaxFileIrdDTO.class)
-    TaxFileIrdDTO findTotalSalesAmountForCompany(int compId, String fiscalYear);
+    TaxFileIrdDTO findTotalSalesAmountForCompany(int compId, @Bind String fiscalYear, @Bind LocalDateTime quarterStart, @Bind LocalDateTime quarterEnd);
+
+// @SqlQuery("""
+//     SELECT
+//         (SELECT COUNT(*) FROM sales_bill WHERE company_id = :compId AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN :quarterStart AND :quarterEnd) AS totalSalesBill,
+//         (SELECT SUM(total_amount) FROM sales_bill WHERE company_id = :compId AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN :quarterStart AND :quarterEnd) AS totalSale,
+//         (SELECT SUM(tax_amount) FROM sales_bill WHERE company_id = :compId AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN :quarterStart AND :quarterEnd) AS totalVatOnSale,
+//         (SELECT COUNT(*) FROM purchase_bill WHERE company_id = :compId AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN :quarterStart AND :quarterEnd) AS totalPurchaseBill,
+//         (SELECT SUM(total_amount) FROM purchase_bill WHERE company_id = :compId AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN :quarterStart AND :quarterEnd) AS totalPurchase,
+//         (SELECT SUM(tax_amount) FROM purchase_bill WHERE company_id = :compId AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN :quarterStart AND :quarterEnd) AS totalVatOnPurchase;
+// """)
+// @RegisterBeanMapper(TaxFileIrdDTO.class)
+// TaxFileIrdDTO findTotalSalesAmountForCompany(@Bind("compId") int compId, @Bind("fiscalYear") String fiscalYear, @Bind("quarterStart") Date quarterStart, @Bind("quarterEnd") Date quarterEnd);
+
+
 }

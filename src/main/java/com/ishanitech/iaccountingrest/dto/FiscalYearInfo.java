@@ -14,9 +14,13 @@ public class FiscalYearInfo {
 
     private Integer id;
     private String fiscalYear;
-    private LocalDateTime firstQuarter;
-    private LocalDateTime secondQuarter;
-    private LocalDateTime thirdQuarter;
-    private LocalDateTime fourthQuarter;
+    private LocalDateTime firstQuarterStart;
+    private LocalDateTime firstQuarterEnd;
+    private LocalDateTime secondQuarterStart;
+    private LocalDateTime secondQuarterEnd;
+    private LocalDateTime thirdQuarterStart;
+    private LocalDateTime thirdQuarterEnd;
+    private LocalDateTime fourthQuarterStart;
+    private LocalDateTime fourthQuarterEnd;
     private boolean active;
 }
