@@ -34,5 +34,8 @@ public interface BillService {
 
         Double fiscalYearTotalSalesBillTaxAmount(String fiscalYear,int companyId,int branchId);
 
+        List<SalesBillDTO> getLimitedSalesBillsExcludingDraftByCompIdAndBranchId(Integer offset, Integer pageTotalItems,
+                String searchBy, String searchWildCard, Integer compId, Integer branchId);
+
 
 }
