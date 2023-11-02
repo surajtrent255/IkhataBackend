@@ -65,6 +65,7 @@ public class SalesBillController {
             throw new CustomSqlException("Error occured accessing the bill infos : " );
         }
     }
+    
     @GetMapping("/{id}")
     public ResponseDTO<SalesBillDTO> getBillById(@PathVariable int id){
         try{
