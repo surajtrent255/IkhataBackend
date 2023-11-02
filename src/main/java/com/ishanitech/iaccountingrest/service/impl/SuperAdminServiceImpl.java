@@ -29,23 +29,19 @@ public class SuperAdminServiceImpl implements SuperAdminService {
     }
 
     @Override
-    public List<UserConfigurationDTO> fetchLimitedUsersForSuperAdminListing(Integer offset, Integer pageTotalItems, String searchInput, String searchValue) {
+    public List<UserConfigurationDTO> fetchLimitedUsersForSuperAdminListing(Integer offset, Integer pageTotalItems, String searchInput) {
         SuperAdminDAO superAdminDAO = dbService.getDao(SuperAdminDAO.class);
         String caseQuery = "";
-        if (Objects.equals(searchInput,"firstName") ){
-            caseQuery = "role.role <> 'SUPER_ADMIN'" + "and firstname like " + searchValue + "% order by users.id desc "+
+        if (searchInput.matches("\\d+")) {
+            caseQuery = "role.role <> 'SUPER_ADMIN'" + " and phone=" + searchInput + " order by users.id desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }
-        if(Objects.equals(searchInput,"LastName")){
-            caseQuery = "role.role <> 'SUPER_ADMIN'" + "and lastname like " + searchValue + "% order by users.id desc "+
-                    " limit "+ pageTotalItems+" offset "+(offset-1);
-        }
-        if(Objects.equals(searchInput,"email")){
-            caseQuery = "role.role <> 'SUPER_ADMIN'" + "and email like " + searchValue + "% order by users.id desc "+
-                    " limit "+ pageTotalItems+" offset "+(offset-1);
-        }
-        if(Objects.equals(searchInput,"phone")){
-            caseQuery = "role.role <> 'SUPER_ADMIN'" + "and phone=" + searchValue + " order by users.id desc "+
+        else if (searchInput.matches("[a-zA-Z]+")) {
+            caseQuery = "role.role <> 'SUPER_ADMIN'" + " and users.email like '"  + searchInput + "%' "
+                    + " order by users.id" + " desc "
+                    + "limit " + pageTotalItems + " offset " + (offset - 1);
+        }else{
+            caseQuery = "role.role <> 'SUPER_ADMIN' order by users.id desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }
         if(Objects.equals(searchInput,"")){

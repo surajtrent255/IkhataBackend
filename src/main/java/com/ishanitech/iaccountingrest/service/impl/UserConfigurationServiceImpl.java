@@ -95,11 +95,6 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
         return userConfigutarionDAO.getUserRoleDetailsBasedOnCompanyIdAndUserId(companyId,userId);
     }
 
-    @Override
-    public List<UserConfigurationDTO> getAllUsersForSuperAdminListing() {
-        UserConfigutarionDAO userConfigutarionDAO = dbService.getDao(UserConfigutarionDAO.class);
-        return userConfigutarionDAO.getAllUsersForSuperAdminList();
-    }
 
     @Override
     public void assignAdminRoleFromSuperAdmin(int userId,int roleId) {
@@ -113,8 +108,19 @@ public class UserConfigurationServiceImpl implements UserConfigurationService {
     public List<UserCommonConfigDTO> getLimitedUsersForSearchInUserConfiguration(Integer offset, Integer pageTotalItems, int companyId,String searchInput) {
         String caseQuery = "";
         if(searchInput.length() !=0 )
-            caseQuery = " user_company.company_id = " + companyId + " and " + "users.email like '"  + searchInput + "%' order by " + "users.id" + " desc " +
-                    "limit " + pageTotalItems + " offset " + (offset - 1);
+            if (searchInput.matches("\\d+")) {
+                caseQuery = " user_company.company_id = " + companyId + " and "
+                        + " users.phone = " + searchInput
+                        + " order by users.id" + " desc "
+                        + "limit " + pageTotalItems + " offset " + (offset - 1);
+            } else if (searchInput.matches("[a-zA-Z]+")) {
+                caseQuery = " user_company.company_id = " + companyId + " and " + "users.email like '"  + searchInput + "%' "
+                        + " order by users.id" + " desc "
+                        + "limit " + pageTotalItems + " offset " + (offset - 1);
+            } else {
+                caseQuery = " user_company.company_id = "+companyId+" order by "+"users.id"+" desc "+
+                        "limit "+ pageTotalItems+" offset "+(offset-1);
+            }
         else {
             caseQuery = " user_company.company_id = "+companyId+" order by "+"users.id"+" desc "+
                     "limit "+ pageTotalItems+" offset "+(offset-1);

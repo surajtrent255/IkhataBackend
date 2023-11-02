@@ -105,9 +105,9 @@ companyDAO.deleteCompany(companyId);
 
         for (CompanyDTO companyDTO : companyDTOS) {
             if(companyDTO.getImageName() != null){
-                String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
+//                String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
                 //            for Production comment above line and uncomment below line
-//            String imageUrl = "http://103.233.58.121:9999/"+"images/"+companyDTO.getImageName();
+            String imageUrl = "http://103.233.58.121:9999/"+"images/"+companyDTO.getImageName();
                 companyDTO.setImageUrl(imageUrl);
 
             }else {
@@ -171,9 +171,9 @@ companyDAO.deleteCompany(companyId);
 
             CompanyDTO companyDTO = companyDAO.getCompanyByIdForEdit(companyId);
 
-            String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
+//            String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
 //                        for Production comment above line and uncomment below line
-//            String imageUrl = "http://103.233.58.121:9999/"+"images/"+companyDTO.getImageName();
+            String imageUrl = "http://103.233.58.121:9999/"+"images/"+companyDTO.getImageName();
 
             companyDTO.setImageUrl(imageUrl);
             return companyDTO;

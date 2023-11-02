@@ -144,17 +144,6 @@ public class UserConfigurationController {
 
 
 //    For Super Admin
-    @GetMapping("/superAdmin")
-    public ResponseDTO<?> getAllUsersForSuperAdminListing(){
-        try{
-            return new ResponseDTO<>(userConfigurationService.getAllUsersForSuperAdminListing());
-
-        }catch(Exception e){
-            log.error(e.getMessage());
-            throw new CustomSqlException(e.getMessage());
-        }
-
-    }
 
     @PutMapping("/superAdmin/assign")
     public ResponseDTO<?> assignAdminRoleToUserFromSuperAdmin(@RequestParam("userId") int userId){
