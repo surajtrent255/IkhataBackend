@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * {@code UserServiceImpl} is an implementation class of
@@ -79,6 +80,18 @@ public class UserServiceImpl implements UserService {
     public List<Role> getAllRole() {
         UserDAO userDAO = dbService.getDao(UserDAO.class);
         return userDAO.getAllRole();
+    }
+
+    @Override
+    public void checkEmailAndGenerateToken(String email) {
+        UserDAO userDAO = dbService.getDao(UserDAO.class);
+        User user = userDAO.getUserByEmail(email).orElse(null);
+        if(user != null){
+            String uniqueID = UUID.randomUUID().toString();
+            
+        } else {
+
+        }
     }
 
 

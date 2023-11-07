@@ -17,8 +17,5 @@ public interface UserService {
 	int addUser(User user, int roleId);
 
 	List<Role> getAllRole();
-
-
-
-
+    void checkEmailAndGenerateToken(String email);
 }
