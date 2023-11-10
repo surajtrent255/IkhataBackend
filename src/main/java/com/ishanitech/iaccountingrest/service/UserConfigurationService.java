@@ -17,7 +17,7 @@ public void addUserRole(int userId,int companyId,int[] roleId);
 public void addMultipleUserRole(int[] userId,int companyId,int roleId);
 
 
-    List<UserCommonConfigDTO> getAllUser(int companyId);
+    List<UserCommonConfigDTO> getAllUser(int companyId,Integer offset,Integer pageTotalItems,String searchInput);
 
     void AssignCompanyToUser(int companyId,int[] userId);
 
@@ -29,7 +29,6 @@ public void addMultipleUserRole(int[] userId,int companyId,int roleId);
 
 //    For Super Admin Users Listing And Operation
 
-    List<UserConfigurationDTO> getAllUsersForSuperAdminListing();
 
     void assignAdminRoleFromSuperAdmin(int userId,int roleId);
 

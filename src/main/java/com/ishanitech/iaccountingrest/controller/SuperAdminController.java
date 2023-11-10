@@ -45,11 +45,11 @@ public class SuperAdminController {
     @GetMapping("/search")
     public ResponseDTO<List<UserConfigurationDTO>> fetchLimitedUsersForSuperAdminListing(@RequestParam("offset") Integer offset,
                                                                                          @RequestParam("pageTotalItems") Integer pageTotalItems,
-                                                                                         @RequestParam("searchInput") String searchInput,
-                                                                                         @RequestParam("searchValue") String searchValue){
+                                                                                         @RequestParam("searchInput") String searchInput){
         try{
-            return new ResponseDTO<List<UserConfigurationDTO>>(superAdminService.fetchLimitedUsersForSuperAdminListing(offset,pageTotalItems,searchInput,searchValue)) ;
+            return new ResponseDTO<List<UserConfigurationDTO>>(superAdminService.fetchLimitedUsersForSuperAdminListing(offset,pageTotalItems,searchInput)) ;
         }catch (Exception e){
+            log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
         }
 

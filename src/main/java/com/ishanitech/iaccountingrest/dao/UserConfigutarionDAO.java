@@ -71,11 +71,9 @@ public interface UserConfigutarionDAO {
             " FROM users " +
             " LEFT JOIN user_company ON users.id = user_company.user_id " +
             "   INNER JOIN user_role on user_role.user_id =  users.id " +
-            " WHERE (user_company.company_id <> :companyId OR user_company.company_id IS NULL) " +
-            " AND users.id NOT IN (SELECT user_id FROM user_company WHERE company_id = :companyId)" +
-            " AND user_role.role_id <> 6; ")
+            "   <caseQuery> ")
     @RegisterBeanMapper(UserCommonConfigDTO.class)
-    List<UserCommonConfigDTO> getAllUser(@Bind int companyId);
+    List<UserCommonConfigDTO> getAllUser(@Define String caseQuery);
 
 //    WHERE id NOT IN (SELECT user_id FROM user_company)
     @SqlQuery("""
@@ -122,13 +120,6 @@ public interface UserConfigutarionDAO {
     void AssignCompanyToUser(@Bind("companyId") int companyId,@Bind("userId") int userId);
 
 //    For Super Admin
-    @SqlQuery(" SELECT users.id AS userId, users.firstname AS firstname, users.lastname AS lastname, users.email AS email, " +
-            " users.phone as phone,user_role.status as roleStatus,role.role as role,user_role.role_id as roleId" +
-            " from users inner join user_role on users.id = user_role.user_id " +
-            " inner join role on role.id = user_role.role_id WHERE role.role <> 'SUPER_ADMIN'  ; ")
-    @RegisterBeanMapper(UserConfigurationDTO.class)
-    List<UserConfigurationDTO> getAllUsersForSuperAdminList();
-
 
     @SqlUpdate(" UPDATE user_role " +
             " SET role_id=:roleId " +

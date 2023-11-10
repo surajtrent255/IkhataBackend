@@ -10,7 +10,7 @@ public interface SuperAdminService {
 
     void allowDisallowUserToProceedBySuperAdmin(int companyId,Boolean status);
 
-    List<UserConfigurationDTO> fetchLimitedUsersForSuperAdminListing(Integer offset, Integer pageTotalItems, String searchInput, String searchValue);
+    List<UserConfigurationDTO> fetchLimitedUsersForSuperAdminListing(Integer offset, Integer pageTotalItems, String searchInput);
 
 
 }
