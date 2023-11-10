@@ -55,9 +55,20 @@ public class AuthenticationController {
     try {
       userService.checkEmailAndGenerateToken(email.get("email"));
     } catch (Exception ex) {
-      log.info(ex.getMessage());
+      log.error(ex.getMessage());
       throw new RuntimeException("some thing went wrong" + ex.getMessage());
     }
+  }
+
+  @PostMapping("/reset-password")
+  public ResponseDTO<String> resetPassword(@RequestBody Map<String, String> tokenAndPassword){
+    try{
+      String email  = userService.resetPassword(tokenAndPassword);
+    } catch(Exception ex){
+      log.error("something wnet wrong while reseting password " ,  ex.getMessage());
+      throw new RuntimeException(" something went wrong while reseting password " + ex.getMessage());
+    }
+    return null;
   }
 
 }

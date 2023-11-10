@@ -919,3 +919,10 @@ create table fiscal_year (
     fourth_quarter_end Date not null,
     active boolean not null;
 );
+
+create table forgot_password(
+    id serial,
+    useremail varchar not null,
+    token varchar(400) not null,
+    status boolean not null
+)

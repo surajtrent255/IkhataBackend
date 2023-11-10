@@ -22,6 +22,7 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
 
     private final Configuration freeMarkerConfiguration;
+    
     public EmailService(JavaMailSender javaMailSender, Configuration freeMarkerConfiguration){
         this.javaMailSender = javaMailSender;
         this.freeMarkerConfiguration = freeMarkerConfiguration;

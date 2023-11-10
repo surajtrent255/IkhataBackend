@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 import java.util.Properties;
 
@@ -14,6 +17,13 @@ public class IaccountingRestApplication  {
 	public static void main(String[] args) {
 		SpringApplication.run(IaccountingRestApplication.class, args);
 	}
+
+	@Bean
+    public FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactoryBean() {
+        FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactoryBean  = new FreeMarkerConfigurationFactoryBean();
+        freeMarkerConfigurationFactoryBean.setTemplateLoaderPath("/templates/");
+        return freeMarkerConfigurationFactoryBean;
+    }
 	@Bean
 	public JavaMailSender blMailSender() {
 		JavaMailSenderImpl sender = new JavaMailSenderImpl();
@@ -30,6 +40,4 @@ public class IaccountingRestApplication  {
 		sender.setJavaMailProperties(javaMailProps);
 		return sender;
 	}
-
-
 }

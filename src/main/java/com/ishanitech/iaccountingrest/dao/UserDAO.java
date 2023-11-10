@@ -1,5 +1,7 @@
 package com.ishanitech.iaccountingrest.dao;
 
+import com.ishanitech.iaccountingrest.dao.UserDAO.UserReducer;
+import com.ishanitech.iaccountingrest.dto.ForgotPasswordDTO;
 import com.ishanitech.iaccountingrest.model.Role;
 import com.ishanitech.iaccountingrest.model.User;
 import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
@@ -12,6 +14,7 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.statement.UseRowReducer;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -78,7 +81,33 @@ public interface UserDAO {
 	List<Role> getAllRole();
 
 
+	@GetGeneratedKeys
+	@SqlUpdate("""
+			INSERT  INTO forgot_password (useremail, token, status) VALUES (:userEmail, :token, :status)
+			""")
+	int generateTokenForForgetPassword(@BindBean ForgotPasswordDTO forgotPassword);
 
+	@SqlQuery("""
+			SELECT * from forgot_password where useremail = :email and status = true
+			""")
+	@RegisterBeanMapper(ForgotPasswordDTO.class)
+	ForgotPasswordDTO getForgotPasswordDto(String email);
+
+	@SqlUpdate("""
+			UPDATE users set password = :newCryptedPassword where email = :email
+			""")
+	int updatePassword(@Bind String newCryptedPassword, @Bind String email);
+
+	@SqlUpdate("""
+			UPDATE forgot_password set status = false where useremail = :email
+			""")
+	int removePreviousToken(@Bind String email);
+
+	@Transactional
+	default void resetPassword(String newCryptedPassword, String email){
+		updatePassword(newCryptedPassword, email);
+		int i = removePreviousToken(email);
+	}
 
 	class UserReducer implements LinkedHashMapRowReducer<Integer,User> {
 		@Override
@@ -90,7 +119,4 @@ public interface UserDAO {
 			}
 		}
 	}
-
-
-
 }

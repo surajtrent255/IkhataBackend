@@ -5,17 +5,14 @@ import com.ishanitech.iaccountingrest.dto.EmployeeDTO;
 import com.ishanitech.iaccountingrest.dto.EmployeeTypeDTO;
 import com.ishanitech.iaccountingrest.dto.PaginationTypeClass;
 import com.ishanitech.iaccountingrest.service.DbService;
-import com.ishanitech.iaccountingrest.service.EmailService;
 import com.ishanitech.iaccountingrest.service.EmployeeService;
 import com.ishanitech.iaccountingrest.utils.CustomQueryCreator;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

@@ -4,12 +4,10 @@ import com.ishanitech.iaccountingrest.dao.CategoryProductDAO;
 import com.ishanitech.iaccountingrest.dto.CategoryProductDTO;
 import com.ishanitech.iaccountingrest.service.CategoryProductService;
 import com.ishanitech.iaccountingrest.service.DbService;
-import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 @Service
