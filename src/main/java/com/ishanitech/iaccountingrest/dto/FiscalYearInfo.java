@@ -20,7 +20,5 @@ public class FiscalYearInfo {
     private LocalDateTime secondQuarterEnd;
     private LocalDateTime thirdQuarterStart;
     private LocalDateTime thirdQuarterEnd;
-    private LocalDateTime fourthQuarterStart;
-    private LocalDateTime fourthQuarterEnd;
     private boolean active;
 }

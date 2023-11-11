@@ -38,6 +38,7 @@ public class UtilityController {
 
     @GetMapping("/salesBill/list")
     public ResponseDTO<List<SalesBillDTO>> getLimitedBillsByCompId(
+            @RequestParam("fiscalYear") String fiscalYear,
             @RequestParam("offset") Integer offset,
             @RequestParam("pageTotalItems") Integer pageTotalItems,
             @RequestParam("searchBy") String searchBy,
@@ -45,8 +46,9 @@ public class UtilityController {
             @RequestParam("compId") Integer compId,
             @RequestParam("branchId") Integer branchId) {
         try {
-            return new ResponseDTO<List<SalesBillDTO>>(billService.getLimitedSalesBillsExcludingDraftByCompIdAndBranchId(offset,
-                    pageTotalItems, searchBy, searchWildCard, compId, branchId));
+            return new ResponseDTO<List<SalesBillDTO>>(
+                    billService.getLimitedSalesBillsExcludingDraftByCompIdAndBranchId(fiscalYear, offset,
+                            pageTotalItems, searchBy, searchWildCard, compId, branchId));
         } catch (Exception e) {
             log.error("Error occured accessing the bill infos : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the bill infos : ");

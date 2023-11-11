@@ -44,11 +44,6 @@ public class UtilityServiceImpl implements UtilityService {
                 quarterEnd = fiscalYearInfo.getThirdQuarterEnd();
                 break;
 
-            case 4:
-                quarterStart = fiscalYearInfo.getFourthQuarterStart();
-                quarterEnd = fiscalYearInfo.getFourthQuarterEnd();
-                break;
-
             default:
                 break;
         }
