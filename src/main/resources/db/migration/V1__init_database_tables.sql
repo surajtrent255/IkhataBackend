@@ -918,8 +918,6 @@ create table fiscal_year (
     second_quarter_end Date not null,
     third_quarter_start Date not null,
     third_quarter_end Date not null,
-    fourth_quarter_start Date not null,
-    fourth_quarter_end Date not null,
     active boolean not null;
 );
 

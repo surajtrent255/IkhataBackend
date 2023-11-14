@@ -190,7 +190,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<SalesBillDTO> getLimitedSalesBillsExcludingDraftByCompIdAndBranchId(Integer offset,
+    public List<SalesBillDTO> getLimitedSalesBillsExcludingDraftByCompIdAndBranchId( String fiscalYear, Integer offset,
             Integer pageTotalItems, String searchBy, String searchWildCard, Integer compId, Integer branchId) {
         // TODO Auto-generated method stub
         List<SalesBillDTO> salesBillList;
@@ -234,7 +234,7 @@ public class BillServiceImpl implements BillService {
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchBy, "") || searchBy.length() == 0) {
-            caseQuery = " company_id = " + compId + " and branch_id =" + branchId + " and draft = false  and status=true " + " order by id " + " desc " +
+            caseQuery = " company_id = " + compId + " and branch_id =" + branchId + " and draft = false  and status=true  and fiscal_year='"+fiscalYear +  "' order by id " + " desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
         }
         salesBillList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(caseQuery);
