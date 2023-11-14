@@ -38,8 +38,26 @@ public interface PurchaseAdditionalInfoDAO {
           """)
   void addNewAttributes(@Bind String attributeName,@Bind int companyId);
 
-  @SqlQuery("""
-          SELECT * FROM purchase_additional_info WHERE bill_no = :billNo
+  @SqlQuery(""" 
+          SELECT
+              pbd.expense_id AS expenseId,
+              pbd.supplier_pan AS supplierPan,
+              pbd.supplier_name AS supplierName,
+              pbd.invoice_date AS invoiceDate,
+              pbd.invoice_no AS invoiceNo,
+              pbd.amount AS amount,
+              pbd.vat_bill AS vatBill,
+              pbd.company_id AS companyId,
+              pbd.branch_id AS branchId,
+              pbd.bill_no AS billNo,
+              paa.attribute_name AS attributeName
+          FROM
+              purchase_additional_info pbd
+          INNER JOIN
+              purchase_additional_attributes paa ON pbd.expense_id = paa.id
+          WHERE
+              pbd.bill_no = :billNo
+                                                    
           """)
   @RegisterBeanMapper(PurchaseAdditionalInfoDTO.class)
   List<PurchaseAdditionalInfoDTO> getPurchaseAdditionalInfoByBillNo(@Bind String billNo);

@@ -31,7 +31,7 @@ public class PurchaseBillDetailController {
 
     @GetMapping
     public ResponseDTO<PurchaseBillInvoice> getPurchaseInfoByBillId(@RequestParam("billId") int billId,
-                                                                    @RequestParam("comapnyId") int companyId, @RequestParam("branchId") int branchId){
+                                                                    @RequestParam("companyId") int companyId, @RequestParam("branchId") int branchId){
         try{
             return new ResponseDTO<PurchaseBillInvoice>(purchaseBillDetailService.getPurchaseInfoByBillId(billId, companyId, branchId));
         } catch(Exception ex){

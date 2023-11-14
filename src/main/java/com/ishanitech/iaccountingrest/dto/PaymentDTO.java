@@ -23,7 +23,7 @@ public class PaymentDTO {
 
     private int paymentModeId;
 
-    private Double tdsDeducted;
+    private Boolean tdsDeducted;
 
     private boolean postDateCheck;
 
@@ -38,6 +38,8 @@ public class PaymentDTO {
     private Date postCheckDateNepali;
 
     private Long checkNo;
+
+    private String bankName;
 
     private boolean postDateCheckStatus;
 
