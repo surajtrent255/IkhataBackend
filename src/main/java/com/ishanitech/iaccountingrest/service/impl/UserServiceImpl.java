@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jdbi.v3.core.JdbiException;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService {
     private final MailService mailService;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${server.ip}")
+    private  String serverIp;
 
     @Override
     public Optional<User> getUserByUsername(String username) {
@@ -115,7 +119,8 @@ public class UserServiceImpl implements UserService {
 
             map.put("email", user.getEmail());
             map.put("token", uniqueID);
-            map.put("resetLink", "http://localhost:4200/reset-password/" + uniqueID + "/" + email);
+            String serverIp = this.serverIp;
+            map.put("resetLink", serverIp+"/reset-password/" + uniqueID + "/" + email);
             emailingDetail.setModel(map);
             try {
                 emailService.sendAccountActivationEmail(emailingDetail, "pw");

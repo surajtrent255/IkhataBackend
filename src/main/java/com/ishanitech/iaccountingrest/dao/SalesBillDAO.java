@@ -284,9 +284,9 @@ public interface SalesBillDAO {
 
     @SqlQuery("""
     SELECT
-            (SELECT COUNT(*) FROM sales_bill WHERE company_id = :compId AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalSalesBill,
-            (SELECT SUM(total_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalSale,
-            (SELECT SUM(tax_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalVatOnSale,
+            (SELECT COUNT(*) FROM sales_bill WHERE company_id = :compId AND is_bill_active = TRUE AND draft = FALSE AND status=true AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalSalesBill,
+            (SELECT SUM(total_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND status=true AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalSale,
+            (SELECT SUM(tax_amount) FROM sales_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND draft = FALSE AND status=true AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalVatOnSale,
             (SELECT COUNT(*) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalPurchaseBill,
             (SELECT SUM(total_amount) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalPurchase,
             (SELECT SUM(tax_amount) FROM purchase_bill WHERE company_id = :compId  AND is_bill_active = TRUE AND status = TRUE AND fiscal_year = :fiscalYear AND bill_date BETWEEN  :quarterStart AND  :quarterEnd) AS totalVatOnPurchase;

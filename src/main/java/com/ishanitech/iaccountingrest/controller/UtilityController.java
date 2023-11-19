@@ -1,5 +1,6 @@
 package com.ishanitech.iaccountingrest.controller;
 
+import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
 import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.TaxFileIrdDTO;
@@ -39,6 +40,7 @@ public class UtilityController {
     @GetMapping("/salesBill/list")
     public ResponseDTO<List<SalesBillDTO>> getLimitedBillsByCompId(
             @RequestParam("fiscalYear") String fiscalYear,
+            @RequestParam("quarter") Integer quarter,
             @RequestParam("offset") Integer offset,
             @RequestParam("pageTotalItems") Integer pageTotalItems,
             @RequestParam("searchBy") String searchBy,
@@ -47,11 +49,28 @@ public class UtilityController {
             @RequestParam("branchId") Integer branchId) {
         try {
             return new ResponseDTO<List<SalesBillDTO>>(
-                    billService.getLimitedSalesBillsExcludingDraftByCompIdAndBranchId(fiscalYear, offset,
+                    billService.getLimitedSalesBillsExcludingDraftByCompIdAndBranchId(fiscalYear, quarter, offset,
                             pageTotalItems, searchBy, searchWildCard, compId, branchId));
         } catch (Exception e) {
             log.error("Error occured accessing the bill infos : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the bill infos : ");
+        }
+    }
+
+
+     @GetMapping("/purchaseBill/list/limited")
+    public ResponseDTO<List<PurchaseBillDTO>> getLimitedBillsByCompId(
+            @RequestParam("offset") Integer offset,
+            @RequestParam("fiscalYear") String fiscalYear,
+            @RequestParam("quarter") Integer quarter,
+             @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId
+            ,@RequestParam("searchInput") String searchInput, @RequestParam("searchValue") String searchValue)   {
+        try{
+            return new ResponseDTO<List<PurchaseBillDTO>>(utilityService.getLimitedPurchaseBillsForIrd(offset, fiscalYear, quarter, pageTotalItems, compId, branchId,searchInput,searchValue));
+        } catch(Exception e) {
+            log.error("Error occured accessing the bill infos : " + e.getMessage());
+            throw new CustomSqlException("Error occured accessing the purchase bill infos : " );
         }
     }
 

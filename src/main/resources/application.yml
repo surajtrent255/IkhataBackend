@@ -44,6 +44,7 @@ spring:
 ############## Server port configuration ################
 server:
   port: 9999
+  ip: http://localhost:4200
 
 rest-microservice-api:
   protocol: http
@@ -96,6 +97,7 @@ spring:
 ############## Server port configuration ################
 server:
   port: 9999
+  ip: http://103.233.58.121:4200
 
 database:
   username: postgres

@@ -1,9 +1,11 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
 import com.ishanitech.iaccountingrest.dao.BillNoGeneratorDAO;
+import com.ishanitech.iaccountingrest.dao.FiscalYearDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
 import com.ishanitech.iaccountingrest.dao.StockDAO;
+import com.ishanitech.iaccountingrest.dto.FiscalYearInfo;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
 import com.ishanitech.iaccountingrest.service.BillService;
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -190,39 +193,65 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<SalesBillDTO> getLimitedSalesBillsExcludingDraftByCompIdAndBranchId( String fiscalYear, Integer offset,
+    public List<SalesBillDTO> getLimitedSalesBillsExcludingDraftByCompIdAndBranchId( String fiscalYear, Integer quarter, Integer offset,
             Integer pageTotalItems, String searchBy, String searchWildCard, Integer compId, Integer branchId) {
         // TODO Auto-generated method stub
         List<SalesBillDTO> salesBillList;
+        FiscalYearDAO fiscalYearDAO = dbService.getDao(FiscalYearDAO.class);
+
+        // extracting quarter
+        FiscalYearInfo fiscalYearInfo = fiscalYearDAO.getFiscalYear(fiscalYear);
+        LocalDateTime quarterStart = LocalDateTime.of(2023, 1, 1, 0, 0);
+        LocalDateTime quarterEnd = LocalDateTime.of(2023, 1, 1, 0, 0);
+        switch (quarter) {
+            case 1:
+                quarterStart = fiscalYearInfo.getFirstQuarterStart();
+                quarterEnd = fiscalYearInfo.getFirstQuarterEnd();
+                break;
+
+            case 2:
+                quarterStart = fiscalYearInfo.getSecondQuarterStart();
+                quarterEnd = fiscalYearInfo.getSecondQuarterEnd();
+                break;
+
+            case 3:
+                quarterStart = fiscalYearInfo.getThirdQuarterStart();
+                quarterEnd = fiscalYearInfo.getThirdQuarterEnd();
+                break;
+
+            default:
+                break;
+        }
+        // extractign end
         String caseQuery = "";
         if (Objects.equals(searchBy, "pan")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and customer_pan = '"
-                    + searchWildCard + " and draft = false " +"' order by bill_no desc " +
+                    + searchWildCard + " and draft = false and is_bill_active = TRUE AND bill_date BETWEEN '"+quarterStart+"'' AND '" + quarterEnd   +"' order by bill_no desc " +
                     " limit " + pageTotalItems + " offset " + (offset - 1);
         }
         if (Objects.equals(searchBy, "date")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and bill_date = CAST( '"
-                    + searchWildCard + "' AS DATE)" + " order by bill_no desc " +
+                    + searchWildCard + "' AS DATE)" + " and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" order by bill_no desc " +
                     " limit " + pageTotalItems + " offset " + (offset - 1);
         }
         if (Objects.equals(searchBy, "billNo")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and bill_no = '" + searchWildCard
-                    + "' order by bill_no desc " +
+                    + "' and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" order by bill_no desc " +
                     " limit " + pageTotalItems + " offset " + (offset - 1);
         }
         if (Objects.equals(searchBy, "customerOrSellerName")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and customer_name = '"
-                    + searchWildCard + "' order by bill_no desc " +
+                    + searchWildCard + "' and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" order by bill_no desc " +
                     " limit " + pageTotalItems + " offset " + (offset - 1);
         }
         if (Objects.equals(searchBy, "month")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " AND bill_date_nepali LIKE '%-"
-                    + searchWildCard + "-%'" + " ORDER BY bill_no DESC " +
+                    + searchWildCard + "-%'" + " and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" ORDER BY bill_no DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchBy, "fiscalYear")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " AND fiscal_year = '"
-                    + searchWildCard + "'" + " ORDER BY bill_no DESC " +
+                    + searchWildCard + "'" + " and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" ORDER BY bill_no DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchBy, "dateBetween")) {
@@ -230,15 +259,22 @@ public class BillServiceImpl implements BillService {
             String startDate = dateArray[0];
             String endDate = dateArray[1];
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " AND bill_date BETWEEN CAST('"
-                    + startDate + "' AS DATE) AND CAST('" + endDate + "' AS DATE) " + " ORDER BY bill_no DESC " +
+                    + startDate + "' AS DATE) AND CAST('" + endDate + "' AS DATE) " + " and is_bill_active = TRUE  ORDER BY bill_no DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchBy, "") || searchBy.length() == 0) {
-            caseQuery = " company_id = " + compId + " and branch_id =" + branchId + " and draft = false  and status=true  and fiscal_year='"+fiscalYear +  "' order by id " + " desc " +
-                    "limit " + pageTotalItems + " offset " + (offset - 1);
+            caseQuery = " company_id = " + compId + " and draft = false  and status=true  and fiscal_year='"+fiscalYear +  "' and is_bill_active = TRUE AND bill_date BETWEEN '"+quarterStart+"' AND '" + quarterEnd   +"' order by id " + " desc " 
+                    + "limit " + pageTotalItems + " offset " + (offset - 1)
+                    ;
+        }
+        if(fiscalYear.equalsIgnoreCase("all")){
+           caseQuery =  caseQuery.replace("and fiscal_year='all'", " ");
+            caseQuery = caseQuery.replace("And fiscal_year='all'", " ");
+            caseQuery = caseQuery.replace(" and is_bill_active = TRUE ", " ");
         }
         salesBillList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(caseQuery);
         return salesBillList;
     }
+
 
 }
