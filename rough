@@ -1,0 +1,8 @@
+sudo sync && sudo sysctl -w vm.drop_caches=3
+sudo sync && sudo sysctl -w vm.drop_caches=3
+
+SELECT name, setting
+FROM pg_settings
+WHERE name = 'max_connections';
+
+SHOW max_connections;
