@@ -65,7 +65,7 @@ public class PurchaseBillMasterServiceImpl implements PurchaseBillMasterService 
             purchaseBillDetailDAO.addNewPurchaseInfo(purchaseBillDetailDTOS);
         } catch (Exception ex){
             log.error("addNewPurchaseInfo() ========> "+ex.getMessage());
-            throw new CustomSqlException("something went wrong while adding purchase detail");
+            throw new CustomSqlException(ex.getMessage());
         }
 
         return new ResponseDTO<Integer>(purchaseBillDTO.getPurchaseBillNo());

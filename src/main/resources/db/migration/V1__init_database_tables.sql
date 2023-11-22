@@ -277,7 +277,7 @@ create table bill_no_generator (
 
 create table purchase_bill (
     fiscal_year varchar(50) not null,
-    purchase_bill_no int  not null,
+    purchase_bill_no int  not null ,
 	seller_id int  not null,
 	company_id int not null,
 	branch_id int not null,
@@ -325,7 +325,7 @@ CREATE TABLE "purchase_bill_detail"(
    "date" date DEFAULT CURRENT_DATE NOT NULL,
    "discount_per_unit" real NOT NULL,
    "rate" real NOT NULL,
-   "purchase_bill_id" integer NOT NULL,
+   "purchase_bill_id" integer  NOT NULL,
    "company_id" integer NOT NULL,
    "branch_id" integer not null
 --       FOREIGN KEY(bill_id)
@@ -418,7 +418,8 @@ CREATE TABLE payment (
   amount REAL NOT NULL,
   payment_mode_id INT NOT NULL,
   check_no bigint  NOT NULL,
-  tds_deducted real DEFAULT 0,
+  bank_name VARCHAR DEFAULT NULL,
+  tds_deducted boolean DEFAULT false,
   post_date_check boolean DEFAULT FALSE,
   branch_id int DEFAULT NULL,
   date DATE DEFAULT NULL,
@@ -693,6 +694,7 @@ CREATE TABLE debit_note(
 	bill_number BIGINT DEFAULT NULL,
 	date DATE DEFAULT NULL,
 	nepali_date VARCHAR DEFAULT NULL,
+	fiscal_year VARCHAR DEFAULT NULL,
 	total_amount REAL DEFAULT NULL,
 	total_tax REAL DEFAULT NULL,
 	company_id INT NOT NULL,
@@ -725,7 +727,8 @@ CREATE TABLE credit_note(
 	total_amount REAL DEFAULT NULL,
 	total_tax REAL DEFAULT NULL,
 	company_id INT NOT NULL,
-	branch_id INT NOT NULL
+	branch_id INT NOT NULL,
+	fiscal_year VARCHAR DEFAULT NULL
 );
 
 
