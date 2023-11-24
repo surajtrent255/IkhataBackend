@@ -95,6 +95,23 @@ public class CustomQueryCreator{
                 }
                 caseQuery += " OFFSET  " + (offset - 1) + " LIMIT " + pageSize;
             }
+
+            case DEBTORS ->{
+                caseQuery += " company_id = " + companyId + " AND branch_id =" + branchId+ " AND status = true  ";
+                if(!searchBy.isEmpty()){
+                    if(searchBy.equals("customer_pan")){
+                        caseQuery += " AND customer_pan= '"+searchWildCard+"'";
+                    } else{
+                    caseQuery += " AND lower("+searchBy+"::text) LIKE '%"+searchWildCard+"%'";
+
+                    }
+                } if(!orderBy.isEmpty()){
+                    caseQuery += " ORDER BY " + orderBy + " " + orderType;
+                } else{
+                    caseQuery += " ORDER BY id desc";
+                }
+                caseQuery += " OFFSET "+ (offset - 1) + " LIMIT " + pageSize;
+            }
         }
         return caseQuery;
     }

@@ -6,6 +6,7 @@ import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BillService;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -192,6 +193,33 @@ public class SalesBillController {
             log.error(e.getMessage());
             throw new CustomSqlException(e.getMessage());
         }
+    }
+
+    @GetMapping("/debtors")
+    public ResponseDTO<List<SalesBillDTO>> getAllDebtors(
+        // @RequestParam("companyId") Integer companyId,
+        // @RequestParam("branchId") Integer branchId
+        HttpServletRequest request
+    ){
+        try{
+            return new ResponseDTO<>(billService.getAllDebtors(request));
+        }
+         catch(Exception ex){
+            log.error(ex.getMessage());
+            throw new CustomSqlException(ex.getMessage());
+         }
+         
+    }
+
+    @GetMapping("/debtors/billDetail/{id}")
+    public ResponseDTO<SalesBillDTO> getAllBill(@PathVariable("id") Integer id){
+        try{
+            return new ResponseDTO<SalesBillDTO>(billService.getDebtorsBillDetail(id));
+        }catch(Exception ex){
+            log.error(ex.getMessage());
+            throw new CustomSqlException(ex.getMessage());
+        }
+
     }
 
 }

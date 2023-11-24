@@ -6,10 +6,15 @@ import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDetailDAO;
 import com.ishanitech.iaccountingrest.dao.StockDAO;
 import com.ishanitech.iaccountingrest.dto.FiscalYearInfo;
+import com.ishanitech.iaccountingrest.dto.PaginationTypeClass;
+import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
 import com.ishanitech.iaccountingrest.service.BillService;
 import com.ishanitech.iaccountingrest.service.DbService;
+import com.ishanitech.iaccountingrest.utils.CustomQueryCreator;
+
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -277,4 +282,26 @@ public class BillServiceImpl implements BillService {
     }
 
 
+    public List<SalesBillDTO> getAllDebtors(Integer companyId, Integer branchId){
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        List<SalesBillDTO> debtors = salesBillDAO.getAllDebtors(companyId, branchId);
+        return debtors;
+    }
+
+    @Override
+    public SalesBillDTO getDebtorsBillDetail(Integer id) {
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        SalesBillDTO sbd = salesBillDAO.fetchDebtorsBillDetail(id);
+        return sbd;
+    }
+
+    @Override
+    public List<SalesBillDTO> getAllDebtors(HttpServletRequest request) {
+        // TODO Auto-generated method stub
+        String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.DEBTORS, dbService);
+        SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        List<SalesBillDTO> salesBillDTOs = salesBillDAO.getLimitedDebtors(caseQuery);
+        return salesBillDTOs;
+        
+    }
 }

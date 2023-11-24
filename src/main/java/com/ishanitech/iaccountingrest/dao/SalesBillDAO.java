@@ -307,4 +307,23 @@ public interface SalesBillDAO {
 // TaxFileIrdDTO findTotalSalesAmountForCompany(@Bind("compId") int compId, @Bind("fiscalYear") String fiscalYear, @Bind("quarterStart") Date quarterStart, @Bind("quarterEnd") Date quarterEnd);
 
 
+@SqlQuery("""
+        SELECT id, customer_name, customer_pan, total_amount from sales_bill where company_id = :companyId and branch_id = :branchId and sale_type = 2;; 
+                """)
+@RegisterBeanMapper(SalesBillDTO.class)
+ List<SalesBillDTO> getAllDebtors(Integer companyId, Integer branchId);
+
+
+ @SqlQuery("""
+        select id, bill_no, amount, bill_date_nepali from sales_bill where id = :id; 
+                 """)
+ @RegisterBeanMapper(SalesBillDTO.class)
+ SalesBillDTO fetchDebtorsBillDetail(@Bind Integer id);
+
+ @SqlQuery("""
+        SELECT id, customer_name, customer_pan, total_amount from sales_bill where <caseQuery>; 
+                """)
+@RegisterBeanMapper(SalesBillDTO.class)
+List<SalesBillDTO> getLimitedDebtors(@Define String caseQuery);
+
 }
