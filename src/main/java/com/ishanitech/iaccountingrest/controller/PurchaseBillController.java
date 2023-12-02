@@ -1,11 +1,10 @@
 package com.ishanitech.iaccountingrest.controller;
 
+import com.ishanitech.iaccountingrest.dto.*;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
-import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
-import com.ishanitech.iaccountingrest.dto.PurchaseReportDTO;
-import com.ishanitech.iaccountingrest.dto.ResponseDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.PurchaseBillService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -169,6 +168,35 @@ public class PurchaseBillController {
         }
     }
 
+    @GetMapping("/creditors")
+    public ResponseDTO<List<PurchaseBillDTO>> getAllCreditors(
+            HttpServletRequest request
+    ){
+        try{
+            return new ResponseDTO<>(purchaseBillService.getAllCreditors(request));
+        }
+        catch(Exception ex){
+            log.error(ex.getMessage());
+            throw new CustomSqlException(ex.getMessage());
+        }
+
+    }
+
+    @GetMapping("/creditors/detail")
+    public ResponseDTO<List<PurchaseBillDTO>> getCreditorsForDetail(
+            @RequestParam("offset") Integer offset, @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("companyId") Integer companyId, @RequestParam("branchId") Integer branchId
+            ,@RequestParam("sellerPan") String sellerPan,@RequestParam("searchInput") String searchInput
+    ){
+        try{
+            return new ResponseDTO<>(purchaseBillService.getPurchaseBillForCreditorDetailPage(companyId,branchId,sellerPan,searchInput,offset,pageTotalItems));
+        }
+        catch(Exception ex){
+            log.error(ex.getMessage());
+            throw new CustomSqlException(ex.getMessage());
+        }
+
+    }
 
 
 }

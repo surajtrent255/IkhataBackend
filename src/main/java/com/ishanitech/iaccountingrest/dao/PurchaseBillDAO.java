@@ -176,6 +176,51 @@ public interface PurchaseBillDAO {
     PurchaseBillDTO getBillById(int billId, int companyId, int branchId);
 
     @SqlQuery("""
+            SELECT 
+                DISTINCT ON (seller_pan)
+                fiscal_year AS fiscal_year,
+                purchase_bill_no AS purchase_bill_no,
+                seller_id AS seller_id,
+                seller_name AS sellerName,
+                seller_pan AS sellerPan,
+                company_id AS companyId,
+                branch_id AS branchId,
+                seller_address AS sellerAddress,
+                bill_date AS bill_date, 
+                amount AS amount,
+                discount AS discount,
+                taxable_amount AS taxable_amount,
+                tax_amount AS tax_amount,
+                total_amount AS total_amount,
+                sync_with_ird AS sync_with_ird,
+                is_bill_printed AS bill_printed,
+                is_bill_active AS bill_active,
+                printed_time AS printed_time,
+                entered_by AS entered_by,
+                printed_by AS printed_by,
+                is_realtime AS realtime,
+                payment_method AS payment_method,
+                vat_refund_amount AS vat_refund_amount,
+                transaction_id AS transaction_id,
+                sale_type AS sale_type
+            FROM purchase_bill
+            WHERE <caseQuery>
+            """)
+    @RegisterBeanMapper(PurchaseBillDTO.class)
+    List<PurchaseBillDTO> getPurchaseBillBySaleTypeForCreditors( @Define String caseQuery);
+
+    @SqlQuery("""
+            select Sum(pb.total_amount) from purchase_bill pb where pb.sale_type = 2 and seller_pan = :sellerPan and pb.company_id = :companyId and pb.branch_id = :branchId;
+            """)
+    Double totalAmountForCreditors(String sellerPan, int companyId, int branchId);
+
+    @SqlQuery("""
+            Select * from purchase_bill where <caseQuery>
+            """)
+    @RegisterBeanMapper(PurchaseBillDTO.class)
+    List<PurchaseBillDTO> getPurchaseBillBySellerPan(@Define String caseQuery);
+
+    @SqlQuery("""
             select * from purchase_bill  where <caseQuery> ;
             """)
     @RegisterBeanMapper(PurchaseBillDTO.class)
