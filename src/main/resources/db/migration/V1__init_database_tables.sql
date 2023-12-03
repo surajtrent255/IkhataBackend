@@ -414,7 +414,7 @@ CREATE TABLE municipality (
 CREATE TABLE payment (
   SN SERIAL,
   company_id int DEFAULT NULL,
-  party_id int NOT NULL,
+  party_id VARCHAR NOT NULL,
   amount REAL NOT NULL,
   payment_mode_id INT NOT NULL,
   check_no bigint  NOT NULL,
