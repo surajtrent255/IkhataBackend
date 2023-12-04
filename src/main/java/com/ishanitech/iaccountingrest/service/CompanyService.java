@@ -44,5 +44,6 @@ public interface CompanyService {
     Integer customerAddedThisYear( String fiscalYear,int companyId);
 
     List<CompanyDTO> getAllCustomersByCompAndBranchId(HttpServletRequest request);
+    CompanyDTO getSingleCompanyById(Integer id);
 
 }

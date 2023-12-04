@@ -245,4 +245,30 @@ public class CompanyController {
             throw new CustomSqlException("something went wrong while fetching customer");
         }
     }
+
+
+    @GetMapping("/single")
+    public ResponseDTO<CompanyDTO> getSingleCompanyById(@RequestParam("id") Integer companyId){
+        try{
+                return new ResponseDTO<>(companyService.getSingleCompanyById(companyId));
+        } catch(Exception ex){
+            log.error(ex.getMessage());
+            throw new CustomSqlException("");
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
