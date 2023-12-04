@@ -17,7 +17,7 @@ public class PaymentDTO {
     private int SN;
     private int companyId;
 
-    private int partyId;
+    private String partyId;
 
     private Double amount;
 

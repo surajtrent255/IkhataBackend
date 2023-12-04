@@ -56,6 +56,11 @@ public interface PaymentDAO {
     @RegisterBeanMapper(PaymentDTO.class)
     void updatePaymentDetails(@BindBean PaymentDTO paymentDTO);
 
+    @SqlQuery("""
+            select Sum(amount) from payment where party_id = :partyId and company_id = :companyId and branch_id = :branchId;
+            """)
+    Double getTotalPaymentByPartyIdForCreditors(String partyId, int companyId, int branchId);
+
     @SqlQuery("SELECT p.sn as SN, p.company_id as companyId,p.party_id as partyId," +
             " p.amount as amount ,p.payment_mode_id as paymentModeId," +
             " p.tds_deducted as tdsDeducted, p.post_date_check as postDateCheck," +

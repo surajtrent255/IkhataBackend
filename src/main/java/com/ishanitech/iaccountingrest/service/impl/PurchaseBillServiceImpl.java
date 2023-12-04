@@ -1,11 +1,16 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
-import com.ishanitech.iaccountingrest.dao.ProductDAO;
+import com.ishanitech.iaccountingrest.dao.PaymentDAO;
 import com.ishanitech.iaccountingrest.dao.PurchaseBillDAO;
 import com.ishanitech.iaccountingrest.dao.PurchaseBillDetailDAO;
-import com.ishanitech.iaccountingrest.dto.*;
+import com.ishanitech.iaccountingrest.dto.PaginationTypeClass;
+import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
+import com.ishanitech.iaccountingrest.dto.PurchaseBillDetailWithProdInfo;
+import com.ishanitech.iaccountingrest.dto.PurchaseReportDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
 import com.ishanitech.iaccountingrest.service.PurchaseBillService;
+import com.ishanitech.iaccountingrest.utils.CustomQueryCreator;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -129,5 +134,35 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
         String caseQuery = "company_id=" +companyId + " and branch_id = " + branchId + " AND fiscal_year LIKE '%" + fiscalYear + "%'";
         return purchaseBillDAO.fiscalYearTotalPurchaseBillTaxAmount(caseQuery);
 
+    }
+
+
+    @Override
+    public List<PurchaseBillDTO> getAllCreditors(HttpServletRequest request) {
+        String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.CREDITORS, dbService);
+        PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        PaymentDAO paymentDAO = dbService.getDao(PaymentDAO.class);
+        List<PurchaseBillDTO> purchaseBillDTO = purchaseBillDAO.getPurchaseBillBySaleTypeForCreditors(caseQuery);
+        for (PurchaseBillDTO data: purchaseBillDTO){
+            Double totalAmountPaid = Objects.requireNonNullElse(paymentDAO.getTotalPaymentByPartyIdForCreditors(data.getSellerPan(), data.getCompanyId(), data.getBranchId()), 0.0);
+            Double totalCreditAmount = Objects.requireNonNullElse(purchaseBillDAO.totalAmountForCreditors(data.getSellerPan(), data.getCompanyId(), data.getBranchId()), 0.0);
+            double totalAmount = totalCreditAmount - totalAmountPaid;
+            data.setTotalAmount(totalAmount);
+        }
+        return purchaseBillDTO;
+    }
+
+    @Override
+    public List<PurchaseBillDTO> getPurchaseBillForCreditorDetailPage(int companyId, int branchId, String sellerPan, String searchInput,Integer offset, Integer pageTotalItems) {
+        String caseQuery = "" ;
+        PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        if(!searchInput.isEmpty()){
+            caseQuery = " company_id= " + companyId + " AND branch_id= " + branchId + " AND seller_pan='" + sellerPan + "' AND purchase_bill_no=" + searchInput +  " order by seller_pan desc "+
+                    " limit "+ pageTotalItems+" offset "+(offset-1);
+        }else{
+            caseQuery = " company_id= " + companyId + " AND branch_id= " + branchId + " AND seller_pan= '" + sellerPan + "' order by seller_pan desc "+
+                    " limit "+ pageTotalItems+" offset "+(offset-1);
+        }
+        return purchaseBillDAO.getPurchaseBillBySellerPan(caseQuery);
     }
 }

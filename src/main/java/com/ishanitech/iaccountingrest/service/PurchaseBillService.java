@@ -2,6 +2,9 @@ package com.ishanitech.iaccountingrest.service;
 
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseReportDTO;
+import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import org.jdbi.v3.sqlobject.customizer.Define;
 
 import java.util.List;
 
@@ -29,4 +32,9 @@ public interface PurchaseBillService {
     Double ThisMonthTotalPurchaseBillTaxAmount(String month,int companyId,int branchId);
 
     Double fiscalYearTotalPurchaseBillTaxAmount(String fiscalYear,int companyId,int branchId);
+
+    List<PurchaseBillDTO> getAllCreditors(HttpServletRequest request);
+
+    List<PurchaseBillDTO> getPurchaseBillForCreditorDetailPage(int companyId, int branchId, String sellerPan, String searchInput,Integer offset, Integer pageTotalItems);
+
 }

@@ -4,5 +4,6 @@ public enum PaginationTypeClass {
     EMPLOYEE,
     PRODUCT,
     CUSTOMER,
-    DEBTORS
+    DEBTORS,
+    CREDITORS,
 }
