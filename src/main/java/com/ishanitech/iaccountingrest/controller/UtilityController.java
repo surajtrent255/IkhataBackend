@@ -28,9 +28,10 @@ public class UtilityController {
 
     @GetMapping("/summary")
     public ResponseDTO<TaxFileIrdDTO> taxFileUtilitySummary(@RequestParam("compId") Integer compId,
-            @RequestParam("fiscal_year") String fiscalYear, @RequestParam("quarter") Integer quarter) {
+            @RequestParam("fiscal_year") String fiscalYear, @RequestParam("quarterStart") String qrtStart, 
+            @RequestParam("quarterEnd") String qrtEnd) {
         try {
-            return new ResponseDTO<>(utilityService.findTaxFileUtilitySummary(compId, fiscalYear, quarter));
+            return new ResponseDTO<>(utilityService.findTaxFileUtilitySummary(compId, fiscalYear,  qrtStart,  qrtEnd));
         } catch (Exception ex) {
             log.error("something went wrong while fetching utility summary" + ex.getMessage());
             throw new CustomSqlException("something went wrong.. ");
@@ -57,20 +58,34 @@ public class UtilityController {
         }
     }
 
-
-     @GetMapping("/purchaseBill/list/limited")
+    @GetMapping("/purchaseBill/list/limited")
     public ResponseDTO<List<PurchaseBillDTO>> getLimitedBillsByCompId(
             @RequestParam("offset") Integer offset,
             @RequestParam("fiscalYear") String fiscalYear,
             @RequestParam("quarter") Integer quarter,
-             @RequestParam("pageTotalItems") Integer pageTotalItems,
-            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId
-            ,@RequestParam("searchInput") String searchInput, @RequestParam("searchValue") String searchValue)   {
-        try{
-            return new ResponseDTO<List<PurchaseBillDTO>>(utilityService.getLimitedPurchaseBillsForIrd(offset, fiscalYear, quarter, pageTotalItems, compId, branchId,searchInput,searchValue));
-        } catch(Exception e) {
+            @RequestParam("pageTotalItems") Integer pageTotalItems,
+            @RequestParam("compId") Integer compId, @RequestParam("branchId") Integer branchId,
+            @RequestParam("searchInput") String searchInput, @RequestParam("searchValue") String searchValue) {
+        try {
+            return new ResponseDTO<List<PurchaseBillDTO>>(utilityService.getLimitedPurchaseBillsForIrd(offset,
+                    fiscalYear, quarter, pageTotalItems, compId, branchId, searchInput, searchValue));
+        } catch (Exception e) {
             log.error("Error occured accessing the bill infos : " + e.getMessage());
-            throw new CustomSqlException("Error occured accessing the purchase bill infos : " );
+            throw new CustomSqlException("Error occured accessing the purchase bill infos : ");
+        }
+    }
+
+    @GetMapping("/summaryByMonth")
+    public ResponseDTO<TaxFileIrdDTO> taxFileUtilitySummaryByMonth(@RequestParam("compId") Integer compId,
+            @RequestParam("monthBegDate") String monthBegDate, 
+            @RequestParam("monthEndDate") String monthEndDate,
+            @RequestParam("fiscalYear") String fiscalYear) {
+        try {
+            return new ResponseDTO<TaxFileIrdDTO>(
+                    utilityService.findTaxFileUtilitySummaryByMonth(compId, monthBegDate, monthEndDate, fiscalYear));
+        } catch (Exception ex) {
+            log.error("something went wrong while fetching utility summary" + ex.getMessage());
+            throw new CustomSqlException("something went wrong.. ");
         }
     }
 
