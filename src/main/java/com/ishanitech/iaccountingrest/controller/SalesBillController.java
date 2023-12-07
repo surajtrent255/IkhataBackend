@@ -211,10 +211,11 @@ public class SalesBillController {
          
     }
 
-    @GetMapping("/debtors/billDetail/{id}")
-    public ResponseDTO<SalesBillDTO> getAllBill(@PathVariable("id") Integer id){
+    @GetMapping("/debtors/billList/{debtorPan}")
+    public ResponseDTO<SalesBillDTO> getAllBill(@PathVariable("debtorPan") Long debtorPan,
+    @RequestParam("companyId") Integer companyId, @RequestParam("branchId") Integer branchId ){
         try{
-            return new ResponseDTO<SalesBillDTO>(billService.getDebtorsBillDetail(id));
+            return new ResponseDTO<SalesBillDTO>(billService.getDebtorsBillList(debtorPan, companyId, branchId));
         }catch(Exception ex){
             log.error(ex.getMessage());
             throw new CustomSqlException(ex.getMessage());

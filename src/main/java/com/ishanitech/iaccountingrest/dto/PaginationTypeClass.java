@@ -6,4 +6,5 @@ public enum PaginationTypeClass {
     CUSTOMER,
     DEBTORS,
     CREDITORS,
+    DEBTORBILLS
 }

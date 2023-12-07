@@ -315,13 +315,13 @@ public interface SalesBillDAO {
 
 
  @SqlQuery("""
-        select id, bill_no, amount, bill_date_nepali from sales_bill where id = :id; 
+        <caseQuery>
                  """)
  @RegisterBeanMapper(SalesBillDTO.class)
- SalesBillDTO fetchDebtorsBillDetail(@Bind Integer id);
+ SalesBillDTO fetchDebtorsBillList(@Define String caseQuery);
 
  @SqlQuery("""
-        SELECT id, customer_name, customer_pan, total_amount from sales_bill where <caseQuery>; 
+         <caseQuery>; 
                 """)
 @RegisterBeanMapper(SalesBillDTO.class)
 List<SalesBillDTO> getLimitedDebtors(@Define String caseQuery);
