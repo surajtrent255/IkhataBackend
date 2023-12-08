@@ -141,8 +141,8 @@ public class CustomQueryCreator {
                 caseQuery += " company_id = " + companyId + " AND branch_id =" + branchId + " AND status = true  ";
                 if (!searchBy.isEmpty()) {
                     if (searchBy.equals("creditors")) {
-                        caseQuery += " AND seller_pan= '" + searchWildCard + "' OR seller_name LIKE '%" + searchWildCard
-                                + "%'";
+                        caseQuery += " AND ( seller_pan= '" + searchWildCard + "' OR seller_name LIKE '%" + searchWildCard
+                                + "%')";
                     }
                 }
                 if (!orderBy.isEmpty()) {
