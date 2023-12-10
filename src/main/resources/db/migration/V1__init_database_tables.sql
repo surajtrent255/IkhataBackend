@@ -115,7 +115,7 @@ CREATE TABLE  token (
   PRIMARY KEY (id)
 ) ;
 
-CREATE TABLE  company (
+CREATE TABLE company (
   company_id SERIAL NOT NULL ,
   name varchar(50) NOT NULL,
   owner_name VARCHAR(100) DEFAULT NULL ,

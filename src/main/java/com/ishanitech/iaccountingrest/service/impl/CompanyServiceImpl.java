@@ -38,7 +38,11 @@ public class CompanyServiceImpl implements CompanyService {
         BranchDAO branchDAO = dbService.getDao(BranchDAO.class);
         int savedCompanyId = 0;
         try {
-            savedCompanyId = companyDAO.addCompanyWithUserId(companyDTO, userId);
+            if (!companyDTO.isCustomer()){
+                savedCompanyId = companyDAO.addCompanyWithUserId(companyDTO, userId);
+            }else{
+                savedCompanyId = companyDAO.addCompany(companyDTO);
+            }
             // BranchDTO branchDTO = new BranchDTO();
             // branchDTO.setCompanyId(savedCompanyId);
             // int branchAdded = branchDAO.addBranch(branchDTO);
