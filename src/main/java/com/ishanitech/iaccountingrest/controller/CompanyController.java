@@ -43,9 +43,11 @@ public class CompanyController {
         CompanyDTO companyDTO = companyWithUserIdDTO.getCompanyDTO();
 
         try {
-         Integer   result = companyService.addCompany(companyDTO,userId);
-           CompanyDTO companyDTO1 = (CompanyDTO) companyService.getCompanyByPanNo(companyDTO.getPanNo());
-            userConfigurationService.addUserRole(userId,companyDTO1.getCompanyId(),new int[] {1});
+            Integer   result = companyService.addCompany(companyDTO,userId);
+            if(!companyDTO.isCustomer()){
+                CompanyDTO companyDTO1 = (CompanyDTO) companyService.getCompanyByPanNo(companyDTO.getPanNo());
+                userConfigurationService.addUserRole(userId,companyDTO1.getCompanyId(),new int[] {1});
+            }
             return new ResponseDTO<>( result);
         } catch (Exception e) {
             log.error(e.getMessage());

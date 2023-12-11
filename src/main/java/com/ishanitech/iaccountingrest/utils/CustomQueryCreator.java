@@ -142,14 +142,31 @@ public class CustomQueryCreator {
                 caseQuery += " company_id = " + companyId + " AND branch_id =" + branchId + " AND status = true  ";
                 if (!searchBy.isEmpty()) {
                     if (searchBy.equals("creditors")) {
-                        caseQuery += " AND seller_pan= '" + searchWildCard + "' OR seller_name LIKE '%" + searchWildCard
-                                + "%'";
+                        caseQuery += " AND ( seller_pan= '" + searchWildCard + "' OR seller_name LIKE '%" + searchWildCard
+                                + "%')";
                     }
                 }
                 if (!orderBy.isEmpty()) {
                     caseQuery += " ORDER BY " + orderBy + " " + orderType;
                 } else {
                     caseQuery += " ORDER BY seller_pan desc";
+                }
+                caseQuery += " OFFSET " + (offset - 1) + " LIMIT " + pageSize;
+            }
+
+            case SUPERADMIN -> {
+                caseQuery += " customer = true ";
+                if (!searchWildCard.isEmpty()) {
+                    if(searchWildCard.matches("\\d+")){
+                        caseQuery += " AND ( pan_no= " + searchWildCard + " ) ";
+                    }else if(searchWildCard.matches("[a-zA-Z]+")){
+                        caseQuery += " AND ( name LIKE '%" + searchWildCard + "%' OR email LIKE '%" + searchWildCard + "%' ) ";
+                    }
+                }
+                if (!orderBy.isEmpty()) {
+                    caseQuery += " ORDER BY " + orderBy + " " + orderType;
+                } else {
+                    caseQuery += " ORDER BY name asc";
                 }
                 caseQuery += " OFFSET " + (offset - 1) + " LIMIT " + pageSize;
             }

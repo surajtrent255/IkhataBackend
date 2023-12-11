@@ -2,6 +2,8 @@ package com.ishanitech.iaccountingrest.dao;
 
 import com.ishanitech.iaccountingrest.dto.CompanyDTO;
 import com.ishanitech.iaccountingrest.dto.UserConfigurationDTO;
+import com.ishanitech.iaccountingrest.dto.UserDTO;
+import jakarta.annotation.Nullable;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Define;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -51,4 +53,36 @@ public interface SuperAdminDAO {
             " inner join role on role.id = user_role.role_id WHERE <caseQuery> ; ")
     @RegisterBeanMapper(UserConfigurationDTO.class)
     List<UserConfigurationDTO>  fetchLimitedUsersForSuperAdminList(@Define String caseQuery);
+
+
+    @SqlQuery("""
+            SELECT * FROM company WHERE <caseQuery>
+            """)
+    @RegisterBeanMapper(CompanyDTO.class)
+    List<CompanyDTO> fetchCompanyWithNoUsers(@Define String caseQuery);
+
+    @SqlQuery("""
+            select * from users where deleted=false;
+            """)
+    @RegisterBeanMapper(UserDTO.class)
+    List<UserDTO> getAllUsers();
+
+
+
+    @SqlUpdate("""
+            UPDATE company
+            SET deleted = false, customer = false, is_approved = true
+            WHERE company_id = :companyId;
+                        
+            UPDATE user_role
+            SET role_id = 1, status = true
+            WHERE user_id = :userId;
+                        
+            INSERT INTO user_company(company_id,user_id,status)
+            VALUES(:companyId , :userId , true);
+                        
+            INSERT INTO user_company_role(user_id,role_id,company_id,status,deleted)
+            VALUES(:userId , 1, :companyId , true , false);
+            """)
+    Integer assignUserWithNoCompany(int companyId, int userId);
 }
