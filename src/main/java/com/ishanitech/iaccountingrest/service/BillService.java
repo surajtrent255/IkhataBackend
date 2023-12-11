@@ -45,6 +45,6 @@ public interface BillService {
 
         List<SalesBillDTO> getAllDebtors(HttpServletRequest request);
 
-        SalesBillDTO getDebtorsBillList(HttpServletRequest request);
+        List<SalesBillDTO> getDebtorsBillList(HttpServletRequest request);
 
 }

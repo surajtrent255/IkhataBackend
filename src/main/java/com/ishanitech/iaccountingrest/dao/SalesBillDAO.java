@@ -318,7 +318,7 @@ public interface SalesBillDAO {
         <caseQuery>
                  """)
  @RegisterBeanMapper(SalesBillDTO.class)
- SalesBillDTO fetchDebtorsBillList(@Define String caseQuery);
+ List<SalesBillDTO> fetchDebtorsBillList(@Define String caseQuery);
 
  @SqlQuery("""
          <caseQuery>; 

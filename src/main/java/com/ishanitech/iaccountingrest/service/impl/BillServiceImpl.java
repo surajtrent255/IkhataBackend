@@ -283,12 +283,12 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public SalesBillDTO getDebtorsBillList(HttpServletRequest request) {
+    public List<SalesBillDTO> getDebtorsBillList(HttpServletRequest request) {
         String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.DEBTORBILLS, dbService);
 
         SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
-        SalesBillDTO sbd = salesBillDAO.fetchDebtorsBillList( caseQuery);
-        return sbd;
+        List<SalesBillDTO> sbds = salesBillDAO.fetchDebtorsBillList( caseQuery);
+        return sbds;
     }
 
     @Override

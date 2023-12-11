@@ -119,11 +119,12 @@ public class CustomQueryCreator {
             }
 
             case DEBTORBILLS -> {
-                caseQuery += " SELECT  bill_no, customer_pan, customer_name,  total_amount as totalAmount from sales_bill WHERE company_id = "
-                        + companyId + " AND branch_id =" + branchId + " AND status = true AND sale_type = 2 ";
-                if (!searchBy.isEmpty()) {
-                    if (searchBy.equals("customer_pan")) {
-                        caseQuery += " AND customer_pan= '" + searchWildCard + "'";
+                String debtor_pan = request.getParameter("debtorPan");
+                caseQuery += " SELECT id, bill_no, customer_pan, customer_name,  total_amount as totalAmount, bill_date_nepali from sales_bill WHERE company_id = "
+                        + companyId + " AND branch_id =" + branchId + " AND status = true AND sale_type = 2  AND  draft = false AND customer_pan= '"+debtor_pan+"' ";
+                if (!searchBy.isEmpty() && !searchWildCard.isEmpty()) {
+                    if (searchBy.equals("customer_pan") || searchBy.equals("bill_no")) {
+                        caseQuery += " AND "+searchBy + " = '"  + searchWildCard+"' " ;
                     } else {
                         caseQuery += " AND lower(" + searchBy + "::text) LIKE '%" + searchWildCard + "%'  ";
 
