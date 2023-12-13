@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.*;
 import com.ishanitech.iaccountingrest.dto.FiscalYearInfo;
 import com.ishanitech.iaccountingrest.dto.PaginationTypeClass;
+import com.ishanitech.iaccountingrest.dto.ReceiptDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDTO;
 import com.ishanitech.iaccountingrest.dto.SalesBillDetailDTO;
 import com.ishanitech.iaccountingrest.service.BillService;
@@ -296,7 +297,17 @@ public class BillServiceImpl implements BillService {
         // TODO Auto-generated method stub
         String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.DEBTORS, dbService);
         SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
+        ReceiptDAO receiptDAO = dbService.getDao(ReceiptDAO.class);
+        
         List<SalesBillDTO> salesBillDTOs = salesBillDAO.getLimitedDebtors(caseQuery);
+        List<ReceiptDTO> receiptDTOs = receiptDAO.getAllReceipts(Integer.parseInt(request.getParameter("compId")));
+        salesBillDTOs.forEach(sb->{
+            receiptDTOs.forEach(rd->{
+                if(sb.getCustomerPan() == rd.getPartyId()){
+                    sb.setTotalAmount(sb.getTotalAmount() - rd.getAmount());                   
+                }
+            });
+        });
         return salesBillDTOs;
         
     }
