@@ -35,7 +35,8 @@ public interface CompanyDAO {
                         landline_number,
                         registration_type,
                         created_date,
-                        created_date_nepali
+                        created_date_nepali,
+                        tax_pay_type
                         ) VALUES (
                         :name,
                         :email,
@@ -51,7 +52,8 @@ public interface CompanyDAO {
                         :landlineNumber,
                         :registrationType,
                         :createdDate,
-                        :createdDateNepali
+                        :createdDateNepali,
+                        :taxPayType
                      )                                                                            
             """)
     Integer addCompany(@BindBean CompanyDTO companyDTO);

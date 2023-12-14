@@ -48,4 +48,6 @@ public class CompanyDTO {
 
     private Boolean isApproved;
 
+    private String taxPayType;
+
 }

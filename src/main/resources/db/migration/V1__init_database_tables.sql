@@ -135,6 +135,7 @@ CREATE TABLE company (
    created_date DATE DEFAULT NULL,
    created_date_nepali VARCHAR(20) DEFAULT NULL,
    is_approved BOOLEAN DEFAULT FALSE,
+   tax_pay_type VARCHAR(255) DEFAULT 'monthly',
   PRIMARY KEY (company_id),
 	constraint valid_number
       check (phone <= 9999999999)

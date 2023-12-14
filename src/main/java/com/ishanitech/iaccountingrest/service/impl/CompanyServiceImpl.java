@@ -107,7 +107,7 @@ public class CompanyServiceImpl implements CompanyService {
         for (CompanyDTO companyDTO : companyDTOS) {
             if(companyDTO.getImageName() != null){
                 String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
-                //            for Production comment above line and uncomment below line
+                //            for master comment above line and uncomment below line
 //            String imageUrl = "http://103.233.58.121:9999/"+"images/"+companyDTO.getImageName();
                 companyDTO.setImageUrl(imageUrl);
 
