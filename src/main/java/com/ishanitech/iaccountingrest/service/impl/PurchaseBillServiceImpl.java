@@ -157,10 +157,10 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
         String caseQuery = "" ;
         PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
         if(!searchInput.isEmpty()){
-            caseQuery = " company_id= " + companyId + " AND branch_id= " + branchId + " AND seller_pan='" + sellerPan + "' AND purchase_bill_no=" + searchInput +  " order by seller_pan desc "+
+            caseQuery = " company_id= " + companyId + " AND branch_id= " + branchId + " AND sale_type = 2 AND seller_pan='" + sellerPan + "' AND purchase_bill_no=" + searchInput +  " order by seller_pan desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }else{
-            caseQuery = " company_id= " + companyId + " AND branch_id= " + branchId + " AND seller_pan= '" + sellerPan + "' order by seller_pan desc "+
+            caseQuery = " company_id= " + companyId + " AND branch_id= " + branchId + " AND sale_type = 2 AND seller_pan= '" + sellerPan + "' order by seller_pan desc "+
                     " limit "+ pageTotalItems+" offset "+(offset-1);
         }
         return purchaseBillDAO.getPurchaseBillBySellerPan(caseQuery);
