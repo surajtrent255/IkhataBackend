@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface BankWithdrawDAO {
-    @SqlQuery("SELECT * FROM  bank_withdraw where company_id=:companyId AND branch_id=:branchId")
+    @SqlQuery("SELECT * FROM  bank_withdraw where company_id=:companyId AND branch_id=:branchId order by withdraw_id desc")
     @RegisterBeanMapper(BankWithdrawDTO.class)
     List<BankWithdrawDTO> getAllwithdraw(int companyId, int branchId);
 

@@ -68,6 +68,10 @@ public interface BankDAO {
     @SqlQuery("SELECT * FROM bank_list ")
     @RegisterBeanMapper(BankListDTO.class)
     List<BankListDTO> getAllBankList();
+
+    @SqlQuery(" select * from bank_list where id = :id")
+    @RegisterBeanMapper(BankListDTO.class)
+    BankListDTO getSingleBankById(int id);
     @SqlQuery("SELECT * FROM type_of_payment ")
     @RegisterBeanMapper(TypePaymentDTO.class)
     List<TypePaymentDTO> getAllPayment();

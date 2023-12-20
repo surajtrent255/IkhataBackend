@@ -76,10 +76,11 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems,
-            String searchBy, String searchWildCard, Integer compId, Integer branchId) {
+            String searchBy, String searchWildCard, Integer compId, Integer branchId, boolean salesReport) {
 
         List<SalesBillDTO> salesBillList;
         String caseQuery = "";
+
         if (Objects.equals(searchBy, "pan")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and customer_pan = '"
                     + searchWildCard + "' order by bill_no desc " +
@@ -121,6 +122,13 @@ public class BillServiceImpl implements BillService {
         if (Objects.equals(searchBy, "") || searchBy.length() == 0) {
             caseQuery = " company_id = " + compId + " and branch_id =" + branchId + " order by id " + " desc " +
                     "limit " + pageTotalItems + " offset " + (offset - 1);
+        }
+
+        if (salesReport) {
+            StringBuffer sb = new StringBuffer();
+            sb.append(" draft = false and ");
+            sb.append(caseQuery);
+            caseQuery = sb.toString();
         }
         salesBillList = dbService.getDao(SalesBillDAO.class).getLimitedSalesBillByCompanyAndBranchId(caseQuery);
         return salesBillList;
@@ -193,7 +201,8 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<SalesBillDTO> getLimitedSalesBillsExcludingDraftByCompIdAndBranchId( String fiscalYear, Integer quarter, Integer offset,
+    public List<SalesBillDTO> getLimitedSalesBillsExcludingDraftByCompIdAndBranchId(String fiscalYear, Integer quarter,
+            Integer offset,
             Integer pageTotalItems, String searchBy, String searchWildCard, Integer compId, Integer branchId) {
         // TODO Auto-generated method stub
         List<SalesBillDTO> salesBillList;
@@ -226,32 +235,38 @@ public class BillServiceImpl implements BillService {
         String caseQuery = "";
         if (Objects.equals(searchBy, "pan")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and customer_pan = '"
-                    + searchWildCard + " and draft = false and is_bill_active = TRUE AND bill_date BETWEEN '"+quarterStart+"'' AND '" + quarterEnd   +"' order by bill_no desc " +
+                    + searchWildCard + " and draft = false and is_bill_active = TRUE AND bill_date BETWEEN '"
+                    + quarterStart + "'' AND '" + quarterEnd + "' order by bill_no desc " +
                     " limit " + pageTotalItems + " offset " + (offset - 1);
         }
         if (Objects.equals(searchBy, "date")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and bill_date = CAST( '"
-                    + searchWildCard + "' AS DATE)" + " and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" order by bill_no desc " +
+                    + searchWildCard + "' AS DATE)" + " and is_bill_active = TRUE AND bill_date BETWEEN " + quarterStart
+                    + " AND " + quarterEnd + " order by bill_no desc " +
                     " limit " + pageTotalItems + " offset " + (offset - 1);
         }
         if (Objects.equals(searchBy, "billNo")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and bill_no = '" + searchWildCard
-                    + "' and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" order by bill_no desc " +
+                    + "' and is_bill_active = TRUE AND bill_date BETWEEN " + quarterStart + " AND " + quarterEnd
+                    + " order by bill_no desc " +
                     " limit " + pageTotalItems + " offset " + (offset - 1);
         }
         if (Objects.equals(searchBy, "customerOrSellerName")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " and customer_name = '"
-                    + searchWildCard + "' and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" order by bill_no desc " +
+                    + searchWildCard + "' and is_bill_active = TRUE AND bill_date BETWEEN " + quarterStart + " AND "
+                    + quarterEnd + " order by bill_no desc " +
                     " limit " + pageTotalItems + " offset " + (offset - 1);
         }
         if (Objects.equals(searchBy, "month")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " AND bill_date_nepali LIKE '%-"
-                    + searchWildCard + "-%'" + " and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" ORDER BY bill_no DESC " +
+                    + searchWildCard + "-%'" + " and is_bill_active = TRUE AND bill_date BETWEEN " + quarterStart
+                    + " AND " + quarterEnd + " ORDER BY bill_no DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchBy, "fiscalYear")) {
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " AND fiscal_year = '"
-                    + searchWildCard + "'" + " and is_bill_active = TRUE AND bill_date BETWEEN "+quarterStart+" AND " + quarterEnd   +" ORDER BY bill_no DESC " +
+                    + searchWildCard + "'" + " and is_bill_active = TRUE AND bill_date BETWEEN " + quarterStart
+                    + " AND " + quarterEnd + " ORDER BY bill_no DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchBy, "dateBetween")) {
@@ -259,16 +274,18 @@ public class BillServiceImpl implements BillService {
             String startDate = dateArray[0];
             String endDate = dateArray[1];
             caseQuery = "company_id=" + compId + " and branch_id = " + branchId + " AND bill_date BETWEEN CAST('"
-                    + startDate + "' AS DATE) AND CAST('" + endDate + "' AS DATE) " + " and is_bill_active = TRUE  ORDER BY bill_no DESC " +
+                    + startDate + "' AS DATE) AND CAST('" + endDate + "' AS DATE) "
+                    + " and is_bill_active = TRUE  ORDER BY bill_no DESC " +
                     "LIMIT " + pageTotalItems + " OFFSET " + (offset - 1);
         }
         if (Objects.equals(searchBy, "") || searchBy.length() == 0) {
-            caseQuery = " company_id = " + compId + " and draft = false  and status=true  and fiscal_year='"+fiscalYear +  "' and is_bill_active = TRUE AND bill_date BETWEEN '"+quarterStart+"' AND '" + quarterEnd   +"' order by id " + " desc " 
-                    + "limit " + pageTotalItems + " offset " + (offset - 1)
-                    ;
+            caseQuery = " company_id = " + compId + " and draft = false  and status=true  and fiscal_year='"
+                    + fiscalYear + "' and is_bill_active = TRUE AND bill_date BETWEEN '" + quarterStart + "' AND '"
+                    + quarterEnd + "' order by id " + " desc "
+                    + "limit " + pageTotalItems + " offset " + (offset - 1);
         }
-        if(fiscalYear.equalsIgnoreCase("all")){
-           caseQuery =  caseQuery.replace("and fiscal_year='all'", " ");
+        if (fiscalYear.equalsIgnoreCase("all")) {
+            caseQuery = caseQuery.replace("and fiscal_year='all'", " ");
             caseQuery = caseQuery.replace("And fiscal_year='all'", " ");
             caseQuery = caseQuery.replace(" and is_bill_active = TRUE ", " ");
         }
@@ -276,8 +293,7 @@ public class BillServiceImpl implements BillService {
         return salesBillList;
     }
 
-
-    public List<SalesBillDTO> getAllDebtors(Integer companyId, Integer branchId){
+    public List<SalesBillDTO> getAllDebtors(Integer companyId, Integer branchId) {
         SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
         List<SalesBillDTO> debtors = salesBillDAO.getAllDebtors(companyId, branchId);
         return debtors;
@@ -285,10 +301,11 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<SalesBillDTO> getDebtorsBillList(HttpServletRequest request) {
-        String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.DEBTORBILLS, dbService);
+        String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.DEBTORBILLS,
+                dbService);
 
         SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
-        List<SalesBillDTO> sbds = salesBillDAO.fetchDebtorsBillList( caseQuery);
+        List<SalesBillDTO> sbds = salesBillDAO.fetchDebtorsBillList(caseQuery);
         return sbds;
     }
 
@@ -298,17 +315,17 @@ public class BillServiceImpl implements BillService {
         String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.DEBTORS, dbService);
         SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
         ReceiptDAO receiptDAO = dbService.getDao(ReceiptDAO.class);
-        
+
         List<SalesBillDTO> salesBillDTOs = salesBillDAO.getLimitedDebtors(caseQuery);
         List<ReceiptDTO> receiptDTOs = receiptDAO.getAllReceipts(Integer.parseInt(request.getParameter("compId")));
-        salesBillDTOs.forEach(sb->{
-            receiptDTOs.forEach(rd->{
-                if(sb.getCustomerPan() == rd.getPartyId()){
-                    sb.setTotalAmount(sb.getTotalAmount() - rd.getAmount());                   
+        salesBillDTOs.forEach(sb -> {
+            receiptDTOs.forEach(rd -> {
+                if (sb.getCustomerPan() == rd.getPartyId()) {
+                    sb.setTotalAmount(sb.getTotalAmount() - rd.getAmount());
                 }
             });
         });
         return salesBillDTOs;
-        
+
     }
 }

@@ -1,6 +1,9 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
+import com.ishanitech.iaccountingrest.dao.BankDAO;
 import com.ishanitech.iaccountingrest.dao.BankWithdrawDAO;
+import com.ishanitech.iaccountingrest.dto.BankDTO;
+import com.ishanitech.iaccountingrest.dto.BankListDTO;
 import com.ishanitech.iaccountingrest.dto.BankWithdrawDTO;
 import com.ishanitech.iaccountingrest.service.BankWithdrawService;
 import com.ishanitech.iaccountingrest.service.DbService;
@@ -21,7 +24,14 @@ public class BankWithdrawServiceImpl implements BankWithdrawService {
     @Override
     public List<BankWithdrawDTO> getAllWithdraw(int companyId, int branchId) {
         BankWithdrawDAO BankWithdrawDAO = dbService.getDao(BankWithdrawDAO.class);
-        return BankWithdrawDAO.getAllwithdraw(companyId,branchId);
+        BankDAO bankDAO = dbService.getDao(BankDAO.class);
+        List<BankWithdrawDTO> bWithdrawDTOs =  BankWithdrawDAO.getAllwithdraw(companyId,branchId);
+        bWithdrawDTOs.forEach((bw)->{
+            BankDTO b = bankDAO.getAllByBankId(bw.getBankId()).get(0);
+            BankListDTO bankOne = bankDAO.getSingleBankById(b.getBankTypeId());
+            bw.setBankName(bankOne.getName());
+        });
+        return bWithdrawDTOs;
     }
 
 

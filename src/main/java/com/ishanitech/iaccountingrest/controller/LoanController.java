@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/loan")
@@ -109,7 +110,7 @@ public class LoanController {
     }
 
     @GetMapping("/name/repay")
-    public ResponseDTO<String> getLoanNameForLoanRepay(@RequestParam("Id") int Id,
+    public ResponseDTO<Map<String, String>> getLoanNameForLoanRepay(@RequestParam("Id") int Id,
                                                        @RequestParam("companyId") int companyId,
                                                        @RequestParam("branchId") int branchId){
         try{

@@ -58,9 +58,10 @@ public class SalesBillController {
             @RequestParam("searchBy") String searchBy,
             @RequestParam("searchWildCard") String searchWildCard,
             @RequestParam("compId") Integer compId,
-            @RequestParam("branchId") Integer branchId){
+            @RequestParam("branchId") Integer branchId,
+            @RequestParam("forSalesReport") boolean salesReport){
         try{
-            return new ResponseDTO<List<SalesBillDTO>>(billService.getLimitedSalesBillsByCompIdAndBranchId(offset, pageTotalItems, searchBy, searchWildCard, compId, branchId));
+            return new ResponseDTO<List<SalesBillDTO>>(billService.getLimitedSalesBillsByCompIdAndBranchId(offset, pageTotalItems, searchBy, searchWildCard, compId, branchId, salesReport));
         } catch(Exception e) {
             log.error("Error occured accessing the bill infos : " + e.getMessage());
             throw new CustomSqlException("Error occured accessing the bill infos : " );

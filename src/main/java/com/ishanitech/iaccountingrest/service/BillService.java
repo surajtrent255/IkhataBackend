@@ -23,7 +23,7 @@ public interface BillService {
         Object approveTheBillById(int billId);
 
         List<SalesBillDTO> getLimitedSalesBillsByCompIdAndBranchId(Integer offset, Integer pageTotalItems,
-                        String searchBy, String searchWildCard, Integer compId, Integer branchId);
+                        String searchBy, String searchWildCard, Integer compId, Integer branchId, boolean salesReport);
 
         Double todayTotalSalesBillAmount(String todayDate, int companyId, int branchId);
 

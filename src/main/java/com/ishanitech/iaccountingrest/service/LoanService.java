@@ -6,6 +6,7 @@ import com.ishanitech.iaccountingrest.dto.LoanTypesDTO;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LoanService {
     Integer createNewLoan(LoanDTO loanDTO);
@@ -24,6 +25,6 @@ public interface LoanService {
 
     List<LoanDTO> getLimitedLoanEntitiesForSingleCompAndBranch(Integer offset, Integer pageTotalItems,String searchBy, String searchWildCard, String sortBy, Integer compId, Integer branchId);
 
-    String getLoanNameForLoanRepay( int Id,  int companyId,  int branchId);
+    Map<String, String> getLoanNameForLoanRepay( int Id,  int companyId,  int branchId);
 
 }

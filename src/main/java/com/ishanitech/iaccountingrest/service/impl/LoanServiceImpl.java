@@ -3,6 +3,7 @@ package com.ishanitech.iaccountingrest.service.impl;
 import com.ishanitech.iaccountingrest.dao.LoanDAO;
 import com.ishanitech.iaccountingrest.dao.ProductDAO;
 import com.ishanitech.iaccountingrest.dto.LoanDTO;
+import com.ishanitech.iaccountingrest.dto.LoanNameAndAmountDTO;
 import com.ishanitech.iaccountingrest.dto.LoanNamesDTO;
 import com.ishanitech.iaccountingrest.dto.LoanTypesDTO;
 import com.ishanitech.iaccountingrest.dto.ProductDTO;
@@ -11,7 +12,9 @@ import com.ishanitech.iaccountingrest.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -97,8 +100,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public String getLoanNameForLoanRepay(int Id, int companyId, int branchId) {
+    public Map<String, String> getLoanNameForLoanRepay(int Id, int companyId, int branchId) {
         LoanDAO loanDAO = dbService.getDao(LoanDAO.class);
-        return loanDAO.getLoanNameForLoanRepay(Id,companyId,branchId);
+        LoanNameAndAmountDTO m =  loanDAO.getLoanNameForLoanRepay(Id,companyId,branchId);
+        Map<String, String> loanMap = new  HashMap<>();
+        loanMap.put("name", m.getLoanName());
+        loanMap.put("amount", m.getLoanAmount());
+        return loanMap;
     }
 }

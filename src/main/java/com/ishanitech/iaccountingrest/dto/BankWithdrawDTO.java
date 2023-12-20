@@ -24,5 +24,6 @@ public class BankWithdrawDTO {
     private String chequeNumber;
     private String nepaliDate;
     private Date englishDate;
+    private String bankName;
 
 }
