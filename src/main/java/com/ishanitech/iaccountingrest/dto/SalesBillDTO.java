@@ -48,6 +48,7 @@ public class SalesBillDTO {
     private Integer saleType;
     private boolean hasAbbr;
     private boolean receipt;
+    private String email;
 
 
 

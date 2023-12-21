@@ -7,12 +7,17 @@ import com.ishanitech.iaccountingrest.dto.TaxFileIrdDTO;
 import com.ishanitech.iaccountingrest.exception.CustomSqlException;
 import com.ishanitech.iaccountingrest.service.BillService;
 import com.ishanitech.iaccountingrest.service.UtilityService;
+
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,6 +91,17 @@ public class UtilityController {
         } catch (Exception ex) {
             log.error("something went wrong while fetching utility summary" + ex.getMessage());
             throw new CustomSqlException("something went wrong.. ");
+        }
+    }
+
+    @PostMapping("/sendEmail")
+    public ResponseDTO<Integer> sendEmail(@RequestBody Map<?, ?> data){
+        try{
+            utilityService.sendEmail(data);
+            return new ResponseDTO<>(1);
+        } catch(Exception ex){
+            log.error("someting went wroing while sending mail in utility ==> ", ex);
+            throw new CustomSqlException("something went wrong !!!0");
         }
     }
 

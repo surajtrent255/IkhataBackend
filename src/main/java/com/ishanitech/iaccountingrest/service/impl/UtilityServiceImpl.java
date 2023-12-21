@@ -1,31 +1,50 @@
 package com.ishanitech.iaccountingrest.service.impl;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import com.ishanitech.iaccountingrest.dao.FiscalYearDAO;
 import com.ishanitech.iaccountingrest.dao.PurchaseBillDAO;
 import com.ishanitech.iaccountingrest.dao.SalesBillDAO;
+import com.ishanitech.iaccountingrest.dto.EmailDTO;
 import com.ishanitech.iaccountingrest.dto.FiscalYearInfo;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
 import com.ishanitech.iaccountingrest.dto.TaxFileIrdDTO;
 import com.ishanitech.iaccountingrest.service.DbService;
+import com.ishanitech.iaccountingrest.service.EmailService;
 import com.ishanitech.iaccountingrest.service.UtilityService;
 
+import freemarker.core.ParseException;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class UtilityServiceImpl implements UtilityService {
     private final DbService dbService;
-
+    private final JavaMailSender javaMailSender;
+    private final Configuration freeMarkerConfiguration;
     @Override
     public TaxFileIrdDTO findTaxFileUtilitySummary(int compId, String fiscalYear, String qrtStart, String qrtEnd) {
         SalesBillDAO salesBillDAO = dbService.getDao(SalesBillDAO.class);
@@ -152,5 +171,47 @@ public class UtilityServiceImpl implements UtilityService {
         LocalDateTime endDateMonth = LocalDate.parse(monthEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().plusHours(23).plusMinutes(59).plusSeconds(59);
         TaxFileIrdDTO taxFileIrd = salesBillDAO.findTotalSalesAmountForCompany(compId, fiscalYear, begDateMonth, endDateMonth);
         return taxFileIrd;
+    }
+
+    @Override
+    public void sendEmail(Map<?,?> data) {
+        var email = "suraj.trent255@gmail.com";
+       EmailDTO emailDetail = new EmailDTO();
+       emailDetail.setFrom("no-reply@ishanitech.com");
+       emailDetail.setTo(email);
+       emailDetail.setSubject(" Sale Tally");
+
+       emailDetail.setModel(data);
+       MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED, StandardCharsets.UTF_8.name());
+            Template template = freeMarkerConfiguration.getTemplate("sales-tally-email.ftl");
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, emailDetail.getModel());
+            mimeMessageHelper.setTo(InternetAddress.parse(emailDetail.getTo()));
+            mimeMessageHelper.setFrom(emailDetail.getFrom());
+            mimeMessageHelper.setSubject(emailDetail.getSubject());
+            mimeMessageHelper.setText(html, true);
+            System.out.println("EMAIL is being sending .. please wait !!");
+            javaMailSender.send(mimeMessage);
+            System.out.println(" Email has been sent .. check");
+        } catch (MessagingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();    
+        } catch (TemplateNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (MalformedTemplateNameException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (TemplateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

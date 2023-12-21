@@ -7,7 +7,7 @@ public class EmailDTO {
     private String from;
     private String subject;
     private String content;
-    private Map<String, Object> model;
+    private Map<?, ?> model;
 
     public String getTo() {
         return this.to;
@@ -41,11 +41,11 @@ public class EmailDTO {
         this.content = content;
     }
 
-    public Map<String, Object> getModel() {
+    public Map<?, ?> getModel() {
         return model;
     }
 
-    public void setModel(Map<String, Object> model ) {
+    public void setModel(Map<?, ?> model ) {
         this.model = model;
     }
 

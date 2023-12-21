@@ -99,8 +99,12 @@ public class CustomQueryCreator {
             }
 
             case DEBTORS -> {
-                caseQuery += " SELECT  customer_pan, customer_name,  sum(total_amount) as totalAmount from sales_bill WHERE company_id = "
-                        + companyId + " AND branch_id =" + branchId + " AND status = true AND sale_type = 2 ";
+                caseQuery += " SELECT  customer_pan, customer_name,  sum(total_amount) as totalAmount, sum(tax_amount) as taxAmount, c.email as email from sales_bill sb inner join company c on sb.customer_pan::bigint = c.pan_no WHERE sb.company_id = "
+                        + companyId + " AND branch_id =" + branchId + " AND sb.status = true ";
+                if (!Boolean.parseBoolean(request.getParameter("salesTally"))) {
+                    caseQuery += "  AND sale_type = 2 ";
+                }
+
                 if (!searchBy.isEmpty()) {
                     if (searchBy.equals("customer_pan")) {
                         caseQuery += " AND customer_pan= '" + searchWildCard + "'";
@@ -109,7 +113,7 @@ public class CustomQueryCreator {
 
                     }
                 }
-                caseQuery += " GROUP BY customer_pan, customer_name ";
+                caseQuery += " GROUP BY customer_pan, customer_name, c.email ";
                 if (!orderBy.isEmpty()) {
                     caseQuery += " ORDER BY " + orderBy + " " + orderType;
                 } else {
@@ -121,10 +125,12 @@ public class CustomQueryCreator {
             case DEBTORBILLS -> {
                 String debtor_pan = request.getParameter("debtorPan");
                 caseQuery += " SELECT id, bill_no, customer_pan, customer_name,  total_amount as totalAmount, bill_date_nepali from sales_bill WHERE company_id = "
-                        + companyId + " AND branch_id =" + branchId + " AND status = true AND sale_type = 2  AND  draft = false AND customer_pan= '"+debtor_pan+"' ";
+                        + companyId + " AND branch_id =" + branchId
+                        + " AND status = true AND sale_type = 2  AND  draft = false AND customer_pan= '" + debtor_pan
+                        + "' ";
                 if (!searchBy.isEmpty() && !searchWildCard.isEmpty()) {
                     if (searchBy.equals("customer_pan") || searchBy.equals("bill_no")) {
-                        caseQuery += " AND "+searchBy + " = '"  + searchWildCard+"' " ;
+                        caseQuery += " AND " + searchBy + " = '" + searchWildCard + "' ";
                     } else {
                         caseQuery += " AND lower(" + searchBy + "::text) LIKE '%" + searchWildCard + "%'  ";
 
@@ -142,7 +148,8 @@ public class CustomQueryCreator {
                 caseQuery += " company_id = " + companyId + " AND branch_id =" + branchId + " AND status = true  ";
                 if (!searchBy.isEmpty()) {
                     if (searchBy.equals("creditors")) {
-                        caseQuery += " AND ( seller_pan= '" + searchWildCard + "' OR seller_name LIKE '%" + searchWildCard
+                        caseQuery += " AND ( seller_pan= '" + searchWildCard + "' OR seller_name LIKE '%"
+                                + searchWildCard
                                 + "%')";
                     }
                 }
@@ -157,10 +164,11 @@ public class CustomQueryCreator {
             case SUPERADMIN -> {
                 caseQuery += " customer = true ";
                 if (!searchWildCard.isEmpty()) {
-                    if(searchWildCard.matches("\\d+")){
+                    if (searchWildCard.matches("\\d+")) {
                         caseQuery += " AND ( pan_no= " + searchWildCard + " ) ";
-                    }else if(searchWildCard.matches("[a-zA-Z]+")){
-                        caseQuery += " AND ( name LIKE '%" + searchWildCard + "%' OR email LIKE '%" + searchWildCard + "%' ) ";
+                    } else if (searchWildCard.matches("[a-zA-Z]+")) {
+                        caseQuery += " AND ( name LIKE '%" + searchWildCard + "%' OR email LIKE '%" + searchWildCard
+                                + "%' ) ";
                     }
                 }
                 if (!orderBy.isEmpty()) {
