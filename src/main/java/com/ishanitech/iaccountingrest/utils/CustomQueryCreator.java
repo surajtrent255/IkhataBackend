@@ -104,12 +104,15 @@ public class CustomQueryCreator {
                 if (!Boolean.parseBoolean(request.getParameter("salesTally"))) {
                     caseQuery += "  AND sale_type = 2 ";
                 }
+                if (!request.getParameter("currentFiscalYear").trim().isEmpty()) {
+                    caseQuery += " AND fiscal_year = '" + request.getParameter("currentFiscalYear") + "' ";
+                }
 
                 if (!searchBy.isEmpty()) {
                     if (searchBy.equals("customer_pan")) {
                         caseQuery += " AND customer_pan= '" + searchWildCard + "'";
                     } else {
-                        caseQuery += " AND lower(" + searchBy + "::text) LIKE '%" + searchWildCard + "%'  ";
+                        caseQuery += " AND lower(" + searchBy + "::text) LIKE lower('%" + searchWildCard + "%')  ";
 
                     }
                 }
