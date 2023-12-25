@@ -4,6 +4,7 @@ import com.ishanitech.iaccountingrest.dao.PaymentDAO;
 import com.ishanitech.iaccountingrest.dao.PurchaseBillDAO;
 import com.ishanitech.iaccountingrest.dao.PurchaseBillDetailDAO;
 import com.ishanitech.iaccountingrest.dto.PaginationTypeClass;
+import com.ishanitech.iaccountingrest.dto.PaymentDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDTO;
 import com.ishanitech.iaccountingrest.dto.PurchaseBillDetailWithProdInfo;
 import com.ishanitech.iaccountingrest.dto.PurchaseReportDTO;
@@ -143,6 +144,7 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
         PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
         PaymentDAO paymentDAO = dbService.getDao(PaymentDAO.class);
         List<PurchaseBillDTO> purchaseBillDTO = purchaseBillDAO.getPurchaseBillBySaleTypeForCreditors(caseQuery);
+        List<PaymentDTO> paymentDTOs = paymentDAO.getAllPaymentByCompanyIdAndBranchId(Integer.parseInt( request.getParameter("compId")), Integer.parseInt( request.getParameter("branchId")));
         for (PurchaseBillDTO data: purchaseBillDTO){
             Double totalAmountPaid = Objects.requireNonNullElse(paymentDAO.getTotalPaymentByPartyIdForCreditors(data.getSellerPan(), data.getCompanyId(), data.getBranchId()), 0.0);
             Double totalCreditAmount = Objects.requireNonNullElse(purchaseBillDAO.totalAmountForCreditors(data.getSellerPan(), data.getCompanyId(), data.getBranchId()), 0.0);
@@ -151,6 +153,13 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
         }
         return purchaseBillDTO;
     }
+
+
+    // public List<PurchaseBillDTO> getAllCreditors(HttpServletRequest request){
+    //     String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.CREDITORS, dbService);
+    //     PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
+        
+    // }
 
     @Override
     public List<PurchaseBillDTO> getPurchaseBillForCreditorDetailPage(int companyId, int branchId, String sellerPan, String searchInput,Integer offset, Integer pageTotalItems) {

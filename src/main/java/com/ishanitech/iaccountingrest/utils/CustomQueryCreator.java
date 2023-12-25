@@ -148,18 +148,47 @@ public class CustomQueryCreator {
             }
 
             case CREDITORS -> {
-                caseQuery += " company_id = " + companyId + " AND branch_id =" + branchId + " AND status = true  ";
+                // caseQuery += " company_id = " + companyId + " AND branch_id =" + branchId + "
+                // AND status = true ";
+                // if (!Boolean.parseBoolean(request.getParameter("purchaseTally"))) {
+                // caseQuery += " AND sale_type = 2 ";
+                // }
+                // if (!searchBy.isEmpty()) {
+                // if (searchBy.equals("creditors")) {
+                // caseQuery += " AND ( seller_pan= '" + searchWildCard + "' OR seller_name LIKE
+                // '%"
+                // + searchWildCard
+                // + "%')";
+                // }
+                // }
+                // if (!orderBy.isEmpty()) {
+                // caseQuery += " ORDER BY " + orderBy + " " + orderType;
+                // } else {
+                // caseQuery += " ORDER BY seller_pan desc";
+                // }
+                // caseQuery += " OFFSET " + (offset - 1) + " LIMIT " + pageSize;
+                caseQuery += " SELECT  seller_pan, seller_name,  sum(total_amount) as totalAmount, sum(tax_amount) as taxAmount, c.email as email from purchase_bill sb inner join company c on sb.seller_pan::bigint = c.pan_no WHERE sb.company_id = "
+                        + companyId + " AND branch_id =" + branchId + " AND sb.status = true ";
+                if (!Boolean.parseBoolean(request.getParameter("salesTally"))) {
+                    caseQuery += "  AND sale_type = 2 ";
+                }
+                if (request.getParameter("currentFiscalYear") != null && !request.getParameter("currentFiscalYear").trim().isEmpty()) {
+                    caseQuery += " AND fiscal_year = '" + request.getParameter("currentFiscalYear") + "' ";
+                }
+
                 if (!searchBy.isEmpty()) {
-                    if (searchBy.equals("creditors")) {
-                        caseQuery += " AND ( seller_pan= '" + searchWildCard + "' OR seller_name LIKE '%"
-                                + searchWildCard
-                                + "%')";
+                    if (searchBy.equals("seller_pan")) {
+                        caseQuery += " AND seller_pan= '" + searchWildCard + "'";
+                    } else {
+                        caseQuery += " AND lower(" + searchBy + "::text) LIKE lower('%" + searchWildCard + "%')  ";
+
                     }
                 }
+                caseQuery += " GROUP BY seller_pan, seller_name, c.email ";
                 if (!orderBy.isEmpty()) {
                     caseQuery += " ORDER BY " + orderBy + " " + orderType;
                 } else {
-                    caseQuery += " ORDER BY seller_pan desc";
+                    caseQuery += " ORDER BY seller_name desc";
                 }
                 caseQuery += " OFFSET " + (offset - 1) + " LIMIT " + pageSize;
             }

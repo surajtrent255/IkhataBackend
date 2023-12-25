@@ -133,7 +133,7 @@
 
         <div class="row">
                 <div class="row">
-                    <h3> Information for Sales Tally</h3>
+                    <h3> Information for</h3>
                 </div>
                 <div class="row bg-info">
                     <section>

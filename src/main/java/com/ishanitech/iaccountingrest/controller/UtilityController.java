@@ -95,9 +95,9 @@ public class UtilityController {
     }
 
     @PostMapping("/sendEmail")
-    public ResponseDTO<Integer> sendEmail(@RequestBody Map<?, ?> data){
+    public ResponseDTO<Integer> sendEmail(@RequestBody Map<?, ?> data, @RequestParam("type") String type){
         try{
-            utilityService.sendEmail(data);
+            utilityService.sendEmail(data, type);
             return new ResponseDTO<>(1);
         } catch(Exception ex){
             log.error("someting went wroing while sending mail in utility ==> ", ex);

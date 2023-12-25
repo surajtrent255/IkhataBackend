@@ -15,5 +15,5 @@ public interface UtilityService {
 
     TaxFileIrdDTO findTaxFileUtilitySummaryByMonth(Integer compId, String monthBegDate, String monthEndDate, String fiscalYear);
 
-    void sendEmail(Map<?,?> object);
+    void sendEmail(Map<?,?> object, String params);
 }

@@ -174,7 +174,7 @@ public class UtilityServiceImpl implements UtilityService {
     }
 
     @Override
-    public void sendEmail(Map<?,?> data) {
+    public void sendEmail(Map<?,?> data, String params) {
         var email = "suraj.trent255@gmail.com";
        EmailDTO emailDetail = new EmailDTO();
        emailDetail.setFrom("no-reply@ishanitech.com");
