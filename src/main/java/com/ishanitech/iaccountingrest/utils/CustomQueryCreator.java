@@ -167,7 +167,10 @@ public class CustomQueryCreator {
                 // caseQuery += " ORDER BY seller_pan desc";
                 // }
                 // caseQuery += " OFFSET " + (offset - 1) + " LIMIT " + pageSize;
-                caseQuery += " SELECT  seller_pan, seller_name,  sum(total_amount) as totalAmount, sum(tax_amount) as taxAmount, c.email as email from purchase_bill sb inner join company c on sb.seller_pan::bigint = c.pan_no WHERE sb.company_id = "
+
+                // mystart 
+                caseQuery += "SELECT fQ.seller_pan, fQ.seller_name,  fQ.tax_amount, fQ.email, (fQ.total_amount -sQ.amount) as totalAmount FROM ";
+                caseQuery += " ( SELECT  seller_pan, seller_name,  sum(total_amount) as total_amount, sum(tax_amount) as tax_amount, c.email as email from purchase_bill sb inner join company c on sb.seller_pan::bigint = c.pan_no WHERE sb.company_id = "
                         + companyId + " AND branch_id =" + branchId + " AND sb.status = true ";
                 if (!Boolean.parseBoolean(request.getParameter("salesTally"))) {
                     caseQuery += "  AND sale_type = 2 ";
@@ -191,6 +194,8 @@ public class CustomQueryCreator {
                     caseQuery += " ORDER BY seller_name desc";
                 }
                 caseQuery += " OFFSET " + (offset - 1) + " LIMIT " + pageSize;
+                caseQuery +=" ) as  fQ LEFT JOIN ";
+                caseQuery+=" ( SELECT p.party_id, sum(p.amount) as amount from payment p where company_id= "+ companyId + " and branch_id = "+branchId+"  group by p.party_id ) as  sQ on fQ.seller_pan = sQ.party_id";
             }
 
             case SUPERADMIN -> {

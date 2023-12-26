@@ -14,7 +14,7 @@ public class ReceiptDTO {
 
     private int companyId;
 
-    private int partyId;
+    private Long partyId;
 
     private Double amount;
 

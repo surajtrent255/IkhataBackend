@@ -140,18 +140,30 @@ public class PurchaseBillServiceImpl implements PurchaseBillService {
 
     @Override
     public List<PurchaseBillDTO> getAllCreditors(HttpServletRequest request) {
+        long time1 = System.currentTimeMillis();
         String caseQuery = CustomQueryCreator.generateQueryWithCase(request, PaginationTypeClass.CREDITORS, dbService);
         PurchaseBillDAO purchaseBillDAO = dbService.getDao(PurchaseBillDAO.class);
         PaymentDAO paymentDAO = dbService.getDao(PaymentDAO.class);
-        List<PurchaseBillDTO> purchaseBillDTO = purchaseBillDAO.getPurchaseBillBySaleTypeForCreditors(caseQuery);
+        List<PurchaseBillDTO> purchaseBillDTOs = purchaseBillDAO.getPurchaseBillBySaleTypeForCreditors(caseQuery);
         List<PaymentDTO> paymentDTOs = paymentDAO.getAllPaymentByCompanyIdAndBranchId(Integer.parseInt( request.getParameter("compId")), Integer.parseInt( request.getParameter("branchId")));
-        for (PurchaseBillDTO data: purchaseBillDTO){
-            Double totalAmountPaid = Objects.requireNonNullElse(paymentDAO.getTotalPaymentByPartyIdForCreditors(data.getSellerPan(), data.getCompanyId(), data.getBranchId()), 0.0);
-            Double totalCreditAmount = Objects.requireNonNullElse(purchaseBillDAO.totalAmountForCreditors(data.getSellerPan(), data.getCompanyId(), data.getBranchId()), 0.0);
-            double totalAmount = totalCreditAmount - totalAmountPaid;
-            data.setTotalAmount(totalAmount);
-        }
-        return purchaseBillDTO;
+
+        // purchaseBillDTOs.forEach(pb->{
+        //     paymentDTOs.forEach(pd->{
+        //         if(pb.getSellerPan().strip().equalsIgnoreCase(pd.getPartyId().strip())){
+        //             pb.setTotalAmount(pb.getTotalAmount() - pd.getAmount());
+        //         }
+        //     });
+        // });
+        // for (PurchaseBillDTO data: purchaseBillDTO){
+        //     Double totalAmountPaid = Objects.requireNonNullElse(paymentDAO.getTotalPaymentByPartyIdForCreditors(data.getSellerPan(), data.getCompanyId(), data.getBranchId()), 0.0);
+        //     Double totalCreditAmount = Objects.requireNonNullElse(purchaseBillDAO.totalAmountForCreditors(data.getSellerPan(), data.getCompanyId(), data.getBranchId()), 0.0);
+        //     double totalAmount = totalCreditAmount - totalAmountPaid;
+        //     data.setTotalAmount(totalAmount);
+        // }
+        long time2=System.currentTimeMillis();
+        long timeDiff = time2  -time1;
+        System.out.println(timeDiff + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        return purchaseBillDTOs;
     }
 
 

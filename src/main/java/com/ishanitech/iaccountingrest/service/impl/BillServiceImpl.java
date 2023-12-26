@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Slf4j
@@ -318,12 +320,19 @@ public class BillServiceImpl implements BillService {
 
         List<SalesBillDTO> salesBillDTOs = salesBillDAO.getLimitedDebtors(caseQuery);
         List<ReceiptDTO> receiptDTOs = receiptDAO.getAllReceipts(Integer.parseInt(request.getParameter("compId")));
-        salesBillDTOs.forEach(sb -> {
-            receiptDTOs.forEach(rd -> {
-                if (sb.getCustomerPan() == rd.getPartyId()) {
-                    sb.setTotalAmount(sb.getTotalAmount() - rd.getAmount());
-                }
-            });
+        // salesBillDTOs.forEach(sb -> {
+        //     receiptDTOs.forEach(rd -> {
+        //         if (sb.getCustomerPan() == rd.getPartyId()) {
+        //             sb.setTotalAmount(sb.getTotalAmount() - rd.getAmount());
+        //         }
+        //     });
+        // });
+        Map<Long, Double> receiptsMap = new HashMap<>();//one null key but multiple null values
+        receiptDTOs.forEach(r->{
+            receiptsMap.merge((r.getPartyId()), r.getAmount(), (exVal, newVal)-> exVal+newVal);
+        });
+        salesBillDTOs.forEach(sb->{
+            sb.setTotalAmount(sb.getTotalAmount()-receiptsMap.get(sb.getCustomerPan()));
         });
         return salesBillDTOs;
 
