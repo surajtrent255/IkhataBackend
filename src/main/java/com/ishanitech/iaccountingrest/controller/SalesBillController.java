@@ -21,6 +21,7 @@ import java.util.Map;
 public class SalesBillController {
 
     private final BillService billService;
+    int count = 0;
 
     @GetMapping
 //    public ResponseDTO<List<SalesBillDTO>> getAllBills(){
@@ -61,6 +62,11 @@ public class SalesBillController {
             @RequestParam("branchId") Integer branchId,
             @RequestParam("forSalesReport") boolean salesReport){
         try{
+            count  = count+ 1;
+            System.out.println("$$$$$$$$$$$  ->   "+count);
+            int innerCount = 0;
+            innerCount = innerCount + 1;
+            System.out.println("############## -> "+innerCount);
             return new ResponseDTO<List<SalesBillDTO>>(billService.getLimitedSalesBillsByCompIdAndBranchId(offset, pageTotalItems, searchBy, searchWildCard, compId, branchId, salesReport));
         } catch(Exception e) {
             log.error("Error occured accessing the bill infos : " + e.getMessage());

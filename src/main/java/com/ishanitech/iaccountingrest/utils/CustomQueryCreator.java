@@ -169,7 +169,7 @@ public class CustomQueryCreator {
                 // caseQuery += " OFFSET " + (offset - 1) + " LIMIT " + pageSize;
 
                 // mystart 
-                caseQuery += "SELECT fQ.seller_pan, fQ.seller_name,  fQ.tax_amount, fQ.email, (fQ.total_amount -sQ.amount) as totalAmount FROM ";
+                caseQuery += "SELECT fQ.seller_pan, fQ.seller_name,  fQ.tax_amount, fQ.email, (fQ.total_amount - COALESCE(sQ.amount, 0)) as totalAmount FROM ";
                 caseQuery += " ( SELECT  seller_pan, seller_name,  sum(total_amount) as total_amount, sum(tax_amount) as tax_amount, c.email as email from purchase_bill sb inner join company c on sb.seller_pan::bigint = c.pan_no WHERE sb.company_id = "
                         + companyId + " AND branch_id =" + branchId + " AND sb.status = true ";
                 if (!Boolean.parseBoolean(request.getParameter("salesTally"))) {
