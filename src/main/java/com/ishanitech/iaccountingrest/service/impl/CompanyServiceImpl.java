@@ -106,9 +106,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         for (CompanyDTO companyDTO : companyDTOS) {
             if(companyDTO.getImageName() != null){
-                String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
-                //            for Production comment above line and uncomment below line
-//            String imageUrl = "http://103.233.58.121:9999/"+"images/"+companyDTO.getImageName();
+            String imageUrl = resolveHostAddress.getHostUrl() +"images/"+companyDTO.getImageName();
                 companyDTO.setImageUrl(imageUrl);
 
             } else {
@@ -171,9 +169,7 @@ public class CompanyServiceImpl implements CompanyService {
 
             CompanyDTO companyDTO = companyDAO.getCompanyByIdForEdit(companyId);
 
-            String imageUrl = resolveHostAddress.getHostUrl() + "images/" + companyDTO.getImageName();
-//                        for Production comment above line and uncomment below line
-//            String imageUrl = "http://103.233.58.121:9999/"+"images/"+companyDTO.getImageName();
+            String imageUrl = resolveHostAddress.getHostUrl() +"images/"+companyDTO.getImageName();
 
             companyDTO.setImageUrl(imageUrl);
             return companyDTO;
