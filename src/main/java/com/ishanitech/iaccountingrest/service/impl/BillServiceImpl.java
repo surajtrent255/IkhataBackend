@@ -327,12 +327,12 @@ public class BillServiceImpl implements BillService {
         //         }
         //     });
         // });
-        Map<Long, Double> receiptsMap = new HashMap<>();//one null key but multiple null values
+        Map<String, Double> receiptsMap = new HashMap<>();//one null key but multiple null values
         receiptDTOs.forEach(r->{
-            receiptsMap.merge((r.getPartyId()), r.getAmount(), (exVal, newVal)-> exVal+newVal);
+            receiptsMap.merge((Long.toString(r.getPartyId()).strip()), r.getAmount(), (exVal, newVal)-> exVal+newVal);
         });
         salesBillDTOs.forEach(sb->{
-            sb.setTotalAmount(sb.getTotalAmount()-receiptsMap.get(sb.getCustomerPan()));
+            sb.setTotalAmount(sb.getTotalAmount()-receiptsMap.get(Long.toString(sb.getCustomerPan())));
         });
         return salesBillDTOs;
 
