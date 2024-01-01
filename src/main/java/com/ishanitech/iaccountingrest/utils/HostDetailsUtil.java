@@ -12,6 +12,9 @@ public class HostDetailsUtil {
     @Value("${server.port}")
     int port;
 
+    @Value("${rest.domain}")
+    String HostAddress;
+
     private static final String HTTP_PREFIX = "http://";
 
     public String getHostUrl() {
@@ -22,6 +25,6 @@ public class HostDetailsUtil {
             e.printStackTrace();
         }
 
-        return HTTP_PREFIX + hostAddress + ":" + port + "/" ;
+        return HTTP_PREFIX + HostAddress + ":" + port + "/" ;
     }
 }
